@@ -62,11 +62,11 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="http://www.pirrla.cn/2017/03/20/GitTutorial_ByLiaoxuefeng/"/>
-    <id>http://www.pirrla.cn/2017/03/20/GitTutorial_ByLiaoxuefeng/</id>
-    <published>2017-03-20T03:27:20.000Z</published>
-    <updated>2017-03-23T12:39:50.000Z</updated>
+    <title>Git Tutorial</title>
+    <link href="http://www.pirrla.cn/2017/03/16/GitTutorial_ByLiaoxuefeng/"/>
+    <id>http://www.pirrla.cn/2017/03/16/GitTutorial_ByLiaoxuefeng/</id>
+    <published>2017-03-15T16:00:00.000Z</published>
+    <updated>2017-03-24T07:58:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>Source:</p>
 <p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
@@ -129,14 +129,16 @@
     </summary>
     
     
+      <category term="git" scheme="http://www.pirrla.cn/tags/git/"/>
+    
   </entry>
   
   <entry>
-    <title></title>
-    <link href="http://www.pirrla.cn/2017/03/20/Coursera-MachineLearningByAndrewNg/"/>
-    <id>http://www.pirrla.cn/2017/03/20/Coursera-MachineLearningByAndrewNg/</id>
-    <published>2017-03-20T03:23:21.000Z</published>
-    <updated>2017-03-20T03:24:09.000Z</updated>
+    <title>Coursera Machine Learning Notes</title>
+    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
+    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
+    <published>2017-03-14T16:00:00.000Z</published>
+    <updated>2017-03-24T07:57:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>CourseHomePage:</p>
 <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">https://www.coursera.org/learn/machine-learning/home/</a></p>
@@ -150,6 +152,8 @@
     </summary>
     
     
+      <category term="ML" scheme="http://www.pirrla.cn/tags/ML/"/>
+    
   </entry>
   
   <entry>
@@ -157,7 +161,7 @@
     <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
     <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
     <published>2017-03-14T16:00:00.000Z</published>
-    <updated>2017-03-24T04:13:49.000Z</updated>
+    <updated>2017-03-24T07:56:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>Resource:</p>
 <p><strong>S´ebastien Lahaie, How to take the Dual of a Linear Program <a href="http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf" target="_blank" rel="external">http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf</a></strong></p>
@@ -219,14 +223,16 @@
     </summary>
     
     
+      <category term="LP" scheme="http://www.pirrla.cn/tags/LP/"/>
+    
   </entry>
   
   <entry>
-    <title></title>
-    <link href="http://www.pirrla.cn/2017/03/14/netease/"/>
-    <id>http://www.pirrla.cn/2017/03/14/netease/</id>
-    <published>2017-03-14T08:47:10.000Z</published>
-    <updated>2017-03-14T09:41:20.000Z</updated>
+    <title>Duality of Linear Programming</title>
+    <link href="http://www.pirrla.cn/2017/03/15/netease/"/>
+    <id>http://www.pirrla.cn/2017/03/15/netease/</id>
+    <published>2017-03-14T16:00:00.000Z</published>
+    <updated>2017-03-24T07:58:58.000Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li>首先根据玩家的在线时间等数据，推测每天每个时段的服务器带宽等资源的压力，并进行及时的调配，避免发生网络拥堵。此外，还可以根据一年中一些特殊的日期进行相应的提前调配（可能数据量会比较少），让玩家拥有良好的游戏体验。</li>
@@ -253,6 +259,8 @@
     
     </summary>
     
+    
+      <category term="LP" scheme="http://www.pirrla.cn/tags/LP/"/>
     
   </entry>
   
