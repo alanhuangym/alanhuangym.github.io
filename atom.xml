@@ -153,11 +153,11 @@
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://www.pirrla.cn/2017/03/20/Duality_of_Linear_Programming/"/>
-    <id>http://www.pirrla.cn/2017/03/20/Duality_of_Linear_Programming/</id>
-    <published>2017-03-20T02:42:54.000Z</published>
-    <updated>2017-03-24T04:11:44.000Z</updated>
+    <title>Duality of Linear Programming</title>
+    <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
+    <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
+    <published>2017-03-14T16:00:00.000Z</published>
+    <updated>2017-03-24T04:13:49.000Z</updated>
     
     <content type="html"><![CDATA[<p>Resource:</p>
 <p><strong>S´ebastien Lahaie, How to take the Dual of a Linear Program <a href="http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf" target="_blank" rel="external">http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf</a></strong></p>
