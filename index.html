@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Note down something</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Note down something">
+<meta property="og:url" content="http://www.pirrla.cn/index.html">
+<meta property="og:site_name" content="Note down something">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Note down something">
+  
+    <link rel="alternate" href="/atom.xml" title="Note down something" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body>
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Note down something" rel="home"> Note down something </a>
+            
+          </h1>
+
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Kategorien</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main">
+  
+    <article id="post-Duality of Linear Programming"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/03/20/Duality of Linear Programming/" class="article-date">
+	  <time datetime="2017-03-20T02:42:54.000Z" itemprop="datePublished">March 20, 2017</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Resource:</p>
+<p><strong>S´ebastien Lahaie, How to take the Dual of a Linear Program <a href="http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf" target="_blank" rel="external">http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf</a></strong></p>
+<p>翻译：</p>
+<p>Alan Huang</p>
+<h1 id="如何求线性规划的二元性"><a href="#如何求线性规划的二元性" class="headerlink" title="如何求线性规划的二元性"></a>如何求线性规划的二元性</h1><ol>
+<li><p>线性规划是最优解问题的一个公式化结果：通过设立目标函数和约束函数，求取目标方程的最大值或最小值。因目标函数是线性的，所以称之为线性规划。</p>
+<p>通常，线性规划的一般形式是这样的：</p>
+<p>max<br>x1≥0, x2≤0, x3<br>v1x1 + v2x2 + v3x3 (1)<br>such that </p>
+<p>a1x1 + x2 + x3 ≤ b1 (2)<br>x1 + a2x2 = b2 (3)<br>a3x3 ≥ b3 (4)</p>
+<p>(1)是目标函数，(2)(3)(4)是约束函数，目标是求取(1)的最大值</p>
+<p>其中，x1,x2,x3是变量，而其他的参数则为常量（v1,v2,v3等）</p>
+</li>
+<li><p>这里我们称以上所述的线性规划为原始线性规划，二元性则是通过数学过程，从原始线性规划得到二次线性规划。</p>
+</li>
+<li><p>首先我们要重写原始线性规划的目标方程，使之成为一个标准形式。</p>
+<p>为了简便计算，我们尽量将目标方程改写为求##最小值##的形式</p>
+<p>从求最大值到求最小值也很简单，只需要将目标方程乘以-1即可</p>
+<p>所以我们可以获得改写后的目标方程：</p>
+<p>min<br>x1≥0, x2≤0, x3<br>−v1x1 − v2x2 − v3x3</p>
+</li>
+<li><p>第二步，是将约束函数全部改写为小于或小于等于或等于零的形式。即将(2)(3)(4)改写为：</p>
+<p>a1x1 + x2 + x3 − b1 ≤ 0 (5)<br>x1 + a2x2 − b2 = 0 (6)<br>−a3x3 + b3 ≤ 0 (7)</p>
+</li>
+<li><p>第三步，为每一个不等式约束函数设定一个非负的二元性参数，为每一个等式约束函数设定一个二元性参数（无限制负或非负）。如上所述，我们分别为(5)(7)设定二元性参数λ1 ≥ 0 和 λ3 ≥ 0，为(6)设定 λ2。</p>
+</li>
+<li><p>第四步，将第三步设置的二元性参数与约束函数符号左边的部分相乘并将它们加入到目标函数之中，并在目标函数前面加上求最大值，即如下所示：</p>
+<p>max min  −v1x1 − v2x2 − v3x3</p>
+<p>+λ1 (a1x1 + x2 + x3 − b1) (8)</p>
+<p>+λ2 (x1 + a2x2 − b2) (9)</p>
+<p>+λ3 (−a3x3 + b3) (10)</p>
+</li>
+<li><p>第五步，将目标函数的括号拆开，并进行整理。将包含原本变量（x1,x2,x3）的式子下放到约束函数之中，其余的项放入目标函数之中。即:</p>
+<p>max min  −b1λ1 − b2λ2 − b3λ3</p>
+<p>+x1(a1λ1 + λ2 − v1) (11)</p>
+<p>+x2(λ1 + a2λ2 − v2) (12)</p>
+<p>+x3(λ1 − a3λ3 − v3) (13)</p>
+</li>
+<li><p>第六步，将约束函数表示为等式或不等式的形式。</p>
+<p>如果变量后面的参数是大于或等于零的，则去掉原始变量获得不等式该参数大于或等于零，</p>
+<p>如果变量后面的参数是小于或等于零的，则去掉原始变量获得不等式该参数小于或等于零，</p>
+<p>如果变量后面的参数是等于零的，则去掉原始变量获得不等式该参数等于零。</p>
+<p>同时，目标函数去除Min。</p>
+<p>max −b1λ1 − b2λ2 − b3λ3<br>a1λ1 + λ2 − v1 ≥ 0 (14)<br>λ1 + a2λ2 − v2 ≤ 0 (15)<br>λ1 − a3λ3 − v3 = 0 (16)</p>
+</li>
+<li><p>第七步，如果一开始将求最小值变成了最大值（目标函数乘以-1），则将目标函数再次反转，否则，不做任何步骤（可以整理约束函数），则获得最终结果。</p>
+<p>min b1λ1 + b2λ2 + b3λ3<br>a1λ1 + λ2 ≥ v1 (17)<br>λ1 + a2λ2 ≤ v2 (18)<br>λ1 − a3λ3 = v3 (19)</p>
+<p>至此，已经获得了原始线性规划的二元线性规划。</p>
+<p>​</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+
+
+</section>
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" style="margin: 20px 0;">
+	<div id="search-form-wrap">
+
+    <form class="search-form">
+        <label style="width: 75%;">
+            <span class="screen-reader-text">Search for:</span>
+            <input type="search" class="search-field" style="height: 42px;" placeholder=" Suche…" value="" name="s" title="Search for:">
+        </label>
+        <input type="submit" class="search-form-submit" value="Suche">
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Connect With Us</h3>
+    <div class="widget widget_athemes_social_icons">
+
+    	<ul class="clearfix widget-social-icons">   
+    	
+   			<li><a href="https://github.com/iTimeTraveler" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></li> 
+
+   		
+   			<li><a href="http://www.yoursite.com" title="Weibo"><i class="fa fa-weibo" aria-hidden="true"></i></a></li> 
+
+   		
+   			<li><a href="null" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li> 
+
+   		
+   			<li><a href="null" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li> 
+
+   		
+   			<li><a href="null" title="Google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li> 
+
+   		
+   			<li><a href="null" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li> 
+
+   		
+   			<li><a href="null" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li> 
+
+   		
+   			<li><a href="null" title="Flickr"><i class="fa fa-flickr" aria-hidden="true"></i></a></li> 
+
+   		
+   		</ul>
+
+
+   		<!--
+   		<ul class="clearfix widget-social-icons">   		
+   		<li class="widget-si-twitter"><a href="http://twitter.com" title="Twitter"><i class="ico-twitter"></i></a></li> 
+		<li class="widget-si-facebook"><a href="http://facebook.com" title="Facebook"><i class="ico-facebook"></i></a></li>
+			<li class="widget-si-gplus"><a href="http://plus.google.com" title="Google+"><i class="ico-gplus"></i></a></li>
+			<li class="widget-si-pinterest"><a href="http://pinterest.com" title="Pinterest"><i class="ico-pinterest"></i></a></li>
+			<li class="widget-si-flickr"><a href="http://flickr.com" title="Flickr"><i class="ico-flickr"></i></a></li>
+			<li class="widget-si-instagram"><a href="http://instagram.com" title="Instagram"><i class="ico-instagram"></i></a></li>
+		</ul> -->
+
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget_athemes_tabs">
+    <ul id="widget-tab" class="clearfix widget-tab-nav">
+      <li class="active"><a>letzter Beitrag</a></li>
+    </ul>
+    <div class="widget">
+      <ul>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/03/20/Duality of Linear Programming/">(no title)</a></h6>
+              <span>March 20, 2017</span>
+            </div>
+
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2017 Note down something All Rights Reserved.
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+</body>
+</html>
