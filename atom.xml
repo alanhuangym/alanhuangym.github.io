@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-03-25T16:20:22.000Z</updated>
+  <updated>2017-03-25T17:59:52.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/"/>
     <id>http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/</id>
     <published>2017-03-16T16:00:00.000Z</published>
-    <updated>2017-03-25T16:20:22.000Z</updated>
+    <updated>2017-03-25T17:59:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>Resource: <a href="https://marcobonzanini.com/2016/08/02/mastering-social-media-mining-with-python/" target="_blank" rel="external">Mastering Social Media Mining wiht Python</a></p>
 <p>By Marco Bonzanini</p>
@@ -58,6 +58,8 @@
     
     </summary>
     
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
+    
     
       <category term="data_mining" scheme="http://www.pirrla.cn/tags/data-mining/"/>
     
@@ -68,7 +70,7 @@
     <link href="http://www.pirrla.cn/2017/03/16/GitTutorial_ByLiaoxuefeng/"/>
     <id>http://www.pirrla.cn/2017/03/16/GitTutorial_ByLiaoxuefeng/</id>
     <published>2017-03-15T16:00:00.000Z</published>
-    <updated>2017-03-24T07:58:05.000Z</updated>
+    <updated>2017-03-25T18:00:00.000Z</updated>
     
     <content type="html"><![CDATA[<p>Source:</p>
 <p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
@@ -130,6 +132,8 @@
     
     </summary>
     
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
+    
     
       <category term="git" scheme="http://www.pirrla.cn/tags/git/"/>
     
@@ -140,7 +144,7 @@
     <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
     <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
     <published>2017-03-14T16:00:00.000Z</published>
-    <updated>2017-03-25T15:55:39.000Z</updated>
+    <updated>2017-03-25T18:00:13.000Z</updated>
     
     <content type="html"><![CDATA[<p>CourseHomePage:</p>
 <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">https://www.coursera.org/learn/machine-learning/home/</a></p>
@@ -153,6 +157,8 @@
     
     </summary>
     
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
+    
     
       <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
     
@@ -163,7 +169,7 @@
     <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
     <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
     <published>2017-03-14T16:00:00.000Z</published>
-    <updated>2017-03-25T15:55:31.000Z</updated>
+    <updated>2017-03-25T18:00:07.000Z</updated>
     
     <content type="html"><![CDATA[<p>Resource:</p>
 <p><strong>S´ebastien Lahaie, How to take the Dual of a Linear Program <a href="http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf" target="_blank" rel="external">http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf</a></strong></p>
@@ -223,6 +229,8 @@
 &lt;p&gt;&lt;strong&gt;S´ebastien Lahaie, How to take the Dual of a Linear Program &lt;a href=&quot;http://www.cs.columbia.edu/coms6998-3/lppri
     
     </summary>
+    
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
     
     
       <category term="linear_programming" scheme="http://www.pirrla.cn/tags/linear-programming/"/>
