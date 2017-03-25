@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-03-25T15:55:15.000Z</updated>
+  <updated>2017-03-25T16:20:22.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/"/>
     <id>http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/</id>
     <published>2017-03-16T16:00:00.000Z</published>
-    <updated>2017-03-25T15:55:15.000Z</updated>
+    <updated>2017-03-25T16:20:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>By Marco Bonzanini</p>
+    <content type="html"><![CDATA[<p>Resource: <a href="https://marcobonzanini.com/2016/08/02/mastering-social-media-mining-with-python/" target="_blank" rel="external">Mastering Social Media Mining wiht Python</a></p>
+<p>By Marco Bonzanini</p>
 <h2 id="Python-tools-for-data-science"><a href="#Python-tools-for-data-science" class="headerlink" title="Python tools for data science"></a>Python tools for data science</h2><p>Pandas</p>
 <p>Numpy</p>
 <p>Scikit-learn</p>
@@ -53,8 +54,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;By Marco Bonzanini&lt;/p&gt;
-&lt;h2 id=&quot;Python-tools-for-data-science&quot;&gt;&lt;a href=&quot;#Python-tools-for-data-science&quot; class=&quot;headerlink&quot; title=&quot;Python t
+      &lt;p&gt;Resource: &lt;a href=&quot;https://marcobonzanini.com/2016/08/02/mastering-social-media-mining-with-python/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Maste
     
     </summary>
     
