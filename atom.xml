@@ -140,31 +140,6 @@
   </entry>
   
   <entry>
-    <title>Coursera Machine Learning Notes</title>
-    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
-    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
-    <published>2017-03-14T16:00:00.000Z</published>
-    <updated>2017-03-25T18:00:13.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>CourseHomePage:</p>
-<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">https://www.coursera.org/learn/machine-learning/home/</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;CourseHomePage:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.courser
-    
-    </summary>
-    
-      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
-    
-    
-      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Duality of Linear Programming</title>
     <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
     <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
@@ -234,6 +209,31 @@
     
     
       <category term="linear_programming" scheme="http://www.pirrla.cn/tags/linear-programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Coursera Machine Learning Notes</title>
+    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
+    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
+    <published>2017-03-14T16:00:00.000Z</published>
+    <updated>2017-03-25T18:00:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>CourseHomePage:</p>
+<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">https://www.coursera.org/learn/machine-learning/home/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;CourseHomePage:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.courser
+    
+    </summary>
+    
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
+    
+    
+      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
     
   </entry>
   
