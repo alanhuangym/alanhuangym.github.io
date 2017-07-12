@@ -99,7 +99,7 @@ Kibana版本：5.4.2
 Logstash版本：5.4.2
 Elasticsearch在执行搜索后，返回结果的排序是根据字段_score决定的。排序结果是倒序排列，得分越高，越在前面。
 _score字段即量化表明查询语句与文档内容的相似性与匹配度，为了更好地显示搜索结果，我们需要深入了解该数值的来源与相关算法">
-<meta property="og:updated_time" content="2017-07-12T06:31:50.000Z">
+<meta property="og:updated_time" content="2017-07-12T07:53:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch相关性">
 <meta name="twitter:description" content="ElasticSearch 相关性1.简介Elasticsearch版本：5.4.2
@@ -414,7 +414,40 @@ _score字段即量化表明查询语句与文档内容的相似性与匹配度�
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">"similarity" : &#123;</div><div class="line">  "my_similarity" : &#123;</div><div class="line">    "type" : "DFR",</div><div class="line">    "basic_model" : "g",</div><div class="line">    "after_effect" : "l",</div><div class="line">    "normalization" : "h2",</div><div class="line">    "normalization.h2.c" : "3.0"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>再在索引中设置mapping以应用算法</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"book"</span> : &#123;</div><div class="line">    <span class="attr">"properties"</span> : &#123;</div><div class="line">      <span class="attr">"title"</span> : &#123; <span class="attr">"type"</span> : <span class="string">"text"</span>, <span class="attr">"similarity"</span> : <span class="string">"my_similarity"</span> &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="6-Function-Score"><a href="#6-Function-Score" class="headerlink" title="6.Function Score"></a>6.Function Score</h3><p>待续</p>
+<h3 id="6-Function-Score"><a href="#6-Function-Score" class="headerlink" title="6.Function Score"></a>6.Function Score</h3><p>首先，function score的语句如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">GET test6/test/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123; //首先是检索体</div><div class="line">          "match_all": &#123;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">         "functions": [  //Functions可以添加多种脚本和过滤器</div><div class="line">          &#123;              //使用一个数组将各个function结合起来</div><div class="line">            "filter": &#123;  // 过滤器</div><div class="line">              "match": &#123; "title": "a" &#125; &#125;,</div><div class="line">              "weight": 23 // weight 直接给符合过滤器的文档权重分</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            "script_score": &#123; //脚本打分器</div><div class="line">              "script": &#123;     //只能对字段类型为数值的进行数学操作</div><div class="line">               "inline": "Math.log(2 + doc['votes'].value)"</div><div class="line">          &#125; </div><div class="line">         &#125;</div><div class="line">        &#125;</div><div class="line">        ],</div><div class="line">      "boost":5, //将该数值影响得分</div><div class="line">      "score_mode":"multiply", //functions内多个脚本的得分处理办法</div><div class="line">      "boost_mode":"multiply", //检索得分和函数得分的处理办法</div><div class="line">      "min_score":40, //返回搜索结果所需要的最少得分</div><div class="line">      "random_score":&#123;&#125;, //生成一个随机数，影响得分</div><div class="line">      "max_boost":10 //无论函数、脚本如何影响得分，最终得分最大值为此</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>其中<strong>boost_mode</strong>（检索得分与函数得分d的处理方式）的模式有：</p>
+<ul>
+<li><p>multiply - 检索得分和函数得分的积（默认）</p>
+</li>
+<li><p>sum - 检索得分和函数得分的和</p>
+</li>
+<li><p>min - 检索得分和函数得分之中的较小值</p>
+</li>
+<li><p>max - 检索得分和函数得分之中的较大值</p>
+</li>
+<li><p>replace - 函数得分代替检索得分</p>
+<p>​</p>
+</li>
+</ul>
+<p>而后在函数内部中不同脚本、函数和过滤器也需要进行得分处理，<strong>score_mode</strong>:</p>
+<ul>
+<li><p>multiply - 函数结果求积（默认）</p>
+</li>
+<li><p>sum - 函数结果求和</p>
+</li>
+<li><p>min - 函数结果最小值</p>
+</li>
+<li><p>max - 函数结果最大值</p>
+</li>
+<li><p>avg - 函数结果平均值</p>
+</li>
+<li><p>first - 首个函数结果作为最终结果</p>
+<p>​</p>
+</li>
+</ul>
+<p><strong>脚本评分</strong>（script_score）例子中使用的是简洁版本，其完整版本为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">"script_score": &#123;</div><div class="line">          "params": &#123;  // 参数字段，以","分隔</div><div class="line">            "threshold": 80,</div><div class="line">            "discount": 0.1,</div><div class="line">            "target": 10</div><div class="line">          &#125;,</div><div class="line">  		  //脚本字段，以";"分隔语句</div><div class="line">          "script": "price  = doc['price'].value; margin = doc['margin'].value;</div><div class="line">          if (price &lt; threshold) &#123; return price * margin / target &#125;;</div><div class="line">          return price * (1 - discount) * margin / target;" </div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
 <h3 id="7-同义词"><a href="#7-同义词" class="headerlink" title="7.同义词"></a>7.同义词</h3><p>使用同义词进行检索时，部分数据会发生变化，以BM25算法为例：</p>
 <p>b,c为同义词</p>
 <ul>
