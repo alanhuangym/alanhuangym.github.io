@@ -255,6 +255,217 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/Elasticsearch相关性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/12/Elasticsearch相关性/" itemprop="url">
+                  Elasticsearch相关性
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
+                2017-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ElasticSearch-相关性"><a href="#ElasticSearch-相关性" class="headerlink" title="ElasticSearch 相关性"></a>ElasticSearch 相关性</h1><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>Elasticsearch版本：5.4.2</p>
+<p>Kibana版本：5.4.2</p>
+<p>Logstash版本：5.4.2</p>
+<p>Elasticsearch在执行搜索后，返回结果的排序是根据字段<strong>_score</strong>决定的。排序结果是倒序排列，得分越高，越在前面。</p>
+<p><strong>_score</strong>字段即量化表明查询语句与文档内容的相似性与匹配度，为了更好地显示搜索结果，我们需要深入了解该数值的来源与相关算法，本文讨论的相关性则为此。</p>
+<h3 id="2-语句"><a href="#2-语句" class="headerlink" title="2.语句"></a>2.语句</h3><p>本文通过调用<strong>_search</strong>的<strong>explain</strong>参数进行调试。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /_search?explain</div><div class="line">&#123;</div><div class="line">  "query":&#123;</div><div class="line">    "match":&#123;</div><div class="line">      "title":"a"</div><div class="line">  &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-经典TF-IDF算法"><a href="#3-经典TF-IDF算法" class="headerlink" title="3.经典TF/IDF算法"></a>3.经典TF/IDF算法</h3><p>在Elasticsearch 5.X 版本前，Elasticsearch默认使用的是经典的TF/IDF算法，即：</p>
+<p><strong>检索词频率（TermFrequency）</strong></p>
+<p>检索词在该字段出现的频率？出现频率越高，相关性也越高。 字段中出现过 5 次要比只出现过 1 次的相关性高。当然，词频不是在score计算中直接使用的。通常是取词频（TermFrequency）的平方根。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TF_Score = sqrt(termFreq)</div></pre></td></tr></table></figure>
+<p><strong>反向文档频率（InverseDocumentFrequency）</strong></p>
+<p>每个检索词在索引中出现的频率？频率越高，相关性越低。检索词出现在多数文档中会比出现在少数文档中的权重更低。例如中文中，“的”、“得”，“不”等词因在大多数文档中出现，所以相关性较低。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">IDF_Score = log(maxDocs/docFreq+1)+1</div></pre></td></tr></table></figure>
+<p><strong>字段长度准则（FieldNorms）</strong></p>
+<p>字段的长度是多少？长度越长，相关性越低。 检索词出现在一个短的 title 要比同样的词出现在一个长的 content 字段权重更大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FieldNorms = 1 / sqrt(length)</div></pre></td></tr></table></figure>
+<p>所以最终得分为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Score = TF_Score*IDF_Score*FieldNorms</div><div class="line">      = log(maxDocs / (docFreq + 1)) * sqrt(termFreq) * (1/sqrt(length))</div></pre></td></tr></table></figure>
+<p>*maxDocs有可能会数到已删除文档！</p>
+<h3 id="4-BM25算法"><a href="#4-BM25算法" class="headerlink" title="4.BM25算法"></a>4.BM25算法</h3><p>BM25是Elasticsearch5.X的默认相关性算法，它根据TF/IDF算法改进而来。它由两部分组成，分别是IDF和TFNorm.</p>
+<p>其中，根据不同的检索方法，数值各不相同，由于Elasticsearch是分布式系统，所以默认的检索方法为Query_Then_Search（该方法为在各自分片内进行检索，然后各分片返回各自的搜索结果至协调分片，非全局检索，当数据量充足时，效果良好，但当数据量较少时，应使用全局检索，请参看后文DFS_Query_Then_Search方法）</p>
+<p><strong>单词检索</strong>（即检索内容只包含单个英语单词（空格间隔）或单个中文分词（由Tokenizer划分））：</p>
+<p>IDF</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5))</div></pre></td></tr></table></figure>
+<p>TFNorm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">termfreq * (k1 + 1)) / (termfreq + k1 * (1 - b + b * fieldLength / avgFieldLength)</div></pre></td></tr></table></figure>
+<ul>
+<li>docCount - 该索引该分片的文档总数</li>
+<li>docFreq - 该索引内该分片内，含有检索内容的文档的数量</li>
+<li>termFreq - 包含该检索内容的文档的检索内容出现次数</li>
+<li>k1 &amp; b - BM25参数，常分别设为 1.2 和 0.75</li>
+<li>fieldLength - 包含该检索内容的文档的长度</li>
+<li>avgFieldLength - 该索引该分片的平均文档长度</li>
+</ul>
+<p><strong>多词检索</strong></p>
+<p>如果检索内容为一段话或多个词语，首先通过Analyzer将一段话或多个词语进行筛选和划分，包括大小写转换、停用词去除、词根筛选、同义词转换、分词（英文根据空格划分，中文根据Tokenizer划分，本文使用中文分词工具ik）。然后将得到的多个词语逐个进行单词检索，然后最终得分为多个词语的得分的总和。</p>
+<h3 id="5-其他算法"><a href="#5-其他算法" class="headerlink" title="5.其他算法"></a>5.其他算法</h3><p>如果需要更换算法，可以在创建索引的时候，添加settings设置，更改默认的相关性算法。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">PUT /test</div><div class="line">&#123;</div><div class="line">  "settings": &#123;</div><div class="line">    "index": &#123;</div><div class="line">      "similarity": &#123;</div><div class="line">        "default": &#123;</div><div class="line">          "type": "classic"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可选算法有</p>
+<ul>
+<li>“BM25” - 如无设置算法，则默认为BM25算法</li>
+<li>“classic” - 经典TF/IDF算法</li>
+</ul>
+<p>除了以上的两种算法，其他的算法需要<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html#lm_dirichlet" target="_blank" rel="external">配置参数</a></p>
+<ul>
+<li>“<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/DFRSimilarity.html" target="_blank" rel="external">DFR</a>“  / “<a href="http://trec.nist.gov/pubs/trec21/papers/irra.web.nb.pdf" target="_blank" rel="external">DFI</a>“  / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/IBSimilarity.html" target="_blank" rel="external">IB</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMDirichletSimilarity.html" target="_blank" rel="external">LMDirichlet</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html" target="_blank" rel="external">LMJelinekMercer</a>“</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">"similarity" : &#123;</div><div class="line">  "my_similarity" : &#123;</div><div class="line">    "type" : "DFR",</div><div class="line">    "basic_model" : "g",</div><div class="line">    "after_effect" : "l",</div><div class="line">    "normalization" : "h2",</div><div class="line">    "normalization.h2.c" : "3.0"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再在索引中设置mapping以应用算法</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"book"</span> : &#123;</div><div class="line">    <span class="attr">"properties"</span> : &#123;</div><div class="line">      <span class="attr">"title"</span> : &#123; <span class="attr">"type"</span> : <span class="string">"text"</span>, <span class="attr">"similarity"</span> : <span class="string">"my_similarity"</span> &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="6-Function-Score"><a href="#6-Function-Score" class="headerlink" title="6.Function Score"></a>6.Function Score</h3><p>待续</p>
+<h3 id="7-同义词"><a href="#7-同义词" class="headerlink" title="7.同义词"></a>7.同义词</h3><p>使用同义词进行检索时，部分数据会发生变化，以BM25算法为例：</p>
+<p>b,c为同义词</p>
+<ul>
+<li>docCount - 文档总数不变</li>
+<li>docFreq - 所有包含b或c的文档的数量</li>
+<li>termFreq - 如有一次b或c出现，则算双倍次数</li>
+<li>k1 &amp; b - 不变</li>
+<li>fieldLength - 不变</li>
+<li>avgFieldLength - 每个b或c算双倍大小</li>
+</ul>
+<h3 id="8-DFS-Query-Then-Fetch"><a href="#8-DFS-Query-Then-Fetch" class="headerlink" title="8.DFS Query Then Fetch"></a>8.DFS Query Then Fetch</h3><p>可以全局搜索，当数据量较少时可以使用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /_search?search_type=dfs_query_then_fetch</div></pre></td></tr></table></figure>
+<h3 id="资料参考："><a href="#资料参考：" class="headerlink" title="资料参考："></a>资料参考：</h3><p>[1] <a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/relevance-intro.html" target="_blank" rel="external">Elasticsearch文档-什么是相关性？</a></p>
+<p>[2] <a href="http://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/" target="_blank" rel="external">BM25 The Next Generation of Lucene Relevance</a></p>
+<p>[3] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html" target="_blank" rel="external">Elasticsearch文档-Similarity module</a></p>
+<p>[4] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" rel="external">Elasticsearch文档-Function Score Query</a></p>
+<p>[5] <a href="https://www.elastic.co/blog/understanding-query-then-fetch-vs-dfs-query-then-fetch" target="_blank" rel="external">Elasticsearch文档-DFS-DFS Query Then Fetch</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -618,6 +829,179 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/15/Coursera-MachineLearningByAndrewNg/" itemprop="url">
+                  Coursera Machine Learning Notes
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T00:00:00+08:00">
+                2017-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CUHK-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">CUHK_Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
+</ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -801,150 +1185,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/15/Coursera-MachineLearningByAndrewNg/" itemprop="url">
-                  Coursera Machine Learning Notes
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T00:00:00+08:00">
-                2017-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CUHK-Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">CUHK_Notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>CourseHomePage:</p>
-<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">https://www.coursera.org/learn/machine-learning/home/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -990,7 +1230,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1001,7 +1241,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1012,7 +1252,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

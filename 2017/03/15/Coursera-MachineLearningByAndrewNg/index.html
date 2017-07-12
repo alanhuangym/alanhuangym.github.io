@@ -85,19 +85,40 @@
 
 
 
-<meta name="description" content="CourseHomePage:
-https://www.coursera.org/learn/machine-learning/home/">
+<meta name="description" content="CourseHomePage
+Week6:
+Evaluating a Learning Algorithm
+How to improve the algorithm:
+What to do next:
+
+Get more training examples
+Try smaller or additional features
+Try adding ploynomial features (x sq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coursera Machine Learning Notes">
 <meta property="og:url" content="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="CourseHomePage:
-https://www.coursera.org/learn/machine-learning/home/">
-<meta property="og:updated_time" content="2017-03-25T18:00:13.000Z">
+<meta property="og:description" content="CourseHomePage
+Week6:
+Evaluating a Learning Algorithm
+How to improve the algorithm:
+What to do next:
+
+Get more training examples
+Try smaller or additional features
+Try adding ploynomial features (x sq">
+<meta property="og:updated_time" content="2017-03-26T09:34:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Coursera Machine Learning Notes">
-<meta name="twitter:description" content="CourseHomePage:
-https://www.coursera.org/learn/machine-learning/home/">
+<meta name="twitter:description" content="CourseHomePage
+Week6:
+Evaluating a Learning Algorithm
+How to improve the algorithm:
+What to do next:
+
+Get more training examples
+Try smaller or additional features
+Try adding ploynomial features (x sq">
 
 
 
@@ -354,8 +375,37 @@ https://www.coursera.org/learn/machine-learning/home/">
       
 
       
-        <p>CourseHomePage:</p>
-<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">https://www.coursera.org/learn/machine-learning/home/</a></p>
+        <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
+</ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
 
       
     </div>
@@ -398,14 +448,18 @@ https://www.coursera.org/learn/machine-learning/home/">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/03/15/Duality_of_Linear_Programming/" rel="next" title="Duality of Linear Programming">
+                <i class="fa fa-chevron-left"></i> Duality of Linear Programming
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/15/Duality_of_Linear_Programming/" rel="prev" title="Duality of Linear Programming">
-                Duality of Linear Programming <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/16/GitTutorial_ByLiaoxuefeng/" rel="prev" title="Git Tutorial">
+                Git Tutorial <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -453,8 +507,17 @@ https://www.coursera.org/learn/machine-learning/home/">
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
@@ -469,7 +532,7 @@ https://www.coursera.org/learn/machine-learning/home/">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -480,7 +543,7 @@ https://www.coursera.org/learn/machine-learning/home/">
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -491,7 +554,7 @@ https://www.coursera.org/learn/machine-learning/home/">
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -527,6 +590,22 @@ https://www.coursera.org/learn/machine-learning/home/">
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluate-the-hypothesis"><span class="nav-number">1.</span> <span class="nav-text">Evaluate the hypothesis:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bias-VS-Variance"><span class="nav-number">2.</span> <span class="nav-text">Bias VS Variance</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
