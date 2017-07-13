@@ -1,0 +1,762 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="elasticsearch," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。
+股票数据来源来自于东方财富网。
+1234567891011121314import requestsfrom bs4 import BeautifulSoup#用两个列表分别存储上证和深证各支股票的信息sh = []sz = []with r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES">
+<meta property="og:url" content="http://www.pirrla.cn/2017/07/13/es_gf/index.html">
+<meta property="og:site_name" content="Note down something">
+<meta property="og:description" content="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。
+股票数据来源来自于东方财富网。
+1234567891011121314import requestsfrom bs4 import BeautifulSoup#用两个列表分别存储上证和深证各支股票的信息sh = []sz = []with r">
+<meta property="og:image" content="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png">
+<meta property="og:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
+<meta property="og:updated_time" content="2017-07-13T08:53:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES">
+<meta name="twitter:description" content="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。
+股票数据来源来自于东方财富网。
+1234567891011121314import requestsfrom bs4 import BeautifulSoup#用两个列表分别存储上证和深证各支股票的信息sh = []sz = []with r">
+<meta name="twitter:image" content="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.pirrla.cn/2017/07/13/es_gf/"/>
+
+
+
+
+
+  <title> ES | Note down something </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Note down something</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/13/es_gf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ES
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-13T00:00:00+08:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"><a href="#1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）" class="headerlink" title="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"></a>1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）</h3><p>首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。</p>
+<p>股票数据来源来自于<a href="http://quote.eastmoney.com/stocklist.html" target="_blank" rel="external">东方财富网</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="comment">#用两个列表分别存储上证和深证各支股票的信息</span></div><div class="line">sh = []</div><div class="line">sz = []</div><div class="line"><span class="keyword">with</span> requests.Session() <span class="keyword">as</span> s:</div><div class="line">    html = s.get(<span class="string">r'http://quote.eastmoney.com/stocklist.html'</span>)</div><div class="line">    soup = BeautifulSoup(html.content, <span class="string">'lxml'</span>)</div><div class="line">    sh_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">7</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sh_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sh.append(i.a.text)</div><div class="line">    sz_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">8</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sz_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sz.append(i.a.text)</div></pre></td></tr></table></figure>
+<p>输出的本文结果为如下格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头&lt;font color=red&gt;etf&lt;/font&gt;</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
+<p><img src="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png" alt=""></p>
+<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法，所以需要在拓展词库中添加全部股票名称。</p>
+<p>其中，由于用户输入一般是忽略大小写的，为了方便用户能够输入大小写都能匹配到股票信息，我们将拓展词典、同义词词典的股票名称信息都更改为小写，这样无论用户输入大写还是小写都能匹配到股票。</p>
+<p><del>暂时没有找到关闭 filter <em> 号的方法，所以搜索不了 </em>stXX股票</del></p>
+<p><del>有没有可能去除st等标记，因标记是在原股票名称前添加，不改变原股票名称</del></p>
+<h3 id="2-学习使用html-strip-filter"><a href="#2-学习使用html-strip-filter" class="headerlink" title="2.学习使用html_strip filter"></a>2.学习使用html_strip filter</h3><p>html strip filter 代码如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">"char_filter": &#123;</div><div class="line">        "my_html": &#123;</div><div class="line">          "type": "html_strip",</div><div class="line">          "escaped_tags": []</div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
+<p>其中<strong>escaped_tags</strong>字段表示该列表之中的标签不用去除</p>
+<h3 id="3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip"><a href="#3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip" class="headerlink" title="3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip"></a>3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip</h3><p>完整设置和mapping如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "settings": &#123;</div><div class="line">        "index" : &#123;</div><div class="line">            "analysis" : &#123;</div><div class="line">                "analyzer" : &#123;</div><div class="line">                    "my_analyzer" : &#123;</div><div class="line">                        "tokenizer" : "my_ik",</div><div class="line">                        "filter" : ["my_stop","synonym"],</div><div class="line">                        "char_filter":  ["my_html"]</div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                "char_filter": &#123;</div><div class="line">                    "my_html": &#123;</div><div class="line">                      "type": "html_strip",</div><div class="line">                      "escaped_tags": []</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                "filter" : &#123;</div><div class="line">                    "synonym" : &#123;</div><div class="line">                        "type" : "synonym",</div><div class="line">                        "synonyms_path" : "synonym.txt"</div><div class="line">                    &#125;,</div><div class="line">                    "my_stop":&#123;</div><div class="line">                      "type":"stop",</div><div class="line">                      "stopwords":"_none_"</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                  "tokenizer":&#123;</div><div class="line">                  "my_ik":&#123;</div><div class="line">                    "type":"ik_max_word",</div><div class="line">                    "enable_lowercase":true</div><div class="line">                &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    "mappings":&#123;</div><div class="line">    "news":&#123; //类型名，这里为news</div><div class="line">    "properties": &#123;</div><div class="line">        "title": &#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "keywords":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "content":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>还需要完善：</p>
+<ul>
+<li>对于不需要和不希望加入搜索的字段进行not_analyze设置</li>
+<li>设置日期字段的数值类型date</li>
+</ul>
+<h3 id="4-对已有数据进行reindex-约34w数据"><a href="#4-对已有数据进行reindex-约34w数据" class="headerlink" title="4.对已有数据进行reindex(约34w数据)"></a>4.对已有数据进行reindex(约34w数据)</h3><p>之前进行reindex速度明显比这次高，原因是上次没有使用analyzer。</p>
+<p>此次reindex <strong>34w</strong>数据共用时<strong>793</strong>秒，每1秒操作<strong>428</strong>个文档。</p>
+<p>如无analyzer，则每一秒操作<strong>1581</strong>个文档。</p>
+<h3 id="5-使用function-score进行filter检索，发布时间越靠前的得分越高"><a href="#5-使用function-score进行filter检索，发布时间越靠前的得分越高" class="headerlink" title="5.使用function_score进行filter检索，发布时间越靠前的得分越高"></a>5.使用function_score进行filter检索，发布时间越靠前的得分越高</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">GET test/news/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "_source": ["title","publishdate"], </div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123;</div><div class="line">          "match": &#123;</div><div class="line">            "title": "600340"</div><div class="line">          &#125;</div><div class="line">        &#125; ,</div><div class="line">         "functions": [ </div><div class="line">            &#123;</div><div class="line">                    "exp": &#123;</div><div class="line">                        "publishdate" : &#123;</div><div class="line">                            "origin": "now",</div><div class="line">                            "offset": "1h",</div><div class="line">                            "scale" : "30d",</div><div class="line">                            "decay": 0.2</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    "weight": 200</div><div class="line">                &#125;</div><div class="line">        ],</div><div class="line">        "boost_mode": "sum"</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>其中使用的是<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#_supported_fields_for_decay_functions" target="_blank" rel="external">function score query</a> 的 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decayfunction</a>(衰减函数)。</p>
+<p>各参数设置如图：</p>
+<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/12/Elasticsearch相关性/" rel="next" title="Elasticsearch相关性">
+                <i class="fa fa-chevron-left"></i> Elasticsearch相关性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
+               alt="Alan Wong" />
+          <p class="site-author-name" itemprop="name">Alan Wong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/alanhuangym" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"><span class="nav-number">1.</span> <span class="nav-text">1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-学习使用html-strip-filter"><span class="nav-number">2.</span> <span class="nav-text">2.学习使用html_strip filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip"><span class="nav-number">3.</span> <span class="nav-text">3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-对已有数据进行reindex-约34w数据"><span class="nav-number">4.</span> <span class="nav-text">4.对已有数据进行reindex(约34w数据)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-使用function-score进行filter检索，发布时间越靠前的得分越高"><span class="nav-number">5.</span> <span class="nav-text">5.使用function_score进行filter检索，发布时间越靠前的得分越高</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Wong</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

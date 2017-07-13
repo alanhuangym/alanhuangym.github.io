@@ -99,7 +99,7 @@ Kibana版本：5.4.2
 Logstash版本：5.4.2
 Elasticsearch在执行搜索后，返回结果的排序是根据字段_score决定的。排序结果是倒序排列，得分越高，越在前面。
 _score字段即量化表明查询语句与文档内容的相似性与匹配度，为了更好地显示搜索结果，我们需要深入了解该数值的来源与相关算法">
-<meta property="og:updated_time" content="2017-07-12T07:53:27.000Z">
+<meta property="og:updated_time" content="2017-07-13T05:39:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch相关性">
 <meta name="twitter:description" content="ElasticSearch 相关性1.简介Elasticsearch版本：5.4.2
@@ -455,7 +455,7 @@ _score字段即量化表明查询语句与文档内容的相似性与匹配度�
 <li>docFreq - 所有包含b或c的文档的数量</li>
 <li>termFreq - 如有一次b或c出现，则算双倍次数</li>
 <li>k1 &amp; b - 不变</li>
-<li>fieldLength - 不变</li>
+<li>fieldLength - <del>不变</del> 经测试，目前认为是取同义词中，长度最长的为该文档长度</li>
 <li>avgFieldLength - 每个b或c算双倍大小</li>
 </ul>
 <h3 id="8-DFS-Query-Then-Fetch"><a href="#8-DFS-Query-Then-Fetch" class="headerlink" title="8.DFS Query Then Fetch"></a>8.DFS Query Then Fetch</h3><p>可以全局搜索，当数据量较少时可以使用</p>
@@ -507,8 +507,8 @@ _score字段即量化表明查询语句与文档内容的相似性与匹配度�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/17/Mastering_Social_Media_Mining_with_Python/" rel="next" title="Mastering Social Media Mining wiht Python">
-                <i class="fa fa-chevron-left"></i> Mastering Social Media Mining wiht Python
+              <a href="/2017/07/12/python/" rel="next" title="python练习笔记">
+                <i class="fa fa-chevron-left"></i> python练习笔记
               </a>
             
           </div>
@@ -516,6 +516,10 @@ _score字段即量化表明查询语句与文档内容的相似性与匹配度�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/13/es_gf/" rel="prev" title="ES">
+                ES <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -587,7 +591,7 @@ _score字段即量化表明查询语句与文档内容的相似性与匹配度�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -598,7 +602,7 @@ _score字段即量化表明查询语句与文档内容的相似性与匹配度�
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -609,7 +613,7 @@ _score字段即量化表明查询语句与文档内容的相似性与匹配度�
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
