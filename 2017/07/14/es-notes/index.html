@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="elasticsearch," />
 
 
 
@@ -85,31 +85,28 @@
 
 
 
-<meta name="description" content="获取当前路径
-1234import osprint os.getcwd()/Users/alan/Python Files/Untitled Folder
-计算机CPU数量
-12import multiprocessingprint multiprocessing.cpu_count()
-遍历文件夹的文档
-1234from os import listdirfrom os.path import">
+<meta name="description" content="Elasticsearch 5.5 文档Set up Elasticsearch
+ES目录下config/elasticsearch.yml 是ES的配置文件
+
+配置如下：
+123456789101112# Cluster# 设置cluster的名称cluster.name: my-application# Node# 设置node的名称node.name: node-1# 添加node自定义属性">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python练习笔记">
-<meta property="og:url" content="http://www.pirrla.cn/2017/07/12/python/index.html">
+<meta property="og:title" content="Elasticsearch笔记">
+<meta property="og:url" content="http://www.pirrla.cn/2017/07/14/es-notes/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="获取当前路径
-1234import osprint os.getcwd()/Users/alan/Python Files/Untitled Folder
-计算机CPU数量
-12import multiprocessingprint multiprocessing.cpu_count()
-遍历文件夹的文档
-1234from os import listdirfrom os.path import">
-<meta property="og:updated_time" content="2017-07-12T09:00:54.000Z">
+<meta property="og:description" content="Elasticsearch 5.5 文档Set up Elasticsearch
+ES目录下config/elasticsearch.yml 是ES的配置文件
+
+配置如下：
+123456789101112# Cluster# 设置cluster的名称cluster.name: my-application# Node# 设置node的名称node.name: node-1# 添加node自定义属性">
+<meta property="og:updated_time" content="2017-07-17T02:08:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python练习笔记">
-<meta name="twitter:description" content="获取当前路径
-1234import osprint os.getcwd()/Users/alan/Python Files/Untitled Folder
-计算机CPU数量
-12import multiprocessingprint multiprocessing.cpu_count()
-遍历文件夹的文档
-1234from os import listdirfrom os.path import">
+<meta name="twitter:title" content="Elasticsearch笔记">
+<meta name="twitter:description" content="Elasticsearch 5.5 文档Set up Elasticsearch
+ES目录下config/elasticsearch.yml 是ES的配置文件
+
+配置如下：
+123456789101112# Cluster# 设置cluster的名称cluster.name: my-application# Node# 设置node的名称node.name: node-1# 添加node自定义属性">
 
 
 
@@ -137,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/07/12/python/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/07/14/es-notes/"/>
 
 
 
 
 
-  <title> python练习笔记 | Note down something </title>
+  <title> Elasticsearch笔记 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -272,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/python/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/14/es-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -293,7 +290,7 @@
             
             
               
-                python练习笔记
+                Elasticsearch笔记
               
             
           </h1>
@@ -308,8 +305,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
-                2017-07-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-14T09:28:34+08:00">
+                2017-07-14
               </time>
             
 
@@ -331,8 +328,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">elasticsearch</span>
                   </a>
                 </span>
 
@@ -366,16 +363,32 @@
       
 
       
-        <p><strong>获取当前路径</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
-<p><strong>计算机CPU数量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
-<p><strong>遍历文件夹的文档</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
-<p> <strong>获取当前用户名</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
-<p><strong>获取当前IP地址</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+        <h3 id="Elasticsearch-5-5-文档"><a href="#Elasticsearch-5-5-文档" class="headerlink" title="Elasticsearch 5.5 文档"></a><strong>Elasticsearch 5.5 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank" rel="external">文档</a></strong></h3><h3 id="Set-up-Elasticsearch"><a href="#Set-up-Elasticsearch" class="headerlink" title="Set up Elasticsearch"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html" target="_blank" rel="external">Set up Elasticsearch</a></h3><ul>
+<li>ES目录下config/elasticsearch.yml 是ES的配置文件</li>
+</ul>
+<p>配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Cluster</span></div><div class="line"><span class="comment"># 设置cluster的名称</span></div><div class="line"><span class="string">cluster.name:</span> <span class="string">my-application</span></div><div class="line"><span class="comment"># Node</span></div><div class="line"><span class="comment"># 设置node的名称</span></div><div class="line"><span class="string">node.name:</span> <span class="string">node-1</span></div><div class="line"><span class="comment"># 添加node自定义属性</span></div><div class="line"><span class="string">node.attr.rack:</span> <span class="string">r1</span></div><div class="line"><span class="comment"># 存储数据的路径</span></div><div class="line"><span class="comment"># Path to log files:</span></div><div class="line"><span class="string">path.logs:</span> <span class="string">/path/to/logs</span></div><div class="line"><span class="string">...</span></div></pre></td></tr></table></figure>
+<p>如需要在ES启动时，再输入node名称等信息可以以下配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#text是直接输入数据并显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.text&#125;</span></div><div class="line"><span class="comment">#secret则是输入的数据不会在终端上显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.secret&#125;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Enter value for [node.name]:</div></pre></td></tr></table></figure>
+<p>这样在启动ES时就需要输入名称了。</p>
+<ul>
+<li>ES目录下config/log4j2.properties 是ES的日志配置文件</li>
+</ul>
+<p>注意日志配置文件对多余的<font color="red">空格</font>会解析错误，所以需要保证没有多余的空格。</p>
+<p>基本概念**</p>
+<p>一个cluster是一个或多个node的集合，一个node可以存储index，一个index可以有多个type。</p>
+<p><strong>索引</strong></p>
+<p>不输入id</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自定id</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT /customer/external/2</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>更新数据</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/1/_update</div><div class="line">&#123;</div><div class="line">  "script" : "ctx._source.age += 5"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Note that as of this writing, updates can only be performed on a single document at a time. In the future, Elasticsearch might provide the ability to update multiple documents given a query condition (like an <code>SQL UPDATE-WHERE</code> statement).</p>
+<p><strong>批量操作</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/_bulk</div><div class="line">&#123;"update":&#123;"_id":"1"&#125;&#125;</div><div class="line">&#123;"doc": &#123; "name": "John Doe becomes Jane Doe" &#125; &#125;</div><div class="line">&#123;"delete":&#123;"_id":"2"&#125;&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/date-math-index-names.html" target="_blank" rel="external">批量操作日期格式的index</a></p>
 
       
     </div>
@@ -405,7 +418,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
           
         </div>
       
@@ -418,8 +431,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/17/Mastering_Social_Media_Mining_with_Python/" rel="next" title="Mastering Social Media Mining wiht Python">
-                <i class="fa fa-chevron-left"></i> Mastering Social Media Mining wiht Python
+              <a href="/2017/07/13/es_stocks/" rel="next" title="Elasticsearch股票分析">
+                <i class="fa fa-chevron-left"></i> Elasticsearch股票分析
               </a>
             
           </div>
@@ -427,10 +440,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/12/Elasticsearch相关性/" rel="prev" title="Elasticsearch相关性">
-                Elasticsearch相关性 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -477,8 +486,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
@@ -493,7 +511,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -551,6 +569,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Elasticsearch-5-5-文档"><span class="nav-number">1.</span> <span class="nav-text">Elasticsearch 5.5 文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-up-Elasticsearch"><span class="nav-number">2.</span> <span class="nav-text">Set up Elasticsearch</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

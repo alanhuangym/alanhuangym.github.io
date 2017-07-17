@@ -89,17 +89,17 @@
 股票数据来源来自于东方财富网。
 1234567891011121314import requestsfrom bs4 import BeautifulSoup#用两个列表分别存储上证和深证各支股票的信息sh = []sz = []with r">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ES">
-<meta property="og:url" content="http://www.pirrla.cn/2017/07/13/es_gf/index.html">
+<meta property="og:title" content="Elasticsearch股票分析">
+<meta property="og:url" content="http://www.pirrla.cn/2017/07/13/es_stocks/index.html">
 <meta property="og:site_name" content="Note down something">
 <meta property="og:description" content="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。
 股票数据来源来自于东方财富网。
 1234567891011121314import requestsfrom bs4 import BeautifulSoup#用两个列表分别存储上证和深证各支股票的信息sh = []sz = []with r">
 <meta property="og:image" content="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png">
 <meta property="og:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
-<meta property="og:updated_time" content="2017-07-13T08:53:30.000Z">
+<meta property="og:updated_time" content="2017-07-14T06:25:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ES">
+<meta name="twitter:title" content="Elasticsearch股票分析">
 <meta name="twitter:description" content="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。
 股票数据来源来自于东方财富网。
 1234567891011121314import requestsfrom bs4 import BeautifulSoup#用两个列表分别存储上证和深证各支股票的信息sh = []sz = []with r">
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/07/13/es_gf/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/07/13/es_stocks/"/>
 
 
 
 
 
-  <title> ES | Note down something </title>
+  <title> Elasticsearch股票分析 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -266,7 +266,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/13/es_gf/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/13/es_stocks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -287,7 +287,7 @@
             
             
               
-                ES
+                Elasticsearch股票分析
               
             
           </h1>
@@ -364,9 +364,9 @@
 <p>股票数据来源来自于<a href="http://quote.eastmoney.com/stocklist.html" target="_blank" rel="external">东方财富网</a>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="comment">#用两个列表分别存储上证和深证各支股票的信息</span></div><div class="line">sh = []</div><div class="line">sz = []</div><div class="line"><span class="keyword">with</span> requests.Session() <span class="keyword">as</span> s:</div><div class="line">    html = s.get(<span class="string">r'http://quote.eastmoney.com/stocklist.html'</span>)</div><div class="line">    soup = BeautifulSoup(html.content, <span class="string">'lxml'</span>)</div><div class="line">    sh_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">7</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sh_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sh.append(i.a.text)</div><div class="line">    sz_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">8</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sz_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sz.append(i.a.text)</div></pre></td></tr></table></figure>
 <p>输出的本文结果为如下格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头&lt;font color=red&gt;etf&lt;/font&gt;</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头etf</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
 <p><img src="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png" alt=""></p>
-<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法，所以需要在拓展词库中添加全部股票名称。</p>
+<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法检索到，所以需要在拓展词库中添加全部股票名称。</p>
 <p>其中，由于用户输入一般是忽略大小写的，为了方便用户能够输入大小写都能匹配到股票信息，我们将拓展词典、同义词词典的股票名称信息都更改为小写，这样无论用户输入大写还是小写都能匹配到股票。</p>
 <p><del>暂时没有找到关闭 filter <em> 号的方法，所以搜索不了 </em>stXX股票</del></p>
 <p><del>有没有可能去除st等标记，因标记是在原股票名称前添加，不改变原股票名称</del></p>
@@ -429,7 +429,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/12/Elasticsearch相关性/" rel="next" title="Elasticsearch相关性">
+              <a href="/2017/07/12/es_similarity/" rel="next" title="Elasticsearch相关性">
                 <i class="fa fa-chevron-left"></i> Elasticsearch相关性
               </a>
             
@@ -438,6 +438,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/14/es-notes/" rel="prev" title="Elasticsearch笔记">
+                Elasticsearch笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -509,7 +513,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

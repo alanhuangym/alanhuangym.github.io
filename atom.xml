@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-07-13T08:53:30.000Z</updated>
+  <updated>2017-07-17T02:08:37.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -16,19 +16,67 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ES</title>
-    <link href="http://www.pirrla.cn/2017/07/13/es_gf/"/>
-    <id>http://www.pirrla.cn/2017/07/13/es_gf/</id>
+    <title>Elasticsearch笔记</title>
+    <link href="http://www.pirrla.cn/2017/07/14/es-notes/"/>
+    <id>http://www.pirrla.cn/2017/07/14/es-notes/</id>
+    <published>2017-07-14T01:28:34.000Z</published>
+    <updated>2017-07-17T02:08:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Elasticsearch-5-5-文档"><a href="#Elasticsearch-5-5-文档" class="headerlink" title="Elasticsearch 5.5 文档"></a><strong>Elasticsearch 5.5 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank" rel="external">文档</a></strong></h3><h3 id="Set-up-Elasticsearch"><a href="#Set-up-Elasticsearch" class="headerlink" title="Set up Elasticsearch"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html" target="_blank" rel="external">Set up Elasticsearch</a></h3><ul>
+<li>ES目录下config/elasticsearch.yml 是ES的配置文件</li>
+</ul>
+<p>配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Cluster</span></div><div class="line"><span class="comment"># 设置cluster的名称</span></div><div class="line"><span class="string">cluster.name:</span> <span class="string">my-application</span></div><div class="line"><span class="comment"># Node</span></div><div class="line"><span class="comment"># 设置node的名称</span></div><div class="line"><span class="string">node.name:</span> <span class="string">node-1</span></div><div class="line"><span class="comment"># 添加node自定义属性</span></div><div class="line"><span class="string">node.attr.rack:</span> <span class="string">r1</span></div><div class="line"><span class="comment"># 存储数据的路径</span></div><div class="line"><span class="comment"># Path to log files:</span></div><div class="line"><span class="string">path.logs:</span> <span class="string">/path/to/logs</span></div><div class="line"><span class="string">...</span></div></pre></td></tr></table></figure>
+<p>如需要在ES启动时，再输入node名称等信息可以以下配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#text是直接输入数据并显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.text&#125;</span></div><div class="line"><span class="comment">#secret则是输入的数据不会在终端上显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.secret&#125;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Enter value for [node.name]:</div></pre></td></tr></table></figure>
+<p>这样在启动ES时就需要输入名称了。</p>
+<ul>
+<li>ES目录下config/log4j2.properties 是ES的日志配置文件</li>
+</ul>
+<p>注意日志配置文件对多余的<font color="red">空格</font>会解析错误，所以需要保证没有多余的空格。</p>
+<p>基本概念**</p>
+<p>一个cluster是一个或多个node的集合，一个node可以存储index，一个index可以有多个type。</p>
+<p><strong>索引</strong></p>
+<p>不输入id</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自定id</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT /customer/external/2</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>更新数据</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/1/_update</div><div class="line">&#123;</div><div class="line">  "script" : "ctx._source.age += 5"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Note that as of this writing, updates can only be performed on a single document at a time. In the future, Elasticsearch might provide the ability to update multiple documents given a query condition (like an <code>SQL UPDATE-WHERE</code> statement).</p>
+<p><strong>批量操作</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/_bulk</div><div class="line">&#123;"update":&#123;"_id":"1"&#125;&#125;</div><div class="line">&#123;"doc": &#123; "name": "John Doe becomes Jane Doe" &#125; &#125;</div><div class="line">&#123;"delete":&#123;"_id":"2"&#125;&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/date-math-index-names.html" target="_blank" rel="external">批量操作日期格式的index</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Elasticsearch-5-5-文档&quot;&gt;&lt;a href=&quot;#Elasticsearch-5-5-文档&quot; class=&quot;headerlink&quot; title=&quot;Elasticsearch 5.5 文档&quot;&gt;&lt;/a&gt;&lt;strong&gt;Elasticsearch 5.5 
+    
+    </summary>
+    
+      <category term="elasticsearch" scheme="http://www.pirrla.cn/categories/elasticsearch/"/>
+    
+    
+      <category term="elasticsearch" scheme="http://www.pirrla.cn/tags/elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Elasticsearch股票分析</title>
+    <link href="http://www.pirrla.cn/2017/07/13/es_stocks/"/>
+    <id>http://www.pirrla.cn/2017/07/13/es_stocks/</id>
     <published>2017-07-12T16:00:00.000Z</published>
-    <updated>2017-07-13T08:53:30.000Z</updated>
+    <updated>2017-07-14T06:25:25.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"><a href="#1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）" class="headerlink" title="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"></a>1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）</h3><p>首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。</p>
 <p>股票数据来源来自于<a href="http://quote.eastmoney.com/stocklist.html" target="_blank" rel="external">东方财富网</a>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="comment">#用两个列表分别存储上证和深证各支股票的信息</span></div><div class="line">sh = []</div><div class="line">sz = []</div><div class="line"><span class="keyword">with</span> requests.Session() <span class="keyword">as</span> s:</div><div class="line">    html = s.get(<span class="string">r'http://quote.eastmoney.com/stocklist.html'</span>)</div><div class="line">    soup = BeautifulSoup(html.content, <span class="string">'lxml'</span>)</div><div class="line">    sh_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">7</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sh_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sh.append(i.a.text)</div><div class="line">    sz_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">8</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sz_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sz.append(i.a.text)</div></pre></td></tr></table></figure>
 <p>输出的本文结果为如下格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头&lt;font color=red&gt;etf&lt;/font&gt;</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头etf</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
 <p><img src="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png" alt=""></p>
-<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法，所以需要在拓展词库中添加全部股票名称。</p>
+<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法检索到，所以需要在拓展词库中添加全部股票名称。</p>
 <p>其中，由于用户输入一般是忽略大小写的，为了方便用户能够输入大小写都能匹配到股票信息，我们将拓展词典、同义词词典的股票名称信息都更改为小写，这样无论用户输入大写还是小写都能匹配到股票。</p>
 <p><del>暂时没有找到关闭 filter <em> 号的方法，所以搜索不了 </em>stXX股票</del></p>
 <p><del>有没有可能去除st等标记，因标记是在原股票名称前添加，不改变原股票名称</del></p>
@@ -66,10 +114,10 @@
   
   <entry>
     <title>Elasticsearch相关性</title>
-    <link href="http://www.pirrla.cn/2017/07/12/Elasticsearch%E7%9B%B8%E5%85%B3%E6%80%A7/"/>
-    <id>http://www.pirrla.cn/2017/07/12/Elasticsearch相关性/</id>
+    <link href="http://www.pirrla.cn/2017/07/12/es_similarity/"/>
+    <id>http://www.pirrla.cn/2017/07/12/es_similarity/</id>
     <published>2017-07-11T16:00:00.000Z</published>
-    <updated>2017-07-13T05:39:07.000Z</updated>
+    <updated>2017-07-14T00:55:20.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="ElasticSearch-相关性"><a href="#ElasticSearch-相关性" class="headerlink" title="ElasticSearch 相关性"></a>ElasticSearch 相关性</h1><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>Elasticsearch版本：5.4.2</p>
 <p>Kibana版本：5.4.2</p>
@@ -189,11 +237,11 @@
   </entry>
   
   <entry>
-    <title>python练习笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/12/python/"/>
-    <id>http://www.pirrla.cn/2017/07/12/python/</id>
+    <title>Python练习笔记</title>
+    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
+    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
     <published>2017-07-11T16:00:00.000Z</published>
-    <updated>2017-07-12T09:00:54.000Z</updated>
+    <updated>2017-07-14T00:55:31.000Z</updated>
     
     <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
