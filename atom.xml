@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-07-17T02:08:37.000Z</updated>
+  <updated>2017-08-04T02:08:20.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -16,16 +16,119 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>2</title>
+    <link href="http://www.pirrla.cn/2017/08/04/2/"/>
+    <id>http://www.pirrla.cn/2017/08/04/2/</id>
+    <published>2017-08-04T02:08:20.000Z</published>
+    <updated>2017-08-04T02:08:20.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ES输入设置</title>
+    <link href="http://www.pirrla.cn/2017/08/03/es_input/"/>
+    <id>http://www.pirrla.cn/2017/08/03/es_input/</id>
+    <published>2017-08-03T02:31:08.000Z</published>
+    <updated>2017-08-03T08:16:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="PDF"><a href="#PDF" class="headerlink" title="PDF"></a>PDF</h1><h3 id="1-安装PDFMiner"><a href="#1-安装PDFMiner" class="headerlink" title="1.安装PDFMiner"></a>1.安装PDFMiner</h3><p>从<a href="http://www.unixuser.org/~euske/python/pdfminer/" target="_blank" rel="external">官网</a>上下载源安装包。</p>
+<p>通过命令行，运行安装安装包。(注意需要到解压后安装包的根目录)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python setup.py install</div></pre></td></tr></table></figure>
+<p>测试是否安装成功，可以紧接着运行以下的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pdf2txt.py samples/simple1.pdf</div></pre></td></tr></table></figure>
+<p>如果能读取PDF内容则安装成功。</p>
+<p>如果是中文、韩文、日文等特殊文字PDF，则需要额外安装特殊文字补充包。</p>
+<p>紧接着上述的安装程序，也是在根目录下运行以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ make cmap</div><div class="line">...</div><div class="line">$ python setup.py install</div></pre></td></tr></table></figure>
+<p>运行完这两行之后，则可以正常运行PDFMiner了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="comment">#-*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> pdfminer.converter <span class="keyword">import</span> PDFPageAggregator</div><div class="line"><span class="keyword">from</span> pdfminer.pdfparser <span class="keyword">import</span> PDFParser</div><div class="line"><span class="keyword">from</span> pdfminer.pdfdocument <span class="keyword">import</span> PDFDocument</div><div class="line"><span class="keyword">from</span> pdfminer.pdfpage <span class="keyword">import</span> PDFPage</div><div class="line"><span class="keyword">from</span> pdfminer.pdfpage <span class="keyword">import</span> PDFTextExtractionNotAllowed</div><div class="line"><span class="keyword">from</span> pdfminer.pdfinterp <span class="keyword">import</span> PDFResourceManager</div><div class="line"><span class="keyword">from</span> pdfminer.pdfinterp <span class="keyword">import</span> PDFPageInterpreter</div><div class="line"><span class="keyword">from</span> pdfminer.layout <span class="keyword">import</span> *</div><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line"><span class="comment">#打开一个pdf文件</span></div><div class="line">fp = open(<span class="string">u'F:\\pdf\\2013\\000001_平安银行_2013年年度报告_2562.pdf'</span>, <span class="string">'rb'</span>)</div><div class="line"><span class="comment">#创建一个PDF文档解析器对象</span></div><div class="line">parser = PDFParser(fp)</div><div class="line"><span class="comment">#创建一个PDF文档对象存储文档结构</span></div><div class="line"><span class="comment">#提供密码初始化，没有就不用传该参数</span></div><div class="line"><span class="comment">#document = PDFDocument(parser, password)</span></div><div class="line">document = PDFDocument(parser)</div><div class="line"><span class="comment">#检查文件是否允许文本提取</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> document.is_extractable:</div><div class="line">    <span class="keyword">raise</span> PDFTextExtractionNotAllowed</div><div class="line"><span class="comment">#创建一个PDF资源管理器对象来存储共享资源</span></div><div class="line"><span class="comment">#caching = False不缓存</span></div><div class="line">rsrcmgr = PDFResourceManager(caching = <span class="keyword">False</span>)</div><div class="line"><span class="comment"># 创建一个PDF设备对象</span></div><div class="line">laparams = LAParams()</div><div class="line"><span class="comment"># 创建一个PDF页面聚合对象</span></div><div class="line">device = PDFPageAggregator(rsrcmgr, laparams=laparams)</div><div class="line"><span class="comment">#创建一个PDF解析器对象</span></div><div class="line">interpreter = PDFPageInterpreter(rsrcmgr, device)</div><div class="line"><span class="comment">#处理文档当中的每个页面</span></div><div class="line"></div><div class="line"><span class="comment"># doc.get_pages() 获取page列表</span></div><div class="line"><span class="comment">#for i, page in enumerate(document.get_pages()):</span></div><div class="line"><span class="comment">#PDFPage.create_pages(document) 获取page列表的另一种方式</span></div><div class="line">replace=re.compile(<span class="string">r'\s+'</span>);</div><div class="line"><span class="comment"># 循环遍历列表，每次处理一个page的内容</span></div><div class="line"><span class="keyword">for</span> page <span class="keyword">in</span> PDFPage.create_pages(document):</div><div class="line">    interpreter.process_page(page)</div><div class="line">    <span class="comment"># 接受该页面的LTPage对象</span></div><div class="line">    layout=device.get_result()</div><div class="line">    <span class="comment"># 这里layout是一个LTPage对象 里面存放着 这个page解析出的各种对象</span></div><div class="line">    <span class="comment"># 一般包括LTTextBox, LTFigure, LTImage, LTTextBoxHorizontal 等等</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> layout:</div><div class="line">        <span class="comment">#如果x是水平文本对象的话</span></div><div class="line">        <span class="keyword">if</span>(isinstance(x,LTTextBoxHorizontal)):</div><div class="line">            text=re.sub(replace,<span class="string">''</span>,x.get_text())</div><div class="line">            <span class="keyword">if</span> len(text)!=<span class="number">0</span>:</div><div class="line">                <span class="keyword">print</span> text</div></pre></td></tr></table></figure>
+<h1 id="DOC-amp-DOCX"><a href="#DOC-amp-DOCX" class="headerlink" title="DOC&amp;DOCX"></a>DOC&amp;DOCX</h1><p>pip install python-docx</p>
+<p>安装第三方库<a href="https://python-docx.readthedocs.io/" target="_blank" rel="external">python-docx</a></p>
+<p>直接使用可以读取.docx文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</div><div class="line">doc = Document(<span class="string">r'/Users/alan/Downloads/123.docx'</span>)</div><div class="line">para = doc.paragraphs</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> para:</div><div class="line">    <span class="keyword">print</span> i.text</div></pre></td></tr></table></figure>
+<p>.doc好像暂时还没方法读取</p>
+<h1 id="PPTX"><a href="#PPTX" class="headerlink" title="PPTX"></a>PPTX</h1><p>pip install python-pptx</p>
+<p>安装第三方库<a href="https://python-pptx.readthedocs.io/en/latest/index.html" target="_blank" rel="external">python-pptx</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pptx <span class="keyword">import</span> Presentation</div><div class="line">ppt = Presentation(<span class="string">'1.pptx'</span>)</div><div class="line">text_runs = []</div><div class="line"></div><div class="line"><span class="keyword">for</span> slide <span class="keyword">in</span> prs.slides:</div><div class="line">    <span class="keyword">for</span> shape <span class="keyword">in</span> slide.shapes:</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> shape.has_text_frame:</div><div class="line">            <span class="keyword">continue</span></div><div class="line">        <span class="keyword">for</span> paragraph <span class="keyword">in</span> shape.text_frame.paragraphs:</div><div class="line">            <span class="keyword">for</span> run <span class="keyword">in</span> paragraph.runs:</div><div class="line">                text_runs.append(run.text)</div><div class="line"><span class="keyword">print</span> text_runs</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;PDF&quot;&gt;&lt;a href=&quot;#PDF&quot; class=&quot;headerlink&quot; title=&quot;PDF&quot;&gt;&lt;/a&gt;PDF&lt;/h1&gt;&lt;h3 id=&quot;1-安装PDFMiner&quot;&gt;&lt;a href=&quot;#1-安装PDFMiner&quot; class=&quot;headerlink&quot; titl
+    
+    </summary>
+    
+      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Javascript学习笔记</title>
+    <link href="http://www.pirrla.cn/2017/07/21/js_notes/"/>
+    <id>http://www.pirrla.cn/2017/07/21/js_notes/</id>
+    <published>2017-07-21T08:36:48.000Z</published>
+    <updated>2017-07-24T06:21:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>JavaScript不区分整数和浮点数，统一用Number表示</p>
+<p>JavaScript 大小写敏感</p>
+<p>用  // 和 /<em> </em>/ 做注释</p>
+<p>&amp;&amp; 与运算 ||或运算</p>
+<p>==比较，会自动转换类型 ， === 比较不会转换类型，不同类型false</p>
+<p>NaN 不与其他数值相等，判断非数值用isNaN()</p>
+<p>js 用null 表空值</p>
+<p>js 列表[] 可以由多种不同类型的数值</p>
+<p>pop and push 对列表的尾部进行操作</p>
+<p>unshift给列表头添加数据，shift = pop 头部版</p>
+<p>splice 对列表各种操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">'Microsoft'</span>, <span class="string">'Apple'</span>, <span class="string">'Yahoo'</span>, <span class="string">'AOL'</span>, <span class="string">'Excite'</span>, <span class="string">'Oracle'</span>];</div><div class="line"><span class="comment">// 从索引2开始删除3个元素,然后再添加两个元素:</span></div><div class="line">arr.splice(<span class="number">2</span>, <span class="number">3</span>, <span class="string">'Google'</span>, <span class="string">'Facebook'</span>); <span class="comment">// 返回删除的元素 ['Yahoo', 'AOL', 'Excite']</span></div><div class="line">arr; <span class="comment">// ['Microsoft', 'Apple', 'Google', 'Facebook', 'Oracle']</span></div><div class="line"><span class="comment">// 只删除,不添加:</span></div><div class="line">arr.splice(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// ['Google', 'Facebook']</span></div><div class="line">arr; <span class="comment">// ['Microsoft', 'Apple', 'Oracle']</span></div><div class="line"><span class="comment">// 只添加,不删除:</span></div><div class="line">arr.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="string">'Google'</span>, <span class="string">'Facebook'</span>); <span class="comment">// 返回[],因为没有删除任何元素</span></div><div class="line">arr; <span class="comment">// ['Microsoft', 'Apple', 'Google', 'Facebook', 'Oracle']</span></div></pre></td></tr></table></figure>
+<p>新浏览器才能用map和set</p>
+<p>将所有数值绑定到一个全局变量中，这样避免命名空间重用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 唯一的全局变量MYAPP:</span></div><div class="line"><span class="keyword">var</span> MYAPP = &#123;&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 其他变量:</span></div><div class="line">MYAPP.name = <span class="string">'myapp'</span>;</div><div class="line">MYAPP.version = <span class="number">1.0</span>;</div><div class="line"></div><div class="line"><span class="comment">// 其他函数:</span></div><div class="line">MYAPP.foo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'foo'</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>for (xxx of xxx) { } 遍历用</p>
+<p>构造原型</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//原型函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">std</span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.name = std.name || <span class="string">"xiaoming"</span>;</div><div class="line">  <span class="keyword">this</span>.grade = std.grade || <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//定义公用函数</span></div><div class="line">Student.prototype.hello()&#123;</div><div class="line">  alert(<span class="string">"Hello, "</span>+<span class="keyword">this</span>.name+<span class="string">"!"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//定义构造函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createStudent</span>(<span class="params">std</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Student(std || &#123;&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有class但是很多浏览器不支持</p>
+<p>要加载一个新页面，可以调用<code>location.assign()</code>。如果要重新加载当前页面，调用<code>location.reload()</code>方法非常方便。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;JavaScript不区分整数和浮点数，统一用Number表示&lt;/p&gt;
+&lt;p&gt;JavaScript 大小写敏感&lt;/p&gt;
+&lt;p&gt;用  // 和 /&lt;em&gt; &lt;/em&gt;/ 做注释&lt;/p&gt;
+&lt;p&gt;&amp;amp;&amp;amp; 与运算 ||或运算&lt;/p&gt;
+&lt;p&gt;==比较，会自动转换类型 ，
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://www.pirrla.cn/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://www.pirrla.cn/tags/javascript/"/>
+    
+      <category term="node.js" scheme="http://www.pirrla.cn/tags/node-js/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Elasticsearch笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/14/es-notes/"/>
-    <id>http://www.pirrla.cn/2017/07/14/es-notes/</id>
+    <link href="http://www.pirrla.cn/2017/07/14/es_notes/"/>
+    <id>http://www.pirrla.cn/2017/07/14/es_notes/</id>
     <published>2017-07-14T01:28:34.000Z</published>
-    <updated>2017-07-17T02:08:37.000Z</updated>
+    <updated>2017-07-21T08:36:27.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Elasticsearch-5-5-文档"><a href="#Elasticsearch-5-5-文档" class="headerlink" title="Elasticsearch 5.5 文档"></a><strong>Elasticsearch 5.5 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank" rel="external">文档</a></strong></h3><h3 id="Set-up-Elasticsearch"><a href="#Set-up-Elasticsearch" class="headerlink" title="Set up Elasticsearch"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html" target="_blank" rel="external">Set up Elasticsearch</a></h3><ul>
 <li>ES目录下config/elasticsearch.yml 是ES的配置文件</li>
 </ul>
-<p>配置如下：</p>
+<p>配置如下：详细设置看<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html" target="_blank" rel="external">这里</a></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Cluster</span></div><div class="line"><span class="comment"># 设置cluster的名称</span></div><div class="line"><span class="string">cluster.name:</span> <span class="string">my-application</span></div><div class="line"><span class="comment"># Node</span></div><div class="line"><span class="comment"># 设置node的名称</span></div><div class="line"><span class="string">node.name:</span> <span class="string">node-1</span></div><div class="line"><span class="comment"># 添加node自定义属性</span></div><div class="line"><span class="string">node.attr.rack:</span> <span class="string">r1</span></div><div class="line"><span class="comment"># 存储数据的路径</span></div><div class="line"><span class="comment"># Path to log files:</span></div><div class="line"><span class="string">path.logs:</span> <span class="string">/path/to/logs</span></div><div class="line"><span class="string">...</span></div></pre></td></tr></table></figure>
 <p>如需要在ES启动时，再输入node名称等信息可以以下配置：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#text是直接输入数据并显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.text&#125;</span></div><div class="line"><span class="comment">#secret则是输入的数据不会在终端上显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.secret&#125;</span></div></pre></td></tr></table></figure>
@@ -35,6 +138,278 @@
 <li>ES目录下config/log4j2.properties 是ES的日志配置文件</li>
 </ul>
 <p>注意日志配置文件对多余的<font color="red">空格</font>会解析错误，所以需要保证没有多余的空格。</p>
+<h3 id="Set-up-X-Pack"><a href="#Set-up-X-Pack" class="headerlink" title="Set up X-Pack"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html" target="_blank" rel="external">Set up X-Pack</a></h3><h3 id="API-Conventions"><a href="#API-Conventions" class="headerlink" title="API Conventions"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/api-conventions.html" target="_blank" rel="external">API Conventions</a></h3><h5 id="Multiple-Indices"><a href="#Multiple-Indices" class="headerlink" title="Multiple Indices"></a>Multiple Indices</h5><p>后文所用的API基本都涉及到<strong>索引名称</strong></p>
+<ul>
+<li>_all 指所有的索引</li>
+<li>索引名称同时支持通配符，如test<em>,te\</em>t</li>
+<li>索引名称还支持筛选，如+test*,-test3</li>
+</ul>
+<p>包含多个索引操作的API支持以下参数：</p>
+<ul>
+<li>ignore_unavailable - 是否忽略索引如索引名称不存在</li>
+<li>allow_no_indices - 当通配符匹配失败后，是否整条request都失败</li>
+<li>expand_wildcards - open/close 设置通配符匹配的索引的开关状态</li>
+</ul>
+<h5 id="Date-math-support-in-index-names"><a href="#Date-math-support-in-index-names" class="headerlink" title="Date math support in index names"></a>Date math support in index names</h5><p>如果需要根据日期去匹配索引，可以使用以下通配符：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;static_name&#123;date_math_expr&#123;date_format|time_zone&#125;&#125;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>static_name - 固定的文字部分</li>
+<li>date_math_expr - 日期表达式，通常使用now/d</li>
+<li>date_format - 日期的显示格式</li>
+<li>time_zone - 时区</li>
+</ul>
+<p>例子：</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Resolves to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;logstash-{now/d}&gt;</code></td>
+<td><code>logstash-2024.03.22</code></td>
+</tr>
+<tr>
+<td><code>&lt;logstash-{now/M}&gt;</code></td>
+<td><code>logstash-2024.03.01</code></td>
+</tr>
+<tr>
+<td><code>&lt;logstash-{now/M{YYYY.MM}}&gt;</code></td>
+<td><code>logstash-2024.03</code></td>
+</tr>
+<tr>
+<td><code>&lt;logstash-{now/M-1M{YYYY.MM}}&gt;</code></td>
+<td><code>logstash-2024.02</code></td>
+</tr>
+<tr>
+<td>`&lt;logstash-{now/d{YYYY.MM.dd</td>
+<td>+12:00}}&gt;`</td>
+<td><code>logstash-2024.03.23</code></td>
+</tr>
+</tbody>
+</table>
+<p>其中，由于url需要进行标准化，所以需要对符号进行百分号化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># GET /&lt;logstash-&#123;now/d&#125;&gt;/_search</div><div class="line">GET /%3Clogstash-%7Bnow%2Fd%7D%3E/_search</div><div class="line">&#123;</div><div class="line">  &quot;query&quot; : &#123;</div><div class="line">    &quot;match&quot;: &#123;</div><div class="line">      &quot;test&quot;: &quot;data&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>百分号编码如下：</p>
+<table>
+<thead>
+<tr>
+<th><code>&lt;</code></th>
+<th><code>%3C</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>%3E</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td><code>%2F</code></td>
+</tr>
+<tr>
+<td><code>{</code></td>
+<td><code>%7B</code></td>
+</tr>
+<tr>
+<td><code>}</code></td>
+<td><code>%7D</code></td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td><code>%7C</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td><code>%2B</code></td>
+</tr>
+<tr>
+<td><code>:</code></td>
+<td><code>%3A</code></td>
+</tr>
+<tr>
+<td><code>,</code></td>
+<td><code>%2C</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="Common-options"><a href="#Common-options" class="headerlink" title="Common options"></a>Common options</h5><ul>
+<li>美化输出，可以使用 <code>?pretty=true</code>参数</li>
+<li>为了将时间、大小（1h,1kb）等变得可读，可以使用<code>?human=true</code>参数</li>
+<li>日期时间</li>
+<li><ul>
+<li>+1h = 加一小时</li>
+<li>-1d = 减一天</li>
+<li>/d = 取整最近的一天</li>
+</ul>
+</li>
+</ul>
+<p>具体的日期表达式如下：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>代表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>y</code></td>
+<td>years</td>
+</tr>
+<tr>
+<td><code>M</code></td>
+<td>months</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>weeks</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>days</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td>hours</td>
+</tr>
+<tr>
+<td><code>H</code></td>
+<td>hours</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>minutes</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>seconds</td>
+</tr>
+<tr>
+<td><code>ms</code></td>
+<td>milliseconds</td>
+</tr>
+<tr>
+<td><code>micros</code></td>
+<td>microseconds</td>
+</tr>
+<tr>
+<td><code>nanos</code></td>
+<td>nanoseconds</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>错误回溯，可以使用<code>?error_trace=true</code>参数</li>
+</ul>
+<h3 id="Document-APIs"><a href="#Document-APIs" class="headerlink" title="Document APIs"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html" target="_blank" rel="external">Document APIs</a></h3><h5 id="Reading-and-Writing-documents"><a href="#Reading-and-Writing-documents" class="headerlink" title="Reading and Writing documents"></a>Reading and Writing documents</h5><p><strong>基础写操作</strong>：</p>
+<p>首先，每一个索引操作来到ES都会首先被送去不同的复制组（复制组指的是ES内含有很多的分片，包括主分片和主分片的复制分片，每一个主分片和其复制分片构成一个复制组）。而分组方法，则是通过路由（路由一般指将文档的ID进行哈希操作，从而根据结果分配到不同的复制组中）分配到不同的复制组中。</p>
+<p>进入到一个复制组中，操作将会发送给主分片，主分片将进行以下操作：</p>
+<ol>
+<li>验证来到的操作，如操作非法则拒绝此操作；</li>
+<li>在主分片内进行本地操作，这同样会检查数值域的合法性，如果非法也会拒绝操作；</li>
+<li>转发这个操作至复制组中的复制分片，这个操作将是平行进行的；</li>
+<li>当整个复制组的复制分片都已经完成了操作，将会通知主分片，主分片将会通知客户端操作的完成性。</li>
+</ol>
+<p>失败处理：</p>
+<ul>
+<li>当主分片崩溃了，主持节点将会将一个复制分片提升为主分片</li>
+<li>当主分片转发操作给复制分片时，将会检查自己是否还是主分片，否则将造成数据不同步</li>
+<li>当主分片转发操作给复制分片，但复制分片崩溃了，主分片将会对master节点进行报告，同时会开始进行新的复制分片的制作流程</li>
+</ul>
+<p><strong>基础读操作</strong></p>
+<p>读操作相对于写操作来说，将轻量很多。</p>
+<p>当一个节点解说道了读操作，节点将操作转发到该操作的相关分片中，对应的分片将对该操作负责，不需要一定要主分片进行操作：</p>
+<ol>
+<li>解析读操作，并转发给相关的复制组；</li>
+<li>从复制组选择任一活动的分片，主分片或复制分片都可以；</li>
+<li>将分片领域的操作进行执行；</li>
+<li>将结果进行汇总，并呈献给客户端。</li>
+</ol>
+<p><del>待续。待继续整理</del>。</p>
+<h5 id="Index-API"><a href="#Index-API" class="headerlink" title="Index API"></a>Index API</h5><p>基础操作</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">PUT twitter/tweet/1</div><div class="line">&#123;</div><div class="line">    "user" : "kimchy",</div><div class="line">    "post_date" : "2009-11-15T14:12:12",</div><div class="line">    "message" : "trying out Elasticsearch"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当该索引不存在时，系统会自动创建索引，并且自动设置mapping。如不想要系统自动创建索引，那么可以将参数<code>action.auto_create_index</code>设置为<code>false</code>。</p>
+<p>同时，如果不希望自动设置mapping(设置各个域的数值类型和分析器等参数)，可以在索引创建时设置settings<code>index.mapper.dynamic</code>设置为<code>false</code>。</p>
+<p>版本控制</p>
+<p>每一次创建文档成功，文档将会自带一个<code>version</code>字段。通过该字段的控制，则可以实现版本控制。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT twitter/tweet/1?version=2</div><div class="line">&#123;</div><div class="line">    "message" : "elasticsearch now has versioning support, double cool!"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当需要系统自动创建文档ID时可以使用<strong>POST</strong>方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST twitter/tweet/</div><div class="line">&#123;</div><div class="line">    "user" : "kimchy",</div><div class="line">    "post_date" : "2009-11-15T14:12:12",</div><div class="line">    "message" : "trying out Elasticsearch"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>======================================================</p>
+<p>以下为简单笔记</p>
+<p>GET 获取信息，HEAD检测是否存在。</p>
+<p>批量搜索删除</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">POST twitter/_delete_by_query</div><div class="line">&#123;</div><div class="line">  "query": &#123; </div><div class="line">    "match": &#123;</div><div class="line">      "message": "some message"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>更新数据</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">POST test/type1/1/_update</div><div class="line">&#123;</div><div class="line">    "script" : &#123;</div><div class="line">        "inline": "ctx._source.counter += params.count",</div><div class="line">        "lang": "painless",</div><div class="line">        "params" : &#123;</div><div class="line">            "count" : 4</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>批量筛选更新：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">POST twitter/_update_by_query</div><div class="line">&#123;</div><div class="line">  "script": &#123;</div><div class="line">    "inline": "ctx._source.likes++",</div><div class="line">    "lang": "painless"</div><div class="line">  &#125;,</div><div class="line">  "query": &#123;</div><div class="line">    "term": &#123;</div><div class="line">      "user": "kimchy"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>reindex</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">POST _reindex</div><div class="line">&#123;</div><div class="line">  "source": &#123;</div><div class="line">    "index": "twitter",</div><div class="line">    "type": "tweet",</div><div class="line">    "query": &#123;</div><div class="line">      "term": &#123;</div><div class="line">        "user": "kimchy"</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  "dest": &#123;</div><div class="line">    "index": "new_twitter"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>完整的source_filter 支持通配符</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "_source": &#123;</div><div class="line">        "includes": [ "obj1.*", "obj2.*" ],</div><div class="line">        "excludes": [ "*.description" ]</div><div class="line">    &#125;,</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自定义字段，并输出</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "match_all": &#123;&#125;</div><div class="line">    &#125;,</div><div class="line">    "script_fields" : &#123;</div><div class="line">        "test1" : &#123;</div><div class="line">            "script" : &#123;</div><div class="line">                "lang": "painless",</div><div class="line">                "inline": "doc['my_field_name'].value * 2"</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        "test2" : &#123;</div><div class="line">            "script" : &#123;</div><div class="line">                "lang": "painless",</div><div class="line">                "inline": "doc['my_field_name'].value * factor",</div><div class="line">                "params" : &#123;</div><div class="line">                    "factor"  : 2.0</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-preference.html" target="_blank" rel="external">选择在什么分片执行操作</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /_search?preference=xyzabc123</div><div class="line">&#123;</div><div class="line">    "query": &#123;</div><div class="line">        "match": &#123;</div><div class="line">            "title": "elasticsearch"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>agg-<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html" target="_blank" rel="external">cardinality</a></p>
+<p>对多set的可能会出错，对少的比较正确</p>
+<p>聚合例子</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">POST /sales/_search?size=0</div><div class="line">&#123;</div><div class="line">    "aggs" : &#123;</div><div class="line">        "t_shirts" : &#123;</div><div class="line">            "filter" : &#123; "term": &#123; "type": "t-shirt" &#125; &#125;,</div><div class="line">            "aggs" : &#123;</div><div class="line">                "avg_price" : &#123; "avg" : &#123; "field" : "price" &#125; &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自动建立条状图聚类</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">POST /sales/_search?size=0</div><div class="line">&#123;</div><div class="line">    "aggs" : &#123;</div><div class="line">        "prices" : &#123;</div><div class="line">            "histogram" : &#123;</div><div class="line">                "field" : "price",</div><div class="line">                "interval" : 50,</div><div class="line">                "min_doc_count" : 1</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>聚类 stats字段一键显示各种avg/sum/…</p>
+<p>In order to disable allowing to delete indices via wildcards or <code>_all</code>, set <code>action.destructive_requires_name</code> setting in the config to <code>true</code>. </p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-rollover-index.html#indices-rollover-index" target="_blank" rel="external">转移不同index内的数据（index太大）</a></p>
+<p>添加alias</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    "actions" : [</div><div class="line">        &#123; "add" : &#123; "indices" : ["test1", "test2"], "alias" : "alias1" &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>移除alias</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    "actions" : [</div><div class="line">        &#123; "remove" : &#123; "index" : "test1", "alias" : "alias1" &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>索引模板</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">PUT _template/template_1</div><div class="line">&#123;</div><div class="line">  "template": "te*",</div><div class="line">  "settings": &#123;</div><div class="line">    "number_of_shards": 1</div><div class="line">  &#125;,</div><div class="line">  "mappings": &#123;</div><div class="line">    "type1": &#123;</div><div class="line">      "_source": &#123;</div><div class="line">        "enabled": false</div><div class="line">      &#125;,</div><div class="line">      "properties": &#123;</div><div class="line">        "host_name": &#123;</div><div class="line">          "type": "keyword"</div><div class="line">        &#125;,</div><div class="line">        "created_at": &#123;</div><div class="line">          "type": "date",</div><div class="line">          "format": "EEE MMM dd HH:mm:ss Z YYYY"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>三倍重要搜索</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">  "query": &#123;</div><div class="line">    "multi_match" : &#123;</div><div class="line">      "query" : "this is a test",</div><div class="line">      "fields" : [ "subject^3", "message" ] </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>多个field同用一个名字</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  "mappings": &#123;</div><div class="line">    "my_type": &#123;</div><div class="line">      "properties": &#123;</div><div class="line">        "first_name": &#123;</div><div class="line">          "type": "text",</div><div class="line">          "copy_to": "full_name" </div><div class="line">        &#125;,</div><div class="line">        "last_name": &#123;</div><div class="line">          "type": "text",</div><div class="line">          "copy_to": "full_name" </div><div class="line">        &#125;,</div><div class="line">        "full_name": &#123;</div><div class="line">          "type": "text"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>master node 个数</p>
+<p>最少discovery.zen.minimum_master_nodes=(master_eligible_nodes / 2) + 1</p>
+<p>脚本语言（默认painless）</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Sandboxed</th>
+<th>Required plugin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-painless.html" target="_blank" rel="external"><code>painless</code></a></td>
+<td>yes</td>
+<td>built-in</td>
+</tr>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-groovy.html" target="_blank" rel="external"><code>groovy</code></a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
+<td>built-in</td>
+</tr>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-javascript.html" target="_blank" rel="external"><code>javascript</code></a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-javascript.html" target="_blank" rel="external"><code>lang-javascript</code></a></td>
+</tr>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-python.html" target="_blank" rel="external"><code>python</code></a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-python.html" target="_blank" rel="external"><code>lang-python</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>By far the fastest most efficient way to access a field value from a script is to use the <code>doc[&#39;field_name&#39;]</code> syntax,</p>
 <p>基本概念**</p>
 <p>一个cluster是一个或多个node的集合，一个node可以存储index，一个index可以有多个type。</p>
 <p><strong>索引</strong></p>
@@ -109,6 +484,39 @@
     
     
       <category term="elasticsearch" scheme="http://www.pirrla.cn/tags/elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python练习笔记</title>
+    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
+    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
+    <published>2017-07-11T16:00:00.000Z</published>
+    <updated>2017-07-14T00:55:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
+<p><strong>计算机CPU数量</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
+<p><strong>遍历文件夹的文档</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
+<p> <strong>获取当前用户名</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
+<p><strong>获取当前IP地址</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
+    
+    </summary>
+    
+      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
     
   </entry>
   
@@ -233,39 +641,6 @@
     
     
       <category term="elasticsearch" scheme="http://www.pirrla.cn/tags/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python练习笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
-    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
-    <published>2017-07-11T16:00:00.000Z</published>
-    <updated>2017-07-14T00:55:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
-<p><strong>计算机CPU数量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
-<p><strong>遍历文件夹的文档</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
-<p> <strong>获取当前用户名</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
-<p><strong>获取当前IP地址</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
-    
-    </summary>
-    
-      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
     
   </entry>
   
