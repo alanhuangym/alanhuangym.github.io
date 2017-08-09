@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="es," />
+  <meta name="keywords" content="elasticsearch," />
 
 
 
@@ -97,7 +97,7 @@
 1.最基础的是“Query”字段它包含最基础的搜索内容和其他设置。(后面再具体介绍内容写法)
 1234567//最简单的结构体GET /_search&amp;#123;    &quot;query&quot; : &amp;#123;        &quot;term&quot; : &amp;#123; &quot;user&quot; : &quot;kimchy&quot; &amp;#125;    &amp;#125;&amp;#125;
 2.from 和 size 字">
-<meta property="og:updated_time" content="2017-08-09T07:28:24.000Z">
+<meta property="og:updated_time" content="2017-08-09T08:21:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES搜索笔记">
 <meta name="twitter:description" content="首先，了解QUERY结构体)的写法：
@@ -325,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/es/" itemprop="url" rel="index">
-                    <span itemprop="name">es</span>
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">elasticsearch</span>
                   </a>
                 </span>
 
@@ -363,17 +363,17 @@
         <p>首先，了解<a href="[Request Body Search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html">QUERY结构体</a>)的写法：</p>
 <h3 id="1-最基础的是“Query”字段"><a href="#1-最基础的是“Query”字段" class="headerlink" title="1.最基础的是“Query”字段"></a>1.最基础的是<strong>“Query”字段</strong></h3><p>它包含最基础的搜索内容和其他设置。(后面再具体介绍内容写法)</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//最简单的结构体</div><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="2-from-和-size-字段"><a href="#2-from-和-size-字段" class="headerlink" title="2.from 和 size 字段"></a>2.<strong>from 和 size 字段</strong></h5><p>控制显示搜索结果的数量和页数</p>
-<h5 id="3-sort-字段"><a href="#3-sort-字段" class="headerlink" title="3.sort 字段"></a>3.<strong>sort 字段</strong></h5><p>例子如下</p>
+<h5 id="2-from-和-size-字段"><a href="#2-from-和-size-字段" class="headerlink" title="2.from 和 size 字段"></a>2.<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html" target="_blank" rel="external"><strong>from 和 size 字段</strong></a></h5><p>控制显示搜索结果的数量和页数</p>
+<h5 id="3-sort-字段"><a href="#3-sort-字段" class="headerlink" title="3.sort 字段"></a>3.<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html" target="_blank" rel="external"><strong>sort 字段</strong></a></h5><p>例子如下</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">GET /my_index/my_type/_search</div><div class="line">&#123;</div><div class="line">    "sort" : [</div><div class="line">        &#123; "post_date" : &#123;"order" : "asc"&#125;&#125;,</div><div class="line">        "user",</div><div class="line">        &#123; "name" : "desc" &#125;,</div><div class="line">        &#123; "age" : "desc" &#125;,</div><div class="line">        "_score"</div><div class="line">    ],</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>通过一个列表，控制排列顺序，如果遇到相同的则比较下一项。</p>
 <h5 id="4-source"><a href="#4-source" class="headerlink" title="4._source "></a>4.<strong>_source </strong></h5><p>由于es的索引不是所有字段我们都需要，所以需要进行字段筛选，同时由于使用了highlight功能，所以我们可能只需要将hightlight字段筛选出来即可。（可使用正则表达式匹配字段名）</p>
-<h5 id="5-script-fields"><a href="#5-script-fields" class="headerlink" title="5.script_fields"></a>5.<strong>script_fields</strong></h5><p>用于编写函数，并返回到搜索结果中</p>
+<h5 id="5-script-fields"><a href="#5-script-fields" class="headerlink" title="5.script_fields"></a>5.<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-script-fields.html" target="_blank" rel="external"><strong>script_fields</strong></a></h5><p>用于编写函数，并返回到搜索结果中</p>
 <h5 id="6-highlight"><a href="#6-highlight" class="headerlink" title="6.highlight"></a>6.<strong>highlight</strong></h5><p>用于高亮显示某些搜索结果，例子如下</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "match": &#123; "user": "kimchy" &#125;</div><div class="line">    &#125;,</div><div class="line">    "highlight" : &#123;</div><div class="line">        "pre_tags" : ["&lt;tag1&gt;"],</div><div class="line">        "post_tags" : ["&lt;/tag1&gt;"],</div><div class="line">        "fields" : &#123;</div><div class="line">            "_all" : &#123;&#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="7-rescore"><a href="#7-rescore" class="headerlink" title="7.rescore"></a>7.rescore</h5><p>用于在返回的搜索结果中再次进行得分计算，并重新计算得分，可用于在搜索相关性后，在根据资讯的日期进行二次排序</p>
+<h5 id="7-rescore"><a href="#7-rescore" class="headerlink" title="7.rescore"></a>7.<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-rescore.html" target="_blank" rel="external">rescore</a></h5><p>用于在返回的搜索结果中再次进行得分计算，并重新计算得分，可用于在搜索相关性后，在根据资讯的日期进行二次排序</p>
 <h5 id="8-search-type"><a href="#8-search-type" class="headerlink" title="8.search type"></a>8.search type</h5><p>用于决定是全局搜索并计算得分，还是在各自的分片上进行分布式得分计算和搜索</p>
-<h5 id="9-scroll"><a href="#9-scroll" class="headerlink" title="9.scroll"></a>9.scroll</h5><p>设定搜索结果的存活时间，避免重复搜索浪费资源，只用于在可以滑动搜索窗口的客户端中，如Python</p>
+<h5 id="9-scroll"><a href="#9-scroll" class="headerlink" title="9.scroll"></a>9.<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html" target="_blank" rel="external">scroll</a></h5><p>设定搜索结果的存活时间，避免重复搜索浪费资源，只用于在可以滑动搜索窗口的客户端中，如Python</p>
 <h5 id="10-preference"><a href="#10-preference" class="headerlink" title="10.preference"></a>10.preference</h5><p>分片喜好</p>
 <h5 id="11-version"><a href="#11-version" class="headerlink" title="11.version"></a>11.version</h5><p>返回每一个hit的版本号</p>
 <h5 id="12-min-score"><a href="#12-min-score" class="headerlink" title="12.min_score"></a>12.min_score</h5><p>只有超过某个数值的_score才会返回在搜索结果中</p>
@@ -448,7 +448,7 @@
 </tbody>
 </table>
 <h3 id="Query字段内部的编写方式"><a href="#Query字段内部的编写方式" class="headerlink" title="Query字段内部的编写方式"></a>Query字段内部的编写方式</h3><p>叶语句：</p>
-<p>几乎语句都能写成match的形式，所以使用match</p>
+<p>几乎语句都能写成match的形式，所以使用<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html" target="_blank" rel="external">match</a></p>
 <table>
 <thead>
 <tr>
@@ -479,14 +479,21 @@
 </tbody>
 </table>
 <p>聚合语句：</p>
-<p>bool</p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html" target="_blank" rel="external">bool</a></p>
 <p>匹配到越多，越高分，不同的match之间得分相加</p>
-<p>dis_max</p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-dis-max-query.html" target="_blank" rel="external">dis_max</a></p>
 <p>是disjunctionmax 各自的match执行，然后最高分的为最终得分，通过设置tie_breaker来调参</p>
-<p>function score</p>
-<p>参考<a href="http://pirrla.cn/2017/07/12/es_similarity/" target="_blank" rel="external">前文</a></p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" rel="external">function score</a></p>
+<p>参考<a href="http://pirrla.cn/2017/07/12/es_similarity/" target="_blank" rel="external">前文</a>，运用了离当前时间越近，则score更高的<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">衰减函数</a></p>
 <p>我认为的搜索语句：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">GET /windxw/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "from": 0,</div><div class="line">  "size": 20,</div><div class="line">  "_source": ["title","content"], </div><div class="line">  "highlight": &#123;</div><div class="line">    "pre_tags": ["&lt;font color=\"red\"&gt;"],</div><div class="line">    "post_tags": ["&lt;/font&gt;"],</div><div class="line">    "fields": &#123;</div><div class="line">      "content": &#123;&#125;,</div><div class="line">      "title": &#123;&#125;</div><div class="line">    &#125;</div><div class="line">  &#125;, </div><div class="line">  "query": &#123;</div><div class="line">    "bool": &#123;</div><div class="line">      "should": [</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "title": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2，</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "content": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2，</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "keywords": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":1，</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;</div><div class="line">      ]，</div><div class="line">      "minimum_should_match": 2 </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">GET /windxw/_search?search_type=dfs_query_then_fetch&amp;explain</div><div class="line">&#123;</div><div class="line">  "from": 0,</div><div class="line">  "size": 20,</div><div class="line">  "_source": ["title","content"], </div><div class="line">  "highlight": &#123;</div><div class="line">    "pre_tags": ["&lt;font color=\"red\"&gt;"],</div><div class="line">    "post_tags": ["&lt;/font&gt;"],</div><div class="line">    "fields": &#123;</div><div class="line">      "content": &#123;&#125;,</div><div class="line">      "title": &#123;&#125;</div><div class="line">    &#125;</div><div class="line">  &#125;, </div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">      "query": &#123;</div><div class="line">        "bool": &#123;</div><div class="line">      "should": [</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "title": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "content": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "keywords": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":1,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;</div><div class="line">      ],</div><div class="line">      "minimum_should_match": 1 </div><div class="line">    &#125;</div><div class="line">      &#125;,</div><div class="line">       "functions": [ </div><div class="line">            &#123;</div><div class="line">                    "exp": &#123;</div><div class="line">                        "publishdate" : &#123;</div><div class="line">                            "origin": "now",</div><div class="line">                            "offset": "1h",</div><div class="line">                            "scale" : "30d",</div><div class="line">                            "decay": 0.2</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    "weight": 200</div><div class="line">                &#125;</div><div class="line">        ],</div><div class="line">        "boost_mode": "sum"</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我认为目前需要解决的问题：</p>
+<p>1.如何实现翻页（from/size，scroll，search_after）</p>
+<p>2.权衡时间与搜索匹配度的权重（通过调整boost和weight）</p>
+<p>3.是否需要用rescore参数来进行二次排序（根据时间排序）</p>
+<p>4.search_type是使用全局搜索还是分片搜索</p>
+<p>5.三个字段（title,content,keyword）之间的权重</p>
+<p>6.三个字段的match得分是使用bool相加还是dis_max取最大值</p>
 
       
     </div>
@@ -516,7 +523,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/es/" rel="tag"># es</a>
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
           
         </div>
       
@@ -620,7 +627,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -631,7 +638,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

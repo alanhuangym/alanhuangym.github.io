@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -277,8 +277,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/03/15/Duality_of_Linear_Programming/" itemprop="url">
-                  Duality of Linear Programming
+                <a class="post-title-link" href="/2017/03/15/Coursera-MachineLearningByAndrewNg/" itemprop="url">
+                  Coursera Machine Learning Notes
                 </a>
               
             
@@ -354,56 +354,37 @@
       
         
           
-            <p>Resource:</p>
-<p><strong>S´ebastien Lahaie, How to take the Dual of a Linear Program <a href="http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf" target="_blank" rel="external">http://www.cs.columbia.edu/coms6998-3/lpprimer.pdf</a></strong></p>
-<p>翻译：</p>
-<p>Alan Huang</p>
-<h1 id="如何求线性规划的二元性"><a href="#如何求线性规划的二元性" class="headerlink" title="如何求线性规划的二元性"></a>如何求线性规划的二元性</h1><ol>
-<li><p>线性规划是最优解问题的一个公式化结果：通过设立目标函数和约束函数，求取目标方程的最大值或最小值。因目标函数是线性的，所以称之为线性规划。</p>
-<p>通常，线性规划的一般形式是这样的：</p>
-<p>max<br>x1≥0, x2≤0, x3<br>v1x1 + v2x2 + v3x3 (1)<br>such that </p>
-<p>a1x1 + x2 + x3 ≤ b1 (2)<br>x1 + a2x2 = b2 (3)<br>a3x3 ≥ b3 (4)</p>
-<p>(1)是目标函数，(2)(3)(4)是约束函数，目标是求取(1)的最大值</p>
-<p>其中，x1,x2,x3是变量，而其他的参数则为常量（v1,v2,v3等）</p>
-</li>
-<li><p>这里我们称以上所述的线性规划为原始线性规划，二元性则是通过数学过程，从原始线性规划得到二次线性规划。</p>
-</li>
-<li><p>首先我们要重写原始线性规划的目标方程，使之成为一个标准形式。</p>
-<p>为了简便计算，我们尽量将目标方程改写为求##最小值##的形式</p>
-<p>从求最大值到求最小值也很简单，只需要将目标方程乘以-1即可</p>
-<p>所以我们可以获得改写后的目标方程：</p>
-<p>min<br>x1≥0, x2≤0, x3<br>−v1x1 − v2x2 − v3x3</p>
-</li>
-<li><p>第二步，是将约束函数全部改写为小于或小于等于或等于零的形式。即将(2)(3)(4)改写为：</p>
-<p>a1x1 + x2 + x3 − b1 ≤ 0 (5)<br>x1 + a2x2 − b2 = 0 (6)<br>−a3x3 + b3 ≤ 0 (7)</p>
-</li>
-<li><p>第三步，为每一个不等式约束函数设定一个非负的二元性参数，为每一个等式约束函数设定一个二元性参数（无限制负或非负）。如上所述，我们分别为(5)(7)设定二元性参数λ1 ≥ 0 和 λ3 ≥ 0，为(6)设定 λ2。</p>
-</li>
-<li><p>第四步，将第三步设置的二元性参数与约束函数符号左边的部分相乘并将它们加入到目标函数之中，并在目标函数前面加上求最大值，即如下所示：</p>
-<p>max min  −v1x1 − v2x2 − v3x3</p>
-<p>+λ1 (a1x1 + x2 + x3 − b1) (8)</p>
-<p>+λ2 (x1 + a2x2 − b2) (9)</p>
-<p>+λ3 (−a3x3 + b3) (10)</p>
-</li>
-<li><p>第五步，将目标函数的括号拆开，并进行整理。将包含原本变量（x1,x2,x3）的式子下放到约束函数之中，其余的项放入目标函数之中。即:</p>
-<p>max min  −b1λ1 − b2λ2 − b3λ3</p>
-<p>+x1(a1λ1 + λ2 − v1) (11)</p>
-<p>+x2(λ1 + a2λ2 − v2) (12)</p>
-<p>+x3(λ1 − a3λ3 − v3) (13)</p>
-</li>
-<li><p>第六步，将约束函数表示为等式或不等式的形式。</p>
-<p>如果变量后面的参数是大于或等于零的，则去掉原始变量获得不等式该参数大于或等于零，</p>
-<p>如果变量后面的参数是小于或等于零的，则去掉原始变量获得不等式该参数小于或等于零，</p>
-<p>如果变量后面的参数是等于零的，则去掉原始变量获得不等式该参数等于零。</p>
-<p>同时，目标函数去除Min。</p>
-<p>max −b1λ1 − b2λ2 − b3λ3<br>a1λ1 + λ2 − v1 ≥ 0 (14)<br>λ1 + a2λ2 − v2 ≤ 0 (15)<br>λ1 − a3λ3 − v3 = 0 (16)</p>
-</li>
-<li><p>第七步，如果一开始将求最小值变成了最大值（目标函数乘以-1），则将目标函数再次反转，否则，不做任何步骤（可以整理约束函数），则获得最终结果。</p>
-<p>min b1λ1 + b2λ2 + b3λ3<br>a1λ1 + λ2 ≥ v1 (17)<br>λ1 + a2λ2 ≤ v2 (18)<br>λ1 − a3λ3 = v3 (19)</p>
-<p>至此，已经获得了原始线性规划的二元线性规划。</p>
-<p>​</p>
-</li>
+            <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
 </ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
 
           
         
@@ -498,7 +479,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -509,7 +490,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
