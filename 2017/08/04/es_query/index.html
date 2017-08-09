@@ -1,0 +1,862 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="es," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="首先，了解QUERY结构体)的写法：
+1.最基础的是“Query”字段它包含最基础的搜索内容和其他设置。(后面再具体介绍内容写法)
+1234567//最简单的结构体GET /_search&amp;#123;    &quot;query&quot; : &amp;#123;        &quot;term&quot; : &amp;#123; &quot;user&quot; : &quot;kimchy&quot; &amp;#125;    &amp;#125;&amp;#125;
+2.from 和 size 字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES搜索笔记">
+<meta property="og:url" content="http://www.pirrla.cn/2017/08/04/es_query/index.html">
+<meta property="og:site_name" content="Note down something">
+<meta property="og:description" content="首先，了解QUERY结构体)的写法：
+1.最基础的是“Query”字段它包含最基础的搜索内容和其他设置。(后面再具体介绍内容写法)
+1234567//最简单的结构体GET /_search&amp;#123;    &quot;query&quot; : &amp;#123;        &quot;term&quot; : &amp;#123; &quot;user&quot; : &quot;kimchy&quot; &amp;#125;    &amp;#125;&amp;#125;
+2.from 和 size 字">
+<meta property="og:updated_time" content="2017-08-09T07:28:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES搜索笔记">
+<meta name="twitter:description" content="首先，了解QUERY结构体)的写法：
+1.最基础的是“Query”字段它包含最基础的搜索内容和其他设置。(后面再具体介绍内容写法)
+1234567//最简单的结构体GET /_search&amp;#123;    &quot;query&quot; : &amp;#123;        &quot;term&quot; : &amp;#123; &quot;user&quot; : &quot;kimchy&quot; &amp;#125;    &amp;#125;&amp;#125;
+2.from 和 size 字">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.pirrla.cn/2017/08/04/es_query/"/>
+
+
+
+
+
+  <title> ES搜索笔记 | Note down something </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Note down something</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/04/es_query/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ES搜索笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-04T10:08:20+08:00">
+                2017-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/es/" itemprop="url" rel="index">
+                    <span itemprop="name">es</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先，了解<a href="[Request Body Search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html">QUERY结构体</a>)的写法：</p>
+<h3 id="1-最基础的是“Query”字段"><a href="#1-最基础的是“Query”字段" class="headerlink" title="1.最基础的是“Query”字段"></a>1.最基础的是<strong>“Query”字段</strong></h3><p>它包含最基础的搜索内容和其他设置。(后面再具体介绍内容写法)</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//最简单的结构体</div><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="2-from-和-size-字段"><a href="#2-from-和-size-字段" class="headerlink" title="2.from 和 size 字段"></a>2.<strong>from 和 size 字段</strong></h5><p>控制显示搜索结果的数量和页数</p>
+<h5 id="3-sort-字段"><a href="#3-sort-字段" class="headerlink" title="3.sort 字段"></a>3.<strong>sort 字段</strong></h5><p>例子如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">GET /my_index/my_type/_search</div><div class="line">&#123;</div><div class="line">    "sort" : [</div><div class="line">        &#123; "post_date" : &#123;"order" : "asc"&#125;&#125;,</div><div class="line">        "user",</div><div class="line">        &#123; "name" : "desc" &#125;,</div><div class="line">        &#123; "age" : "desc" &#125;,</div><div class="line">        "_score"</div><div class="line">    ],</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过一个列表，控制排列顺序，如果遇到相同的则比较下一项。</p>
+<h5 id="4-source"><a href="#4-source" class="headerlink" title="4._source "></a>4.<strong>_source </strong></h5><p>由于es的索引不是所有字段我们都需要，所以需要进行字段筛选，同时由于使用了highlight功能，所以我们可能只需要将hightlight字段筛选出来即可。（可使用正则表达式匹配字段名）</p>
+<h5 id="5-script-fields"><a href="#5-script-fields" class="headerlink" title="5.script_fields"></a>5.<strong>script_fields</strong></h5><p>用于编写函数，并返回到搜索结果中</p>
+<h5 id="6-highlight"><a href="#6-highlight" class="headerlink" title="6.highlight"></a>6.<strong>highlight</strong></h5><p>用于高亮显示某些搜索结果，例子如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "match": &#123; "user": "kimchy" &#125;</div><div class="line">    &#125;,</div><div class="line">    "highlight" : &#123;</div><div class="line">        "pre_tags" : ["&lt;tag1&gt;"],</div><div class="line">        "post_tags" : ["&lt;/tag1&gt;"],</div><div class="line">        "fields" : &#123;</div><div class="line">            "_all" : &#123;&#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="7-rescore"><a href="#7-rescore" class="headerlink" title="7.rescore"></a>7.rescore</h5><p>用于在返回的搜索结果中再次进行得分计算，并重新计算得分，可用于在搜索相关性后，在根据资讯的日期进行二次排序</p>
+<h5 id="8-search-type"><a href="#8-search-type" class="headerlink" title="8.search type"></a>8.search type</h5><p>用于决定是全局搜索并计算得分，还是在各自的分片上进行分布式得分计算和搜索</p>
+<h5 id="9-scroll"><a href="#9-scroll" class="headerlink" title="9.scroll"></a>9.scroll</h5><p>设定搜索结果的存活时间，避免重复搜索浪费资源，只用于在可以滑动搜索窗口的客户端中，如Python</p>
+<h5 id="10-preference"><a href="#10-preference" class="headerlink" title="10.preference"></a>10.preference</h5><p>分片喜好</p>
+<h5 id="11-version"><a href="#11-version" class="headerlink" title="11.version"></a>11.version</h5><p>返回每一个hit的版本号</p>
+<h5 id="12-min-score"><a href="#12-min-score" class="headerlink" title="12.min_score"></a>12.min_score</h5><p>只有超过某个数值的_score才会返回在搜索结果中</p>
+<h5 id="13-collapse"><a href="#13-collapse" class="headerlink" title="13.collapse"></a>13.collapse</h5><p>selecting only the top sorted document per collapse key</p>
+<p>用于收集某一个关键词的最高分的文档，例如检索每个用户最多like的tweet（必须包含sort）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">GET /twitter/tweet/_search</div><div class="line">&#123;</div><div class="line">    "query": &#123;</div><div class="line">        "match": &#123;</div><div class="line">            "message": "elasticsearch"</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    "collapse" : &#123;</div><div class="line">        "field" : "user" </div><div class="line">    &#125;,</div><div class="line">    "sort": ["likes"], </div><div class="line">    "from": 10 </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="14-search-after"><a href="#14-search-after" class="headerlink" title="14.search_after"></a>14.search_after</h5><p>也用于翻页，将本页的最后一个搜索结果填入参数则进入下一页（from必须是0）</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>是否需要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>必须，基础字段（后表续query字段具体写法）</td>
+</tr>
+<tr>
+<td>from/size</td>
+<td>需要，用于管理用户的搜索页的页码</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>不需要，用于控制排列顺序，首先是比对_score字段，如果相同则比较date，日期较新的排列较前（但是由于我们是match搜索，非term搜索，所以出现_score相同的情况较少，不能使用此字段）</td>
+</tr>
+<tr>
+<td>_source</td>
+<td>需要，进行字段筛选</td>
+</tr>
+<tr>
+<td>script_fields</td>
+<td>不需要，暂时不需要编写函数</td>
+</tr>
+<tr>
+<td>highlight</td>
+<td>需要，进行搜索字段标红</td>
+</tr>
+<tr>
+<td>rescore</td>
+<td>可能需要</td>
+</tr>
+<tr>
+<td>search_type</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>scroll</td>
+<td>可能需要</td>
+</tr>
+<tr>
+<td>preference</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>version</td>
+<td>可能需要</td>
+</tr>
+<tr>
+<td>min_score</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>collapse</td>
+<td>可能需要</td>
+</tr>
+<tr>
+<td>search_after</td>
+<td>可能需要</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Query字段内部的编写方式"><a href="#Query字段内部的编写方式" class="headerlink" title="Query字段内部的编写方式"></a>Query字段内部的编写方式</h3><p>叶语句：</p>
+<p>几乎语句都能写成match的形式，所以使用match</p>
+<table>
+<thead>
+<tr>
+<th>match方法</th>
+<th>是否采用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>match</td>
+<td></td>
+</tr>
+<tr>
+<td>match_phrase</td>
+<td></td>
+</tr>
+<tr>
+<td>multi_match</td>
+<td></td>
+</tr>
+<tr>
+<td>query_string</td>
+<td></td>
+</tr>
+<tr>
+<td>simple_query_string</td>
+</tr>
+</tbody>
+</table>
+<p>聚合语句：</p>
+<p>bool</p>
+<p>匹配到越多，越高分，不同的match之间得分相加</p>
+<p>dis_max</p>
+<p>是disjunctionmax 各自的match执行，然后最高分的为最终得分，通过设置tie_breaker来调参</p>
+<p>function score</p>
+<p>参考<a href="http://pirrla.cn/2017/07/12/es_similarity/" target="_blank" rel="external">前文</a></p>
+<p>我认为的搜索语句：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">GET /windxw/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "from": 0,</div><div class="line">  "size": 20,</div><div class="line">  "_source": ["title","content"], </div><div class="line">  "highlight": &#123;</div><div class="line">    "pre_tags": ["&lt;font color=\"red\"&gt;"],</div><div class="line">    "post_tags": ["&lt;/font&gt;"],</div><div class="line">    "fields": &#123;</div><div class="line">      "content": &#123;&#125;,</div><div class="line">      "title": &#123;&#125;</div><div class="line">    &#125;</div><div class="line">  &#125;, </div><div class="line">  "query": &#123;</div><div class="line">    "bool": &#123;</div><div class="line">      "should": [</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "title": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2，</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "content": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2，</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "keywords": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":1，</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;</div><div class="line">      ]，</div><div class="line">      "minimum_should_match": 2 </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/es/" rel="tag"># es</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/03/es_input/" rel="next" title="ES输入设置">
+                <i class="fa fa-chevron-left"></i> ES输入设置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
+               alt="Alan Wong" />
+          <p class="site-author-name" itemprop="name">Alan Wong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/alanhuangym" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-最基础的是“Query”字段"><span class="nav-number">1.</span> <span class="nav-text">1.最基础的是“Query”字段</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-from-和-size-字段"><span class="nav-number">1.0.1.</span> <span class="nav-text">2.from 和 size 字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-sort-字段"><span class="nav-number">1.0.2.</span> <span class="nav-text">3.sort 字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-source"><span class="nav-number">1.0.3.</span> <span class="nav-text">4._source </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-script-fields"><span class="nav-number">1.0.4.</span> <span class="nav-text">5.script_fields</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-highlight"><span class="nav-number">1.0.5.</span> <span class="nav-text">6.highlight</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-rescore"><span class="nav-number">1.0.6.</span> <span class="nav-text">7.rescore</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-search-type"><span class="nav-number">1.0.7.</span> <span class="nav-text">8.search type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-scroll"><span class="nav-number">1.0.8.</span> <span class="nav-text">9.scroll</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-preference"><span class="nav-number">1.0.9.</span> <span class="nav-text">10.preference</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-version"><span class="nav-number">1.0.10.</span> <span class="nav-text">11.version</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12-min-score"><span class="nav-number">1.0.11.</span> <span class="nav-text">12.min_score</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13-collapse"><span class="nav-number">1.0.12.</span> <span class="nav-text">13.collapse</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14-search-after"><span class="nav-number">1.0.13.</span> <span class="nav-text">14.search_after</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Query字段内部的编写方式"><span class="nav-number">2.</span> <span class="nav-text">Query字段内部的编写方式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Wong</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
