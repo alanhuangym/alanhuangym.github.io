@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-08-09T08:21:42.000Z</updated>
+  <updated>2017-08-23T01:37:19.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -16,13 +16,242 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>推荐系统1</title>
+    <link href="http://www.pirrla.cn/2017/08/21/rs_start/"/>
+    <id>http://www.pirrla.cn/2017/08/21/rs_start/</id>
+    <published>2017-08-21T06:56:01.000Z</published>
+    <updated>2017-08-23T01:37:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="目前大部分舆论："><a href="#目前大部分舆论：" class="headerlink" title="目前大部分舆论："></a>目前大部分舆论：</h3><p>目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用</p>
+<p><strong>精细的特征工程+简单可行的模型+各种Trick+CF协同过滤</strong></p>
+<p>即可以实现比较好的效果。</p>
+<p>其中，大部分人认为其中重要性是：</p>
+<p><strong>用户交互界面UI &gt; 数据 &gt; 算法</strong></p>
+<font color="red">所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）</font>
+
+<font color="red">其次，我们的推荐页面是已什么形式展现给客户？</font>
+
+<p>是直接在目前的基础上，进行排序展示？（推荐的产品在最前面）</p>
+<p>现有的第三方库：<strong>Java-mahout, Python-Crab</strong></p>
+<p>特征工程分为：静态特征、行为特征、Item特征、上下文特征</p>
+<p>特镇工程操作有：转换、切分、叠加、离散化、组合</p>
+<p>大数据不一定有效，提高维度则有一定的帮助，数据量太大可以随机从原始数据中采样。</p>
+<h3 id="USER表"><a href="#USER表" class="headerlink" title="USER表"></a>USER表</h3><p>对于USER，我们设计了一个表去存储用户的信息。</p>
+<p>信息来源暂定是用户自己填写的信息、问卷调查获得的风险偏好和从身份证号所获取的信息（出生地、年龄、性别等）。</p>
+<p>开户日期指的是用户已经在网站注册的时长。</p>
+<font color="red">金额方面，暂时还需要解决，是什么金额？</font>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>userid</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>金额</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>风险偏好</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>已购产品</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>年龄</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>职业</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>电话</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>出生地</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>邮箱</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>开户日期</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ITEM表"><a href="#ITEM表" class="headerlink" title="ITEM表"></a>ITEM表</h3><p>对于ITEM，我们同样将它存储在数据库中。</p>
+<p>这个数据来源我们可以从自身获取。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>itemid</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>风险</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>起购额</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>产品类型</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+</tbody>
+</table>
+<p>两个表中，有<strong>关联的是风险和风险偏好，起购额和金额</strong>。因为这两个字段的数值是硬性要求，起到了一个Filter的作用。</p>
+<h3 id="可能添加的字段（增加维度，提高准度）"><a href="#可能添加的字段（增加维度，提高准度）" class="headerlink" title="可能添加的字段（增加维度，提高准度）"></a>可能添加的字段（增加维度，提高准度）</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户行为-退款行为</td>
+<td>用户是否发生退款行为，退款产品为</td>
+</tr>
+<tr>
+<td>用户行为-投诉行为</td>
+<td>用户是否对某款产品进行过投诉</td>
+</tr>
+<tr>
+<td>用户-是否有亲戚好友购买过相关产品</td>
+<td>对于熟人推荐的会比较信任（但是亲戚好友的信息比较难获取，推荐码？）</td>
+</tr>
+<tr>
+<td>产品-描述</td>
+<td>对描述进行NLP，得出一个向量</td>
+</tr>
+<tr>
+<td>产品-投资经理</td>
+<td>对于不同的投资经理，会有不同的喜好（例如已经购买的产品的同一位投资经理，但是要确定是否前一款产品是否亏损）</td>
+</tr>
+<tr>
+<td>产品-目前盈亏</td>
+<td>目前产品的盈亏情况，是否会推荐亏损的产品给客户</td>
+</tr>
+<tr>
+<td>产品-行业归属</td>
+<td>投资详情</td>
+</tr>
+<tr>
+<td>产品-开始销售日期</td>
+<td>长期稳定的产品会让客户偏喜爱</td>
+</tr>
+<tr>
+<td>网页动作</td>
+<td>是否能捕捉到用户的网页动作？（例如在某一个产品页面逗留很久，多次点击同一款产品的详情）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="相关论文"><a href="#相关论文" class="headerlink" title="相关论文"></a>相关论文</h3><p><a href="http://www.cin.ufpe.br/~idal/rs/Amazon-Recommendations.pdf" target="_blank" rel="external">Amazon CF</a></p>
+<p>基础的推荐算法有：</p>
+<p><strong>1.传统的协同过滤</strong></p>
+<p>其中，分为寻找相似的用户和相似的产品。</p>
+<p>计算相似度的基本都是使用向量之间的cos距离</p>
+<p>推荐相似用户购买的产品或者推荐相似产品的产品</p>
+<p><strong>2.Cluster Models</strong></p>
+<p>将用户分类成几个类，然后对新来的用户同样进行分类，然后推荐同一个分类用户的购买的产品信息</p>
+<p>其中分类的算法可以有：KNN, LogisticRegression, NeuralNetwork, DecesionTree, K-Means</p>
+<p><strong>3.Search-Based Methods</strong></p>
+<p>将item进行细分，划分出目录、类别、作者等信息，然后推荐相关目录、相关作者的其他作品等。</p>
+<p><strong>4.亚马逊Item-to-item 协同过滤</strong></p>
+<p>基于庞大的用户数量和商品数量，一个一个算相似度计算量非常庞大，同时不能满足业务要求的0.5秒内给用户推荐信息的要求，所以亚马逊按照传统的协同过滤进行优化，只计算购买过某一产品的用户们的购买记录中商品的相似度，然后推荐相似度最高的产品。</p>
+<p><a href="https://datajobs.com/data-science-repo/Recommender-Systems-%5BNetflix%5D.pdf" target="_blank" rel="external">matrix factorization</a></p>
+<h3 id="想法："><a href="#想法：" class="headerlink" title="想法："></a>想法：</h3><h3 id="1-直接将已购产品当做Training-data"><a href="#1-直接将已购产品当做Training-data" class="headerlink" title="1.直接将已购产品当做Training data"></a>1.直接将已购产品当做Training data</h3><p>是否可以直接将客户已经购买的产品记录当做training data放进神经网络</p>
+<p>然后把产品当成ont-hot型的向量输出（或者把金额当成输出）</p>
+<h3 id="2-将用户分类"><a href="#2-将用户分类" class="headerlink" title="2.将用户分类"></a>2.将用户分类</h3><p>将用户分成某几类用户，然后进来一个用户则根据模型，将该用户分配到不同的组里面。</p>
+<p>然后推荐系统将推荐组内用户最常购买的产品。</p>
+<h3 id="3-将产品分类"><a href="#3-将产品分类" class="headerlink" title="3.将产品分类"></a>3.将产品分类</h3><p>由于产品比较少，所以是否直接人工分类？</p>
+<p>或者根据投资经理（用户是否有投资经理偏好）进行分类？</p>
+<h3 id="目前难题："><a href="#目前难题：" class="headerlink" title="目前难题："></a>目前难题：</h3><p>1.冷启动？（完全新用户进入，没有任何数据，是否能找出新用户最多购买的产品）（例如注册时间小于30天的用户，购买最多的产品是？）</p>
+<p>2.推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
+<p>3.是否要将客户引导到高风险的产品上去？</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;目前大部分舆论：&quot;&gt;&lt;a href=&quot;#目前大部分舆论：&quot; class=&quot;headerlink&quot; title=&quot;目前大部分舆论：&quot;&gt;&lt;/a&gt;目前大部分舆论：&lt;/h3&gt;&lt;p&gt;目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>1</title>
+    <link href="http://www.pirrla.cn/2017/08/21/1/"/>
+    <id>http://www.pirrla.cn/2017/08/21/1/</id>
+    <published>2017-08-21T06:54:08.000Z</published>
+    <updated>2017-08-21T06:54:08.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MacOS安装Oracle客户端Client</title>
+    <link href="http://www.pirrla.cn/2017/08/10/mac_oracle/"/>
+    <id>http://www.pirrla.cn/2017/08/10/mac_oracle/</id>
+    <published>2017-08-10T02:56:39.000Z</published>
+    <updated>2017-08-10T03:02:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="安装客户端只需要简单的几步！！！"><a href="#安装客户端只需要简单的几步！！！" class="headerlink" title="安装客户端只需要简单的几步！！！"></a>安装客户端只需要简单的几步！！！</h1><h1 id="如果你按照官网的方法会一直都失败！！！！"><a href="#如果你按照官网的方法会一直都失败！！！！" class="headerlink" title="如果你按照官网的方法会一直都失败！！！！"></a>如果你按照<a href="https://oracle.github.io/odpi/doc/installation.html#macos" target="_blank" rel="external">官网的方法</a>会一直都失败！！！！</h1><h1 id="首先是安装anaconda（安装第三方库lxml等难安装的库巨有用）"><a href="#首先是安装anaconda（安装第三方库lxml等难安装的库巨有用）" class="headerlink" title="首先是安装anaconda（安装第三方库lxml等难安装的库巨有用）"></a>首先是安装anaconda（安装第三方库lxml等难安装的库巨有用）</h1><h1 id="然后在anaconda中安装cx-oracle第三方库"><a href="#然后在anaconda中安装cx-oracle第三方库" class="headerlink" title="然后在anaconda中安装cx_oracle第三方库"></a>然后在anaconda中安装cx_oracle第三方库</h1><h1 id="然后再官网下载两个相对应的包（位数与python相对应）"><a href="#然后再官网下载两个相对应的包（位数与python相对应）" class="headerlink" title="然后再官网下载两个相对应的包（位数与python相对应）"></a>然后再<a href="http://www.oracle.com/technetwork/topics/intel-macsoft-096467.html" target="_blank" rel="external">官网</a>下载两个相对应的包（位数与python相对应）</h1><h1 id="instantclient-basic-和-instantclient-sqlplus"><a href="#instantclient-basic-和-instantclient-sqlplus" class="headerlink" title="instantclient-basic 和 instantclient-sqlplus"></a>instantclient-basic 和 instantclient-sqlplus</h1><h1 id="然后只需要把两个包的东西解压出来，全部文件放到"><a href="#然后只需要把两个包的东西解压出来，全部文件放到" class="headerlink" title="然后只需要把两个包的东西解压出来，全部文件放到"></a>然后只需要把两个包的东西解压出来，全部文件放到</h1><h1 id="lib-目录里面即可！！！！！"><a href="#lib-目录里面即可！！！！！" class="headerlink" title="~/lib/目录里面即可！！！！！"></a><font color="red">~/lib/</font>目录里面即可！！！！！</h1><p>~就是当前用户名的文件夹</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;安装客户端只需要简单的几步！！！&quot;&gt;&lt;a href=&quot;#安装客户端只需要简单的几步！！！&quot; class=&quot;headerlink&quot; title=&quot;安装客户端只需要简单的几步！！！&quot;&gt;&lt;/a&gt;安装客户端只需要简单的几步！！！&lt;/h1&gt;&lt;h1 id=&quot;如果你按照官网的方
+    
+    </summary>
+    
+      <category term="oracle" scheme="http://www.pirrla.cn/categories/oracle/"/>
+    
+    
+      <category term="oracle" scheme="http://www.pirrla.cn/tags/oracle/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ES搜索笔记</title>
     <link href="http://www.pirrla.cn/2017/08/04/es_query/"/>
     <id>http://www.pirrla.cn/2017/08/04/es_query/</id>
     <published>2017-08-04T02:08:20.000Z</published>
-    <updated>2017-08-09T08:21:42.000Z</updated>
+    <updated>2017-08-09T08:49:00.000Z</updated>
     
-    <content type="html"><![CDATA[<p>首先，了解<a href="[Request Body Search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html">QUERY结构体</a>)的写法：</p>
+    <content type="html"><![CDATA[<p>首先，了解<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html" target="_blank" rel="external">QUERY结构体</a>的写法：</p>
 <h3 id="1-最基础的是“Query”字段"><a href="#1-最基础的是“Query”字段" class="headerlink" title="1.最基础的是“Query”字段"></a>1.最基础的是<strong>“Query”字段</strong></h3><p>它包含最基础的搜索内容和其他设置。(后面再具体介绍内容写法)</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//最简单的结构体</div><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h5 id="2-from-和-size-字段"><a href="#2-from-和-size-字段" class="headerlink" title="2.from 和 size 字段"></a>2.<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html" target="_blank" rel="external"><strong>from 和 size 字段</strong></a></h5><p>控制显示搜索结果的数量和页数</p>
@@ -148,7 +377,7 @@
 <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" rel="external">function score</a></p>
 <p>参考<a href="http://pirrla.cn/2017/07/12/es_similarity/" target="_blank" rel="external">前文</a>，运用了离当前时间越近，则score更高的<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">衰减函数</a></p>
 <p>我认为的搜索语句：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">GET /windxw/_search?search_type=dfs_query_then_fetch&amp;explain</div><div class="line">&#123;</div><div class="line">  "from": 0,</div><div class="line">  "size": 20,</div><div class="line">  "_source": ["title","content"], </div><div class="line">  "highlight": &#123;</div><div class="line">    "pre_tags": ["&lt;font color=\"red\"&gt;"],</div><div class="line">    "post_tags": ["&lt;/font&gt;"],</div><div class="line">    "fields": &#123;</div><div class="line">      "content": &#123;&#125;,</div><div class="line">      "title": &#123;&#125;</div><div class="line">    &#125;</div><div class="line">  &#125;, </div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">      "query": &#123;</div><div class="line">        "bool": &#123;</div><div class="line">      "should": [</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "title": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "content": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "keywords": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":1,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;</div><div class="line">      ],</div><div class="line">      "minimum_should_match": 1 </div><div class="line">    &#125;</div><div class="line">      &#125;,</div><div class="line">       "functions": [ </div><div class="line">            &#123;</div><div class="line">                    "exp": &#123;</div><div class="line">                        "publishdate" : &#123;</div><div class="line">                            "origin": "now",</div><div class="line">                            "offset": "1h",</div><div class="line">                            "scale" : "30d",</div><div class="line">                            "decay": 0.2</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    "weight": 200</div><div class="line">                &#125;</div><div class="line">        ],</div><div class="line">        "boost_mode": "sum"</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">GET /windxw/_search?search_type=dfs_query_then_fetch&amp;explain</div><div class="line">&#123;</div><div class="line">  "from": 0,</div><div class="line">  "size": 20,</div><div class="line">  "_source": ["title","content"], </div><div class="line">  "highlight": &#123;</div><div class="line">    "pre_tags": ["&lt;font color=\"red\"&gt;"],</div><div class="line">    "post_tags": ["&lt;/font&gt;"],</div><div class="line">    "fields": &#123;</div><div class="line">      "content": &#123;&#125;,</div><div class="line">      "title": &#123;&#125;</div><div class="line">    &#125;</div><div class="line">  &#125;, </div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">      "query": &#123;</div><div class="line">        "bool": &#123;</div><div class="line">      "should": [</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "title": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "content": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":1,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123;"match": &#123;</div><div class="line">          "keywords": &#123;</div><div class="line">            "query": "uber",</div><div class="line">            "boost":2,</div><div class="line">            "operator": "and"</div><div class="line">          &#125;</div><div class="line">        &#125;&#125;</div><div class="line">      ],</div><div class="line">      "minimum_should_match": 1 </div><div class="line">    &#125;</div><div class="line">      &#125;,</div><div class="line">       "functions": [ </div><div class="line">            &#123;</div><div class="line">                    "exp": &#123;</div><div class="line">                        "publishdate" : &#123;</div><div class="line">                            "origin": "now",</div><div class="line">                            "offset": "1h",</div><div class="line">                            "scale" : "30d",</div><div class="line">                            "decay": 0.2</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    "weight": 200</div><div class="line">                &#125;</div><div class="line">        ],</div><div class="line">        "boost_mode": "sum"</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我认为目前需要解决的问题：</p>
 <p>1.如何实现翻页（from/size，scroll，search_after）</p>
 <p>2.权衡时间与搜索匹配度的权重（通过调整boost和weight）</p>
@@ -160,7 +389,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;首先，了解&lt;a href=&quot;[Request Body Search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html&quot;&gt;QUERY结构体&lt;/a
+      &lt;p&gt;首先，了解&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;QU
     
     </summary>
     
@@ -637,43 +866,6 @@
   </entry>
   
   <entry>
-    <title>Python练习笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
-    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
-    <published>2017-07-11T16:00:00.000Z</published>
-    <updated>2017-08-04T07:51:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
-<p><strong>计算机CPU数量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
-<p><strong>遍历文件夹的文档</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
-<p> <strong>获取当前用户名</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
-<p><strong>获取当前IP地址</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
-<p>绝对路径</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
-<p>从路径解析文件名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
-<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
-    
-    </summary>
-    
-      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Elasticsearch相关性</title>
     <link href="http://www.pirrla.cn/2017/07/12/es_similarity/"/>
     <id>http://www.pirrla.cn/2017/07/12/es_similarity/</id>
@@ -794,6 +986,43 @@
     
     
       <category term="elasticsearch" scheme="http://www.pirrla.cn/tags/elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python练习笔记</title>
+    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
+    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
+    <published>2017-07-11T16:00:00.000Z</published>
+    <updated>2017-08-04T07:51:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
+<p><strong>计算机CPU数量</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
+<p><strong>遍历文件夹的文档</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
+<p> <strong>获取当前用户名</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
+<p><strong>获取当前IP地址</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+<p>绝对路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
+<p>从路径解析文件名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
+<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
+    
+    </summary>
+    
+      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
     
   </entry>
   
@@ -922,6 +1151,61 @@
   </entry>
   
   <entry>
+    <title>Coursera Machine Learning Notes</title>
+    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
+    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
+    <published>2017-03-14T16:00:00.000Z</published>
+    <updated>2017-03-26T09:34:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
+</ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CourseHomePage&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Week6:&lt;/p&gt;
+&lt;p&gt;Ev
+    
+    </summary>
+    
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
+    
+    
+      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Duality of Linear Programming</title>
     <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
     <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
@@ -991,61 +1275,6 @@
     
     
       <category term="linear_programming" scheme="http://www.pirrla.cn/tags/linear-programming/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Coursera Machine Learning Notes</title>
-    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
-    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
-    <published>2017-03-14T16:00:00.000Z</published>
-    <updated>2017-03-26T09:34:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
-<p>Week6:</p>
-<p>Evaluating a Learning Algorithm</p>
-<p>How to improve the algorithm:</p>
-<p>What to do next:</p>
-<ol>
-<li>Get more training examples</li>
-<li>Try smaller or additional features</li>
-<li>Try adding ploynomial features (x square or x cube)</li>
-<li>Try decrease or increse the lamda (regularization parameter)</li>
-</ol>
-<p>But every one takes much time. So</p>
-<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
-<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
-<p>Then only apply test on test set.</p>
-<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
-<ol>
-<li>Get more training examples - fix high variance</li>
-<li>Try smaller features - fix high variance</li>
-<li>Try additional features - fix high bias</li>
-<li>Try adding polynomial features - fix high bias</li>
-<li>Try decrease lamda - fix high bias</li>
-<li>Try increase lamda - fix high variance</li>
-</ol>
-<p>Precision and Recall</p>
-<p>Precision = True Positive/(True positive + False positive) </p>
-<p>= True Pos/Number of Predictive Pos</p>
-<p>Recall = True positive /(True positive + False negative)</p>
-<p>= True Pos/Number of Actual Pos</p>
-<p>one way to balance precision and recall is f1 score</p>
-<p>f1 score = 2*P*R/(P+R)</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CourseHomePage&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Week6:&lt;/p&gt;
-&lt;p&gt;Ev
-    
-    </summary>
-    
-      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
-    
-    
-      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
     
   </entry>
   

@@ -1,0 +1,902 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="recommendationsystem," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="目前大部分舆论：目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用
+精细的特征工程+简单可行的模型+各种Trick+CF协同过滤
+即可以实现比较好的效果。
+其中，大部分人认为其中重要性是：
+用户交互界面UI &amp;gt; 数据 &amp;gt; 算法
+所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）
+
+其次，我们的推荐页面是已什么形式展现给客户？
+
+是直接在目前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="推荐系统1">
+<meta property="og:url" content="http://www.pirrla.cn/2017/08/21/rs_start/index.html">
+<meta property="og:site_name" content="Note down something">
+<meta property="og:description" content="目前大部分舆论：目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用
+精细的特征工程+简单可行的模型+各种Trick+CF协同过滤
+即可以实现比较好的效果。
+其中，大部分人认为其中重要性是：
+用户交互界面UI &amp;gt; 数据 &amp;gt; 算法
+所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）
+
+其次，我们的推荐页面是已什么形式展现给客户？
+
+是直接在目前">
+<meta property="og:updated_time" content="2017-08-23T01:37:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="推荐系统1">
+<meta name="twitter:description" content="目前大部分舆论：目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用
+精细的特征工程+简单可行的模型+各种Trick+CF协同过滤
+即可以实现比较好的效果。
+其中，大部分人认为其中重要性是：
+用户交互界面UI &amp;gt; 数据 &amp;gt; 算法
+所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）
+
+其次，我们的推荐页面是已什么形式展现给客户？
+
+是直接在目前">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.pirrla.cn/2017/08/21/rs_start/"/>
+
+
+
+
+
+  <title> 推荐系统1 | Note down something </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Note down something</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/21/rs_start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                推荐系统1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T14:56:01+08:00">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="目前大部分舆论："><a href="#目前大部分舆论：" class="headerlink" title="目前大部分舆论："></a>目前大部分舆论：</h3><p>目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用</p>
+<p><strong>精细的特征工程+简单可行的模型+各种Trick+CF协同过滤</strong></p>
+<p>即可以实现比较好的效果。</p>
+<p>其中，大部分人认为其中重要性是：</p>
+<p><strong>用户交互界面UI &gt; 数据 &gt; 算法</strong></p>
+<font color="red">所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）</font>
+
+<font color="red">其次，我们的推荐页面是已什么形式展现给客户？</font>
+
+<p>是直接在目前的基础上，进行排序展示？（推荐的产品在最前面）</p>
+<p>现有的第三方库：<strong>Java-mahout, Python-Crab</strong></p>
+<p>特征工程分为：静态特征、行为特征、Item特征、上下文特征</p>
+<p>特镇工程操作有：转换、切分、叠加、离散化、组合</p>
+<p>大数据不一定有效，提高维度则有一定的帮助，数据量太大可以随机从原始数据中采样。</p>
+<h3 id="USER表"><a href="#USER表" class="headerlink" title="USER表"></a>USER表</h3><p>对于USER，我们设计了一个表去存储用户的信息。</p>
+<p>信息来源暂定是用户自己填写的信息、问卷调查获得的风险偏好和从身份证号所获取的信息（出生地、年龄、性别等）。</p>
+<p>开户日期指的是用户已经在网站注册的时长。</p>
+<font color="red">金额方面，暂时还需要解决，是什么金额？</font>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>userid</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>金额</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>风险偏好</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>已购产品</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>年龄</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>职业</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>电话</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>出生地</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>邮箱</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>开户日期</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ITEM表"><a href="#ITEM表" class="headerlink" title="ITEM表"></a>ITEM表</h3><p>对于ITEM，我们同样将它存储在数据库中。</p>
+<p>这个数据来源我们可以从自身获取。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>itemid</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>风险</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>起购额</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>产品类型</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+</tbody>
+</table>
+<p>两个表中，有<strong>关联的是风险和风险偏好，起购额和金额</strong>。因为这两个字段的数值是硬性要求，起到了一个Filter的作用。</p>
+<h3 id="可能添加的字段（增加维度，提高准度）"><a href="#可能添加的字段（增加维度，提高准度）" class="headerlink" title="可能添加的字段（增加维度，提高准度）"></a>可能添加的字段（增加维度，提高准度）</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户行为-退款行为</td>
+<td>用户是否发生退款行为，退款产品为</td>
+</tr>
+<tr>
+<td>用户行为-投诉行为</td>
+<td>用户是否对某款产品进行过投诉</td>
+</tr>
+<tr>
+<td>用户-是否有亲戚好友购买过相关产品</td>
+<td>对于熟人推荐的会比较信任（但是亲戚好友的信息比较难获取，推荐码？）</td>
+</tr>
+<tr>
+<td>产品-描述</td>
+<td>对描述进行NLP，得出一个向量</td>
+</tr>
+<tr>
+<td>产品-投资经理</td>
+<td>对于不同的投资经理，会有不同的喜好（例如已经购买的产品的同一位投资经理，但是要确定是否前一款产品是否亏损）</td>
+</tr>
+<tr>
+<td>产品-目前盈亏</td>
+<td>目前产品的盈亏情况，是否会推荐亏损的产品给客户</td>
+</tr>
+<tr>
+<td>产品-行业归属</td>
+<td>投资详情</td>
+</tr>
+<tr>
+<td>产品-开始销售日期</td>
+<td>长期稳定的产品会让客户偏喜爱</td>
+</tr>
+<tr>
+<td>网页动作</td>
+<td>是否能捕捉到用户的网页动作？（例如在某一个产品页面逗留很久，多次点击同一款产品的详情）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="相关论文"><a href="#相关论文" class="headerlink" title="相关论文"></a>相关论文</h3><p><a href="http://www.cin.ufpe.br/~idal/rs/Amazon-Recommendations.pdf" target="_blank" rel="external">Amazon CF</a></p>
+<p>基础的推荐算法有：</p>
+<p><strong>1.传统的协同过滤</strong></p>
+<p>其中，分为寻找相似的用户和相似的产品。</p>
+<p>计算相似度的基本都是使用向量之间的cos距离</p>
+<p>推荐相似用户购买的产品或者推荐相似产品的产品</p>
+<p><strong>2.Cluster Models</strong></p>
+<p>将用户分类成几个类，然后对新来的用户同样进行分类，然后推荐同一个分类用户的购买的产品信息</p>
+<p>其中分类的算法可以有：KNN, LogisticRegression, NeuralNetwork, DecesionTree, K-Means</p>
+<p><strong>3.Search-Based Methods</strong></p>
+<p>将item进行细分，划分出目录、类别、作者等信息，然后推荐相关目录、相关作者的其他作品等。</p>
+<p><strong>4.亚马逊Item-to-item 协同过滤</strong></p>
+<p>基于庞大的用户数量和商品数量，一个一个算相似度计算量非常庞大，同时不能满足业务要求的0.5秒内给用户推荐信息的要求，所以亚马逊按照传统的协同过滤进行优化，只计算购买过某一产品的用户们的购买记录中商品的相似度，然后推荐相似度最高的产品。</p>
+<p><a href="https://datajobs.com/data-science-repo/Recommender-Systems-%5BNetflix%5D.pdf" target="_blank" rel="external">matrix factorization</a></p>
+<h3 id="想法："><a href="#想法：" class="headerlink" title="想法："></a>想法：</h3><h3 id="1-直接将已购产品当做Training-data"><a href="#1-直接将已购产品当做Training-data" class="headerlink" title="1.直接将已购产品当做Training data"></a>1.直接将已购产品当做Training data</h3><p>是否可以直接将客户已经购买的产品记录当做training data放进神经网络</p>
+<p>然后把产品当成ont-hot型的向量输出（或者把金额当成输出）</p>
+<h3 id="2-将用户分类"><a href="#2-将用户分类" class="headerlink" title="2.将用户分类"></a>2.将用户分类</h3><p>将用户分成某几类用户，然后进来一个用户则根据模型，将该用户分配到不同的组里面。</p>
+<p>然后推荐系统将推荐组内用户最常购买的产品。</p>
+<h3 id="3-将产品分类"><a href="#3-将产品分类" class="headerlink" title="3.将产品分类"></a>3.将产品分类</h3><p>由于产品比较少，所以是否直接人工分类？</p>
+<p>或者根据投资经理（用户是否有投资经理偏好）进行分类？</p>
+<h3 id="目前难题："><a href="#目前难题：" class="headerlink" title="目前难题："></a>目前难题：</h3><p>1.冷启动？（完全新用户进入，没有任何数据，是否能找出新用户最多购买的产品）（例如注册时间小于30天的用户，购买最多的产品是？）</p>
+<p>2.推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
+<p>3.是否要将客户引导到高风险的产品上去？</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/recommendationsystem/" rel="tag"># recommendationsystem</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/21/1/" rel="next" title="1">
+                <i class="fa fa-chevron-left"></i> 1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
+               alt="Alan Wong" />
+          <p class="site-author-name" itemprop="name">Alan Wong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/alanhuangym" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目前大部分舆论："><span class="nav-number">1.</span> <span class="nav-text">目前大部分舆论：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USER表"><span class="nav-number">2.</span> <span class="nav-text">USER表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ITEM表"><span class="nav-number">3.</span> <span class="nav-text">ITEM表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可能添加的字段（增加维度，提高准度）"><span class="nav-number">4.</span> <span class="nav-text">可能添加的字段（增加维度，提高准度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关论文"><span class="nav-number">5.</span> <span class="nav-text">相关论文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法："><span class="nav-number">6.</span> <span class="nav-text">想法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-直接将已购产品当做Training-data"><span class="nav-number">7.</span> <span class="nav-text">1.直接将已购产品当做Training data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-将用户分类"><span class="nav-number">8.</span> <span class="nav-text">2.将用户分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-将产品分类"><span class="nav-number">9.</span> <span class="nav-text">3.将产品分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目前难题："><span class="nav-number">10.</span> <span class="nav-text">目前难题：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Wong</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
