@@ -95,7 +95,7 @@
 子代码情况
 其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
 29w用户购买过两款产品以上。
-平均每位用">
+平均每">
 <meta property="og:type" content="article">
 <meta property="og:title" content="推荐系统3">
 <meta property="og:url" content="http://www.pirrla.cn/2017/08/30/rs_3/index.html">
@@ -110,8 +110,8 @@
 子代码情况
 其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
 29w用户购买过两款产品以上。
-平均每位用">
-<meta property="og:updated_time" content="2017-08-30T01:41:26.000Z">
+平均每">
+<meta property="og:updated_time" content="2017-08-30T01:56:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统3">
 <meta name="twitter:description" content="现在使用协同过滤方法数据概况
@@ -124,7 +124,7 @@
 子代码情况
 其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
 29w用户购买过两款产品以上。
-平均每位用">
+平均每">
 
 
 
@@ -381,7 +381,9 @@
       
 
       
-        <h3 id="现在使用协同过滤方法"><a href="#现在使用协同过滤方法" class="headerlink" title="现在使用协同过滤方法"></a>现在使用协同过滤方法</h3><p><strong>数据概况</strong></p>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<h3 id="现在使用协同过滤方法"><a href="#现在使用协同过滤方法" class="headerlink" title="现在使用协同过滤方法"></a>现在使用协同过滤方法</h3><p><strong>数据概况</strong></p>
 <p>“持有过.csv”</p>
 <p>目前只调用了2016年年度数据。</p>
 <p>统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。</p>
@@ -455,12 +457,8 @@
 <p>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。</p>
 <p>0则表示没有。</p>
 <p>通过建立这个矩阵之后，计算不同用户之间的相似度。</p>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-
-
-<p>相似度</p>
-<p>$$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$<br>\(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\)</p>
+<p>相似度计算使用Jaccard Similarity</p>
+<p>$$similarity=\frac{USER1\capUSER2}{USER1\cupUSER2}$$</p>
 
       
     </div>
