@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-08-24T05:15:07.000Z</updated>
+  <updated>2017-08-30T01:38:54.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -16,9 +16,110 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>推荐系统3</title>
+    <link href="http://www.pirrla.cn/2017/08/30/rs_3/"/>
+    <id>http://www.pirrla.cn/2017/08/30/rs_3/</id>
+    <published>2017-08-30T01:12:35.000Z</published>
+    <updated>2017-08-30T01:38:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="现在使用协同过滤方法"><a href="#现在使用协同过滤方法" class="headerlink" title="现在使用协同过滤方法"></a>现在使用协同过滤方法</h3><p><strong>数据概况</strong></p>
+<p>“持有过.csv”</p>
+<p>目前只调用了2016年年度数据。</p>
+<p>统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。</p>
+<p>数据约190w条。</p>
+<p>每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。</p>
+<p>通过初步分析，得知，数据共包含125w位用户。</p>
+<p><strong>子代码情况</strong></p>
+<p>其中约有<font color="red">96w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）</p>
+<p>29w用户购买过两款产品以上。</p>
+<p>平均每位用户购买<strong>1.52</strong>款子产品</p>
+<p><strong>母代码情况</strong></p>
+<p>其中约有<font color="red">121w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）</p>
+<p>只有<font color="red">4w</font>用户购买过两款产品以上。</p>
+<p>平均每位用户购买<strong>1.03</strong>款母产品</p>
+<p><strong>初步构建</strong></p>
+<p>为了简化该问题，所以首先只考虑用户曾经持仓的产品，忽略<font color="red"><strong>购买次数、购买金额、购买日期、卖出</strong></font>等数据。建立一个用户-产品的矩阵（如下）。</p>
+<table>
+<thead>
+<tr>
+<th>表格</th>
+<th>产品1</th>
+<th>产品2</th>
+<th>产品3</th>
+<th>产品4</th>
+<th>产品5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>用户2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>用户3</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>用户4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>用户5</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。</p>
+<p>0则表示没有。</p>
+<p>通过建立这个矩阵之后，计算不同用户之间的相似度。</p>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+
+
+<p>相似度</p>
+<p>$$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$<br>\(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\)</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;现在使用协同过滤方法&quot;&gt;&lt;a href=&quot;#现在使用协同过滤方法&quot; class=&quot;headerlink&quot; title=&quot;现在使用协同过滤方法&quot;&gt;&lt;/a&gt;现在使用协同过滤方法&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;数据概况&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;“持有过.csv”
+    
+    </summary>
+    
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
+    
+  </entry>
+  
+  <entry>
     <title>推荐系统1</title>
-    <link href="http://www.pirrla.cn/2017/08/21/rs_start/"/>
-    <id>http://www.pirrla.cn/2017/08/21/rs_start/</id>
+    <link href="http://www.pirrla.cn/2017/08/21/rs_1/"/>
+    <id>http://www.pirrla.cn/2017/08/21/rs_1/</id>
     <published>2017-08-21T06:56:01.000Z</published>
     <updated>2017-08-24T05:15:07.000Z</updated>
     
@@ -215,16 +316,361 @@
   </entry>
   
   <entry>
-    <title>1</title>
-    <link href="http://www.pirrla.cn/2017/08/21/1/"/>
-    <id>http://www.pirrla.cn/2017/08/21/1/</id>
+    <title>推荐系统2</title>
+    <link href="http://www.pirrla.cn/2017/08/21/rs_2/"/>
+    <id>http://www.pirrla.cn/2017/08/21/rs_2/</id>
     <published>2017-08-21T06:54:08.000Z</published>
-    <updated>2017-08-21T06:54:08.000Z</updated>
+    <updated>2017-08-29T01:41:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="想法1"><a href="#想法1" class="headerlink" title="想法1:"></a>想法1:</h3><p>根据用户的属性来进行用户分类器的建立。</p>
+<p>从client和client_info两个表查看，可以得出信息。</p>
+<p>目前初步选择的属性有：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+<th>如何向量化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client_id</td>
+<td>用来区别用户的唯一属性，应为主键</td>
+<td>不用</td>
+</tr>
+<tr>
+<td>birthday</td>
+<td>生日，用于计算年龄，或者计算星座？</td>
+<td>计算年龄，然后根据问卷的划分，划分为四个等级</td>
+</tr>
+<tr>
+<td>address</td>
+<td>住址，不同区域的人群有不同的投资观念</td>
+<td>根据省份划分？</td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号码，可以查询归属地？</td>
+<td>归属地</td>
+</tr>
+<tr>
+<td>email</td>
+<td>可以查看邮箱的地址属性</td>
+<td>email服务商</td>
+</tr>
+<tr>
+<td>degree</td>
+<td>学历</td>
+<td>学历代码</td>
+</tr>
+<tr>
+<td>profession</td>
+<td>职业</td>
+<td>职业代码</td>
+</tr>
+<tr>
+<td>income</td>
+<td>收入</td>
+<td>收入可以去除</td>
+</tr>
+<tr>
+<td>marriage</td>
+<td>婚否</td>
+<td>1、0</td>
+</tr>
+<tr>
+<td>risk_level</td>
+<td>风险偏好</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>性别</td>
+<td>1、0</td>
+</tr>
+<tr>
+<td>id_type</td>
+<td>证件类型</td>
+<td></td>
+</tr>
+<tr>
+<td>id_no</td>
+<td>证件号码</td>
+<td></td>
+</tr>
+<tr>
+<td>open_date</td>
+<td>开户日期</td>
+<td>计算开户总时长</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>可能有用的字段，尚未加入</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_address</td>
+<td>身份证地址</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>用户之间的相似度：</p>
+<p>将所有的属性向量化（normalize），然后用cos计算两个向量之间的距离，距离小于一定的阈值则确定为相似。</p>
+<p>然后推荐系统推荐相似用户中，最喜爱的产品。</p>
+<h3 id="想法2"><a href="#想法2" class="headerlink" title="想法2:"></a>想法2:</h3><p>于想法一同样，计算产品之间的相似度，但是由于产品的数量不多，所以是否可以直接人工分类？这样更加准确？</p>
+<h3 id="想法3："><a href="#想法3：" class="headerlink" title="想法3："></a>想法3：</h3><p>建立一个三层的简单的全连接神经网络，然后根据购买记录，将购买记录作为训练集。</p>
+<p>用户的各种信息作为向量输入，然后输出则是一个产品数量维度的向量，购买了产品为1，其他为0。</p>
+<p>然后根据这个分类器就可以softmax去得出最后输出是什么。</p>
+<h3 id="想法4："><a href="#想法4：" class="headerlink" title="想法4："></a>想法4：</h3><p>根据购买记录，建立一个用户-产品的Matrix，单元格是购买产品的数，根据Factorization、SVD、NMF等算法，补全矩阵。</p>
+<h3 id="想法5："><a href="#想法5：" class="headerlink" title="想法5："></a>想法5：</h3><p>将用户或产品，分为大几类，然后将用户或产品进行归类，然后推荐相同类别用户购买的产品或相同类别的产品</p>
+<h3 id="想法6："><a href="#想法6：" class="headerlink" title="想法6："></a>想法6：</h3><p>根据用户的开户日期和产品的购买日期，去得出新用户最喜欢的产品</p>
+<p>init_date or business_date or valid_date?</p>
+<p>问题：由于用户数据太多，是否需要采样？</p>
+<p>问题：risk_level是否是硬性规定</p>
+<p>问题：推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
+<p>问题：用户的购买记录是以购买金额来分类还是简单以1，0划分</p>
+<p>问题：是否有用户投诉、退款的数据</p>
+<p>问题：是否有用户网站点击，停留时间的数据？</p>
+<p>问题：解析身份证是否合法？</p>
+<h3 id="客户简单维度分析："><a href="#客户简单维度分析：" class="headerlink" title="客户简单维度分析："></a>客户简单维度分析：</h3><p>男性用户最喜爱的产品：</p>
+<p>女性用户最喜爱的产品：</p>
+<p>问题：是否需要区分不同风险用户的喜好?</p>
+<p>年龄段最喜欢产品</p>
+<p>决策树参数：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>性别</td>
+<td>男、女</td>
+</tr>
+<tr>
+<td>年龄</td>
+<td>18-22，22-35，35-60，60+</td>
+</tr>
+<tr>
+<td>星座</td>
+<td>12星座</td>
+</tr>
+</tbody>
+</table>
+<p>876017无法分类</p>
+<p>计算产品相似度：</p>
+<p>涉及字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>excel</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>产品编号</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>产品名称</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>产品创建日期</td>
+<td>7</td>
+<td></td>
+</tr>
+<tr>
+<td>投资经理</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>托管银行</td>
+<td>12</td>
+<td></td>
+</tr>
+<tr>
+<td>存续期</td>
+<td>18</td>
+<td></td>
+</tr>
+<tr>
+<td>产品成立日期</td>
+<td>19</td>
+<td></td>
+</tr>
+<tr>
+<td>成立规模</td>
+<td>20</td>
+<td></td>
+</tr>
+<tr>
+<td>产品类型</td>
+<td>21</td>
+<td></td>
+</tr>
+<tr>
+<td>产品风险等级</td>
+<td>22</td>
+<td></td>
+</tr>
+<tr>
+<td>产品集合类型</td>
+<td>32</td>
+<td></td>
+</tr>
+<tr>
+<td>最小投资额</td>
+<td>34</td>
+<td></td>
+</tr>
+<tr>
+<td>获利类型</td>
+<td>35</td>
+<td></td>
+</tr>
+<tr>
+<td>产品类型</td>
+<td>38</td>
+<td></td>
+</tr>
+<tr>
+<td>天数</td>
+<td>40</td>
+<td></td>
+</tr>
+<tr>
+<td>代理机构</td>
+<td>41</td>
+<td></td>
+</tr>
+<tr>
+<td>产品模型</td>
+<td>43</td>
+<td></td>
+</tr>
+<tr>
+<td>利率</td>
+<td>44</td>
+<td></td>
+</tr>
+<tr>
+<td>阈值</td>
+<td>45</td>
+<td></td>
+</tr>
+<tr>
+<td>单客户购买上限</td>
+<td>46</td>
+<td></td>
+</tr>
+<tr>
+<td>开放日期</td>
+<td>49</td>
+<td></td>
+</tr>
+<tr>
+<td>到期日期</td>
+<td>50</td>
+<td></td>
+</tr>
+<tr>
+<td>总额</td>
+<td>51</td>
+<td></td>
+</tr>
+<tr>
+<td>广发直销规模</td>
+<td>52</td>
+<td></td>
+</tr>
+<tr>
+<td>投资经理名称</td>
+<td>56</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+]]></content>
     
     <summary type="html">
     
+      &lt;h3 id=&quot;想法1&quot;&gt;&lt;a href=&quot;#想法1&quot; class=&quot;headerlink&quot; title=&quot;想法1:&quot;&gt;&lt;/a&gt;想法1:&lt;/h3&gt;&lt;p&gt;根据用户的属性来进行用户分类器的建立。&lt;/p&gt;
+&lt;p&gt;从client和client_info两个表查看，可以得出信息。&lt;/p&gt;
+
+    
     </summary>
     
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
     
   </entry>
   
@@ -873,6 +1319,43 @@
   </entry>
   
   <entry>
+    <title>Python练习笔记</title>
+    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
+    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
+    <published>2017-07-11T16:00:00.000Z</published>
+    <updated>2017-08-04T07:51:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
+<p><strong>计算机CPU数量</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
+<p><strong>遍历文件夹的文档</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
+<p> <strong>获取当前用户名</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
+<p><strong>获取当前IP地址</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+<p>绝对路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
+<p>从路径解析文件名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
+<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
+    
+    </summary>
+    
+      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Elasticsearch相关性</title>
     <link href="http://www.pirrla.cn/2017/07/12/es_similarity/"/>
     <id>http://www.pirrla.cn/2017/07/12/es_similarity/</id>
@@ -993,43 +1476,6 @@
     
     
       <category term="elasticsearch" scheme="http://www.pirrla.cn/tags/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python练习笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
-    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
-    <published>2017-07-11T16:00:00.000Z</published>
-    <updated>2017-08-04T07:51:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
-<p><strong>计算机CPU数量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
-<p><strong>遍历文件夹的文档</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
-<p> <strong>获取当前用户名</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
-<p><strong>获取当前IP地址</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
-<p>绝对路径</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
-<p>从路径解析文件名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
-<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
-    
-    </summary>
-    
-      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
     
   </entry>
   
