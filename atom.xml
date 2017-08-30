@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-08-30T01:58:02.000Z</updated>
+  <updated>2017-08-30T05:44:10.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.pirrla.cn/2017/08/30/rs_3/"/>
     <id>http://www.pirrla.cn/2017/08/30/rs_3/</id>
     <published>2017-08-30T01:12:35.000Z</published>
-    <updated>2017-08-30T01:58:02.000Z</updated>
+    <updated>2017-08-30T05:44:10.000Z</updated>
     
     <content type="html"><![CDATA[<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
@@ -98,8 +98,35 @@
 <p>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。</p>
 <p>0则表示没有。</p>
 <p>通过建立这个矩阵之后，计算不同用户之间的相似度。</p>
-<p>相似度计算使用Jaccard Similarity</p>
+<p>相似度计算使用<a href="https://en.wikipedia.org/wiki/Jaccard_index" target="_blank" rel="external">Jaccard Similarity</a></p>
 <p>$$similarity=\frac{USER1 \cap USER2}{USER1 \cup USER2}$$</p>
+<p>（问题：是否需要在分子分母上加1）</p>
+<p>即是计算两个用户之间购买了相同产品的数量，再除以两个用户共购买了多少款产品，即得到相似度。</p>
+<font color="red">问题：用母代码还是子代码？</font>
+
+<p>但是由于之前描述的数据概况，大部分用户都只购买了一款产品，所以计算相似度时很大概率得到的结果是1和0。（完全相同和完全不相同）</p>
+<p><strong>针对只购买了一款产品的用户</strong></p>
+<p>所以为了实现协同过滤的效果，我们需要先挑选出<strong>购买过两款产品或以上</strong>的用户出来，然后再根据这些用户与其他用户进行重合，进行推荐。</p>
+<p>首先，根据统计一共有125款母代码产品。</p>
+<p>制作一份字典，遍历一遍记录，然后对于购买了两款产品以上的用户加入到字典里，索引是购买产品的产品代码。</p>
+<p>然后对于每一个只购买了一款产品的用户就可以到这份字典去索引，根据已经购买了的产品代码，可以得到与其相似的用户群，然后根据用户群进行推荐。</p>
+<p><strong>对于购买了两款产品或以上的用户</strong></p>
+<p>可以直接使用Jaccard Similarity 的计算方法，计算两位用户之间的相似度。</p>
+<p>设定一个阈值（threshold），当两位用户相似度超过这个阈值之后（去除相似度1.0的用户，以为完全相同没有推荐的意义），则认定这两位用户为相似用户。然后根据相似用户的其他喜好，进行推荐。</p>
+<h3 id="后期完善"><a href="#后期完善" class="headerlink" title="后期完善"></a>后期完善</h3><p><strong>1.使用时间字段</strong></p>
+<p>根据购买时间与现在时间的差值，赋予用户一个权重，标识这个用户近期对该产品的偏好程度。</p>
+<p>可以参考ES中的<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decay_function</a>。</p>
+<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt="">根据时间差，套入不同的计算公式中，得出一个权重。</p>
+<p><strong>2.购买数量与金额</strong></p>
+<p>由于每个客户的购买金额和购买次数是不一样的。在初步构建的当中，我们忽略了购买的金额和次数，均算作1。所以我们现在需要将购买金额和次数考虑进去。</p>
+<p>想法是：</p>
+<p>$$金额权重=\frac{购买总金额}{该产品的最低购买金额}$$</p>
+<p>由于每个产品的规模大小都不一样，所以不能单纯以购买金额去衡量用户与产品之间的关系。所以我们使用到客户购买的总金额除以最低购买门槛金额，得到一个倍数，然后再辅以一个函数，达到实现权重的目的。</p>
+<p>其次，由于某一个客户可能会购买一款母代码的多款子产品，所以购买次数也会反应该用户的投资偏好，我们可以再设定一个函数，去控制该权重。</p>
+<p><strong>3.结合</strong></p>
+<p>根据上述两个字段的影响，每个用户-产品矩阵的内容可以为上述两个字段的权重相加相乘，然后就能计算更加准确的用户相似度。</p>
+<p><strong>4.已找出相似用户后的推荐想法</strong></p>
+<p>如果已经找出了相似的用户，那么就以这群用户对产品的购买次数进行统计，给出一个排名，然后相应地推荐排名第一的产品和后续产品中，客户尚未购买过的产品。</p>
 ]]></content>
     
     <summary type="html">
