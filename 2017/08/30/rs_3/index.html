@@ -94,8 +94,7 @@
 通过初步分析，得知，数据共包含125w位用户。
 子代码情况
 其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。
-平均每">
+29w用户购买过两款产品以上。平均每位">
 <meta property="og:type" content="article">
 <meta property="og:title" content="推荐系统3">
 <meta property="og:url" content="http://www.pirrla.cn/2017/08/30/rs_3/index.html">
@@ -109,10 +108,9 @@
 通过初步分析，得知，数据共包含125w位用户。
 子代码情况
 其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。
-平均每">
+29w用户购买过两款产品以上。平均每位">
 <meta property="og:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
-<meta property="og:updated_time" content="2017-08-30T05:44:10.000Z">
+<meta property="og:updated_time" content="2017-08-30T05:46:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统3">
 <meta name="twitter:description" content="现在使用协同过滤方法数据概况
@@ -124,8 +122,7 @@
 通过初步分析，得知，数据共包含125w位用户。
 子代码情况
 其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。
-平均每">
+29w用户购买过两款产品以上。平均每位">
 <meta name="twitter:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
 
 
@@ -394,76 +391,7 @@
 <p>通过初步分析，得知，数据共包含125w位用户。</p>
 <p><strong>子代码情况</strong></p>
 <p>其中约有<font color="red">96w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）</p>
-<p>29w用户购买过两款产品以上。</p>
-<p>平均每位用户购买<strong>1.52</strong>款子产品</p>
-<p><strong>母代码情况</strong></p>
-<p>其中约有<font color="red">121w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）</p>
-<p>只有<font color="red">4w</font>用户购买过两款产品以上。</p>
-<p>平均每位用户购买<strong>1.03</strong>款母产品</p>
-<p><strong>初步构建</strong></p>
-<p>为了简化该问题，所以首先只考虑用户曾经持仓的产品，忽略<font color="red"><strong>购买次数、购买金额、购买日期、卖出</strong></font>等数据。建立一个用户-产品的矩阵（如下）。</p>
-<table>
-<thead>
-<tr>
-<th>表格</th>
-<th>产品1</th>
-<th>产品2</th>
-<th>产品3</th>
-<th>产品4</th>
-<th>产品5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用户1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>用户2</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>用户3</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>用户4</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>用户5</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<p>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。</p>
-<p>0则表示没有。</p>
-<p>通过建立这个矩阵之后，计算不同用户之间的相似度。</p>
-<p>相似度计算使用<a href="https://en.wikipedia.org/wiki/Jaccard_index" target="_blank" rel="external">Jaccard Similarity</a></p>
-<p>$$similarity=\frac{USER1 \cap USER2}{USER1 \cup USER2}$$</p>
-<p>（问题：是否需要在分子分母上加1）</p>
-<p>即是计算两个用户之间购买了相同产品的数量，再除以两个用户共购买了多少款产品，即得到相似度。</p>
-<font color="red">问题：用母代码还是子代码？</font>
+<font color="red">29w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.52</strong>款子产品<br><br><strong>母代码情况</strong><br><br>其中约有<font color="red">121w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）<br><br>只有<font color="red">4w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.03</strong>款母产品<br><br><br><br><strong>初步构建</strong><br><br>为了简化该问题，所以首先只考虑用户曾经持仓的产品，忽略<font color="red"><strong>购买次数、购买金额、购买日期、卖出</strong></font>等数据。建立一个用户-产品的矩阵（如下）。<br><br>| 表格   | 产品1  | 产品2  | 产品3  | 产品4  | 产品5  |<br>| —- | —- | —- | —- | —- | —- |<br>| 用户1  | 0    | 0    | 0    | 0    | 1    |<br>| 用户2  | 0    | 1    | 0    | 1    | 0    |<br>| 用户3  | 0    | 0    | 1    | 1    | 0    |<br>| 用户4  | 0    | 0    | 0    | 0    | 1    |<br>| 用户5  | 0    | 1    | 0    | 1    | 0    |<br><br>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。<br><br>0则表示没有。<br><br>通过建立这个矩阵之后，计算不同用户之间的相似度。<br><br><br><br>相似度计算使用<a href="https://en.wikipedia.org/wiki/Jaccard_index" target="_blank" rel="external">Jaccard Similarity</a><br><br>$$similarity=\frac{USER1 \cap USER2}{USER1 \cup USER2}$$<br><br>（问题：是否需要在分子分母上加1）<br><br>即是计算两个用户之间购买了相同产品的数量，再除以两个用户共购买了多少款产品，即得到相似度。<br><br><font color="red">问题：用母代码还是子代码？</font>
 
 <p>但是由于之前描述的数据概况，大部分用户都只购买了一款产品，所以计算相似度时很大概率得到的结果是1和0。（完全相同和完全不相同）</p>
 <p><strong>针对只购买了一款产品的用户</strong></p>
@@ -471,6 +399,7 @@
 <p>首先，根据统计一共有125款母代码产品。</p>
 <p>制作一份字典，遍历一遍记录，然后对于购买了两款产品以上的用户加入到字典里，索引是购买产品的产品代码。</p>
 <p>然后对于每一个只购买了一款产品的用户就可以到这份字典去索引，根据已经购买了的产品代码，可以得到与其相似的用户群，然后根据用户群进行推荐。</p>
+<p>这样，计算量可以离线完成，对于大部分的用户（只买过一款产品的），推荐系统的结果可以直接存取，快捷。</p>
 <p><strong>对于购买了两款产品或以上的用户</strong></p>
 <p>可以直接使用Jaccard Similarity 的计算方法，计算两位用户之间的相似度。</p>
 <p>设定一个阈值（threshold），当两位用户相似度超过这个阈值之后（去除相似度1.0的用户，以为完全相同没有推荐的意义），则认定这两位用户为相似用户。然后根据相似用户的其他喜好，进行推荐。</p>
