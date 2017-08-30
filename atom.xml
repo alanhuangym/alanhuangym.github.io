@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-08-30T01:38:54.000Z</updated>
+  <updated>2017-08-30T01:41:26.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.pirrla.cn/2017/08/30/rs_3/"/>
     <id>http://www.pirrla.cn/2017/08/30/rs_3/</id>
     <published>2017-08-30T01:12:35.000Z</published>
-    <updated>2017-08-30T01:38:54.000Z</updated>
+    <updated>2017-08-30T01:41:26.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="现在使用协同过滤方法"><a href="#现在使用协同过滤方法" class="headerlink" title="现在使用协同过滤方法"></a>现在使用协同过滤方法</h3><p><strong>数据概况</strong></p>
 <p>“持有过.csv”</p>
@@ -111,6 +111,8 @@
     
     </summary>
     
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
+    
     
       <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
     
@@ -121,7 +123,7 @@
     <link href="http://www.pirrla.cn/2017/08/21/rs_1/"/>
     <id>http://www.pirrla.cn/2017/08/21/rs_1/</id>
     <published>2017-08-21T06:56:01.000Z</published>
-    <updated>2017-08-24T05:15:07.000Z</updated>
+    <updated>2017-08-30T01:41:16.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="目前大部分舆论："><a href="#目前大部分舆论：" class="headerlink" title="目前大部分舆论："></a>目前大部分舆论：</h3><p>目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用</p>
 <p><strong>精细的特征工程+简单可行的模型+各种Trick+CF协同过滤</strong></p>
@@ -310,6 +312,8 @@
     
     </summary>
     
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
+    
     
       <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
     
@@ -320,7 +324,7 @@
     <link href="http://www.pirrla.cn/2017/08/21/rs_2/"/>
     <id>http://www.pirrla.cn/2017/08/21/rs_2/</id>
     <published>2017-08-21T06:54:08.000Z</published>
-    <updated>2017-08-29T01:41:37.000Z</updated>
+    <updated>2017-08-30T01:41:21.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="想法1"><a href="#想法1" class="headerlink" title="想法1:"></a>想法1:</h3><p>根据用户的属性来进行用户分类器的建立。</p>
 <p>从client和client_info两个表查看，可以得出信息。</p>
@@ -668,6 +672,8 @@
 
     
     </summary>
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
     
     
       <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
@@ -1319,43 +1325,6 @@
   </entry>
   
   <entry>
-    <title>Python练习笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
-    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
-    <published>2017-07-11T16:00:00.000Z</published>
-    <updated>2017-08-04T07:51:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
-<p><strong>计算机CPU数量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
-<p><strong>遍历文件夹的文档</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
-<p> <strong>获取当前用户名</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
-<p><strong>获取当前IP地址</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
-<p>绝对路径</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
-<p>从路径解析文件名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
-<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
-    
-    </summary>
-    
-      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Elasticsearch相关性</title>
     <link href="http://www.pirrla.cn/2017/07/12/es_similarity/"/>
     <id>http://www.pirrla.cn/2017/07/12/es_similarity/</id>
@@ -1476,6 +1445,43 @@
     
     
       <category term="elasticsearch" scheme="http://www.pirrla.cn/tags/elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python练习笔记</title>
+    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
+    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
+    <published>2017-07-11T16:00:00.000Z</published>
+    <updated>2017-08-04T07:51:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>获取当前路径</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
+<p><strong>计算机CPU数量</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
+<p><strong>遍历文件夹的文档</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
+<p> <strong>获取当前用户名</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
+<p><strong>获取当前IP地址</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+<p>绝对路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
+<p>从路径解析文件名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
+<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;获取当前路径&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
+    
+    </summary>
+    
+      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
     
   </entry>
   
@@ -1604,61 +1610,6 @@
   </entry>
   
   <entry>
-    <title>Coursera Machine Learning Notes</title>
-    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
-    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
-    <published>2017-03-14T16:00:00.000Z</published>
-    <updated>2017-03-26T09:34:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
-<p>Week6:</p>
-<p>Evaluating a Learning Algorithm</p>
-<p>How to improve the algorithm:</p>
-<p>What to do next:</p>
-<ol>
-<li>Get more training examples</li>
-<li>Try smaller or additional features</li>
-<li>Try adding ploynomial features (x square or x cube)</li>
-<li>Try decrease or increse the lamda (regularization parameter)</li>
-</ol>
-<p>But every one takes much time. So</p>
-<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
-<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
-<p>Then only apply test on test set.</p>
-<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
-<ol>
-<li>Get more training examples - fix high variance</li>
-<li>Try smaller features - fix high variance</li>
-<li>Try additional features - fix high bias</li>
-<li>Try adding polynomial features - fix high bias</li>
-<li>Try decrease lamda - fix high bias</li>
-<li>Try increase lamda - fix high variance</li>
-</ol>
-<p>Precision and Recall</p>
-<p>Precision = True Positive/(True positive + False positive) </p>
-<p>= True Pos/Number of Predictive Pos</p>
-<p>Recall = True positive /(True positive + False negative)</p>
-<p>= True Pos/Number of Actual Pos</p>
-<p>one way to balance precision and recall is f1 score</p>
-<p>f1 score = 2*P*R/(P+R)</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CourseHomePage&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Week6:&lt;/p&gt;
-&lt;p&gt;Ev
-    
-    </summary>
-    
-      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
-    
-    
-      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Duality of Linear Programming</title>
     <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
     <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
@@ -1728,6 +1679,61 @@
     
     
       <category term="linear_programming" scheme="http://www.pirrla.cn/tags/linear-programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Coursera Machine Learning Notes</title>
+    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
+    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
+    <published>2017-03-14T16:00:00.000Z</published>
+    <updated>2017-03-26T09:34:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
+</ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CourseHomePage&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Week6:&lt;/p&gt;
+&lt;p&gt;Ev
+    
+    </summary>
+    
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
+    
+    
+      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
     
   </entry>
   
