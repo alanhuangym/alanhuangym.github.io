@@ -255,6 +255,275 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/31/rs_4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/31/rs_4/" itemprop="url">
+                  推荐系统4
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T14:17:36+08:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
+                    <span itemprop="name">recommendationsystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<h3 id="数据归一化"><a href="#数据归一化" class="headerlink" title="数据归一化"></a>数据归一化</h3><p>现在每个用户的属性变为了持有产品的份额：</p>
+<p>直接使用份额计算会出现偏差化：</p>
+<p>例如购买了一款产品金额较大，那么</p>
+<p>那么就将份额标准化</p>
+<p><strong>1.固定阈值</strong></p>
+<p>例如（万分之X）</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方案1</td>
+<td>0-0.03</td>
+<td>0.03-0.1</td>
+<td>0.1-0.3</td>
+<td>0.3-1.0</td>
+<td>1.0+</td>
+</tr>
+<tr>
+<td>方案2</td>
+<td>0-0.01</td>
+<td>0.01-0.1</td>
+<td>0.1-1.0</td>
+<td>1.0-2.0</td>
+<td>2.0+</td>
+</tr>
+</tbody>
+</table>
+<p>划分为五个评分，0分则是没有持仓过该产品</p>
+<p><strong>2.平均持仓数</strong></p>
+<p>计算出每个产品的用户平均持仓数，然后根据平均持仓倍数去划分数据：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方案1</td>
+<td>0-0.5倍</td>
+<td>0.5-1.0倍</td>
+<td>1.0-1.5倍</td>
+<td>1.5-2.0倍</td>
+<td>2.0+倍</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>3.排序划分</strong></p>
+<p>将一款产品的所有用户进行排序，然后根据排序去划分数据</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方案1</td>
+<td>20%</td>
+<td>20%</td>
+<td>20%</td>
+<td>20%</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>方案</td>
+<td>10%</td>
+<td>25%</td>
+<td>30%</td>
+<td>25%</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4.（0，1）标准化（max-min）</strong></p>
+<p>$${x}_{normalization}=\frac{x-Min}{Max-Min}$$</p>
+<p>然后将得到的结果乘以5，得到投资偏好。</p>
+<p><strong>5.Z-score标准化</strong></p>
+<p>将数据划分为正态分布化的数据</p>
+<p>$${x}_{normalization}=\frac{x-\mu }{\sigma }$$</p>
+<p>其中的u是平均数，sigma是标准差</p>
+<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h3><p><strong>0.不进行归一化</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">GF1806 0.250494227106</div><div class="line">GF1807 0.228637469027</div><div class="line">GF1805 0.377176516585</div><div class="line">GF1802 0.256939429748</div><div class="line">GF180F 0.758798112353</div><div class="line">879003 0.0578450717465</div><div class="line">GF1811 0.288599403176</div><div class="line">GF180L 1.38227279375</div><div class="line">879005 0.0835590588465</div><div class="line">879049 4.02077615455</div><div class="line">***********************************</div><div class="line">d96e788472f4d36ae9163192f84635d2b3332ced</div><div class="line">GF1806 0.249496242138</div><div class="line">GF180F 0.758798112353</div><div class="line">879002 0.0262265839131</div><div class="line">879003 0.0390845079368</div><div class="line">879005 0.0828958917128</div><div class="line">879049 4.02077615455</div><div class="line">***********************************</div><div class="line">b598fb7de5df3b8a73c5c23c98fb3c73483b020b</div><div class="line">GF1806 0.249496242138</div><div class="line">GF1807 0.226822885939</div><div class="line">GF1805 0.374926954856</div><div class="line">GF1811 0.259999462321</div><div class="line">GF1809 0.306768321508</div><div class="line">879002 0.0233817984367</div><div class="line">879006 0.115620874347</div><div class="line">879049 4.02077615455</div><div class="line">***********************************</div><div class="line">36e64d058bd7a6c387ffe388179d4639749cc44f</div><div class="line">GF1806 0.249496242138</div><div class="line">GF1814 0.249990015339</div><div class="line">GF1804 0.351223807748</div><div class="line">GF1805 0.375676808766</div><div class="line">GF1811 0.323959330052</div><div class="line">GF1803 0.407730728967</div><div class="line">GF1807 0.229544760571</div><div class="line">GF1812 0.355765682516</div><div class="line">879119 0.729319808632</div><div class="line">GF1809 0.311063078009</div><div class="line">GF180F 0.770938882151</div><div class="line">879162 1.2696774613</div><div class="line">879002 0.020420103968</div><div class="line">879003 0.0394753530162</div><div class="line">GF180L 1.38227279375</div><div class="line">879005 0.0830616834962</div><div class="line">879004 0.0871009660079</div><div class="line">879049 4.02077615455</div></pre></td></tr></table></figure>
+<p>1.固定值归一化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">GF1806 0.250494227106 3</div><div class="line">GF1807 0.228637469027 3</div><div class="line">GF1805 0.377176516585 4</div><div class="line">GF1802 0.256939429748 3</div><div class="line">GF180F 0.758798112353 4</div><div class="line">879003 0.0578450717465 2</div><div class="line">GF1811 0.288599403176 3</div><div class="line">GF180L 1.38227279375 5</div><div class="line">879005 0.0835590588465 2</div><div class="line">879049 4.02077615455 5</div><div class="line">***********************************</div><div class="line">bb7a0f6f5d59a3bfcca72a685810c38c2bc8e3a3</div><div class="line">GF1806 0.262470046729 3</div><div class="line">GF1805 0.451412053647 4</div><div class="line">GF1802 0.299002492211 3</div><div class="line">879003 0.101619720636 3</div><div class="line">GF180L 1.38227279375 5</div><div class="line">879005 0.146891520115 3</div><div class="line">***********************************</div><div class="line">d96e788472f4d36ae9163192f84635d2b3332ced</div><div class="line">GF1806 0.249496242138 3</div><div class="line">GF180F 0.758798112353 4</div><div class="line">879002 0.0262265839131 1</div><div class="line">879003 0.0390845079368 2</div><div class="line">879005 0.0828958917128 2</div><div class="line">879049 4.02077615455 5</div><div class="line">***********************************</div><div class="line">f0f5de95640aabbb217a35a7b141b2bae46783aa</div><div class="line">GF180F 4.58465819484 5</div><div class="line">GF180L 3.31469015941 5</div><div class="line">GF1805 0.374926954856 4</div></pre></td></tr></table></figure>
+<p>2.平均持仓数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">GF1806 1</div><div class="line">GF1807 1</div><div class="line">GF1805 1</div><div class="line">GF1802 1</div><div class="line">GF180F 1</div><div class="line">879003 1</div><div class="line">GF1811 1</div><div class="line">GF180L 1</div><div class="line">879005 1</div><div class="line">879049 1</div><div class="line">***********************************</div><div class="line">bb7a0f6f5d59a3bfcca72a685810c38c2bc8e3a3</div><div class="line">GF1806 1</div><div class="line">GF1805 1</div><div class="line">GF1802 1</div><div class="line">879003 1</div><div class="line">GF180L 1</div><div class="line">879005 1</div><div class="line">***********************************</div><div class="line">7b0fa22fec8c28836d6a52cd35aa818218cd4021</div><div class="line">GF1806 1</div><div class="line">GF1807 1</div><div class="line">GF1811 1</div><div class="line">GF1802 1</div><div class="line">879003 1</div><div class="line">***********************************</div><div class="line">21cfa76118cad37e9af116b01ca19230b5def327</div><div class="line">GF1806 1</div><div class="line">GF1807 1</div><div class="line">GF1811 1</div><div class="line">GF1802 1</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">994d7b99589e00ce8e0c719fe30fa936628dfc0e</div><div class="line">87900J 3</div><div class="line">87906Y 2</div><div class="line">87906Z 5</div><div class="line">879787 1</div><div class="line">***********************************</div><div class="line">3b4cf0c1c07783fbe8a625ff04edfbda6b623900</div><div class="line">87906Y 2</div><div class="line">87906Z 5</div><div class="line">***********************************</div><div class="line">6bbe38653b22066bddd7501394cd1008129c9c20</div><div class="line">87906Y 2</div><div class="line">87906Z 5</div><div class="line">***********************************</div><div class="line">9641c6e1eeb9161e5333a52425a417b44f455e38</div><div class="line">87906Y 2</div><div class="line">87906Z 5</div></pre></td></tr></table></figure>
+<p>3.(0,1)归一化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">GF1806 0.00250205597229</div><div class="line">GF1807 0.00611680178649</div><div class="line">GF1805 0.00628624275145</div><div class="line">GF1802 0.00281313461987</div><div class="line">GF180F 0.0110457409948</div><div class="line">879003 9.96838674323e-05</div><div class="line">GF1811 0.00168125266956</div><div class="line">GF180L 0.0126821535272</div><div class="line">879005 0.000251958300901</div><div class="line">879049 0.00139546358688</div><div class="line">***********************************</div><div class="line">53685bbde6333d222b00c006f27ef581c88a4b1d</div><div class="line">GF1806 0.00330949236175</div><div class="line">GF1807 0.00606825574057</div><div class="line">GF1802 0.00277429449691</div><div class="line">GF1808 0.0049099997054</div><div class="line">GF180F 0.0110457409948</div><div class="line">GF180L 0.0126821535272</div><div class="line">879004 0.000391751898821</div><div class="line">***********************************</div><div class="line">2ff657077263d4833bad7d8c8035c623e336c977</div><div class="line">GF1814 0.00701227648786</div><div class="line">GF1807 0.00646876061945</div><div class="line">GF1805 0.00624875024995</div><div class="line">GF1802 0.00280203744188</div><div class="line">879637 0.0</div><div class="line">GF1812 0.00261713803293</div><div class="line">87905M 0.0</div><div class="line">87913V 0.0</div><div class="line">GF1808 0.00505729969656</div><div class="line">GF180F 0.0110457409948</div><div class="line">GF1806 0.0025718344257</div><div class="line">GF1811 0.00151464204465</div><div class="line">GF180L 0.0126821535272</div><div class="line">879580 0.0</div><div class="line">87907S 0.0</div><div class="line">879410 0.0</div><div class="line">***********************************</div><div class="line">ece0720feb0ff36294d63aef73021496db43f7b3</div><div class="line">GF180F 0.0111852661442</div><div class="line">879002 4.82520920901e-05</div><div class="line">GF180L 0.0126821535272</div></pre></td></tr></table></figure>
+<p>4.Z-score</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">GF1806 -0.319787520279</div><div class="line">GF1807 -0.40743813927</div><div class="line">GF1805 -0.349684885459</div><div class="line">GF1802 -0.359717190383</div><div class="line">GF180F -0.405274114882</div><div class="line">879003 -0.0725244748709</div><div class="line">GF1811 -0.262125545055</div><div class="line">GF180L -0.441496892426</div><div class="line">879005 -0.133596718487</div><div class="line">879049 -0.266415990907</div><div class="line">***********************************</div><div class="line">da7ab1c15153fcf193a6fc7d754ae0d3c4d598af</div><div class="line">GF1806 -0.218140849102</div><div class="line">GF1807 -0.179129356215</div><div class="line">GF1802 -0.331388969459</div><div class="line">GF1810 -0.268200096133</div><div class="line">GF180F -0.405274114882</div><div class="line">GF180L -0.441496892426</div><div class="line">***********************************</div><div class="line">bd086050bbaec0d4f07094224c4bf46cf64d057c</div><div class="line">GF1806 -0.320230425164</div><div class="line">GF1807 -0.40743813927</div><div class="line">87911V -0.247691581664</div><div class="line">GF1805 -0.350590828042</div><div class="line">GF1802 -0.356399470815</div><div class="line">GF1814 -0.0395975964336</div><div class="line">GF180F -0.404049998232</div><div class="line">GF1874 -0.30671101606</div><div class="line">879003 -0.0764411040059</div><div class="line">GF1811 -0.267856858948</div><div class="line">***********************************</div><div class="line">2681a76a23e95e26c0a84029644bb510547ee7cd</div><div class="line">GF1806 -0.320230425164</div><div class="line">GF1807 -0.511840648104</div><div class="line">GF1811 -0.316486188947</div><div class="line">GF180F -0.488208017918</div><div class="line">879002 -0.0736386038632</div><div class="line">GF1802 -0.432451811674</div></pre></td></tr></table></figure>
+<h3 id="时间权重："><a href="#时间权重：" class="headerlink" title="时间权重："></a>时间权重：</h3><p>建立一个字典</p>
+<p>{</p>
+<p>“user1”:</p>
+<p>{“87006”：“2017-01-03”</p>
+<p>}</p>
+<p>}</p>
+<p>然后 在计算金额权重的时候，再乘以这个权重。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/30/rs_3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2582,250 +2851,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/es_similarity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/12/es_similarity/" itemprop="url">
-                  Elasticsearch相关性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
-                2017-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="ElasticSearch-相关性"><a href="#ElasticSearch-相关性" class="headerlink" title="ElasticSearch 相关性"></a>ElasticSearch 相关性</h1><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>Elasticsearch版本：5.4.2</p>
-<p>Kibana版本：5.4.2</p>
-<p>Logstash版本：5.4.2</p>
-<p>Elasticsearch在执行搜索后，返回结果的排序是根据字段<strong>_score</strong>决定的。排序结果是倒序排列，得分越高，越在前面。</p>
-<p><strong>_score</strong>字段即量化表明查询语句与文档内容的相似性与匹配度，为了更好地显示搜索结果，我们需要深入了解该数值的来源与相关算法，本文讨论的相关性则为此。</p>
-<h3 id="2-语句"><a href="#2-语句" class="headerlink" title="2.语句"></a>2.语句</h3><p>本文通过调用<strong>_search</strong>的<strong>explain</strong>参数进行调试。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /_search?explain</div><div class="line">&#123;</div><div class="line">  "query":&#123;</div><div class="line">    "match":&#123;</div><div class="line">      "title":"a"</div><div class="line">  &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-经典TF-IDF算法"><a href="#3-经典TF-IDF算法" class="headerlink" title="3.经典TF/IDF算法"></a>3.经典TF/IDF算法</h3><p>在Elasticsearch 5.X 版本前，Elasticsearch默认使用的是经典的TF/IDF算法，即：</p>
-<p><strong>检索词频率（TermFrequency）</strong></p>
-<p>检索词在该字段出现的频率？出现频率越高，相关性也越高。 字段中出现过 5 次要比只出现过 1 次的相关性高。当然，词频不是在score计算中直接使用的。通常是取词频（TermFrequency）的平方根。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TF_Score = sqrt(termFreq)</div></pre></td></tr></table></figure>
-<p><strong>反向文档频率（InverseDocumentFrequency）</strong></p>
-<p>每个检索词在索引中出现的频率？频率越高，相关性越低。检索词出现在多数文档中会比出现在少数文档中的权重更低。例如中文中，“的”、“得”，“不”等词因在大多数文档中出现，所以相关性较低。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">IDF_Score = log(maxDocs/docFreq+1)+1</div></pre></td></tr></table></figure>
-<p><strong>字段长度准则（FieldNorms）</strong></p>
-<p>字段的长度是多少？长度越长，相关性越低。 检索词出现在一个短的 title 要比同样的词出现在一个长的 content 字段权重更大。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FieldNorms = 1 / sqrt(length)</div></pre></td></tr></table></figure>
-<p>所以最终得分为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Score = TF_Score*IDF_Score*FieldNorms</div><div class="line">      = log(maxDocs / (docFreq + 1)) * sqrt(termFreq) * (1/sqrt(length))</div></pre></td></tr></table></figure>
-<p>*maxDocs有可能会数到已删除文档！</p>
-<h3 id="4-BM25算法"><a href="#4-BM25算法" class="headerlink" title="4.BM25算法"></a>4.BM25算法</h3><p>BM25是Elasticsearch5.X的默认相关性算法，它根据TF/IDF算法改进而来。它由两部分组成，分别是IDF和TFNorm.</p>
-<p>其中，根据不同的检索方法，数值各不相同，由于Elasticsearch是分布式系统，所以默认的检索方法为Query_Then_Search（该方法为在各自分片内进行检索，然后各分片返回各自的搜索结果至协调分片，非全局检索，当数据量充足时，效果良好，但当数据量较少时，应使用全局检索，请参看后文DFS_Query_Then_Search方法）</p>
-<p><strong>单词检索</strong>（即检索内容只包含单个英语单词（空格间隔）或单个中文分词（由Tokenizer划分））：</p>
-<p>IDF</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5))</div></pre></td></tr></table></figure>
-<p>TFNorm</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">termfreq * (k1 + 1)) / (termfreq + k1 * (1 - b + b * fieldLength / avgFieldLength)</div></pre></td></tr></table></figure>
-<ul>
-<li>docCount - 该索引该分片的文档总数</li>
-<li>docFreq - 该索引内该分片内，含有检索内容的文档的数量</li>
-<li>termFreq - 包含该检索内容的文档的检索内容出现次数</li>
-<li>k1 &amp; b - BM25参数，常分别设为 1.2 和 0.75</li>
-<li>fieldLength - 包含该检索内容的文档的长度</li>
-<li>avgFieldLength - 该索引该分片的平均文档长度</li>
-</ul>
-<p><strong>多词检索</strong></p>
-<p>如果检索内容为一段话或多个词语，首先通过Analyzer将一段话或多个词语进行筛选和划分，包括大小写转换、停用词去除、词根筛选、同义词转换、分词（英文根据空格划分，中文根据Tokenizer划分，本文使用中文分词工具ik）。然后将得到的多个词语逐个进行单词检索，然后最终得分为多个词语的得分的总和。</p>
-<h3 id="5-其他算法"><a href="#5-其他算法" class="headerlink" title="5.其他算法"></a>5.其他算法</h3><p>如果需要更换算法，可以在创建索引的时候，添加settings设置，更改默认的相关性算法。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">PUT /test</div><div class="line">&#123;</div><div class="line">  "settings": &#123;</div><div class="line">    "index": &#123;</div><div class="line">      "similarity": &#123;</div><div class="line">        "default": &#123;</div><div class="line">          "type": "classic"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可选算法有</p>
-<ul>
-<li>“BM25” - 如无设置算法，则默认为BM25算法</li>
-<li>“classic” - 经典TF/IDF算法</li>
-</ul>
-<p>除了以上的两种算法，其他的算法需要<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html#lm_dirichlet" target="_blank" rel="external">配置参数</a></p>
-<ul>
-<li>“<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/DFRSimilarity.html" target="_blank" rel="external">DFR</a>“  / “<a href="http://trec.nist.gov/pubs/trec21/papers/irra.web.nb.pdf" target="_blank" rel="external">DFI</a>“  / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/IBSimilarity.html" target="_blank" rel="external">IB</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMDirichletSimilarity.html" target="_blank" rel="external">LMDirichlet</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html" target="_blank" rel="external">LMJelinekMercer</a>“</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">"similarity" : &#123;</div><div class="line">  "my_similarity" : &#123;</div><div class="line">    "type" : "DFR",</div><div class="line">    "basic_model" : "g",</div><div class="line">    "after_effect" : "l",</div><div class="line">    "normalization" : "h2",</div><div class="line">    "normalization.h2.c" : "3.0"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>再在索引中设置mapping以应用算法</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"book"</span> : &#123;</div><div class="line">    <span class="attr">"properties"</span> : &#123;</div><div class="line">      <span class="attr">"title"</span> : &#123; <span class="attr">"type"</span> : <span class="string">"text"</span>, <span class="attr">"similarity"</span> : <span class="string">"my_similarity"</span> &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="6-Function-Score"><a href="#6-Function-Score" class="headerlink" title="6.Function Score"></a>6.Function Score</h3><p>首先，function score的语句如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">GET test6/test/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123; //首先是检索体</div><div class="line">          "match_all": &#123;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">         "functions": [  //Functions可以添加多种脚本和过滤器</div><div class="line">          &#123;              //使用一个数组将各个function结合起来</div><div class="line">            "filter": &#123;  // 过滤器</div><div class="line">              "match": &#123; "title": "a" &#125; &#125;,</div><div class="line">              "weight": 23 // weight 直接给符合过滤器的文档权重分</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            "script_score": &#123; //脚本打分器</div><div class="line">              "script": &#123;     //只能对字段类型为数值的进行数学操作</div><div class="line">               "inline": "Math.log(2 + doc['votes'].value)"</div><div class="line">          &#125; </div><div class="line">         &#125;</div><div class="line">        &#125;</div><div class="line">        ],</div><div class="line">      "boost":5, //将该数值影响得分</div><div class="line">      "score_mode":"multiply", //functions内多个脚本的得分处理办法</div><div class="line">      "boost_mode":"multiply", //检索得分和函数得分的处理办法</div><div class="line">      "min_score":40, //返回搜索结果所需要的最少得分</div><div class="line">      "random_score":&#123;&#125;, //生成一个随机数，影响得分</div><div class="line">      "max_boost":10 //无论函数、脚本如何影响得分，最终得分最大值为此</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>其中<strong>boost_mode</strong>（检索得分与函数得分d的处理方式）的模式有：</p>
-<ul>
-<li><p>multiply - 检索得分和函数得分的积（默认）</p>
-</li>
-<li><p>sum - 检索得分和函数得分的和</p>
-</li>
-<li><p>min - 检索得分和函数得分之中的较小值</p>
-</li>
-<li><p>max - 检索得分和函数得分之中的较大值</p>
-</li>
-<li><p>replace - 函数得分代替检索得分</p>
-<p>​</p>
-</li>
-</ul>
-<p>而后在函数内部中不同脚本、函数和过滤器也需要进行得分处理，<strong>score_mode</strong>:</p>
-<ul>
-<li><p>multiply - 函数结果求积（默认）</p>
-</li>
-<li><p>sum - 函数结果求和</p>
-</li>
-<li><p>min - 函数结果最小值</p>
-</li>
-<li><p>max - 函数结果最大值</p>
-</li>
-<li><p>avg - 函数结果平均值</p>
-</li>
-<li><p>first - 首个函数结果作为最终结果</p>
-<p>​</p>
-</li>
-</ul>
-<p><strong>脚本评分</strong>（script_score）例子中使用的是简洁版本，其完整版本为：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">"script_score": &#123;</div><div class="line">          "params": &#123;  // 参数字段，以","分隔</div><div class="line">            "threshold": 80,</div><div class="line">            "discount": 0.1,</div><div class="line">            "target": 10</div><div class="line">          &#125;,</div><div class="line">  		  //脚本字段，以";"分隔语句</div><div class="line">          "script": "price  = doc['price'].value; margin = doc['margin'].value;</div><div class="line">          if (price &lt; threshold) &#123; return price * margin / target &#125;;</div><div class="line">          return price * (1 - discount) * margin / target;" </div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
-<h3 id="7-同义词"><a href="#7-同义词" class="headerlink" title="7.同义词"></a>7.同义词</h3><p>使用同义词进行检索时，部分数据会发生变化，以BM25算法为例：</p>
-<p>b,c为同义词</p>
-<ul>
-<li>docCount - 文档总数不变</li>
-<li>docFreq - 所有包含b或c的文档的数量</li>
-<li>termFreq - 如有一次b或c出现，则算双倍次数</li>
-<li>k1 &amp; b - 不变</li>
-<li>fieldLength - <del>不变</del> 经测试，目前认为是取同义词中，长度最长的为该文档长度</li>
-<li>avgFieldLength - 每个b或c算双倍大小</li>
-</ul>
-<h3 id="8-DFS-Query-Then-Fetch"><a href="#8-DFS-Query-Then-Fetch" class="headerlink" title="8.DFS Query Then Fetch"></a>8.DFS Query Then Fetch</h3><p>可以全局搜索，当数据量较少时可以使用</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /_search?search_type=dfs_query_then_fetch</div></pre></td></tr></table></figure>
-<h3 id="资料参考："><a href="#资料参考：" class="headerlink" title="资料参考："></a>资料参考：</h3><p>[1] <a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/relevance-intro.html" target="_blank" rel="external">Elasticsearch文档-什么是相关性？</a></p>
-<p>[2] <a href="http://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/" target="_blank" rel="external">BM25 The Next Generation of Lucene Relevance</a></p>
-<p>[3] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html" target="_blank" rel="external">Elasticsearch文档-Similarity module</a></p>
-<p>[4] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" rel="external">Elasticsearch文档-Function Score Query</a></p>
-<p>[5] <a href="https://www.elastic.co/blog/understanding-query-then-fetch-vs-dfs-query-then-fetch" target="_blank" rel="external">Elasticsearch文档-DFS-DFS Query Then Fetch</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2875,7 +2900,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
