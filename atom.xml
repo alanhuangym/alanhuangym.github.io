@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-09-04T02:13:59.000Z</updated>
+  <updated>2017-09-08T05:24:38.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -14,6 +14,255 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>推荐系统5</title>
+    <link href="http://www.pirrla.cn/2017/09/05/rs_5/"/>
+    <id>http://www.pirrla.cn/2017/09/05/rs_5/</id>
+    <published>2017-09-05T06:23:06.000Z</published>
+    <updated>2017-09-08T05:24:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
+    
+    </summary>
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
+    
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>文件系统</title>
+    <link href="http://www.pirrla.cn/2017/09/05/fs1/"/>
+    <id>http://www.pirrla.cn/2017/09/05/fs1/</id>
+    <published>2017-09-05T06:23:06.000Z</published>
+    <updated>2017-09-11T08:53:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="数据库选择"><a href="#数据库选择" class="headerlink" title="数据库选择"></a>数据库选择</h3><p><strong>关系型数据库 - Oracle</strong></p>
+<p>基础事务有四个特性：</p>
+<ul>
+<li>原子性：整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执行过程中发生错误，会被回复 （Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</li>
+<li>一致性：在事务开始之前和事务结束以后，数据库的完整性限制没有被破坏。</li>
+<li>隔离性：两个事务的执行是互不干扰的，一个事务不可能看到其他事务运行时，中间某一时刻的数据。</li>
+<li>持久性：在事务完成以后，该事务对数据库所作的更改便持久地保存在数据库之中，并不会被回复。</li>
+</ul>
+<p>对网站来说，关系型数据库的很多特性不再需要了：</p>
+<ul>
+<li>事务一致性</li>
+</ul>
+<p>关系型数据库在对事物一致性的维护中有很大的开销，而现在很多web系统对事物的读写一致性都不高</p>
+<ul>
+<li>读写实时性</li>
+</ul>
+<p>对关系数据库来说，插入一条数据之后立刻查询，是肯定可以读出这条数据的，但是对于很多web应用来说，并不要求这么高的实时性，比如发一条消息之后，过几秒乃至十几秒之后才看到这条动态是完全可以接受的</p>
+<ul>
+<li>复杂SQL，特别是多表关联查询</li>
+</ul>
+<p>任何大数据量的web系统，都非常忌讳多个大表的关联查询，以及复杂的数据分析类型的复杂SQL报表查询，特别是SNS类型的网站，从需求以及产品阶级角度，就避免了这种情况的产生。往往更多的只是单表的主键查询，以及单表的简单条件分页查询，SQL的功能极大的弱化了</p>
+<p><strong>NoSQL - MongoDB</strong></p>
+<p>由于在本项目中，数据是新闻资讯的存储，而新闻资讯相互之间是相对独立的，所以不需要使用到关系型数据库。</p>
+<p>非关系型数据库相当于是简化版的关系型数据库，减少了一些相对少用到的功能，提升了产品的性能。相对于关系型数据库，抛弃了ACID特性。</p>
+<p>但是由于是基于键值对的特性，所以非常容易进行扩展，可拓展性强。</p>
+<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>但是MongoDB也有一个问题。由于MongoDB的文档结构为BJSON格式（BJSON全称：Binary JSON），而BJSON格式本身就支持保存二进制格式的数据，因此可以把文件的二进制格式的数据直接保存到MongoDB的文档结构中。但是由于一个BJSON的最大长度不能超过16M，所以限制了单个文档中能存入的最大文件不能超过<font color="red">16M</font></p>
+<p>为了提供对大容量文件存取的支持，samus驱动提供了“GridFS”方式来支持。</p>
+<p><strong>BJSON</strong></p>
+<p><a href="http://blog.csdn.net/kwsy2008/article/details/48969607" target="_blank" rel="external">python 实现</a></p>
+<p><strong>GridDFS</strong></p>
+<p>MongoDB内置功能。</p>
+<p>GridFS是一种在MongoDB中存储大二进制文件的机制。使用GridFS存文件有如下几个原因：</p>
+<p>利用Grid可以简化需求。要是已经用了MongoDB，GridFS就可以不需要使用独立文件存储架构。</p>
+<p>基本原理是将文件存储在两个Collection之中，一个保存文件索引，一个保存文件内容。4MB每一块。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>适合类型</th>
+<th>文件分布</th>
+<th>系统性能</th>
+<th>复杂度</th>
+<th>FUSE</th>
+<th>POSIX</th>
+<th>备份机制</th>
+<th>通讯协议接口</th>
+<th>社区支持</th>
+<th>去重</th>
+<th>开发语言</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastDFS</td>
+<td>4KB~500MB</td>
+<td>小文件合并存储不分片处理</td>
+<td>很高</td>
+<td>简单</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>组内冗余备份</td>
+<td>ApiHTTP</td>
+<td>国内用户群</td>
+<td></td>
+<td>C语言</td>
+</tr>
+<tr>
+<td>TFS</td>
+<td>所有文件</td>
+<td>小文件合并，以block组织分片</td>
+<td></td>
+<td>复杂</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>Block存储多份,主辅灾备</td>
+<td>APIhttp</td>
+<td>少</td>
+<td></td>
+<td>C++</td>
+</tr>
+<tr>
+<td>MFS</td>
+<td>大于64K</td>
+<td>分片存储</td>
+<td>Master占内存多</td>
+<td></td>
+<td>支持</td>
+<td>支持</td>
+<td>多点备份动态冗余</td>
+<td>使用fuse挂在</td>
+<td>较多</td>
+<td></td>
+<td>Perl</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>大文件</td>
+<td>大文件分片分块存储</td>
+<td></td>
+<td>简单</td>
+<td>支持</td>
+<td>支持</td>
+<td>多副本</td>
+<td>原生api</td>
+<td>较多</td>
+<td></td>
+<td>java</td>
+</tr>
+<tr>
+<td>Ceph</td>
+<td>对象文件块</td>
+<td>OSD一主多从</td>
+<td></td>
+<td>复杂</td>
+<td>支持</td>
+<td>支持</td>
+<td>多副本</td>
+<td>原生api</td>
+<td>较少</td>
+<td></td>
+<td>C++</td>
+</tr>
+<tr>
+<td>MogileFS</td>
+<td>海量小图片</td>
+<td></td>
+<td>高</td>
+<td>复杂</td>
+<td>可以支持</td>
+<td>不支持</td>
+<td>动态冗余</td>
+<td>原生api</td>
+<td>文档少</td>
+<td></td>
+<td>Perl</td>
+</tr>
+<tr>
+<td>ClusterFS</td>
+<td>大文件</td>
+<td></td>
+<td></td>
+<td>简单</td>
+<td>支持</td>
+<td>支持</td>
+<td>镜像</td>
+<td></td>
+<td>多</td>
+<td></td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p><strong>HDFS</strong></p>
+<p>还是适合大数据处理，附件等文档太小，不适合使用HDFS。</p>
+<p><strong>FastDFS</strong></p>
+<ol>
+<li>为互联网量身定制，海量数据文件存储。</li>
+<li>高可用(同组备份机制)。</li>
+<li>FastDFS不是通用的文件系统，只能通过api来访问，目前提供c,java,php客户端。phtyon由第三方开发者提供。</li>
+<li>FastDFS可以看作是基于key/value pair存储系统，也许称为分布式文件存储服务更合适。</li>
+<li>支持高并发(这个好像没体现出支持什么高并发,这个是nginx的功劳吧)</li>
+</ol>
+<h3 id="从MongoDB到ElasticSearch"><a href="#从MongoDB到ElasticSearch" class="headerlink" title="从MongoDB到ElasticSearch"></a>从MongoDB到ElasticSearch</h3><p>MongoDB 本身是自带文本索引功能的，但是，不支持中文。<strong>术业有专攻</strong>，MongoDB 是数据存储应用，那么全文检索就使用专业的全文搜索引擎吧。</p>
+<p><strong>0.River</strong></p>
+<p>由于只支持ES 2.0 以下版本，已弃用。</p>
+<p><strong>1.<a href="https://github.com/mongodb-labs/mongo-connector" target="_blank" rel="external">Mongo-Connector</a></strong></p>
+<p>实时</p>
+<ul>
+<li>MongoDB必须开启复制集[2]</li>
+</ul>
+<p>This assumes there is a MongoDB replica set running on port 27017 and that Elasticsearch is running on port 9200 both on the local machine.</p>
+<ul>
+<li>安装mongo-connector</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install &apos;mongo-connector[elastic5]&apos;</div></pre></td></tr></table></figure>
+<ul>
+<li>运行mongo-connector</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo-connector -m 127.0.0.1:27017 -t 127.0.0.1:9200 -d elastic_doc_manager</div></pre></td></tr></table></figure>
+<p>启动之后，现在开始，在mongoDB上的操作，都会同步到elasticsearch之中了。</p>
+<p>（对旧数据无影响）</p>
+<p>问题：根据其他用户的评价，mongo-conncetor会出现延迟和退出的现象</p>
+<p><strong>2.<a href="https://github.com/keenwon/mongodb-to-elasticsearch" target="_blank" rel="external">mongodb to elasticsearch</a></strong></p>
+<p>非实时，应对一天更新一次的场景</p>
+<p>使用了mongoose</p>
+<p>一个node.js写的小程序，可以将mongodb的数据输入到es。</p>
+<p>Ref:</p>
+<p>[1] <a href="https://segmentfault.com/a/1190000003773614" target="_blank" rel="external">MongoDB 数据自动同步到 ElasticSearch</a></p>
+<p>[2] <a href="http://www.runoob.com/mongodb/mongodb-replication.html" target="_blank" rel="external">副本集设置</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;数据库选择&quot;&gt;&lt;a href=&quot;#数据库选择&quot; class=&quot;headerlink&quot; title=&quot;数据库选择&quot;&gt;&lt;/a&gt;数据库选择&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;关系型数据库 - Oracle&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;基础事务有四个特性：&lt;/p&gt;
+&lt;ul
+    
+    </summary>
+    
+      <category term="filesystem" scheme="http://www.pirrla.cn/categories/filesystem/"/>
+    
+    
+      <category term="filesystem" scheme="http://www.pirrla.cn/tags/filesystem/"/>
+    
+  </entry>
   
   <entry>
     <title>推荐系统4</title>
@@ -1718,61 +1967,6 @@
   </entry>
   
   <entry>
-    <title>Coursera Machine Learning Notes</title>
-    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
-    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
-    <published>2017-03-14T16:00:00.000Z</published>
-    <updated>2017-03-26T09:34:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
-<p>Week6:</p>
-<p>Evaluating a Learning Algorithm</p>
-<p>How to improve the algorithm:</p>
-<p>What to do next:</p>
-<ol>
-<li>Get more training examples</li>
-<li>Try smaller or additional features</li>
-<li>Try adding ploynomial features (x square or x cube)</li>
-<li>Try decrease or increse the lamda (regularization parameter)</li>
-</ol>
-<p>But every one takes much time. So</p>
-<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
-<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
-<p>Then only apply test on test set.</p>
-<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
-<ol>
-<li>Get more training examples - fix high variance</li>
-<li>Try smaller features - fix high variance</li>
-<li>Try additional features - fix high bias</li>
-<li>Try adding polynomial features - fix high bias</li>
-<li>Try decrease lamda - fix high bias</li>
-<li>Try increase lamda - fix high variance</li>
-</ol>
-<p>Precision and Recall</p>
-<p>Precision = True Positive/(True positive + False positive) </p>
-<p>= True Pos/Number of Predictive Pos</p>
-<p>Recall = True positive /(True positive + False negative)</p>
-<p>= True Pos/Number of Actual Pos</p>
-<p>one way to balance precision and recall is f1 score</p>
-<p>f1 score = 2*P*R/(P+R)</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CourseHomePage&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Week6:&lt;/p&gt;
-&lt;p&gt;Ev
-    
-    </summary>
-    
-      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
-    
-    
-      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Duality of Linear Programming</title>
     <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
     <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
@@ -1842,6 +2036,61 @@
     
     
       <category term="linear_programming" scheme="http://www.pirrla.cn/tags/linear-programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Coursera Machine Learning Notes</title>
+    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
+    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
+    <published>2017-03-14T16:00:00.000Z</published>
+    <updated>2017-03-26T09:34:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
+</ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/home/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CourseHomePage&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Week6:&lt;/p&gt;
+&lt;p&gt;Ev
+    
+    </summary>
+    
+      <category term="CUHK_Notes" scheme="http://www.pirrla.cn/categories/CUHK-Notes/"/>
+    
+    
+      <category term="machine_learning" scheme="http://www.pirrla.cn/tags/machine-learning/"/>
     
   </entry>
   

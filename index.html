@@ -255,6 +255,493 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/rs_5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/05/rs_5/" itemprop="url">
+                  推荐系统5
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
+                    <span itemprop="name">recommendationsystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/fs1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/05/fs1/" itemprop="url">
+                  文件系统
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/filesystem/" itemprop="url" rel="index">
+                    <span itemprop="name">filesystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="数据库选择"><a href="#数据库选择" class="headerlink" title="数据库选择"></a>数据库选择</h3><p><strong>关系型数据库 - Oracle</strong></p>
+<p>基础事务有四个特性：</p>
+<ul>
+<li>原子性：整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执行过程中发生错误，会被回复 （Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</li>
+<li>一致性：在事务开始之前和事务结束以后，数据库的完整性限制没有被破坏。</li>
+<li>隔离性：两个事务的执行是互不干扰的，一个事务不可能看到其他事务运行时，中间某一时刻的数据。</li>
+<li>持久性：在事务完成以后，该事务对数据库所作的更改便持久地保存在数据库之中，并不会被回复。</li>
+</ul>
+<p>对网站来说，关系型数据库的很多特性不再需要了：</p>
+<ul>
+<li>事务一致性</li>
+</ul>
+<p>关系型数据库在对事物一致性的维护中有很大的开销，而现在很多web系统对事物的读写一致性都不高</p>
+<ul>
+<li>读写实时性</li>
+</ul>
+<p>对关系数据库来说，插入一条数据之后立刻查询，是肯定可以读出这条数据的，但是对于很多web应用来说，并不要求这么高的实时性，比如发一条消息之后，过几秒乃至十几秒之后才看到这条动态是完全可以接受的</p>
+<ul>
+<li>复杂SQL，特别是多表关联查询</li>
+</ul>
+<p>任何大数据量的web系统，都非常忌讳多个大表的关联查询，以及复杂的数据分析类型的复杂SQL报表查询，特别是SNS类型的网站，从需求以及产品阶级角度，就避免了这种情况的产生。往往更多的只是单表的主键查询，以及单表的简单条件分页查询，SQL的功能极大的弱化了</p>
+<p><strong>NoSQL - MongoDB</strong></p>
+<p>由于在本项目中，数据是新闻资讯的存储，而新闻资讯相互之间是相对独立的，所以不需要使用到关系型数据库。</p>
+<p>非关系型数据库相当于是简化版的关系型数据库，减少了一些相对少用到的功能，提升了产品的性能。相对于关系型数据库，抛弃了ACID特性。</p>
+<p>但是由于是基于键值对的特性，所以非常容易进行扩展，可拓展性强。</p>
+<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>但是MongoDB也有一个问题。由于MongoDB的文档结构为BJSON格式（BJSON全称：Binary JSON），而BJSON格式本身就支持保存二进制格式的数据，因此可以把文件的二进制格式的数据直接保存到MongoDB的文档结构中。但是由于一个BJSON的最大长度不能超过16M，所以限制了单个文档中能存入的最大文件不能超过<font color="red">16M</font></p>
+<p>为了提供对大容量文件存取的支持，samus驱动提供了“GridFS”方式来支持。</p>
+<p><strong>BJSON</strong></p>
+<p><a href="http://blog.csdn.net/kwsy2008/article/details/48969607" target="_blank" rel="external">python 实现</a></p>
+<p><strong>GridDFS</strong></p>
+<p>MongoDB内置功能。</p>
+<p>GridFS是一种在MongoDB中存储大二进制文件的机制。使用GridFS存文件有如下几个原因：</p>
+<p>利用Grid可以简化需求。要是已经用了MongoDB，GridFS就可以不需要使用独立文件存储架构。</p>
+<p>基本原理是将文件存储在两个Collection之中，一个保存文件索引，一个保存文件内容。4MB每一块。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>适合类型</th>
+<th>文件分布</th>
+<th>系统性能</th>
+<th>复杂度</th>
+<th>FUSE</th>
+<th>POSIX</th>
+<th>备份机制</th>
+<th>通讯协议接口</th>
+<th>社区支持</th>
+<th>去重</th>
+<th>开发语言</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastDFS</td>
+<td>4KB~500MB</td>
+<td>小文件合并存储不分片处理</td>
+<td>很高</td>
+<td>简单</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>组内冗余备份</td>
+<td>ApiHTTP</td>
+<td>国内用户群</td>
+<td></td>
+<td>C语言</td>
+</tr>
+<tr>
+<td>TFS</td>
+<td>所有文件</td>
+<td>小文件合并，以block组织分片</td>
+<td></td>
+<td>复杂</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>Block存储多份,主辅灾备</td>
+<td>APIhttp</td>
+<td>少</td>
+<td></td>
+<td>C++</td>
+</tr>
+<tr>
+<td>MFS</td>
+<td>大于64K</td>
+<td>分片存储</td>
+<td>Master占内存多</td>
+<td></td>
+<td>支持</td>
+<td>支持</td>
+<td>多点备份动态冗余</td>
+<td>使用fuse挂在</td>
+<td>较多</td>
+<td></td>
+<td>Perl</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>大文件</td>
+<td>大文件分片分块存储</td>
+<td></td>
+<td>简单</td>
+<td>支持</td>
+<td>支持</td>
+<td>多副本</td>
+<td>原生api</td>
+<td>较多</td>
+<td></td>
+<td>java</td>
+</tr>
+<tr>
+<td>Ceph</td>
+<td>对象文件块</td>
+<td>OSD一主多从</td>
+<td></td>
+<td>复杂</td>
+<td>支持</td>
+<td>支持</td>
+<td>多副本</td>
+<td>原生api</td>
+<td>较少</td>
+<td></td>
+<td>C++</td>
+</tr>
+<tr>
+<td>MogileFS</td>
+<td>海量小图片</td>
+<td></td>
+<td>高</td>
+<td>复杂</td>
+<td>可以支持</td>
+<td>不支持</td>
+<td>动态冗余</td>
+<td>原生api</td>
+<td>文档少</td>
+<td></td>
+<td>Perl</td>
+</tr>
+<tr>
+<td>ClusterFS</td>
+<td>大文件</td>
+<td></td>
+<td></td>
+<td>简单</td>
+<td>支持</td>
+<td>支持</td>
+<td>镜像</td>
+<td></td>
+<td>多</td>
+<td></td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p><strong>HDFS</strong></p>
+<p>还是适合大数据处理，附件等文档太小，不适合使用HDFS。</p>
+<p><strong>FastDFS</strong></p>
+<ol>
+<li>为互联网量身定制，海量数据文件存储。</li>
+<li>高可用(同组备份机制)。</li>
+<li>FastDFS不是通用的文件系统，只能通过api来访问，目前提供c,java,php客户端。phtyon由第三方开发者提供。</li>
+<li>FastDFS可以看作是基于key/value pair存储系统，也许称为分布式文件存储服务更合适。</li>
+<li>支持高并发(这个好像没体现出支持什么高并发,这个是nginx的功劳吧)</li>
+</ol>
+<h3 id="从MongoDB到ElasticSearch"><a href="#从MongoDB到ElasticSearch" class="headerlink" title="从MongoDB到ElasticSearch"></a>从MongoDB到ElasticSearch</h3><p>MongoDB 本身是自带文本索引功能的，但是，不支持中文。<strong>术业有专攻</strong>，MongoDB 是数据存储应用，那么全文检索就使用专业的全文搜索引擎吧。</p>
+<p><strong>0.River</strong></p>
+<p>由于只支持ES 2.0 以下版本，已弃用。</p>
+<p><strong>1.<a href="https://github.com/mongodb-labs/mongo-connector" target="_blank" rel="external">Mongo-Connector</a></strong></p>
+<p>实时</p>
+<ul>
+<li>MongoDB必须开启复制集[2]</li>
+</ul>
+<p>This assumes there is a MongoDB replica set running on port 27017 and that Elasticsearch is running on port 9200 both on the local machine.</p>
+<ul>
+<li>安装mongo-connector</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install &apos;mongo-connector[elastic5]&apos;</div></pre></td></tr></table></figure>
+<ul>
+<li>运行mongo-connector</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo-connector -m 127.0.0.1:27017 -t 127.0.0.1:9200 -d elastic_doc_manager</div></pre></td></tr></table></figure>
+<p>启动之后，现在开始，在mongoDB上的操作，都会同步到elasticsearch之中了。</p>
+<p>（对旧数据无影响）</p>
+<p>问题：根据其他用户的评价，mongo-conncetor会出现延迟和退出的现象</p>
+<p><strong>2.<a href="https://github.com/keenwon/mongodb-to-elasticsearch" target="_blank" rel="external">mongodb to elasticsearch</a></strong></p>
+<p>非实时，应对一天更新一次的场景</p>
+<p>使用了mongoose</p>
+<p>一个node.js写的小程序，可以将mongodb的数据输入到es。</p>
+<p>Ref:</p>
+<p>[1] <a href="https://segmentfault.com/a/1190000003773614" target="_blank" rel="external">MongoDB 数据自动同步到 ElasticSearch</a></p>
+<p>[2] <a href="http://www.runoob.com/mongodb/mongodb-replication.html" target="_blank" rel="external">副本集设置</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/31/rs_4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2241,615 +2728,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/14/es_notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/14/es_notes/" itemprop="url">
-                  Elasticsearch笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-14T09:28:34+08:00">
-                2017-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Elasticsearch-5-5-文档"><a href="#Elasticsearch-5-5-文档" class="headerlink" title="Elasticsearch 5.5 文档"></a><strong>Elasticsearch 5.5 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank" rel="external">文档</a></strong></h3><h3 id="Set-up-Elasticsearch"><a href="#Set-up-Elasticsearch" class="headerlink" title="Set up Elasticsearch"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html" target="_blank" rel="external">Set up Elasticsearch</a></h3><ul>
-<li>ES目录下config/elasticsearch.yml 是ES的配置文件</li>
-</ul>
-<p>配置如下：详细设置看<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html" target="_blank" rel="external">这里</a></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Cluster</span></div><div class="line"><span class="comment"># 设置cluster的名称</span></div><div class="line"><span class="string">cluster.name:</span> <span class="string">my-application</span></div><div class="line"><span class="comment"># Node</span></div><div class="line"><span class="comment"># 设置node的名称</span></div><div class="line"><span class="string">node.name:</span> <span class="string">node-1</span></div><div class="line"><span class="comment"># 添加node自定义属性</span></div><div class="line"><span class="string">node.attr.rack:</span> <span class="string">r1</span></div><div class="line"><span class="comment"># 存储数据的路径</span></div><div class="line"><span class="comment"># Path to log files:</span></div><div class="line"><span class="string">path.logs:</span> <span class="string">/path/to/logs</span></div><div class="line"><span class="string">...</span></div></pre></td></tr></table></figure>
-<p>如需要在ES启动时，再输入node名称等信息可以以下配置：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#text是直接输入数据并显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.text&#125;</span></div><div class="line"><span class="comment">#secret则是输入的数据不会在终端上显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.secret&#125;</span></div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Enter value for [node.name]:</div></pre></td></tr></table></figure>
-<p>这样在启动ES时就需要输入名称了。</p>
-<ul>
-<li>ES目录下config/log4j2.properties 是ES的日志配置文件</li>
-</ul>
-<p>注意日志配置文件对多余的<font color="red">空格</font>会解析错误，所以需要保证没有多余的空格。</p>
-<h3 id="Set-up-X-Pack"><a href="#Set-up-X-Pack" class="headerlink" title="Set up X-Pack"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html" target="_blank" rel="external">Set up X-Pack</a></h3><h3 id="API-Conventions"><a href="#API-Conventions" class="headerlink" title="API Conventions"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/api-conventions.html" target="_blank" rel="external">API Conventions</a></h3><h5 id="Multiple-Indices"><a href="#Multiple-Indices" class="headerlink" title="Multiple Indices"></a>Multiple Indices</h5><p>后文所用的API基本都涉及到<strong>索引名称</strong></p>
-<ul>
-<li>_all 指所有的索引</li>
-<li>索引名称同时支持通配符，如test<em>,te\</em>t</li>
-<li>索引名称还支持筛选，如+test*,-test3</li>
-</ul>
-<p>包含多个索引操作的API支持以下参数：</p>
-<ul>
-<li>ignore_unavailable - 是否忽略索引如索引名称不存在</li>
-<li>allow_no_indices - 当通配符匹配失败后，是否整条request都失败</li>
-<li>expand_wildcards - open/close 设置通配符匹配的索引的开关状态</li>
-</ul>
-<h5 id="Date-math-support-in-index-names"><a href="#Date-math-support-in-index-names" class="headerlink" title="Date math support in index names"></a>Date math support in index names</h5><p>如果需要根据日期去匹配索引，可以使用以下通配符：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;static_name&#123;date_math_expr&#123;date_format|time_zone&#125;&#125;&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li>static_name - 固定的文字部分</li>
-<li>date_math_expr - 日期表达式，通常使用now/d</li>
-<li>date_format - 日期的显示格式</li>
-<li>time_zone - 时区</li>
-</ul>
-<p>例子：</p>
-<table>
-<thead>
-<tr>
-<th>Expression</th>
-<th>Resolves to</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>&lt;logstash-{now/d}&gt;</code></td>
-<td><code>logstash-2024.03.22</code></td>
-</tr>
-<tr>
-<td><code>&lt;logstash-{now/M}&gt;</code></td>
-<td><code>logstash-2024.03.01</code></td>
-</tr>
-<tr>
-<td><code>&lt;logstash-{now/M{YYYY.MM}}&gt;</code></td>
-<td><code>logstash-2024.03</code></td>
-</tr>
-<tr>
-<td><code>&lt;logstash-{now/M-1M{YYYY.MM}}&gt;</code></td>
-<td><code>logstash-2024.02</code></td>
-</tr>
-<tr>
-<td>`&lt;logstash-{now/d{YYYY.MM.dd</td>
-<td>+12:00}}&gt;`</td>
-<td><code>logstash-2024.03.23</code></td>
-</tr>
-</tbody>
-</table>
-<p>其中，由于url需要进行标准化，所以需要对符号进行百分号化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># GET /&lt;logstash-&#123;now/d&#125;&gt;/_search</div><div class="line">GET /%3Clogstash-%7Bnow%2Fd%7D%3E/_search</div><div class="line">&#123;</div><div class="line">  &quot;query&quot; : &#123;</div><div class="line">    &quot;match&quot;: &#123;</div><div class="line">      &quot;test&quot;: &quot;data&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>百分号编码如下：</p>
-<table>
-<thead>
-<tr>
-<th><code>&lt;</code></th>
-<th><code>%3C</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>&gt;</code></td>
-<td><code>%3E</code></td>
-</tr>
-<tr>
-<td><code>/</code></td>
-<td><code>%2F</code></td>
-</tr>
-<tr>
-<td><code>{</code></td>
-<td><code>%7B</code></td>
-</tr>
-<tr>
-<td><code>}</code></td>
-<td><code>%7D</code></td>
-</tr>
-<tr>
-<td>`</td>
-<td>`</td>
-<td><code>%7C</code></td>
-</tr>
-<tr>
-<td><code>+</code></td>
-<td><code>%2B</code></td>
-</tr>
-<tr>
-<td><code>:</code></td>
-<td><code>%3A</code></td>
-</tr>
-<tr>
-<td><code>,</code></td>
-<td><code>%2C</code></td>
-</tr>
-</tbody>
-</table>
-<h5 id="Common-options"><a href="#Common-options" class="headerlink" title="Common options"></a>Common options</h5><ul>
-<li>美化输出，可以使用 <code>?pretty=true</code>参数</li>
-<li>为了将时间、大小（1h,1kb）等变得可读，可以使用<code>?human=true</code>参数</li>
-<li>日期时间</li>
-<li><ul>
-<li>+1h = 加一小时</li>
-<li>-1d = 减一天</li>
-<li>/d = 取整最近的一天</li>
-</ul>
-</li>
-</ul>
-<p>具体的日期表达式如下：</p>
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>代表</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>y</code></td>
-<td>years</td>
-</tr>
-<tr>
-<td><code>M</code></td>
-<td>months</td>
-</tr>
-<tr>
-<td><code>w</code></td>
-<td>weeks</td>
-</tr>
-<tr>
-<td><code>d</code></td>
-<td>days</td>
-</tr>
-<tr>
-<td><code>h</code></td>
-<td>hours</td>
-</tr>
-<tr>
-<td><code>H</code></td>
-<td>hours</td>
-</tr>
-<tr>
-<td><code>m</code></td>
-<td>minutes</td>
-</tr>
-<tr>
-<td><code>s</code></td>
-<td>seconds</td>
-</tr>
-<tr>
-<td><code>ms</code></td>
-<td>milliseconds</td>
-</tr>
-<tr>
-<td><code>micros</code></td>
-<td>microseconds</td>
-</tr>
-<tr>
-<td><code>nanos</code></td>
-<td>nanoseconds</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>错误回溯，可以使用<code>?error_trace=true</code>参数</li>
-</ul>
-<h3 id="Document-APIs"><a href="#Document-APIs" class="headerlink" title="Document APIs"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html" target="_blank" rel="external">Document APIs</a></h3><h5 id="Reading-and-Writing-documents"><a href="#Reading-and-Writing-documents" class="headerlink" title="Reading and Writing documents"></a>Reading and Writing documents</h5><p><strong>基础写操作</strong>：</p>
-<p>首先，每一个索引操作来到ES都会首先被送去不同的复制组（复制组指的是ES内含有很多的分片，包括主分片和主分片的复制分片，每一个主分片和其复制分片构成一个复制组）。而分组方法，则是通过路由（路由一般指将文档的ID进行哈希操作，从而根据结果分配到不同的复制组中）分配到不同的复制组中。</p>
-<p>进入到一个复制组中，操作将会发送给主分片，主分片将进行以下操作：</p>
-<ol>
-<li>验证来到的操作，如操作非法则拒绝此操作；</li>
-<li>在主分片内进行本地操作，这同样会检查数值域的合法性，如果非法也会拒绝操作；</li>
-<li>转发这个操作至复制组中的复制分片，这个操作将是平行进行的；</li>
-<li>当整个复制组的复制分片都已经完成了操作，将会通知主分片，主分片将会通知客户端操作的完成性。</li>
-</ol>
-<p>失败处理：</p>
-<ul>
-<li>当主分片崩溃了，主持节点将会将一个复制分片提升为主分片</li>
-<li>当主分片转发操作给复制分片时，将会检查自己是否还是主分片，否则将造成数据不同步</li>
-<li>当主分片转发操作给复制分片，但复制分片崩溃了，主分片将会对master节点进行报告，同时会开始进行新的复制分片的制作流程</li>
-</ul>
-<p><strong>基础读操作</strong></p>
-<p>读操作相对于写操作来说，将轻量很多。</p>
-<p>当一个节点解说道了读操作，节点将操作转发到该操作的相关分片中，对应的分片将对该操作负责，不需要一定要主分片进行操作：</p>
-<ol>
-<li>解析读操作，并转发给相关的复制组；</li>
-<li>从复制组选择任一活动的分片，主分片或复制分片都可以；</li>
-<li>将分片领域的操作进行执行；</li>
-<li>将结果进行汇总，并呈献给客户端。</li>
-</ol>
-<p><del>待续。待继续整理</del>。</p>
-<h5 id="Index-API"><a href="#Index-API" class="headerlink" title="Index API"></a>Index API</h5><p>基础操作</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">PUT twitter/tweet/1</div><div class="line">&#123;</div><div class="line">    "user" : "kimchy",</div><div class="line">    "post_date" : "2009-11-15T14:12:12",</div><div class="line">    "message" : "trying out Elasticsearch"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>当该索引不存在时，系统会自动创建索引，并且自动设置mapping。如不想要系统自动创建索引，那么可以将参数<code>action.auto_create_index</code>设置为<code>false</code>。</p>
-<p>同时，如果不希望自动设置mapping(设置各个域的数值类型和分析器等参数)，可以在索引创建时设置settings<code>index.mapper.dynamic</code>设置为<code>false</code>。</p>
-<p>版本控制</p>
-<p>每一次创建文档成功，文档将会自带一个<code>version</code>字段。通过该字段的控制，则可以实现版本控制。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT twitter/tweet/1?version=2</div><div class="line">&#123;</div><div class="line">    "message" : "elasticsearch now has versioning support, double cool!"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>当需要系统自动创建文档ID时可以使用<strong>POST</strong>方法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST twitter/tweet/</div><div class="line">&#123;</div><div class="line">    "user" : "kimchy",</div><div class="line">    "post_date" : "2009-11-15T14:12:12",</div><div class="line">    "message" : "trying out Elasticsearch"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>======================================================</p>
-<p>以下为简单笔记</p>
-<p>GET 获取信息，HEAD检测是否存在。</p>
-<p>批量搜索删除</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">POST twitter/_delete_by_query</div><div class="line">&#123;</div><div class="line">  "query": &#123; </div><div class="line">    "match": &#123;</div><div class="line">      "message": "some message"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>更新数据</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">POST test/type1/1/_update</div><div class="line">&#123;</div><div class="line">    "script" : &#123;</div><div class="line">        "inline": "ctx._source.counter += params.count",</div><div class="line">        "lang": "painless",</div><div class="line">        "params" : &#123;</div><div class="line">            "count" : 4</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>批量筛选更新：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">POST twitter/_update_by_query</div><div class="line">&#123;</div><div class="line">  "script": &#123;</div><div class="line">    "inline": "ctx._source.likes++",</div><div class="line">    "lang": "painless"</div><div class="line">  &#125;,</div><div class="line">  "query": &#123;</div><div class="line">    "term": &#123;</div><div class="line">      "user": "kimchy"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>reindex</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">POST _reindex</div><div class="line">&#123;</div><div class="line">  "source": &#123;</div><div class="line">    "index": "twitter",</div><div class="line">    "type": "tweet",</div><div class="line">    "query": &#123;</div><div class="line">      "term": &#123;</div><div class="line">        "user": "kimchy"</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  "dest": &#123;</div><div class="line">    "index": "new_twitter"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>完整的source_filter 支持通配符</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "_source": &#123;</div><div class="line">        "includes": [ "obj1.*", "obj2.*" ],</div><div class="line">        "excludes": [ "*.description" ]</div><div class="line">    &#125;,</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>自定义字段，并输出</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "match_all": &#123;&#125;</div><div class="line">    &#125;,</div><div class="line">    "script_fields" : &#123;</div><div class="line">        "test1" : &#123;</div><div class="line">            "script" : &#123;</div><div class="line">                "lang": "painless",</div><div class="line">                "inline": "doc['my_field_name'].value * 2"</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        "test2" : &#123;</div><div class="line">            "script" : &#123;</div><div class="line">                "lang": "painless",</div><div class="line">                "inline": "doc['my_field_name'].value * factor",</div><div class="line">                "params" : &#123;</div><div class="line">                    "factor"  : 2.0</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-preference.html" target="_blank" rel="external">选择在什么分片执行操作</a></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /_search?preference=xyzabc123</div><div class="line">&#123;</div><div class="line">    "query": &#123;</div><div class="line">        "match": &#123;</div><div class="line">            "title": "elasticsearch"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>agg-<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html" target="_blank" rel="external">cardinality</a></p>
-<p>对多set的可能会出错，对少的比较正确</p>
-<p>聚合例子</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">POST /sales/_search?size=0</div><div class="line">&#123;</div><div class="line">    "aggs" : &#123;</div><div class="line">        "t_shirts" : &#123;</div><div class="line">            "filter" : &#123; "term": &#123; "type": "t-shirt" &#125; &#125;,</div><div class="line">            "aggs" : &#123;</div><div class="line">                "avg_price" : &#123; "avg" : &#123; "field" : "price" &#125; &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>自动建立条状图聚类</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">POST /sales/_search?size=0</div><div class="line">&#123;</div><div class="line">    "aggs" : &#123;</div><div class="line">        "prices" : &#123;</div><div class="line">            "histogram" : &#123;</div><div class="line">                "field" : "price",</div><div class="line">                "interval" : 50,</div><div class="line">                "min_doc_count" : 1</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>聚类 stats字段一键显示各种avg/sum/…</p>
-<p>In order to disable allowing to delete indices via wildcards or <code>_all</code>, set <code>action.destructive_requires_name</code> setting in the config to <code>true</code>. </p>
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-rollover-index.html#indices-rollover-index" target="_blank" rel="external">转移不同index内的数据（index太大）</a></p>
-<p>添加alias</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    "actions" : [</div><div class="line">        &#123; "add" : &#123; "indices" : ["test1", "test2"], "alias" : "alias1" &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>移除alias</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    "actions" : [</div><div class="line">        &#123; "remove" : &#123; "index" : "test1", "alias" : "alias1" &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>索引模板</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">PUT _template/template_1</div><div class="line">&#123;</div><div class="line">  "template": "te*",</div><div class="line">  "settings": &#123;</div><div class="line">    "number_of_shards": 1</div><div class="line">  &#125;,</div><div class="line">  "mappings": &#123;</div><div class="line">    "type1": &#123;</div><div class="line">      "_source": &#123;</div><div class="line">        "enabled": false</div><div class="line">      &#125;,</div><div class="line">      "properties": &#123;</div><div class="line">        "host_name": &#123;</div><div class="line">          "type": "keyword"</div><div class="line">        &#125;,</div><div class="line">        "created_at": &#123;</div><div class="line">          "type": "date",</div><div class="line">          "format": "EEE MMM dd HH:mm:ss Z YYYY"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>三倍重要搜索</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">  "query": &#123;</div><div class="line">    "multi_match" : &#123;</div><div class="line">      "query" : "this is a test",</div><div class="line">      "fields" : [ "subject^3", "message" ] </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>多个field同用一个名字</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  "mappings": &#123;</div><div class="line">    "my_type": &#123;</div><div class="line">      "properties": &#123;</div><div class="line">        "first_name": &#123;</div><div class="line">          "type": "text",</div><div class="line">          "copy_to": "full_name" </div><div class="line">        &#125;,</div><div class="line">        "last_name": &#123;</div><div class="line">          "type": "text",</div><div class="line">          "copy_to": "full_name" </div><div class="line">        &#125;,</div><div class="line">        "full_name": &#123;</div><div class="line">          "type": "text"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>master node 个数</p>
-<p>最少discovery.zen.minimum_master_nodes=(master_eligible_nodes / 2) + 1</p>
-<p>脚本语言（默认painless）</p>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th>Sandboxed</th>
-<th>Required plugin</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-painless.html" target="_blank" rel="external"><code>painless</code></a></td>
-<td>yes</td>
-<td>built-in</td>
-</tr>
-<tr>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-groovy.html" target="_blank" rel="external"><code>groovy</code></a></td>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
-<td>built-in</td>
-</tr>
-<tr>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-javascript.html" target="_blank" rel="external"><code>javascript</code></a></td>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-javascript.html" target="_blank" rel="external"><code>lang-javascript</code></a></td>
-</tr>
-<tr>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-python.html" target="_blank" rel="external"><code>python</code></a></td>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
-<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-python.html" target="_blank" rel="external"><code>lang-python</code></a></td>
-</tr>
-</tbody>
-</table>
-<p>By far the fastest most efficient way to access a field value from a script is to use the <code>doc[&#39;field_name&#39;]</code> syntax,</p>
-<p>基本概念**</p>
-<p>一个cluster是一个或多个node的集合，一个node可以存储index，一个index可以有多个type。</p>
-<p><strong>索引</strong></p>
-<p>不输入id</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>自定id</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT /customer/external/2</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>更新数据</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/1/_update</div><div class="line">&#123;</div><div class="line">  "script" : "ctx._source.age += 5"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Note that as of this writing, updates can only be performed on a single document at a time. In the future, Elasticsearch might provide the ability to update multiple documents given a query condition (like an <code>SQL UPDATE-WHERE</code> statement).</p>
-<p><strong>批量操作</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/_bulk</div><div class="line">&#123;"update":&#123;"_id":"1"&#125;&#125;</div><div class="line">&#123;"doc": &#123; "name": "John Doe becomes Jane Doe" &#125; &#125;</div><div class="line">&#123;"delete":&#123;"_id":"2"&#125;&#125;</div></pre></td></tr></table></figure>
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/date-math-index-names.html" target="_blank" rel="external">批量操作日期格式的index</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/13/es_stocks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/13/es_stocks/" itemprop="url">
-                  Elasticsearch股票分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-13T00:00:00+08:00">
-                2017-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"><a href="#1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）" class="headerlink" title="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"></a>1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）</h3><p>首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。</p>
-<p>股票数据来源来自于<a href="http://quote.eastmoney.com/stocklist.html" target="_blank" rel="external">东方财富网</a>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="comment">#用两个列表分别存储上证和深证各支股票的信息</span></div><div class="line">sh = []</div><div class="line">sz = []</div><div class="line"><span class="keyword">with</span> requests.Session() <span class="keyword">as</span> s:</div><div class="line">    html = s.get(<span class="string">r'http://quote.eastmoney.com/stocklist.html'</span>)</div><div class="line">    soup = BeautifulSoup(html.content, <span class="string">'lxml'</span>)</div><div class="line">    sh_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">7</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sh_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sh.append(i.a.text)</div><div class="line">    sz_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">8</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sz_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sz.append(i.a.text)</div></pre></td></tr></table></figure>
-<p>输出的本文结果为如下格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头etf</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
-<p><img src="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png" alt=""></p>
-<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法检索到，所以需要在拓展词库中添加全部股票名称。</p>
-<p>其中，由于用户输入一般是忽略大小写的，为了方便用户能够输入大小写都能匹配到股票信息，我们将拓展词典、同义词词典的股票名称信息都更改为小写，这样无论用户输入大写还是小写都能匹配到股票。</p>
-<p><del>暂时没有找到关闭 filter <em> 号的方法，所以搜索不了 </em>stXX股票</del></p>
-<p><del>有没有可能去除st等标记，因标记是在原股票名称前添加，不改变原股票名称</del></p>
-<h3 id="2-学习使用html-strip-filter"><a href="#2-学习使用html-strip-filter" class="headerlink" title="2.学习使用html_strip filter"></a>2.学习使用html_strip filter</h3><p>html strip filter 代码如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">"char_filter": &#123;</div><div class="line">        "my_html": &#123;</div><div class="line">          "type": "html_strip",</div><div class="line">          "escaped_tags": []</div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
-<p>其中<strong>escaped_tags</strong>字段表示该列表之中的标签不用去除</p>
-<h3 id="3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip"><a href="#3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip" class="headerlink" title="3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip"></a>3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip</h3><p>完整设置和mapping如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "settings": &#123;</div><div class="line">        "index" : &#123;</div><div class="line">            "analysis" : &#123;</div><div class="line">                "analyzer" : &#123;</div><div class="line">                    "my_analyzer" : &#123;</div><div class="line">                        "tokenizer" : "my_ik",</div><div class="line">                        "filter" : ["my_stop","synonym"],</div><div class="line">                        "char_filter":  ["my_html"]</div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                "char_filter": &#123;</div><div class="line">                    "my_html": &#123;</div><div class="line">                      "type": "html_strip",</div><div class="line">                      "escaped_tags": []</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                "filter" : &#123;</div><div class="line">                    "synonym" : &#123;</div><div class="line">                        "type" : "synonym",</div><div class="line">                        "synonyms_path" : "synonym.txt"</div><div class="line">                    &#125;,</div><div class="line">                    "my_stop":&#123;</div><div class="line">                      "type":"stop",</div><div class="line">                      "stopwords":"_none_"</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                  "tokenizer":&#123;</div><div class="line">                  "my_ik":&#123;</div><div class="line">                    "type":"ik_max_word",</div><div class="line">                    "enable_lowercase":true</div><div class="line">                &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    "mappings":&#123;</div><div class="line">    "news":&#123; //类型名，这里为news</div><div class="line">    "properties": &#123;</div><div class="line">        "title": &#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "keywords":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "content":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>还需要完善：</p>
-<ul>
-<li>对于不需要和不希望加入搜索的字段进行not_analyze设置</li>
-<li>设置日期字段的数值类型date</li>
-</ul>
-<h3 id="4-对已有数据进行reindex-约34w数据"><a href="#4-对已有数据进行reindex-约34w数据" class="headerlink" title="4.对已有数据进行reindex(约34w数据)"></a>4.对已有数据进行reindex(约34w数据)</h3><p>之前进行reindex速度明显比这次高，原因是上次没有使用analyzer。</p>
-<p>此次reindex <strong>34w</strong>数据共用时<strong>793</strong>秒，每1秒操作<strong>428</strong>个文档。</p>
-<p>如无analyzer，则每一秒操作<strong>1581</strong>个文档。</p>
-<h3 id="5-使用function-score进行filter检索，发布时间越靠前的得分越高"><a href="#5-使用function-score进行filter检索，发布时间越靠前的得分越高" class="headerlink" title="5.使用function_score进行filter检索，发布时间越靠前的得分越高"></a>5.使用function_score进行filter检索，发布时间越靠前的得分越高</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">GET test/news/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "_source": ["title","publishdate"], </div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123;</div><div class="line">          "match": &#123;</div><div class="line">            "title": "600340"</div><div class="line">          &#125;</div><div class="line">        &#125; ,</div><div class="line">         "functions": [ </div><div class="line">            &#123;</div><div class="line">                    "exp": &#123;</div><div class="line">                        "publishdate" : &#123;</div><div class="line">                            "origin": "now",</div><div class="line">                            "offset": "1h",</div><div class="line">                            "scale" : "30d",</div><div class="line">                            "decay": 0.2</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    "weight": 200</div><div class="line">                &#125;</div><div class="line">        ],</div><div class="line">        "boost_mode": "sum"</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>其中使用的是<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#_supported_fields_for_decay_functions" target="_blank" rel="external">function score query</a> 的 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decayfunction</a>(衰减函数)。</p>
-<p>各参数设置如图：</p>
-<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt=""></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2899,7 +2777,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2910,7 +2788,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2921,7 +2799,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
