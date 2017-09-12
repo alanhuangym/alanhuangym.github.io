@@ -85,45 +85,91 @@
 
 
 
-<meta name="description" content="现在使用协同过滤方法数据概况
-“持有过.csv”
-目前只调用了2016年年度数据。
-统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
-数据约190w条。
-每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
-通过初步分析，得知，数据共包含125w位用户。
-子代码情况
-其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。平均每位">
+<meta name="description" content="想法1:根据用户的属性来进行用户分类器的建立。
+从client和client_info两个表查看，可以得出信息。
+目前初步选择的属性有：
+
+
+
+字段
+解释
+如何向量化
+
+
+
+
+client_id
+用来区别用户的唯一属性，应为主键
+不用
+
+
+birthday
+生日，用于计算年龄，或者计算星座？
+计算年龄，然后根据问卷的划分，划分为四个等级
+
+
+address
+住址，不同区域的人群有不同的投资观念
+根">
 <meta property="og:type" content="article">
-<meta property="og:title" content="推荐系统3">
-<meta property="og:url" content="http://www.pirrla.cn/2017/08/30/rs_3/index.html">
+<meta property="og:title" content="推荐系统2">
+<meta property="og:url" content="http://www.pirrla.cn/2017/08/21/rs/rs_2/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="现在使用协同过滤方法数据概况
-“持有过.csv”
-目前只调用了2016年年度数据。
-统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
-数据约190w条。
-每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
-通过初步分析，得知，数据共包含125w位用户。
-子代码情况
-其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。平均每位">
-<meta property="og:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
-<meta property="og:updated_time" content="2017-08-30T05:46:23.000Z">
+<meta property="og:description" content="想法1:根据用户的属性来进行用户分类器的建立。
+从client和client_info两个表查看，可以得出信息。
+目前初步选择的属性有：
+
+
+
+字段
+解释
+如何向量化
+
+
+
+
+client_id
+用来区别用户的唯一属性，应为主键
+不用
+
+
+birthday
+生日，用于计算年龄，或者计算星座？
+计算年龄，然后根据问卷的划分，划分为四个等级
+
+
+address
+住址，不同区域的人群有不同的投资观念
+根">
+<meta property="og:updated_time" content="2017-08-30T01:41:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="推荐系统3">
-<meta name="twitter:description" content="现在使用协同过滤方法数据概况
-“持有过.csv”
-目前只调用了2016年年度数据。
-统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
-数据约190w条。
-每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
-通过初步分析，得知，数据共包含125w位用户。
-子代码情况
-其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。平均每位">
-<meta name="twitter:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
+<meta name="twitter:title" content="推荐系统2">
+<meta name="twitter:description" content="想法1:根据用户的属性来进行用户分类器的建立。
+从client和client_info两个表查看，可以得出信息。
+目前初步选择的属性有：
+
+
+
+字段
+解释
+如何向量化
+
+
+
+
+client_id
+用来区别用户的唯一属性，应为主键
+不用
+
+
+birthday
+生日，用于计算年龄，或者计算星座？
+计算年龄，然后根据问卷的划分，划分为四个等级
+
+
+address
+住址，不同区域的人群有不同的投资观念
+根">
 
 
 
@@ -151,13 +197,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/08/30/rs_3/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/08/21/rs/rs_2/"/>
 
 
 
 
 
-  <title> 推荐系统3 | Note down something </title>
+  <title> 推荐系统2 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -286,7 +332,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/30/rs_3/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/21/rs/rs_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -307,7 +353,7 @@
             
             
               
-                推荐系统3
+                推荐系统2
               
             
           </h1>
@@ -322,8 +368,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-30T09:12:35+08:00">
-                2017-08-30
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T14:54:08+08:00">
+                2017-08-21
               </time>
             
 
@@ -380,43 +426,343 @@
       
 
       
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<h3 id="现在使用协同过滤方法"><a href="#现在使用协同过滤方法" class="headerlink" title="现在使用协同过滤方法"></a>现在使用协同过滤方法</h3><p><strong>数据概况</strong></p>
-<p>“持有过.csv”</p>
-<p>目前只调用了2016年年度数据。</p>
-<p>统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。</p>
-<p>数据约190w条。</p>
-<p>每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。</p>
-<p>通过初步分析，得知，数据共包含125w位用户。</p>
-<p><strong>子代码情况</strong></p>
-<p>其中约有<font color="red">96w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）</p>
-<font color="red">29w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.52</strong>款子产品<br><br><strong>母代码情况</strong><br><br>其中约有<font color="red">121w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）<br><br>只有<font color="red">4w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.03</strong>款母产品<br><br><br><br><strong>初步构建</strong><br><br>为了简化该问题，所以首先只考虑用户曾经持仓的产品，忽略<font color="red"><strong>购买次数、购买金额、购买日期、卖出</strong></font>等数据。建立一个用户-产品的矩阵（如下）。<br><br>| 表格   | 产品1  | 产品2  | 产品3  | 产品4  | 产品5  |<br>| —- | —- | —- | —- | —- | —- |<br>| 用户1  | 0    | 0    | 0    | 0    | 1    |<br>| 用户2  | 0    | 1    | 0    | 1    | 0    |<br>| 用户3  | 0    | 0    | 1    | 1    | 0    |<br>| 用户4  | 0    | 0    | 0    | 0    | 1    |<br>| 用户5  | 0    | 1    | 0    | 1    | 0    |<br><br>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。<br><br>0则表示没有。<br><br>通过建立这个矩阵之后，计算不同用户之间的相似度。<br><br><br><br>相似度计算使用<a href="https://en.wikipedia.org/wiki/Jaccard_index" target="_blank" rel="external">Jaccard Similarity</a><br><br>$$similarity=\frac{USER1 \cap USER2}{USER1 \cup USER2}$$<br><br>（问题：是否需要在分子分母上加1）<br><br>即是计算两个用户之间购买了相同产品的数量，再除以两个用户共购买了多少款产品，即得到相似度。<br><br><font color="red">问题：用母代码还是子代码？</font>
-
-<p>但是由于之前描述的数据概况，大部分用户都只购买了一款产品，所以计算相似度时很大概率得到的结果是1和0。（完全相同和完全不相同）</p>
-<p><strong>针对只购买了一款产品的用户</strong></p>
-<p>所以为了实现协同过滤的效果，我们需要先挑选出<strong>购买过两款产品或以上</strong>的用户出来，然后再根据这些用户与其他用户进行重合，进行推荐。</p>
-<p>首先，根据统计一共有125款母代码产品。</p>
-<p>制作一份字典，遍历一遍记录，然后对于购买了两款产品以上的用户加入到字典里，索引是购买产品的产品代码。</p>
-<p>然后对于每一个只购买了一款产品的用户就可以到这份字典去索引，根据已经购买了的产品代码，可以得到与其相似的用户群，然后根据用户群进行推荐。</p>
-<p>这样，计算量可以离线完成，对于大部分的用户（只买过一款产品的），推荐系统的结果可以直接存取，快捷。</p>
-<p><strong>对于购买了两款产品或以上的用户</strong></p>
-<p>可以直接使用Jaccard Similarity 的计算方法，计算两位用户之间的相似度。</p>
-<p>设定一个阈值（threshold），当两位用户相似度超过这个阈值之后（去除相似度1.0的用户，以为完全相同没有推荐的意义），则认定这两位用户为相似用户。然后根据相似用户的其他喜好，进行推荐。</p>
-<h3 id="后期完善"><a href="#后期完善" class="headerlink" title="后期完善"></a>后期完善</h3><p><strong>1.使用时间字段</strong></p>
-<p>根据购买时间与现在时间的差值，赋予用户一个权重，标识这个用户近期对该产品的偏好程度。</p>
-<p>可以参考ES中的<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decay_function</a>。</p>
-<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt="">根据时间差，套入不同的计算公式中，得出一个权重。</p>
-<p><strong>2.购买数量与金额</strong></p>
-<p>由于每个客户的购买金额和购买次数是不一样的。在初步构建的当中，我们忽略了购买的金额和次数，均算作1。所以我们现在需要将购买金额和次数考虑进去。</p>
-<p>想法是：</p>
-<p>$$金额权重=\frac{购买总金额}{该产品的最低购买金额}$$</p>
-<p>由于每个产品的规模大小都不一样，所以不能单纯以购买金额去衡量用户与产品之间的关系。所以我们使用到客户购买的总金额除以最低购买门槛金额，得到一个倍数，然后再辅以一个函数，达到实现权重的目的。</p>
-<p>其次，由于某一个客户可能会购买一款母代码的多款子产品，所以购买次数也会反应该用户的投资偏好，我们可以再设定一个函数，去控制该权重。</p>
-<p><strong>3.结合</strong></p>
-<p>根据上述两个字段的影响，每个用户-产品矩阵的内容可以为上述两个字段的权重相加相乘，然后就能计算更加准确的用户相似度。</p>
-<p><strong>4.已找出相似用户后的推荐想法</strong></p>
-<p>如果已经找出了相似的用户，那么就以这群用户对产品的购买次数进行统计，给出一个排名，然后相应地推荐排名第一的产品和后续产品中，客户尚未购买过的产品。</p>
+        <h3 id="想法1"><a href="#想法1" class="headerlink" title="想法1:"></a>想法1:</h3><p>根据用户的属性来进行用户分类器的建立。</p>
+<p>从client和client_info两个表查看，可以得出信息。</p>
+<p>目前初步选择的属性有：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+<th>如何向量化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client_id</td>
+<td>用来区别用户的唯一属性，应为主键</td>
+<td>不用</td>
+</tr>
+<tr>
+<td>birthday</td>
+<td>生日，用于计算年龄，或者计算星座？</td>
+<td>计算年龄，然后根据问卷的划分，划分为四个等级</td>
+</tr>
+<tr>
+<td>address</td>
+<td>住址，不同区域的人群有不同的投资观念</td>
+<td>根据省份划分？</td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号码，可以查询归属地？</td>
+<td>归属地</td>
+</tr>
+<tr>
+<td>email</td>
+<td>可以查看邮箱的地址属性</td>
+<td>email服务商</td>
+</tr>
+<tr>
+<td>degree</td>
+<td>学历</td>
+<td>学历代码</td>
+</tr>
+<tr>
+<td>profession</td>
+<td>职业</td>
+<td>职业代码</td>
+</tr>
+<tr>
+<td>income</td>
+<td>收入</td>
+<td>收入可以去除</td>
+</tr>
+<tr>
+<td>marriage</td>
+<td>婚否</td>
+<td>1、0</td>
+</tr>
+<tr>
+<td>risk_level</td>
+<td>风险偏好</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>性别</td>
+<td>1、0</td>
+</tr>
+<tr>
+<td>id_type</td>
+<td>证件类型</td>
+<td></td>
+</tr>
+<tr>
+<td>id_no</td>
+<td>证件号码</td>
+<td></td>
+</tr>
+<tr>
+<td>open_date</td>
+<td>开户日期</td>
+<td>计算开户总时长</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>可能有用的字段，尚未加入</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_address</td>
+<td>身份证地址</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>用户之间的相似度：</p>
+<p>将所有的属性向量化（normalize），然后用cos计算两个向量之间的距离，距离小于一定的阈值则确定为相似。</p>
+<p>然后推荐系统推荐相似用户中，最喜爱的产品。</p>
+<h3 id="想法2"><a href="#想法2" class="headerlink" title="想法2:"></a>想法2:</h3><p>于想法一同样，计算产品之间的相似度，但是由于产品的数量不多，所以是否可以直接人工分类？这样更加准确？</p>
+<h3 id="想法3："><a href="#想法3：" class="headerlink" title="想法3："></a>想法3：</h3><p>建立一个三层的简单的全连接神经网络，然后根据购买记录，将购买记录作为训练集。</p>
+<p>用户的各种信息作为向量输入，然后输出则是一个产品数量维度的向量，购买了产品为1，其他为0。</p>
+<p>然后根据这个分类器就可以softmax去得出最后输出是什么。</p>
+<h3 id="想法4："><a href="#想法4：" class="headerlink" title="想法4："></a>想法4：</h3><p>根据购买记录，建立一个用户-产品的Matrix，单元格是购买产品的数，根据Factorization、SVD、NMF等算法，补全矩阵。</p>
+<h3 id="想法5："><a href="#想法5：" class="headerlink" title="想法5："></a>想法5：</h3><p>将用户或产品，分为大几类，然后将用户或产品进行归类，然后推荐相同类别用户购买的产品或相同类别的产品</p>
+<h3 id="想法6："><a href="#想法6：" class="headerlink" title="想法6："></a>想法6：</h3><p>根据用户的开户日期和产品的购买日期，去得出新用户最喜欢的产品</p>
+<p>init_date or business_date or valid_date?</p>
+<p>问题：由于用户数据太多，是否需要采样？</p>
+<p>问题：risk_level是否是硬性规定</p>
+<p>问题：推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
+<p>问题：用户的购买记录是以购买金额来分类还是简单以1，0划分</p>
+<p>问题：是否有用户投诉、退款的数据</p>
+<p>问题：是否有用户网站点击，停留时间的数据？</p>
+<p>问题：解析身份证是否合法？</p>
+<h3 id="客户简单维度分析："><a href="#客户简单维度分析：" class="headerlink" title="客户简单维度分析："></a>客户简单维度分析：</h3><p>男性用户最喜爱的产品：</p>
+<p>女性用户最喜爱的产品：</p>
+<p>问题：是否需要区分不同风险用户的喜好?</p>
+<p>年龄段最喜欢产品</p>
+<p>决策树参数：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>性别</td>
+<td>男、女</td>
+</tr>
+<tr>
+<td>年龄</td>
+<td>18-22，22-35，35-60，60+</td>
+</tr>
+<tr>
+<td>星座</td>
+<td>12星座</td>
+</tr>
+</tbody>
+</table>
+<p>876017无法分类</p>
+<p>计算产品相似度：</p>
+<p>涉及字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>excel</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>产品编号</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>产品名称</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>产品创建日期</td>
+<td>7</td>
+<td></td>
+</tr>
+<tr>
+<td>投资经理</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>托管银行</td>
+<td>12</td>
+<td></td>
+</tr>
+<tr>
+<td>存续期</td>
+<td>18</td>
+<td></td>
+</tr>
+<tr>
+<td>产品成立日期</td>
+<td>19</td>
+<td></td>
+</tr>
+<tr>
+<td>成立规模</td>
+<td>20</td>
+<td></td>
+</tr>
+<tr>
+<td>产品类型</td>
+<td>21</td>
+<td></td>
+</tr>
+<tr>
+<td>产品风险等级</td>
+<td>22</td>
+<td></td>
+</tr>
+<tr>
+<td>产品集合类型</td>
+<td>32</td>
+<td></td>
+</tr>
+<tr>
+<td>最小投资额</td>
+<td>34</td>
+<td></td>
+</tr>
+<tr>
+<td>获利类型</td>
+<td>35</td>
+<td></td>
+</tr>
+<tr>
+<td>产品类型</td>
+<td>38</td>
+<td></td>
+</tr>
+<tr>
+<td>天数</td>
+<td>40</td>
+<td></td>
+</tr>
+<tr>
+<td>代理机构</td>
+<td>41</td>
+<td></td>
+</tr>
+<tr>
+<td>产品模型</td>
+<td>43</td>
+<td></td>
+</tr>
+<tr>
+<td>利率</td>
+<td>44</td>
+<td></td>
+</tr>
+<tr>
+<td>阈值</td>
+<td>45</td>
+<td></td>
+</tr>
+<tr>
+<td>单客户购买上限</td>
+<td>46</td>
+<td></td>
+</tr>
+<tr>
+<td>开放日期</td>
+<td>49</td>
+<td></td>
+</tr>
+<tr>
+<td>到期日期</td>
+<td>50</td>
+<td></td>
+</tr>
+<tr>
+<td>总额</td>
+<td>51</td>
+<td></td>
+</tr>
+<tr>
+<td>广发直销规模</td>
+<td>52</td>
+<td></td>
+</tr>
+<tr>
+<td>投资经理名称</td>
+<td>56</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -459,8 +805,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/21/rs_1/" rel="next" title="推荐系统1">
-                <i class="fa fa-chevron-left"></i> 推荐系统1
+              <a href="/2017/08/10/mac_oracle/" rel="next" title="MacOS安装Oracle客户端Client">
+                <i class="fa fa-chevron-left"></i> MacOS安装Oracle客户端Client
               </a>
             
           </div>
@@ -469,8 +815,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/31/rs_4/" rel="prev" title="推荐系统4">
-                推荐系统4 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/21/rs/rs_1/" rel="prev" title="推荐系统1">
+                推荐系统1 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -611,7 +957,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#现在使用协同过滤方法"><span class="nav-number">1.</span> <span class="nav-text">现在使用协同过滤方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后期完善"><span class="nav-number">2.</span> <span class="nav-text">后期完善</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#想法1"><span class="nav-number">1.</span> <span class="nav-text">想法1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法2"><span class="nav-number">2.</span> <span class="nav-text">想法2:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法3："><span class="nav-number">3.</span> <span class="nav-text">想法3：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法4："><span class="nav-number">4.</span> <span class="nav-text">想法4：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法5："><span class="nav-number">5.</span> <span class="nav-text">想法5：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法6："><span class="nav-number">6.</span> <span class="nav-text">想法6：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户简单维度分析："><span class="nav-number">7.</span> <span class="nav-text">客户简单维度分析：</span></a></li></ol></div>
             
 
           </div>

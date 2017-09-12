@@ -85,91 +85,22 @@
 
 
 
-<meta name="description" content="想法1:根据用户的属性来进行用户分类器的建立。
-从client和client_info两个表查看，可以得出信息。
-目前初步选择的属性有：
-
-
-
-字段
-解释
-如何向量化
-
-
-
-
-client_id
-用来区别用户的唯一属性，应为主键
-不用
-
-
-birthday
-生日，用于计算年龄，或者计算星座？
-计算年龄，然后根据问卷的划分，划分为四个等级
-
-
-address
-住址，不同区域的人群有不同的投资观念
-根">
+<meta name="description" content="假设已经得出了目标用户的相似用户，现做出推荐1.推荐目标用户已购买的产品相似产品由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。
+1.大类
+当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况">
 <meta property="og:type" content="article">
-<meta property="og:title" content="推荐系统2">
-<meta property="og:url" content="http://www.pirrla.cn/2017/08/21/rs_2/index.html">
+<meta property="og:title" content="推荐系统5">
+<meta property="og:url" content="http://www.pirrla.cn/2017/09/05/rs/rs_5/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="想法1:根据用户的属性来进行用户分类器的建立。
-从client和client_info两个表查看，可以得出信息。
-目前初步选择的属性有：
-
-
-
-字段
-解释
-如何向量化
-
-
-
-
-client_id
-用来区别用户的唯一属性，应为主键
-不用
-
-
-birthday
-生日，用于计算年龄，或者计算星座？
-计算年龄，然后根据问卷的划分，划分为四个等级
-
-
-address
-住址，不同区域的人群有不同的投资观念
-根">
-<meta property="og:updated_time" content="2017-08-30T01:41:21.000Z">
+<meta property="og:description" content="假设已经得出了目标用户的相似用户，现做出推荐1.推荐目标用户已购买的产品相似产品由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。
+1.大类
+当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况">
+<meta property="og:updated_time" content="2017-09-08T05:24:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="推荐系统2">
-<meta name="twitter:description" content="想法1:根据用户的属性来进行用户分类器的建立。
-从client和client_info两个表查看，可以得出信息。
-目前初步选择的属性有：
-
-
-
-字段
-解释
-如何向量化
-
-
-
-
-client_id
-用来区别用户的唯一属性，应为主键
-不用
-
-
-birthday
-生日，用于计算年龄，或者计算星座？
-计算年龄，然后根据问卷的划分，划分为四个等级
-
-
-address
-住址，不同区域的人群有不同的投资观念
-根">
+<meta name="twitter:title" content="推荐系统5">
+<meta name="twitter:description" content="假设已经得出了目标用户的相似用户，现做出推荐1.推荐目标用户已购买的产品相似产品由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。
+1.大类
+当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况">
 
 
 
@@ -197,13 +128,13 @@ address
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/08/21/rs_2/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
 
 
 
 
 
-  <title> 推荐系统2 | Note down something </title>
+  <title> 推荐系统5 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -332,7 +263,7 @@ address
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/21/rs_2/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/rs/rs_5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -353,7 +284,7 @@ address
             
             
               
-                推荐系统2
+                推荐系统5
               
             
           </h1>
@@ -368,8 +299,8 @@ address
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T14:54:08+08:00">
-                2017-08-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
+                2017-09-05
               </time>
             
 
@@ -426,343 +357,20 @@ address
       
 
       
-        <h3 id="想法1"><a href="#想法1" class="headerlink" title="想法1:"></a>想法1:</h3><p>根据用户的属性来进行用户分类器的建立。</p>
-<p>从client和client_info两个表查看，可以得出信息。</p>
-<p>目前初步选择的属性有：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>解释</th>
-<th>如何向量化</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>client_id</td>
-<td>用来区别用户的唯一属性，应为主键</td>
-<td>不用</td>
-</tr>
-<tr>
-<td>birthday</td>
-<td>生日，用于计算年龄，或者计算星座？</td>
-<td>计算年龄，然后根据问卷的划分，划分为四个等级</td>
-</tr>
-<tr>
-<td>address</td>
-<td>住址，不同区域的人群有不同的投资观念</td>
-<td>根据省份划分？</td>
-</tr>
-<tr>
-<td>mobile</td>
-<td>手机号码，可以查询归属地？</td>
-<td>归属地</td>
-</tr>
-<tr>
-<td>email</td>
-<td>可以查看邮箱的地址属性</td>
-<td>email服务商</td>
-</tr>
-<tr>
-<td>degree</td>
-<td>学历</td>
-<td>学历代码</td>
-</tr>
-<tr>
-<td>profession</td>
-<td>职业</td>
-<td>职业代码</td>
-</tr>
-<tr>
-<td>income</td>
-<td>收入</td>
-<td>收入可以去除</td>
-</tr>
-<tr>
-<td>marriage</td>
-<td>婚否</td>
-<td>1、0</td>
-</tr>
-<tr>
-<td>risk_level</td>
-<td>风险偏好</td>
-<td>不需要</td>
-</tr>
-<tr>
-<td>gender</td>
-<td>性别</td>
-<td>1、0</td>
-</tr>
-<tr>
-<td>id_type</td>
-<td>证件类型</td>
-<td></td>
-</tr>
-<tr>
-<td>id_no</td>
-<td>证件号码</td>
-<td></td>
-</tr>
-<tr>
-<td>open_date</td>
-<td>开户日期</td>
-<td>计算开户总时长</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>可能有用的字段，尚未加入</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id_address</td>
-<td>身份证地址</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>用户之间的相似度：</p>
-<p>将所有的属性向量化（normalize），然后用cos计算两个向量之间的距离，距离小于一定的阈值则确定为相似。</p>
-<p>然后推荐系统推荐相似用户中，最喜爱的产品。</p>
-<h3 id="想法2"><a href="#想法2" class="headerlink" title="想法2:"></a>想法2:</h3><p>于想法一同样，计算产品之间的相似度，但是由于产品的数量不多，所以是否可以直接人工分类？这样更加准确？</p>
-<h3 id="想法3："><a href="#想法3：" class="headerlink" title="想法3："></a>想法3：</h3><p>建立一个三层的简单的全连接神经网络，然后根据购买记录，将购买记录作为训练集。</p>
-<p>用户的各种信息作为向量输入，然后输出则是一个产品数量维度的向量，购买了产品为1，其他为0。</p>
-<p>然后根据这个分类器就可以softmax去得出最后输出是什么。</p>
-<h3 id="想法4："><a href="#想法4：" class="headerlink" title="想法4："></a>想法4：</h3><p>根据购买记录，建立一个用户-产品的Matrix，单元格是购买产品的数，根据Factorization、SVD、NMF等算法，补全矩阵。</p>
-<h3 id="想法5："><a href="#想法5：" class="headerlink" title="想法5："></a>想法5：</h3><p>将用户或产品，分为大几类，然后将用户或产品进行归类，然后推荐相同类别用户购买的产品或相同类别的产品</p>
-<h3 id="想法6："><a href="#想法6：" class="headerlink" title="想法6："></a>想法6：</h3><p>根据用户的开户日期和产品的购买日期，去得出新用户最喜欢的产品</p>
-<p>init_date or business_date or valid_date?</p>
-<p>问题：由于用户数据太多，是否需要采样？</p>
-<p>问题：risk_level是否是硬性规定</p>
-<p>问题：推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
-<p>问题：用户的购买记录是以购买金额来分类还是简单以1，0划分</p>
-<p>问题：是否有用户投诉、退款的数据</p>
-<p>问题：是否有用户网站点击，停留时间的数据？</p>
-<p>问题：解析身份证是否合法？</p>
-<h3 id="客户简单维度分析："><a href="#客户简单维度分析：" class="headerlink" title="客户简单维度分析："></a>客户简单维度分析：</h3><p>男性用户最喜爱的产品：</p>
-<p>女性用户最喜爱的产品：</p>
-<p>问题：是否需要区分不同风险用户的喜好?</p>
-<p>年龄段最喜欢产品</p>
-<p>决策树参数：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>性别</td>
-<td>男、女</td>
-</tr>
-<tr>
-<td>年龄</td>
-<td>18-22，22-35，35-60，60+</td>
-</tr>
-<tr>
-<td>星座</td>
-<td>12星座</td>
-</tr>
-</tbody>
-</table>
-<p>876017无法分类</p>
-<p>计算产品相似度：</p>
-<p>涉及字段：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>excel</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>产品编号</td>
-<td>4</td>
-<td></td>
-</tr>
-<tr>
-<td>产品名称</td>
-<td>5</td>
-<td></td>
-</tr>
-<tr>
-<td>产品创建日期</td>
-<td>7</td>
-<td></td>
-</tr>
-<tr>
-<td>投资经理</td>
-<td>10</td>
-<td></td>
-</tr>
-<tr>
-<td>托管银行</td>
-<td>12</td>
-<td></td>
-</tr>
-<tr>
-<td>存续期</td>
-<td>18</td>
-<td></td>
-</tr>
-<tr>
-<td>产品成立日期</td>
-<td>19</td>
-<td></td>
-</tr>
-<tr>
-<td>成立规模</td>
-<td>20</td>
-<td></td>
-</tr>
-<tr>
-<td>产品类型</td>
-<td>21</td>
-<td></td>
-</tr>
-<tr>
-<td>产品风险等级</td>
-<td>22</td>
-<td></td>
-</tr>
-<tr>
-<td>产品集合类型</td>
-<td>32</td>
-<td></td>
-</tr>
-<tr>
-<td>最小投资额</td>
-<td>34</td>
-<td></td>
-</tr>
-<tr>
-<td>获利类型</td>
-<td>35</td>
-<td></td>
-</tr>
-<tr>
-<td>产品类型</td>
-<td>38</td>
-<td></td>
-</tr>
-<tr>
-<td>天数</td>
-<td>40</td>
-<td></td>
-</tr>
-<tr>
-<td>代理机构</td>
-<td>41</td>
-<td></td>
-</tr>
-<tr>
-<td>产品模型</td>
-<td>43</td>
-<td></td>
-</tr>
-<tr>
-<td>利率</td>
-<td>44</td>
-<td></td>
-</tr>
-<tr>
-<td>阈值</td>
-<td>45</td>
-<td></td>
-</tr>
-<tr>
-<td>单客户购买上限</td>
-<td>46</td>
-<td></td>
-</tr>
-<tr>
-<td>开放日期</td>
-<td>49</td>
-<td></td>
-</tr>
-<tr>
-<td>到期日期</td>
-<td>50</td>
-<td></td>
-</tr>
-<tr>
-<td>总额</td>
-<td>51</td>
-<td></td>
-</tr>
-<tr>
-<td>广发直销规模</td>
-<td>52</td>
-<td></td>
-</tr>
-<tr>
-<td>投资经理名称</td>
-<td>56</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+        <h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -805,8 +413,8 @@ address
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/10/mac_oracle/" rel="next" title="MacOS安装Oracle客户端Client">
-                <i class="fa fa-chevron-left"></i> MacOS安装Oracle客户端Client
+              <a href="/2017/09/05/fs1/" rel="next" title="文件系统">
+                <i class="fa fa-chevron-left"></i> 文件系统
               </a>
             
           </div>
@@ -814,10 +422,6 @@ address
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/21/rs_1/" rel="prev" title="推荐系统1">
-                推荐系统1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -957,7 +561,7 @@ address
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#想法1"><span class="nav-number">1.</span> <span class="nav-text">想法1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法2"><span class="nav-number">2.</span> <span class="nav-text">想法2:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法3："><span class="nav-number">3.</span> <span class="nav-text">想法3：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法4："><span class="nav-number">4.</span> <span class="nav-text">想法4：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法5："><span class="nav-number">5.</span> <span class="nav-text">想法5：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法6："><span class="nav-number">6.</span> <span class="nav-text">想法6：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户简单维度分析："><span class="nav-number">7.</span> <span class="nav-text">客户简单维度分析：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#假设已经得出了目标用户的相似用户，现做出推荐"><span class="nav-number">1.</span> <span class="nav-text">假设已经得出了目标用户的相似用户，现做出推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-推荐目标用户已购买的产品相似产品"><span class="nav-number">2.</span> <span class="nav-text">1.推荐目标用户已购买的产品相似产品</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-推荐用户尝试其他类型产品"><span class="nav-number">3.</span> <span class="nav-text">2.推荐用户尝试其他类型产品</span></a></li></ol></div>
             
 
           </div>

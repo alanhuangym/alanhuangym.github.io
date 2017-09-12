@@ -85,22 +85,45 @@
 
 
 
-<meta name="description" content="假设已经得出了目标用户的相似用户，现做出推荐1.推荐目标用户已购买的产品相似产品由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。
-1.大类
-当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况">
+<meta name="description" content="现在使用协同过滤方法数据概况
+“持有过.csv”
+目前只调用了2016年年度数据。
+统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
+数据约190w条。
+每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
+通过初步分析，得知，数据共包含125w位用户。
+子代码情况
+其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
+29w用户购买过两款产品以上。平均每位">
 <meta property="og:type" content="article">
-<meta property="og:title" content="推荐系统5">
-<meta property="og:url" content="http://www.pirrla.cn/2017/09/05/rs_5/index.html">
+<meta property="og:title" content="推荐系统3">
+<meta property="og:url" content="http://www.pirrla.cn/2017/08/30/rs/rs_3/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="假设已经得出了目标用户的相似用户，现做出推荐1.推荐目标用户已购买的产品相似产品由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。
-1.大类
-当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况">
-<meta property="og:updated_time" content="2017-09-08T05:24:38.000Z">
+<meta property="og:description" content="现在使用协同过滤方法数据概况
+“持有过.csv”
+目前只调用了2016年年度数据。
+统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
+数据约190w条。
+每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
+通过初步分析，得知，数据共包含125w位用户。
+子代码情况
+其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
+29w用户购买过两款产品以上。平均每位">
+<meta property="og:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
+<meta property="og:updated_time" content="2017-08-30T05:46:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="推荐系统5">
-<meta name="twitter:description" content="假设已经得出了目标用户的相似用户，现做出推荐1.推荐目标用户已购买的产品相似产品由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。
-1.大类
-当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况">
+<meta name="twitter:title" content="推荐系统3">
+<meta name="twitter:description" content="现在使用协同过滤方法数据概况
+“持有过.csv”
+目前只调用了2016年年度数据。
+统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
+数据约190w条。
+每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
+通过初步分析，得知，数据共包含125w位用户。
+子代码情况
+其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
+29w用户购买过两款产品以上。平均每位">
+<meta name="twitter:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
 
 
 
@@ -128,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/09/05/rs_5/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/08/30/rs/rs_3/"/>
 
 
 
 
 
-  <title> 推荐系统5 | Note down something </title>
+  <title> 推荐系统3 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -263,7 +286,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/rs_5/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/30/rs/rs_3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -284,7 +307,7 @@
             
             
               
-                推荐系统5
+                推荐系统3
               
             
           </h1>
@@ -299,8 +322,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
-                2017-09-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-30T09:12:35+08:00">
+                2017-08-30
               </time>
             
 
@@ -357,20 +380,43 @@
       
 
       
-        <h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
-<p><strong>1.大类</strong></p>
-<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
-<p><strong>2.天数</strong></p>
-<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
-<p><strong>3.收益利率</strong></p>
-<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
-<p><strong>4.综上所述</strong></p>
-<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
-<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
-<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
-<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<h3 id="现在使用协同过滤方法"><a href="#现在使用协同过滤方法" class="headerlink" title="现在使用协同过滤方法"></a>现在使用协同过滤方法</h3><p><strong>数据概况</strong></p>
+<p>“持有过.csv”</p>
+<p>目前只调用了2016年年度数据。</p>
+<p>统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。</p>
+<p>数据约190w条。</p>
+<p>每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。</p>
+<p>通过初步分析，得知，数据共包含125w位用户。</p>
+<p><strong>子代码情况</strong></p>
+<p>其中约有<font color="red">96w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）</p>
+<font color="red">29w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.52</strong>款子产品<br><br><strong>母代码情况</strong><br><br>其中约有<font color="red">121w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）<br><br>只有<font color="red">4w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.03</strong>款母产品<br><br><br><br><strong>初步构建</strong><br><br>为了简化该问题，所以首先只考虑用户曾经持仓的产品，忽略<font color="red"><strong>购买次数、购买金额、购买日期、卖出</strong></font>等数据。建立一个用户-产品的矩阵（如下）。<br><br>| 表格   | 产品1  | 产品2  | 产品3  | 产品4  | 产品5  |<br>| —- | —- | —- | —- | —- | —- |<br>| 用户1  | 0    | 0    | 0    | 0    | 1    |<br>| 用户2  | 0    | 1    | 0    | 1    | 0    |<br>| 用户3  | 0    | 0    | 1    | 1    | 0    |<br>| 用户4  | 0    | 0    | 0    | 0    | 1    |<br>| 用户5  | 0    | 1    | 0    | 1    | 0    |<br><br>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。<br><br>0则表示没有。<br><br>通过建立这个矩阵之后，计算不同用户之间的相似度。<br><br><br><br>相似度计算使用<a href="https://en.wikipedia.org/wiki/Jaccard_index" target="_blank" rel="external">Jaccard Similarity</a><br><br>$$similarity=\frac{USER1 \cap USER2}{USER1 \cup USER2}$$<br><br>（问题：是否需要在分子分母上加1）<br><br>即是计算两个用户之间购买了相同产品的数量，再除以两个用户共购买了多少款产品，即得到相似度。<br><br><font color="red">问题：用母代码还是子代码？</font>
+
+<p>但是由于之前描述的数据概况，大部分用户都只购买了一款产品，所以计算相似度时很大概率得到的结果是1和0。（完全相同和完全不相同）</p>
+<p><strong>针对只购买了一款产品的用户</strong></p>
+<p>所以为了实现协同过滤的效果，我们需要先挑选出<strong>购买过两款产品或以上</strong>的用户出来，然后再根据这些用户与其他用户进行重合，进行推荐。</p>
+<p>首先，根据统计一共有125款母代码产品。</p>
+<p>制作一份字典，遍历一遍记录，然后对于购买了两款产品以上的用户加入到字典里，索引是购买产品的产品代码。</p>
+<p>然后对于每一个只购买了一款产品的用户就可以到这份字典去索引，根据已经购买了的产品代码，可以得到与其相似的用户群，然后根据用户群进行推荐。</p>
+<p>这样，计算量可以离线完成，对于大部分的用户（只买过一款产品的），推荐系统的结果可以直接存取，快捷。</p>
+<p><strong>对于购买了两款产品或以上的用户</strong></p>
+<p>可以直接使用Jaccard Similarity 的计算方法，计算两位用户之间的相似度。</p>
+<p>设定一个阈值（threshold），当两位用户相似度超过这个阈值之后（去除相似度1.0的用户，以为完全相同没有推荐的意义），则认定这两位用户为相似用户。然后根据相似用户的其他喜好，进行推荐。</p>
+<h3 id="后期完善"><a href="#后期完善" class="headerlink" title="后期完善"></a>后期完善</h3><p><strong>1.使用时间字段</strong></p>
+<p>根据购买时间与现在时间的差值，赋予用户一个权重，标识这个用户近期对该产品的偏好程度。</p>
+<p>可以参考ES中的<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decay_function</a>。</p>
+<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt="">根据时间差，套入不同的计算公式中，得出一个权重。</p>
+<p><strong>2.购买数量与金额</strong></p>
+<p>由于每个客户的购买金额和购买次数是不一样的。在初步构建的当中，我们忽略了购买的金额和次数，均算作1。所以我们现在需要将购买金额和次数考虑进去。</p>
+<p>想法是：</p>
+<p>$$金额权重=\frac{购买总金额}{该产品的最低购买金额}$$</p>
+<p>由于每个产品的规模大小都不一样，所以不能单纯以购买金额去衡量用户与产品之间的关系。所以我们使用到客户购买的总金额除以最低购买门槛金额，得到一个倍数，然后再辅以一个函数，达到实现权重的目的。</p>
+<p>其次，由于某一个客户可能会购买一款母代码的多款子产品，所以购买次数也会反应该用户的投资偏好，我们可以再设定一个函数，去控制该权重。</p>
+<p><strong>3.结合</strong></p>
+<p>根据上述两个字段的影响，每个用户-产品矩阵的内容可以为上述两个字段的权重相加相乘，然后就能计算更加准确的用户相似度。</p>
+<p><strong>4.已找出相似用户后的推荐想法</strong></p>
+<p>如果已经找出了相似的用户，那么就以这群用户对产品的购买次数进行统计，给出一个排名，然后相应地推荐排名第一的产品和后续产品中，客户尚未购买过的产品。</p>
 
       
     </div>
@@ -413,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/fs1/" rel="next" title="文件系统">
-                <i class="fa fa-chevron-left"></i> 文件系统
+              <a href="/2017/08/21/rs/rs_1/" rel="next" title="推荐系统1">
+                <i class="fa fa-chevron-left"></i> 推荐系统1
               </a>
             
           </div>
@@ -422,6 +468,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/31/rs/rs_4/" rel="prev" title="推荐系统4">
+                推荐系统4 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -561,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#假设已经得出了目标用户的相似用户，现做出推荐"><span class="nav-number">1.</span> <span class="nav-text">假设已经得出了目标用户的相似用户，现做出推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-推荐目标用户已购买的产品相似产品"><span class="nav-number">2.</span> <span class="nav-text">1.推荐目标用户已购买的产品相似产品</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-推荐用户尝试其他类型产品"><span class="nav-number">3.</span> <span class="nav-text">2.推荐用户尝试其他类型产品</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#现在使用协同过滤方法"><span class="nav-number">1.</span> <span class="nav-text">现在使用协同过滤方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后期完善"><span class="nav-number">2.</span> <span class="nav-text">后期完善</span></a></li></ol></div>
             
 
           </div>
