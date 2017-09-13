@@ -2,7 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.pirrla.cn/2017/09/05/fs1/</loc>
+    <loc>http://www.pirrla.cn/2017/09/12/fs/fs2/</loc>
+    
+    <lastmod>2017-09-13T07:04:31.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.pirrla.cn/2017/09/12/mongo-fuzhiji/</loc>
+    
+    <lastmod>2017-09-12T06:55:18.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.pirrla.cn/2017/09/05/fs/fs1/</loc>
     
     <lastmod>2017-09-12T02:03:49.000Z</lastmod>
     
@@ -44,84 +58,84 @@
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/08/10/mac_oracle/</loc>
+    <loc>http://www.pirrla.cn/2017/08/10/other/mac_oracle/</loc>
     
     <lastmod>2017-08-10T03:02:05.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/08/04/es_query/</loc>
+    <loc>http://www.pirrla.cn/2017/08/04/es/es_query/</loc>
     
     <lastmod>2017-08-09T08:49:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/08/03/es_input/</loc>
+    <loc>http://www.pirrla.cn/2017/08/03/es/es_input/</loc>
     
     <lastmod>2017-08-07T08:58:06.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/07/12/python_practise/</loc>
+    <loc>http://www.pirrla.cn/2017/07/12/python/python_practise/</loc>
     
     <lastmod>2017-08-04T07:51:30.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/07/21/js_notes/</loc>
+    <loc>http://www.pirrla.cn/2017/07/21/other/js_notes/</loc>
     
     <lastmod>2017-07-24T06:21:45.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/07/14/es_notes/</loc>
+    <loc>http://www.pirrla.cn/2017/07/14/es/es_notes/</loc>
     
     <lastmod>2017-07-21T08:36:27.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/07/13/es_stocks/</loc>
+    <loc>http://www.pirrla.cn/2017/07/13/es/es_stocks/</loc>
     
     <lastmod>2017-07-14T06:25:25.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/07/12/es_similarity/</loc>
+    <loc>http://www.pirrla.cn/2017/07/12/es/es_similarity/</loc>
     
     <lastmod>2017-07-14T00:55:20.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</loc>
+    <loc>http://www.pirrla.cn/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/</loc>
     
     <lastmod>2017-03-26T09:34:15.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</loc>
+    <loc>http://www.pirrla.cn/2017/03/15/cuhk/Duality_of_Linear_Programming/</loc>
     
     <lastmod>2017-03-25T18:00:07.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/03/16/GitTutorial_ByLiaoxuefeng/</loc>
+    <loc>http://www.pirrla.cn/2017/03/16/other/GitTutorial_ByLiaoxuefeng/</loc>
     
     <lastmod>2017-03-25T18:00:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/</loc>
+    <loc>http://www.pirrla.cn/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/</loc>
     
     <lastmod>2017-03-25T17:59:52.000Z</lastmod>
     

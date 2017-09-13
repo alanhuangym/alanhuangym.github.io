@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-09-08T05:24:38.000Z</updated>
+  <updated>2017-09-12T06:55:18.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -14,6 +14,115 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MongoDB 复制集</title>
+    <link href="http://www.pirrla.cn/2017/09/12/mongo-fuzhiji/"/>
+    <id>http://www.pirrla.cn/2017/09/12/mongo-fuzhiji/</id>
+    <published>2017-09-12T06:24:00.000Z</published>
+    <updated>2017-09-12T06:55:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="MongoDB复制集开启（本机）"><a href="#MongoDB复制集开启（本机）" class="headerlink" title="MongoDB复制集开启（本机）"></a>MongoDB复制集开启（本机）</h3><p>在本地开启三个mongod，当作三个服务器，分别使用作<strong>主复制集、从复制集、仲裁复制集</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:28001   //主复制集</div><div class="line">127.0.0.1:28002   //从复制集</div><div class="line">127.0.0.1:28003   //仲裁复制集</div></pre></td></tr></table></figure>
+<p><strong>1.首先建立三个文件夹分别存放数据库数据文件。</strong></p>
+<p><strong>2.分别建立各自的conf配置文件</strong></p>
+<p>配置内容如下：（三个服务器只是端口不同，其他配置相同）</p>
+<p>/data/mongodb/conf/28001.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># 端口</div><div class="line">port=28001</div><div class="line"># 绑定ip地址</div><div class="line">bind_ip=127.0.0.1</div><div class="line"># 日志文件路径</div><div class="line">logpath=/data/mongodb/log/28001.log</div><div class="line"># 数据文件存放目录</div><div class="line">dbpath=/data/mongodb/data/28001/</div><div class="line"># 以追加的方式写日志</div><div class="line">logappend=true</div><div class="line"></div><div class="line">pidfilepath=/data/mongodb/data/28001/28001.pid</div><div class="line">fork=true</div><div class="line">oplogSize=1024</div><div class="line"># 复制集名称</div><div class="line">replSet=MyMongo</div></pre></td></tr></table></figure>
+<p>其中复制集名称最重要，因为如果需要放在同一个复制集，必须保证不同的服务器的复制集名称完全相同。（<font color="red">其中replSet的S记得要大写</font>）</p>
+<p><strong>3.启动三个服务器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mongod -f /data/mongodb/conf/28001.conf</div><div class="line">mongod -f /data/mongodb/conf/28002.conf</div><div class="line">mongod -f /data/mongodb/conf/28003.conf</div></pre></td></tr></table></figure>
+<p>后面跟的是配置文件的地址，启动完成后，会出现一个fork:successful的提示信息，而且不是在前台启动的，所以要注意，可能已经启动过了。</p>
+<p>查找是否有启动可以使用以下命令查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep mongo</div></pre></td></tr></table></figure>
+<p><strong>4.初始化复制集</strong></p>
+<p>如果是第一次进行初始化，进入需要成为主复制集的服务器，这里进入28001端口</p>
+<p>进入mongo客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo localhost:28001</div></pre></td></tr></table></figure>
+<p>然后输入初始化命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rs.initiate(&#123;_id:&apos;MyMongo&apos;,members:[&#123;_id:1,host:&apos;127.0.0.1:28001&apos;&#125;]&#125;)</div></pre></td></tr></table></figure>
+<p>第一个_id：复制集的名称</p>
+<p>member：复制集服务器列表（因为其他服务器还没完成初始化，所以只有一个当前的服务器）</p>
+<p>第二个_id：指定给服务器的ID</p>
+<p>host：服务器主机地址</p>
+<p><strong>5.添加从复制集合仲裁复制集</strong></p>
+<p>完成初始化，可以看到，当前服务器的名称已经成为了primary。因为是整个复制集中第一个完成初始化的，所以该服务器成为主复制集。</p>
+<p>然后我们需要添加从复制集：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rs.add(&apos;127.0.0.1:28002&apos;)</div></pre></td></tr></table></figure>
+<p>{”ok“ : 1}添加成功</p>
+<p>调用rs.status()可以查看到复制集的情况</p>
+<p>然后我们添加仲裁复制集：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rs.addArb(&apos;127.0.0.1:28003&apos;)</div></pre></td></tr></table></figure>
+<p>{”ok“ : 1}添加成功</p>
+<p><strong>6.测试</strong></p>
+<p>Ref:</p>
+<p>[1] <a href="http://www.cnblogs.com/nicolegxt/p/6841442.html?utm_source=itdadao&amp;utm_medium=referral" target="_blank" rel="external">http://www.cnblogs.com/nicolegxt/p/6841442.html?utm_source=itdadao&amp;utm_medium=referral</a></p>
+<p>[2] <a href="http://blog.csdn.net/lichangzai/article/details/50903130" target="_blank" rel="external">http://blog.csdn.net/lichangzai/article/details/50903130</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;MongoDB复制集开启（本机）&quot;&gt;&lt;a href=&quot;#MongoDB复制集开启（本机）&quot; class=&quot;headerlink&quot; title=&quot;MongoDB复制集开启（本机）&quot;&gt;&lt;/a&gt;MongoDB复制集开启（本机）&lt;/h3&gt;&lt;p&gt;在本地开启三个mongod，
+    
+    </summary>
+    
+      <category term="mongodb" scheme="http://www.pirrla.cn/categories/mongodb/"/>
+    
+    
+      <category term="mongodb" scheme="http://www.pirrla.cn/tags/mongodb/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>文件系统</title>
+    <link href="http://www.pirrla.cn/2017/09/12/fs/fs2/"/>
+    <id>http://www.pirrla.cn/2017/09/12/fs/fs2/</id>
+    <published>2017-09-12T06:23:06.000Z</published>
+    <updated>2017-09-13T07:04:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="FastDFS与GridFS的选择"><a href="#FastDFS与GridFS的选择" class="headerlink" title="FastDFS与GridFS的选择"></a>FastDFS与GridFS的选择</h3><h4 id="FastDFS"><a href="#FastDFS" class="headerlink" title="FastDFS"></a>FastDFS</h4><p>FastDFS服务器端有两个角色：追踪器（tracker）和存储节点（storage）。</p>
+<p>追踪器：主要负责调度工作，在访问上起到<strong>负载均衡</strong>的作用。</p>
+<p>存储节点：存储文件，完成文件管理的存储、同步和提供存取接口等功能。</p>
+<p>FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行管理，以键值对的方式表示。</p>
+<p>建议文件大小： 4KB &lt; file_size &lt;500MB</p>
+<p>系统结构：</p>
+<p><img src="http://static.oschina.net/uploads/img/201204/20230218_pNXn.jpg" alt=""></p>
+<p>存储节点采用分卷的组织方式。存储系统由一个或多个卷组成，卷与卷之间的文件是相对独立的。</p>
+<p>一个卷可以由一台或多台存储服务器组成，多台存储服务器可以起到冗余备份和负载均衡的作用。</p>
+<p><strong>上传文件交互过程：</strong></p>
+<ol>
+<li>client询问tracker上传到的storage，不需要附加参数；</li>
+<li>tracker返回一台可用的storage；</li>
+<li>client直接和storage通讯完成文件上传。 </li>
+</ol>
+<p><strong>下载文件交互过程：</strong></p>
+<ol>
+<li>client询问tracker下载文件的storage，参数为文件标识（卷名和文件名）；</li>
+<li>tracker返回一台可用的storage；</li>
+<li>client直接和storage通讯完成文件下载。</li>
+</ol>
+<h3 id="Mongo-Connector使用心得"><a href="#Mongo-Connector使用心得" class="headerlink" title="Mongo Connector使用心得"></a>Mongo Connector使用心得</h3><p>当按照复制集开启流程完成后，即可使用mongo connector。</p>
+<font color="red">之前的表述有错误，开启mongo conncetor后数据会直接同步，旧数据也会</font>
+
+<p><strong>MongoDB的database会作为es的index</strong></p>
+<p><strong>collection会作为es的type</strong></p>
+<p>然后各个字段都会同步到es中。（增删改都会，version会变）</p>
+<p>Ref:</p>
+<p>[1] <a href="http://www.oschina.net/p/fastdfs" target="_blank" rel="external">http://www.oschina.net/p/fastdfs</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;FastDFS与GridFS的选择&quot;&gt;&lt;a href=&quot;#FastDFS与GridFS的选择&quot; class=&quot;headerlink&quot; title=&quot;FastDFS与GridFS的选择&quot;&gt;&lt;/a&gt;FastDFS与GridFS的选择&lt;/h3&gt;&lt;h4 id=&quot;FastD
+    
+    </summary>
+    
+      <category term="filesystem" scheme="http://www.pirrla.cn/categories/filesystem/"/>
+    
+    
+      <category term="filesystem" scheme="http://www.pirrla.cn/tags/filesystem/"/>
+    
+  </entry>
   
   <entry>
     <title>推荐系统5</title>
@@ -53,8 +162,8 @@
   
   <entry>
     <title>文件系统</title>
-    <link href="http://www.pirrla.cn/2017/09/05/fs1/"/>
-    <id>http://www.pirrla.cn/2017/09/05/fs1/</id>
+    <link href="http://www.pirrla.cn/2017/09/05/fs/fs1/"/>
+    <id>http://www.pirrla.cn/2017/09/05/fs/fs1/</id>
     <published>2017-09-05T06:23:06.000Z</published>
     <updated>2017-09-12T02:03:49.000Z</updated>
     
@@ -1039,8 +1148,8 @@
   
   <entry>
     <title>MacOS安装Oracle客户端Client</title>
-    <link href="http://www.pirrla.cn/2017/08/10/mac_oracle/"/>
-    <id>http://www.pirrla.cn/2017/08/10/mac_oracle/</id>
+    <link href="http://www.pirrla.cn/2017/08/10/other/mac_oracle/"/>
+    <id>http://www.pirrla.cn/2017/08/10/other/mac_oracle/</id>
     <published>2017-08-10T02:56:39.000Z</published>
     <updated>2017-08-10T03:02:05.000Z</updated>
     
@@ -1062,8 +1171,8 @@
   
   <entry>
     <title>ES搜索笔记</title>
-    <link href="http://www.pirrla.cn/2017/08/04/es_query/"/>
-    <id>http://www.pirrla.cn/2017/08/04/es_query/</id>
+    <link href="http://www.pirrla.cn/2017/08/04/es/es_query/"/>
+    <id>http://www.pirrla.cn/2017/08/04/es/es_query/</id>
     <published>2017-08-04T02:08:20.000Z</published>
     <updated>2017-08-09T08:49:00.000Z</updated>
     
@@ -1218,8 +1327,8 @@
   
   <entry>
     <title>ES输入设置</title>
-    <link href="http://www.pirrla.cn/2017/08/03/es_input/"/>
-    <id>http://www.pirrla.cn/2017/08/03/es_input/</id>
+    <link href="http://www.pirrla.cn/2017/08/03/es/es_input/"/>
+    <id>http://www.pirrla.cn/2017/08/03/es/es_input/</id>
     <published>2017-08-03T02:31:08.000Z</published>
     <updated>2017-08-07T08:58:06.000Z</updated>
     
@@ -1266,8 +1375,8 @@
   
   <entry>
     <title>Javascript学习笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/21/js_notes/"/>
-    <id>http://www.pirrla.cn/2017/07/21/js_notes/</id>
+    <link href="http://www.pirrla.cn/2017/07/21/other/js_notes/"/>
+    <id>http://www.pirrla.cn/2017/07/21/other/js_notes/</id>
     <published>2017-07-21T08:36:48.000Z</published>
     <updated>2017-07-24T06:21:45.000Z</updated>
     
@@ -1314,8 +1423,8 @@
   
   <entry>
     <title>Elasticsearch笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/14/es_notes/"/>
-    <id>http://www.pirrla.cn/2017/07/14/es_notes/</id>
+    <link href="http://www.pirrla.cn/2017/07/14/es/es_notes/"/>
+    <id>http://www.pirrla.cn/2017/07/14/es/es_notes/</id>
     <published>2017-07-14T01:28:34.000Z</published>
     <updated>2017-07-21T08:36:27.000Z</updated>
     
@@ -1634,8 +1743,8 @@
   
   <entry>
     <title>Elasticsearch股票分析</title>
-    <link href="http://www.pirrla.cn/2017/07/13/es_stocks/"/>
-    <id>http://www.pirrla.cn/2017/07/13/es_stocks/</id>
+    <link href="http://www.pirrla.cn/2017/07/13/es/es_stocks/"/>
+    <id>http://www.pirrla.cn/2017/07/13/es/es_stocks/</id>
     <published>2017-07-12T16:00:00.000Z</published>
     <updated>2017-07-14T06:25:25.000Z</updated>
     
@@ -1683,8 +1792,8 @@
   
   <entry>
     <title>Python练习笔记</title>
-    <link href="http://www.pirrla.cn/2017/07/12/python_practise/"/>
-    <id>http://www.pirrla.cn/2017/07/12/python_practise/</id>
+    <link href="http://www.pirrla.cn/2017/07/12/python/python_practise/"/>
+    <id>http://www.pirrla.cn/2017/07/12/python/python_practise/</id>
     <published>2017-07-11T16:00:00.000Z</published>
     <updated>2017-08-04T07:51:30.000Z</updated>
     
@@ -1720,8 +1829,8 @@
   
   <entry>
     <title>Elasticsearch相关性</title>
-    <link href="http://www.pirrla.cn/2017/07/12/es_similarity/"/>
-    <id>http://www.pirrla.cn/2017/07/12/es_similarity/</id>
+    <link href="http://www.pirrla.cn/2017/07/12/es/es_similarity/"/>
+    <id>http://www.pirrla.cn/2017/07/12/es/es_similarity/</id>
     <published>2017-07-11T16:00:00.000Z</published>
     <updated>2017-07-14T00:55:20.000Z</updated>
     
@@ -1844,8 +1953,8 @@
   
   <entry>
     <title>Mastering Social Media Mining wiht Python</title>
-    <link href="http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/"/>
-    <id>http://www.pirrla.cn/2017/03/17/Mastering_Social_Media_Mining_with_Python/</id>
+    <link href="http://www.pirrla.cn/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/"/>
+    <id>http://www.pirrla.cn/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/</id>
     <published>2017-03-16T16:00:00.000Z</published>
     <updated>2017-03-25T17:59:52.000Z</updated>
     
@@ -1894,8 +2003,8 @@
   
   <entry>
     <title>Git Tutorial</title>
-    <link href="http://www.pirrla.cn/2017/03/16/GitTutorial_ByLiaoxuefeng/"/>
-    <id>http://www.pirrla.cn/2017/03/16/GitTutorial_ByLiaoxuefeng/</id>
+    <link href="http://www.pirrla.cn/2017/03/16/other/GitTutorial_ByLiaoxuefeng/"/>
+    <id>http://www.pirrla.cn/2017/03/16/other/GitTutorial_ByLiaoxuefeng/</id>
     <published>2017-03-15T16:00:00.000Z</published>
     <updated>2017-03-25T18:00:00.000Z</updated>
     
@@ -1968,8 +2077,8 @@
   
   <entry>
     <title>Duality of Linear Programming</title>
-    <link href="http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/"/>
-    <id>http://www.pirrla.cn/2017/03/15/Duality_of_Linear_Programming/</id>
+    <link href="http://www.pirrla.cn/2017/03/15/cuhk/Duality_of_Linear_Programming/"/>
+    <id>http://www.pirrla.cn/2017/03/15/cuhk/Duality_of_Linear_Programming/</id>
     <published>2017-03-14T16:00:00.000Z</published>
     <updated>2017-03-25T18:00:07.000Z</updated>
     
@@ -2041,8 +2150,8 @@
   
   <entry>
     <title>Coursera Machine Learning Notes</title>
-    <link href="http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/"/>
-    <id>http://www.pirrla.cn/2017/03/15/Coursera-MachineLearningByAndrewNg/</id>
+    <link href="http://www.pirrla.cn/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/"/>
+    <id>http://www.pirrla.cn/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/</id>
     <published>2017-03-14T16:00:00.000Z</published>
     <updated>2017-03-26T09:34:15.000Z</updated>
     

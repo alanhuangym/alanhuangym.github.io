@@ -1,0 +1,1040 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="elasticsearch," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Elasticsearch 5.5 文档Set up Elasticsearch
+ES目录下config/elasticsearch.yml 是ES的配置文件
+
+配置如下：详细设置看这里
+123456789101112# Cluster# 设置cluster的名称cluster.name: my-application# Node# 设置node的名称node.name: node-1# 添加no">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch笔记">
+<meta property="og:url" content="http://www.pirrla.cn/2017/07/14/es/es_notes/index.html">
+<meta property="og:site_name" content="Note down something">
+<meta property="og:description" content="Elasticsearch 5.5 文档Set up Elasticsearch
+ES目录下config/elasticsearch.yml 是ES的配置文件
+
+配置如下：详细设置看这里
+123456789101112# Cluster# 设置cluster的名称cluster.name: my-application# Node# 设置node的名称node.name: node-1# 添加no">
+<meta property="og:updated_time" content="2017-07-21T08:36:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch笔记">
+<meta name="twitter:description" content="Elasticsearch 5.5 文档Set up Elasticsearch
+ES目录下config/elasticsearch.yml 是ES的配置文件
+
+配置如下：详细设置看这里
+123456789101112# Cluster# 设置cluster的名称cluster.name: my-application# Node# 设置node的名称node.name: node-1# 添加no">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.pirrla.cn/2017/07/14/es/es_notes/"/>
+
+
+
+
+
+  <title> Elasticsearch笔记 | Note down something </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Note down something</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/14/es/es_notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Elasticsearch笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-14T09:28:34+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Elasticsearch-5-5-文档"><a href="#Elasticsearch-5-5-文档" class="headerlink" title="Elasticsearch 5.5 文档"></a><strong>Elasticsearch 5.5 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank" rel="external">文档</a></strong></h3><h3 id="Set-up-Elasticsearch"><a href="#Set-up-Elasticsearch" class="headerlink" title="Set up Elasticsearch"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html" target="_blank" rel="external">Set up Elasticsearch</a></h3><ul>
+<li>ES目录下config/elasticsearch.yml 是ES的配置文件</li>
+</ul>
+<p>配置如下：详细设置看<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html" target="_blank" rel="external">这里</a></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Cluster</span></div><div class="line"><span class="comment"># 设置cluster的名称</span></div><div class="line"><span class="string">cluster.name:</span> <span class="string">my-application</span></div><div class="line"><span class="comment"># Node</span></div><div class="line"><span class="comment"># 设置node的名称</span></div><div class="line"><span class="string">node.name:</span> <span class="string">node-1</span></div><div class="line"><span class="comment"># 添加node自定义属性</span></div><div class="line"><span class="string">node.attr.rack:</span> <span class="string">r1</span></div><div class="line"><span class="comment"># 存储数据的路径</span></div><div class="line"><span class="comment"># Path to log files:</span></div><div class="line"><span class="string">path.logs:</span> <span class="string">/path/to/logs</span></div><div class="line"><span class="string">...</span></div></pre></td></tr></table></figure>
+<p>如需要在ES启动时，再输入node名称等信息可以以下配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#text是直接输入数据并显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.text&#125;</span></div><div class="line"><span class="comment">#secret则是输入的数据不会在终端上显示</span></div><div class="line"><span class="attr">node:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">$&#123;prompt.secret&#125;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Enter value for [node.name]:</div></pre></td></tr></table></figure>
+<p>这样在启动ES时就需要输入名称了。</p>
+<ul>
+<li>ES目录下config/log4j2.properties 是ES的日志配置文件</li>
+</ul>
+<p>注意日志配置文件对多余的<font color="red">空格</font>会解析错误，所以需要保证没有多余的空格。</p>
+<h3 id="Set-up-X-Pack"><a href="#Set-up-X-Pack" class="headerlink" title="Set up X-Pack"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html" target="_blank" rel="external">Set up X-Pack</a></h3><h3 id="API-Conventions"><a href="#API-Conventions" class="headerlink" title="API Conventions"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/api-conventions.html" target="_blank" rel="external">API Conventions</a></h3><h5 id="Multiple-Indices"><a href="#Multiple-Indices" class="headerlink" title="Multiple Indices"></a>Multiple Indices</h5><p>后文所用的API基本都涉及到<strong>索引名称</strong></p>
+<ul>
+<li>_all 指所有的索引</li>
+<li>索引名称同时支持通配符，如test<em>,te\</em>t</li>
+<li>索引名称还支持筛选，如+test*,-test3</li>
+</ul>
+<p>包含多个索引操作的API支持以下参数：</p>
+<ul>
+<li>ignore_unavailable - 是否忽略索引如索引名称不存在</li>
+<li>allow_no_indices - 当通配符匹配失败后，是否整条request都失败</li>
+<li>expand_wildcards - open/close 设置通配符匹配的索引的开关状态</li>
+</ul>
+<h5 id="Date-math-support-in-index-names"><a href="#Date-math-support-in-index-names" class="headerlink" title="Date math support in index names"></a>Date math support in index names</h5><p>如果需要根据日期去匹配索引，可以使用以下通配符：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;static_name&#123;date_math_expr&#123;date_format|time_zone&#125;&#125;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>static_name - 固定的文字部分</li>
+<li>date_math_expr - 日期表达式，通常使用now/d</li>
+<li>date_format - 日期的显示格式</li>
+<li>time_zone - 时区</li>
+</ul>
+<p>例子：</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Resolves to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;logstash-{now/d}&gt;</code></td>
+<td><code>logstash-2024.03.22</code></td>
+</tr>
+<tr>
+<td><code>&lt;logstash-{now/M}&gt;</code></td>
+<td><code>logstash-2024.03.01</code></td>
+</tr>
+<tr>
+<td><code>&lt;logstash-{now/M{YYYY.MM}}&gt;</code></td>
+<td><code>logstash-2024.03</code></td>
+</tr>
+<tr>
+<td><code>&lt;logstash-{now/M-1M{YYYY.MM}}&gt;</code></td>
+<td><code>logstash-2024.02</code></td>
+</tr>
+<tr>
+<td>`&lt;logstash-{now/d{YYYY.MM.dd</td>
+<td>+12:00}}&gt;`</td>
+<td><code>logstash-2024.03.23</code></td>
+</tr>
+</tbody>
+</table>
+<p>其中，由于url需要进行标准化，所以需要对符号进行百分号化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># GET /&lt;logstash-&#123;now/d&#125;&gt;/_search</div><div class="line">GET /%3Clogstash-%7Bnow%2Fd%7D%3E/_search</div><div class="line">&#123;</div><div class="line">  &quot;query&quot; : &#123;</div><div class="line">    &quot;match&quot;: &#123;</div><div class="line">      &quot;test&quot;: &quot;data&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>百分号编码如下：</p>
+<table>
+<thead>
+<tr>
+<th><code>&lt;</code></th>
+<th><code>%3C</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>%3E</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td><code>%2F</code></td>
+</tr>
+<tr>
+<td><code>{</code></td>
+<td><code>%7B</code></td>
+</tr>
+<tr>
+<td><code>}</code></td>
+<td><code>%7D</code></td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td><code>%7C</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td><code>%2B</code></td>
+</tr>
+<tr>
+<td><code>:</code></td>
+<td><code>%3A</code></td>
+</tr>
+<tr>
+<td><code>,</code></td>
+<td><code>%2C</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="Common-options"><a href="#Common-options" class="headerlink" title="Common options"></a>Common options</h5><ul>
+<li>美化输出，可以使用 <code>?pretty=true</code>参数</li>
+<li>为了将时间、大小（1h,1kb）等变得可读，可以使用<code>?human=true</code>参数</li>
+<li>日期时间</li>
+<li><ul>
+<li>+1h = 加一小时</li>
+<li>-1d = 减一天</li>
+<li>/d = 取整最近的一天</li>
+</ul>
+</li>
+</ul>
+<p>具体的日期表达式如下：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>代表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>y</code></td>
+<td>years</td>
+</tr>
+<tr>
+<td><code>M</code></td>
+<td>months</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>weeks</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>days</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td>hours</td>
+</tr>
+<tr>
+<td><code>H</code></td>
+<td>hours</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>minutes</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>seconds</td>
+</tr>
+<tr>
+<td><code>ms</code></td>
+<td>milliseconds</td>
+</tr>
+<tr>
+<td><code>micros</code></td>
+<td>microseconds</td>
+</tr>
+<tr>
+<td><code>nanos</code></td>
+<td>nanoseconds</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>错误回溯，可以使用<code>?error_trace=true</code>参数</li>
+</ul>
+<h3 id="Document-APIs"><a href="#Document-APIs" class="headerlink" title="Document APIs"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html" target="_blank" rel="external">Document APIs</a></h3><h5 id="Reading-and-Writing-documents"><a href="#Reading-and-Writing-documents" class="headerlink" title="Reading and Writing documents"></a>Reading and Writing documents</h5><p><strong>基础写操作</strong>：</p>
+<p>首先，每一个索引操作来到ES都会首先被送去不同的复制组（复制组指的是ES内含有很多的分片，包括主分片和主分片的复制分片，每一个主分片和其复制分片构成一个复制组）。而分组方法，则是通过路由（路由一般指将文档的ID进行哈希操作，从而根据结果分配到不同的复制组中）分配到不同的复制组中。</p>
+<p>进入到一个复制组中，操作将会发送给主分片，主分片将进行以下操作：</p>
+<ol>
+<li>验证来到的操作，如操作非法则拒绝此操作；</li>
+<li>在主分片内进行本地操作，这同样会检查数值域的合法性，如果非法也会拒绝操作；</li>
+<li>转发这个操作至复制组中的复制分片，这个操作将是平行进行的；</li>
+<li>当整个复制组的复制分片都已经完成了操作，将会通知主分片，主分片将会通知客户端操作的完成性。</li>
+</ol>
+<p>失败处理：</p>
+<ul>
+<li>当主分片崩溃了，主持节点将会将一个复制分片提升为主分片</li>
+<li>当主分片转发操作给复制分片时，将会检查自己是否还是主分片，否则将造成数据不同步</li>
+<li>当主分片转发操作给复制分片，但复制分片崩溃了，主分片将会对master节点进行报告，同时会开始进行新的复制分片的制作流程</li>
+</ul>
+<p><strong>基础读操作</strong></p>
+<p>读操作相对于写操作来说，将轻量很多。</p>
+<p>当一个节点解说道了读操作，节点将操作转发到该操作的相关分片中，对应的分片将对该操作负责，不需要一定要主分片进行操作：</p>
+<ol>
+<li>解析读操作，并转发给相关的复制组；</li>
+<li>从复制组选择任一活动的分片，主分片或复制分片都可以；</li>
+<li>将分片领域的操作进行执行；</li>
+<li>将结果进行汇总，并呈献给客户端。</li>
+</ol>
+<p><del>待续。待继续整理</del>。</p>
+<h5 id="Index-API"><a href="#Index-API" class="headerlink" title="Index API"></a>Index API</h5><p>基础操作</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">PUT twitter/tweet/1</div><div class="line">&#123;</div><div class="line">    "user" : "kimchy",</div><div class="line">    "post_date" : "2009-11-15T14:12:12",</div><div class="line">    "message" : "trying out Elasticsearch"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当该索引不存在时，系统会自动创建索引，并且自动设置mapping。如不想要系统自动创建索引，那么可以将参数<code>action.auto_create_index</code>设置为<code>false</code>。</p>
+<p>同时，如果不希望自动设置mapping(设置各个域的数值类型和分析器等参数)，可以在索引创建时设置settings<code>index.mapper.dynamic</code>设置为<code>false</code>。</p>
+<p>版本控制</p>
+<p>每一次创建文档成功，文档将会自带一个<code>version</code>字段。通过该字段的控制，则可以实现版本控制。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT twitter/tweet/1?version=2</div><div class="line">&#123;</div><div class="line">    "message" : "elasticsearch now has versioning support, double cool!"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当需要系统自动创建文档ID时可以使用<strong>POST</strong>方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST twitter/tweet/</div><div class="line">&#123;</div><div class="line">    "user" : "kimchy",</div><div class="line">    "post_date" : "2009-11-15T14:12:12",</div><div class="line">    "message" : "trying out Elasticsearch"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>======================================================</p>
+<p>以下为简单笔记</p>
+<p>GET 获取信息，HEAD检测是否存在。</p>
+<p>批量搜索删除</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">POST twitter/_delete_by_query</div><div class="line">&#123;</div><div class="line">  "query": &#123; </div><div class="line">    "match": &#123;</div><div class="line">      "message": "some message"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>更新数据</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">POST test/type1/1/_update</div><div class="line">&#123;</div><div class="line">    "script" : &#123;</div><div class="line">        "inline": "ctx._source.counter += params.count",</div><div class="line">        "lang": "painless",</div><div class="line">        "params" : &#123;</div><div class="line">            "count" : 4</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>批量筛选更新：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">POST twitter/_update_by_query</div><div class="line">&#123;</div><div class="line">  "script": &#123;</div><div class="line">    "inline": "ctx._source.likes++",</div><div class="line">    "lang": "painless"</div><div class="line">  &#125;,</div><div class="line">  "query": &#123;</div><div class="line">    "term": &#123;</div><div class="line">      "user": "kimchy"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>reindex</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">POST _reindex</div><div class="line">&#123;</div><div class="line">  "source": &#123;</div><div class="line">    "index": "twitter",</div><div class="line">    "type": "tweet",</div><div class="line">    "query": &#123;</div><div class="line">      "term": &#123;</div><div class="line">        "user": "kimchy"</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  "dest": &#123;</div><div class="line">    "index": "new_twitter"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>完整的source_filter 支持通配符</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "_source": &#123;</div><div class="line">        "includes": [ "obj1.*", "obj2.*" ],</div><div class="line">        "excludes": [ "*.description" ]</div><div class="line">    &#125;,</div><div class="line">    "query" : &#123;</div><div class="line">        "term" : &#123; "user" : "kimchy" &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自定义字段，并输出</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">    "query" : &#123;</div><div class="line">        "match_all": &#123;&#125;</div><div class="line">    &#125;,</div><div class="line">    "script_fields" : &#123;</div><div class="line">        "test1" : &#123;</div><div class="line">            "script" : &#123;</div><div class="line">                "lang": "painless",</div><div class="line">                "inline": "doc['my_field_name'].value * 2"</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        "test2" : &#123;</div><div class="line">            "script" : &#123;</div><div class="line">                "lang": "painless",</div><div class="line">                "inline": "doc['my_field_name'].value * factor",</div><div class="line">                "params" : &#123;</div><div class="line">                    "factor"  : 2.0</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-preference.html" target="_blank" rel="external">选择在什么分片执行操作</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /_search?preference=xyzabc123</div><div class="line">&#123;</div><div class="line">    "query": &#123;</div><div class="line">        "match": &#123;</div><div class="line">            "title": "elasticsearch"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>agg-<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html" target="_blank" rel="external">cardinality</a></p>
+<p>对多set的可能会出错，对少的比较正确</p>
+<p>聚合例子</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">POST /sales/_search?size=0</div><div class="line">&#123;</div><div class="line">    "aggs" : &#123;</div><div class="line">        "t_shirts" : &#123;</div><div class="line">            "filter" : &#123; "term": &#123; "type": "t-shirt" &#125; &#125;,</div><div class="line">            "aggs" : &#123;</div><div class="line">                "avg_price" : &#123; "avg" : &#123; "field" : "price" &#125; &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自动建立条状图聚类</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">POST /sales/_search?size=0</div><div class="line">&#123;</div><div class="line">    "aggs" : &#123;</div><div class="line">        "prices" : &#123;</div><div class="line">            "histogram" : &#123;</div><div class="line">                "field" : "price",</div><div class="line">                "interval" : 50,</div><div class="line">                "min_doc_count" : 1</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>聚类 stats字段一键显示各种avg/sum/…</p>
+<p>In order to disable allowing to delete indices via wildcards or <code>_all</code>, set <code>action.destructive_requires_name</code> setting in the config to <code>true</code>. </p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-rollover-index.html#indices-rollover-index" target="_blank" rel="external">转移不同index内的数据（index太大）</a></p>
+<p>添加alias</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    "actions" : [</div><div class="line">        &#123; "add" : &#123; "indices" : ["test1", "test2"], "alias" : "alias1" &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>移除alias</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    "actions" : [</div><div class="line">        &#123; "remove" : &#123; "index" : "test1", "alias" : "alias1" &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>索引模板</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">PUT _template/template_1</div><div class="line">&#123;</div><div class="line">  "template": "te*",</div><div class="line">  "settings": &#123;</div><div class="line">    "number_of_shards": 1</div><div class="line">  &#125;,</div><div class="line">  "mappings": &#123;</div><div class="line">    "type1": &#123;</div><div class="line">      "_source": &#123;</div><div class="line">        "enabled": false</div><div class="line">      &#125;,</div><div class="line">      "properties": &#123;</div><div class="line">        "host_name": &#123;</div><div class="line">          "type": "keyword"</div><div class="line">        &#125;,</div><div class="line">        "created_at": &#123;</div><div class="line">          "type": "date",</div><div class="line">          "format": "EEE MMM dd HH:mm:ss Z YYYY"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>三倍重要搜索</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">  "query": &#123;</div><div class="line">    "multi_match" : &#123;</div><div class="line">      "query" : "this is a test",</div><div class="line">      "fields" : [ "subject^3", "message" ] </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>多个field同用一个名字</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  "mappings": &#123;</div><div class="line">    "my_type": &#123;</div><div class="line">      "properties": &#123;</div><div class="line">        "first_name": &#123;</div><div class="line">          "type": "text",</div><div class="line">          "copy_to": "full_name" </div><div class="line">        &#125;,</div><div class="line">        "last_name": &#123;</div><div class="line">          "type": "text",</div><div class="line">          "copy_to": "full_name" </div><div class="line">        &#125;,</div><div class="line">        "full_name": &#123;</div><div class="line">          "type": "text"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>master node 个数</p>
+<p>最少discovery.zen.minimum_master_nodes=(master_eligible_nodes / 2) + 1</p>
+<p>脚本语言（默认painless）</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Sandboxed</th>
+<th>Required plugin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-painless.html" target="_blank" rel="external"><code>painless</code></a></td>
+<td>yes</td>
+<td>built-in</td>
+</tr>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-groovy.html" target="_blank" rel="external"><code>groovy</code></a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
+<td>built-in</td>
+</tr>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-javascript.html" target="_blank" rel="external"><code>javascript</code></a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-javascript.html" target="_blank" rel="external"><code>lang-javascript</code></a></td>
+</tr>
+<tr>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-python.html" target="_blank" rel="external"><code>python</code></a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-security.html" target="_blank" rel="external">no</a></td>
+<td><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.5/lang-python.html" target="_blank" rel="external"><code>lang-python</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>By far the fastest most efficient way to access a field value from a script is to use the <code>doc[&#39;field_name&#39;]</code> syntax,</p>
+<p>基本概念**</p>
+<p>一个cluster是一个或多个node的集合，一个node可以存储index，一个index可以有多个type。</p>
+<p><strong>索引</strong></p>
+<p>不输入id</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自定id</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT /customer/external/2</div><div class="line">&#123;</div><div class="line">  "name": "Jane Doe"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>更新数据</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/1/_update</div><div class="line">&#123;</div><div class="line">  "script" : "ctx._source.age += 5"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Note that as of this writing, updates can only be performed on a single document at a time. In the future, Elasticsearch might provide the ability to update multiple documents given a query condition (like an <code>SQL UPDATE-WHERE</code> statement).</p>
+<p><strong>批量操作</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /customer/external/_bulk</div><div class="line">&#123;"update":&#123;"_id":"1"&#125;&#125;</div><div class="line">&#123;"doc": &#123; "name": "John Doe becomes Jane Doe" &#125; &#125;</div><div class="line">&#123;"delete":&#123;"_id":"2"&#125;&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/date-math-index-names.html" target="_blank" rel="external">批量操作日期格式的index</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/13/es/es_stocks/" rel="next" title="Elasticsearch股票分析">
+                <i class="fa fa-chevron-left"></i> Elasticsearch股票分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/21/other/js_notes/" rel="prev" title="Javascript学习笔记">
+                Javascript学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
+               alt="Alan Wong" />
+          <p class="site-author-name" itemprop="name">Alan Wong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/alanhuangym" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Elasticsearch-5-5-文档"><span class="nav-number">1.</span> <span class="nav-text">Elasticsearch 5.5 文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-up-Elasticsearch"><span class="nav-number">2.</span> <span class="nav-text">Set up Elasticsearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-up-X-Pack"><span class="nav-number">3.</span> <span class="nav-text">Set up X-Pack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API-Conventions"><span class="nav-number">4.</span> <span class="nav-text">API Conventions</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Multiple-Indices"><span class="nav-number">4.0.1.</span> <span class="nav-text">Multiple Indices</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Date-math-support-in-index-names"><span class="nav-number">4.0.2.</span> <span class="nav-text">Date math support in index names</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Common-options"><span class="nav-number">4.0.3.</span> <span class="nav-text">Common options</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Document-APIs"><span class="nav-number">5.</span> <span class="nav-text">Document APIs</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Reading-and-Writing-documents"><span class="nav-number">5.0.1.</span> <span class="nav-text">Reading and Writing documents</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Index-API"><span class="nav-number">5.0.2.</span> <span class="nav-text">Index API</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Wong</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
