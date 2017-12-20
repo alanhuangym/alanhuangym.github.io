@@ -93,11 +93,13 @@
 <meta property="og:site_name" content="Note down something">
 <meta property="og:description" content="当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。
 于是我们每次都需要执行一次npm install的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成doc">
-<meta property="og:updated_time" content="2017-12-20T01:43:02.000Z">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins11.png">
+<meta property="og:updated_time" content="2017-12-20T09:02:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记4-使用Docker对环境和代码打包">
 <meta name="twitter:description" content="当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。
 于是我们每次都需要执行一次npm install的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成doc">
+<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins11.png">
 
 
 
@@ -356,6 +358,7 @@
       
         <p>当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。</p>
 <p>于是我们每次都需要执行一次<code>npm install</code>的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成dockerfile和dockerimage，从而就不需要每次都对生产环境进行更新操作。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins11.png" alt=""></p>
 <h3 id="1-docker简介"><a href="#1-docker简介" class="headerlink" title="1.docker简介"></a>1.docker简介</h3><h3 id="Swarm集群拓展"><a href="#Swarm集群拓展" class="headerlink" title="Swarm集群拓展"></a>Swarm集群拓展</h3>
       
     </div>
