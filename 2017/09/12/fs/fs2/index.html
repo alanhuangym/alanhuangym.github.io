@@ -91,7 +91,7 @@
 FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行管理，以键值对的方式表示。
 建议文件大小： 4KB &amp;lt; fi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="文件系统">
+<meta property="og:title" content="文件系统2">
 <meta property="og:url" content="http://www.pirrla.cn/2017/09/12/fs/fs2/index.html">
 <meta property="og:site_name" content="Note down something">
 <meta property="og:description" content="FastDFS与GridFS的选择FastDFSFastDFS服务器端有两个角色：追踪器（tracker）和存储节点（storage）。
@@ -100,9 +100,9 @@ FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行�
 FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行管理，以键值对的方式表示。
 建议文件大小： 4KB &amp;lt; fi">
 <meta property="og:image" content="http://static.oschina.net/uploads/img/201204/20230218_pNXn.jpg">
-<meta property="og:updated_time" content="2017-09-13T07:59:05.000Z">
+<meta property="og:updated_time" content="2017-10-31T08:27:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文件系统">
+<meta name="twitter:title" content="文件系统2">
 <meta name="twitter:description" content="FastDFS与GridFS的选择FastDFSFastDFS服务器端有两个角色：追踪器（tracker）和存储节点（storage）。
 追踪器：主要负责调度工作，在访问上起到负载均衡的作用。
 存储节点：存储文件，完成文件管理的存储、同步和提供存取接口等功能。
@@ -142,7 +142,7 @@ FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行�
 
 
 
-  <title> 文件系统 | Note down something </title>
+  <title> 文件系统2 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -292,7 +292,7 @@ FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行�
             
             
               
-                文件系统
+                文件系统2
               
             
           </h1>
@@ -411,7 +411,7 @@ FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行�
 <li>开启ES</li>
 <li>开启mongo connector</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo-connector -m localhost:28001 -t localhost:9200 -d elastic2_doc_manager</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mongo-connector --auto-commit-interval=0 -m localhost:28001 -t localhost:9200 -d elastic2_doc_manager -n news.tj_reports -o /Users/alan/Downloads/oplog.txt</div></pre></td></tr></table></figure>
 <font color="red">之前的表述有错误，开启mongo connector后数据会直接同步，旧数据也会</font>
 
 <p><strong>MongoDB的database会作为es的index</strong></p>
@@ -561,7 +561,7 @@ FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -572,7 +572,7 @@ FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行�
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -583,7 +583,7 @@ FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行�
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
