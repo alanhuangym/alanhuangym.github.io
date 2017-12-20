@@ -255,6 +255,419 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/13/es/es_stocks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/13/es/es_stocks/" itemprop="url">
+                  Elasticsearch股票分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-13T00:00:00+08:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"><a href="#1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）" class="headerlink" title="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"></a>1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）</h3><p>首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。</p>
+<p>股票数据来源来自于<a href="http://quote.eastmoney.com/stocklist.html" target="_blank" rel="external">东方财富网</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="comment">#用两个列表分别存储上证和深证各支股票的信息</span></div><div class="line">sh = []</div><div class="line">sz = []</div><div class="line"><span class="keyword">with</span> requests.Session() <span class="keyword">as</span> s:</div><div class="line">    html = s.get(<span class="string">r'http://quote.eastmoney.com/stocklist.html'</span>)</div><div class="line">    soup = BeautifulSoup(html.content, <span class="string">'lxml'</span>)</div><div class="line">    sh_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">7</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sh_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sh.append(i.a.text)</div><div class="line">    sz_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">8</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sz_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sz.append(i.a.text)</div></pre></td></tr></table></figure>
+<p>输出的本文结果为如下格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头etf</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
+<p><img src="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png" alt=""></p>
+<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法检索到，所以需要在拓展词库中添加全部股票名称。</p>
+<p>其中，由于用户输入一般是忽略大小写的，为了方便用户能够输入大小写都能匹配到股票信息，我们将拓展词典、同义词词典的股票名称信息都更改为小写，这样无论用户输入大写还是小写都能匹配到股票。</p>
+<p><del>暂时没有找到关闭 filter <em> 号的方法，所以搜索不了 </em>stXX股票</del></p>
+<p><del>有没有可能去除st等标记，因标记是在原股票名称前添加，不改变原股票名称</del></p>
+<h3 id="2-学习使用html-strip-filter"><a href="#2-学习使用html-strip-filter" class="headerlink" title="2.学习使用html_strip filter"></a>2.学习使用html_strip filter</h3><p>html strip filter 代码如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">"char_filter": &#123;</div><div class="line">        "my_html": &#123;</div><div class="line">          "type": "html_strip",</div><div class="line">          "escaped_tags": []</div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
+<p>其中<strong>escaped_tags</strong>字段表示该列表之中的标签不用去除</p>
+<h3 id="3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip"><a href="#3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip" class="headerlink" title="3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip"></a>3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip</h3><p>完整设置和mapping如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "settings": &#123;</div><div class="line">        "index" : &#123;</div><div class="line">            "analysis" : &#123;</div><div class="line">                "analyzer" : &#123;</div><div class="line">                    "my_analyzer" : &#123;</div><div class="line">                        "tokenizer" : "my_ik",</div><div class="line">                        "filter" : ["my_stop","synonym"],</div><div class="line">                        "char_filter":  ["my_html"]</div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                "char_filter": &#123;</div><div class="line">                    "my_html": &#123;</div><div class="line">                      "type": "html_strip",</div><div class="line">                      "escaped_tags": []</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                "filter" : &#123;</div><div class="line">                    "synonym" : &#123;</div><div class="line">                        "type" : "synonym",</div><div class="line">                        "synonyms_path" : "synonym.txt"</div><div class="line">                    &#125;,</div><div class="line">                    "my_stop":&#123;</div><div class="line">                      "type":"stop",</div><div class="line">                      "stopwords":"_none_"</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                  "tokenizer":&#123;</div><div class="line">                  "my_ik":&#123;</div><div class="line">                    "type":"ik_max_word",</div><div class="line">                    "enable_lowercase":true</div><div class="line">                &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    "mappings":&#123;</div><div class="line">    "news":&#123; //类型名，这里为news</div><div class="line">    "properties": &#123;</div><div class="line">        "title": &#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "keywords":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "content":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>还需要完善：</p>
+<ul>
+<li>对于不需要和不希望加入搜索的字段进行not_analyze设置</li>
+<li>设置日期字段的数值类型date</li>
+</ul>
+<h3 id="4-对已有数据进行reindex-约34w数据"><a href="#4-对已有数据进行reindex-约34w数据" class="headerlink" title="4.对已有数据进行reindex(约34w数据)"></a>4.对已有数据进行reindex(约34w数据)</h3><p>之前进行reindex速度明显比这次高，原因是上次没有使用analyzer。</p>
+<p>此次reindex <strong>34w</strong>数据共用时<strong>793</strong>秒，每1秒操作<strong>428</strong>个文档。</p>
+<p>如无analyzer，则每一秒操作<strong>1581</strong>个文档。</p>
+<h3 id="5-使用function-score进行filter检索，发布时间越靠前的得分越高"><a href="#5-使用function-score进行filter检索，发布时间越靠前的得分越高" class="headerlink" title="5.使用function_score进行filter检索，发布时间越靠前的得分越高"></a>5.使用function_score进行filter检索，发布时间越靠前的得分越高</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">GET test/news/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "_source": ["title","publishdate"], </div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123;</div><div class="line">          "match": &#123;</div><div class="line">            "title": "600340"</div><div class="line">          &#125;</div><div class="line">        &#125; ,</div><div class="line">         "functions": [ </div><div class="line">            &#123;</div><div class="line">                    "exp": &#123;</div><div class="line">                        "publishdate" : &#123;</div><div class="line">                            "origin": "now",</div><div class="line">                            "offset": "1h",</div><div class="line">                            "scale" : "30d",</div><div class="line">                            "decay": 0.2</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    "weight": 200</div><div class="line">                &#125;</div><div class="line">        ],</div><div class="line">        "boost_mode": "sum"</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>其中使用的是<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#_supported_fields_for_decay_functions" target="_blank" rel="external">function score query</a> 的 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decayfunction</a>(衰减函数)。</p>
+<p>各参数设置如图：</p>
+<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/es/es_similarity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/12/es/es_similarity/" itemprop="url">
+                  Elasticsearch相关性
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
+                2017-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ElasticSearch-相关性"><a href="#ElasticSearch-相关性" class="headerlink" title="ElasticSearch 相关性"></a>ElasticSearch 相关性</h1><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>Elasticsearch版本：5.4.2</p>
+<p>Kibana版本：5.4.2</p>
+<p>Logstash版本：5.4.2</p>
+<p>Elasticsearch在执行搜索后，返回结果的排序是根据字段<strong>_score</strong>决定的。排序结果是倒序排列，得分越高，越在前面。</p>
+<p><strong>_score</strong>字段即量化表明查询语句与文档内容的相似性与匹配度，为了更好地显示搜索结果，我们需要深入了解该数值的来源与相关算法，本文讨论的相关性则为此。</p>
+<h3 id="2-语句"><a href="#2-语句" class="headerlink" title="2.语句"></a>2.语句</h3><p>本文通过调用<strong>_search</strong>的<strong>explain</strong>参数进行调试。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /_search?explain</div><div class="line">&#123;</div><div class="line">  "query":&#123;</div><div class="line">    "match":&#123;</div><div class="line">      "title":"a"</div><div class="line">  &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-经典TF-IDF算法"><a href="#3-经典TF-IDF算法" class="headerlink" title="3.经典TF/IDF算法"></a>3.经典TF/IDF算法</h3><p>在Elasticsearch 5.X 版本前，Elasticsearch默认使用的是经典的TF/IDF算法，即：</p>
+<p><strong>检索词频率（TermFrequency）</strong></p>
+<p>检索词在该字段出现的频率？出现频率越高，相关性也越高。 字段中出现过 5 次要比只出现过 1 次的相关性高。当然，词频不是在score计算中直接使用的。通常是取词频（TermFrequency）的平方根。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TF_Score = sqrt(termFreq)</div></pre></td></tr></table></figure>
+<p><strong>反向文档频率（InverseDocumentFrequency）</strong></p>
+<p>每个检索词在索引中出现的频率？频率越高，相关性越低。检索词出现在多数文档中会比出现在少数文档中的权重更低。例如中文中，“的”、“得”，“不”等词因在大多数文档中出现，所以相关性较低。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">IDF_Score = log(maxDocs/docFreq+1)+1</div></pre></td></tr></table></figure>
+<p><strong>字段长度准则（FieldNorms）</strong></p>
+<p>字段的长度是多少？长度越长，相关性越低。 检索词出现在一个短的 title 要比同样的词出现在一个长的 content 字段权重更大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FieldNorms = 1 / sqrt(length)</div></pre></td></tr></table></figure>
+<p>所以最终得分为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Score = TF_Score*IDF_Score*FieldNorms</div><div class="line">      = log(maxDocs / (docFreq + 1)) * sqrt(termFreq) * (1/sqrt(length))</div></pre></td></tr></table></figure>
+<p>*maxDocs有可能会数到已删除文档！</p>
+<h3 id="4-BM25算法"><a href="#4-BM25算法" class="headerlink" title="4.BM25算法"></a>4.BM25算法</h3><p>BM25是Elasticsearch5.X的默认相关性算法，它根据TF/IDF算法改进而来。它由两部分组成，分别是IDF和TFNorm.</p>
+<p>其中，根据不同的检索方法，数值各不相同，由于Elasticsearch是分布式系统，所以默认的检索方法为Query_Then_Search（该方法为在各自分片内进行检索，然后各分片返回各自的搜索结果至协调分片，非全局检索，当数据量充足时，效果良好，但当数据量较少时，应使用全局检索，请参看后文DFS_Query_Then_Search方法）</p>
+<p><strong>单词检索</strong>（即检索内容只包含单个英语单词（空格间隔）或单个中文分词（由Tokenizer划分））：</p>
+<p>IDF</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5))</div></pre></td></tr></table></figure>
+<p>TFNorm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">termfreq * (k1 + 1)) / (termfreq + k1 * (1 - b + b * fieldLength / avgFieldLength)</div></pre></td></tr></table></figure>
+<ul>
+<li>docCount - 该索引该分片的文档总数</li>
+<li>docFreq - 该索引内该分片内，含有检索内容的文档的数量</li>
+<li>termFreq - 包含该检索内容的文档的检索内容出现次数</li>
+<li>k1 &amp; b - BM25参数，常分别设为 1.2 和 0.75</li>
+<li>fieldLength - 包含该检索内容的文档的长度</li>
+<li>avgFieldLength - 该索引该分片的平均文档长度</li>
+</ul>
+<p><strong>多词检索</strong></p>
+<p>如果检索内容为一段话或多个词语，首先通过Analyzer将一段话或多个词语进行筛选和划分，包括大小写转换、停用词去除、词根筛选、同义词转换、分词（英文根据空格划分，中文根据Tokenizer划分，本文使用中文分词工具ik）。然后将得到的多个词语逐个进行单词检索，然后最终得分为多个词语的得分的总和。</p>
+<h3 id="5-其他算法"><a href="#5-其他算法" class="headerlink" title="5.其他算法"></a>5.其他算法</h3><p>如果需要更换算法，可以在创建索引的时候，添加settings设置，更改默认的相关性算法。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">PUT /test</div><div class="line">&#123;</div><div class="line">  "settings": &#123;</div><div class="line">    "index": &#123;</div><div class="line">      "similarity": &#123;</div><div class="line">        "default": &#123;</div><div class="line">          "type": "classic"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可选算法有</p>
+<ul>
+<li>“BM25” - 如无设置算法，则默认为BM25算法</li>
+<li>“classic” - 经典TF/IDF算法</li>
+</ul>
+<p>除了以上的两种算法，其他的算法需要<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html#lm_dirichlet" target="_blank" rel="external">配置参数</a></p>
+<ul>
+<li>“<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/DFRSimilarity.html" target="_blank" rel="external">DFR</a>“  / “<a href="http://trec.nist.gov/pubs/trec21/papers/irra.web.nb.pdf" target="_blank" rel="external">DFI</a>“  / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/IBSimilarity.html" target="_blank" rel="external">IB</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMDirichletSimilarity.html" target="_blank" rel="external">LMDirichlet</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html" target="_blank" rel="external">LMJelinekMercer</a>“</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">"similarity" : &#123;</div><div class="line">  "my_similarity" : &#123;</div><div class="line">    "type" : "DFR",</div><div class="line">    "basic_model" : "g",</div><div class="line">    "after_effect" : "l",</div><div class="line">    "normalization" : "h2",</div><div class="line">    "normalization.h2.c" : "3.0"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再在索引中设置mapping以应用算法</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"book"</span> : &#123;</div><div class="line">    <span class="attr">"properties"</span> : &#123;</div><div class="line">      <span class="attr">"title"</span> : &#123; <span class="attr">"type"</span> : <span class="string">"text"</span>, <span class="attr">"similarity"</span> : <span class="string">"my_similarity"</span> &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="6-Function-Score"><a href="#6-Function-Score" class="headerlink" title="6.Function Score"></a>6.Function Score</h3><p>首先，function score的语句如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">GET test6/test/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123; //首先是检索体</div><div class="line">          "match_all": &#123;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">         "functions": [  //Functions可以添加多种脚本和过滤器</div><div class="line">          &#123;              //使用一个数组将各个function结合起来</div><div class="line">            "filter": &#123;  // 过滤器</div><div class="line">              "match": &#123; "title": "a" &#125; &#125;,</div><div class="line">              "weight": 23 // weight 直接给符合过滤器的文档权重分</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            "script_score": &#123; //脚本打分器</div><div class="line">              "script": &#123;     //只能对字段类型为数值的进行数学操作</div><div class="line">               "inline": "Math.log(2 + doc['votes'].value)"</div><div class="line">          &#125; </div><div class="line">         &#125;</div><div class="line">        &#125;</div><div class="line">        ],</div><div class="line">      "boost":5, //将该数值影响得分</div><div class="line">      "score_mode":"multiply", //functions内多个脚本的得分处理办法</div><div class="line">      "boost_mode":"multiply", //检索得分和函数得分的处理办法</div><div class="line">      "min_score":40, //返回搜索结果所需要的最少得分</div><div class="line">      "random_score":&#123;&#125;, //生成一个随机数，影响得分</div><div class="line">      "max_boost":10 //无论函数、脚本如何影响得分，最终得分最大值为此</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>其中<strong>boost_mode</strong>（检索得分与函数得分d的处理方式）的模式有：</p>
+<ul>
+<li><p>multiply - 检索得分和函数得分的积（默认）</p>
+</li>
+<li><p>sum - 检索得分和函数得分的和</p>
+</li>
+<li><p>min - 检索得分和函数得分之中的较小值</p>
+</li>
+<li><p>max - 检索得分和函数得分之中的较大值</p>
+</li>
+<li><p>replace - 函数得分代替检索得分</p>
+<p>​</p>
+</li>
+</ul>
+<p>而后在函数内部中不同脚本、函数和过滤器也需要进行得分处理，<strong>score_mode</strong>:</p>
+<ul>
+<li><p>multiply - 函数结果求积（默认）</p>
+</li>
+<li><p>sum - 函数结果求和</p>
+</li>
+<li><p>min - 函数结果最小值</p>
+</li>
+<li><p>max - 函数结果最大值</p>
+</li>
+<li><p>avg - 函数结果平均值</p>
+</li>
+<li><p>first - 首个函数结果作为最终结果</p>
+<p>​</p>
+</li>
+</ul>
+<p><strong>脚本评分</strong>（script_score）例子中使用的是简洁版本，其完整版本为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">"script_score": &#123;</div><div class="line">          "params": &#123;  // 参数字段，以","分隔</div><div class="line">            "threshold": 80,</div><div class="line">            "discount": 0.1,</div><div class="line">            "target": 10</div><div class="line">          &#125;,</div><div class="line">  		  //脚本字段，以";"分隔语句</div><div class="line">          "script": "price  = doc['price'].value; margin = doc['margin'].value;</div><div class="line">          if (price &lt; threshold) &#123; return price * margin / target &#125;;</div><div class="line">          return price * (1 - discount) * margin / target;" </div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
+<h3 id="7-同义词"><a href="#7-同义词" class="headerlink" title="7.同义词"></a>7.同义词</h3><p>使用同义词进行检索时，部分数据会发生变化，以BM25算法为例：</p>
+<p>b,c为同义词</p>
+<ul>
+<li>docCount - 文档总数不变</li>
+<li>docFreq - 所有包含b或c的文档的数量</li>
+<li>termFreq - 如有一次b或c出现，则算双倍次数</li>
+<li>k1 &amp; b - 不变</li>
+<li>fieldLength - <del>不变</del> 经测试，目前认为是取同义词中，长度最长的为该文档长度</li>
+<li>avgFieldLength - 每个b或c算双倍大小</li>
+</ul>
+<h3 id="8-DFS-Query-Then-Fetch"><a href="#8-DFS-Query-Then-Fetch" class="headerlink" title="8.DFS Query Then Fetch"></a>8.DFS Query Then Fetch</h3><p>可以全局搜索，当数据量较少时可以使用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /_search?search_type=dfs_query_then_fetch</div></pre></td></tr></table></figure>
+<h3 id="资料参考："><a href="#资料参考：" class="headerlink" title="资料参考："></a>资料参考：</h3><p>[1] <a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/relevance-intro.html" target="_blank" rel="external">Elasticsearch文档-什么是相关性？</a></p>
+<p>[2] <a href="http://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/" target="_blank" rel="external">BM25 The Next Generation of Lucene Relevance</a></p>
+<p>[3] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html" target="_blank" rel="external">Elasticsearch文档-Similarity module</a></p>
+<p>[4] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" rel="external">Elasticsearch文档-Function Score Query</a></p>
+<p>[5] <a href="https://www.elastic.co/blog/understanding-query-then-fetch-vs-dfs-query-then-fetch" target="_blank" rel="external">Elasticsearch文档-DFS-DFS Query Then Fetch</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/python/python_practise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1181,7 +1594,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

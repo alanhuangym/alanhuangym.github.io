@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jenkins," />
 
 
 
@@ -85,12 +85,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Note down something">
-<meta property="og:url" content="http://www.pirrla.cn/tags/javascript/index.html">
+<meta name="description" content="当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。
+于是我们每次都需要执行一次npm install的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成doc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins学习笔记4-使用Docker对环境和代码打包">
+<meta property="og:url" content="http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/index.html">
 <meta property="og:site_name" content="Note down something">
+<meta property="og:description" content="当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。
+于是我们每次都需要执行一次npm install的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成doc">
+<meta property="og:updated_time" content="2017-12-20T01:43:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Note down something">
+<meta name="twitter:title" content="Jenkins学习笔记4-使用Docker对环境和代码打包">
+<meta name="twitter:description" content="当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。
+于是我们每次都需要执行一次npm install的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成doc">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/tags/javascript/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/"/>
 
 
 
 
 
-  <title> Tag: javascript | Note down something </title>
+  <title> Jenkins学习笔记4-使用Docker对环境和代码打包 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -149,7 +156,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -243,46 +250,183 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        javascript
-        <small>Tag</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Jenkins学习笔记4-使用Docker对环境和代码打包
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-21T00:00:00+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。</p>
+<p>于是我们每次都需要执行一次<code>npm install</code>的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成dockerfile和dockerimage，从而就不需要每次都对生产环境进行更新操作。</p>
+<h3 id="1-docker简介"><a href="#1-docker简介" class="headerlink" title="1.docker简介"></a>1.docker简介</h3><h3 id="Swarm集群拓展"><a href="#Swarm集群拓展" class="headerlink" title="Swarm集群拓展"></a>Swarm集群拓展</h3>
+      
+    </div>
 
-      <h1 class="post-title">
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/07/21/other/js_notes/" itemprop="url">
-              
-                <span itemprop="name">Javascript学习笔记</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-21T16:36:48+08:00"
-              content="2017-07-21" >
-          07-21
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jenkins/" rel="tag"># jenkins</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/jenkins/jenkins3/" rel="next" title="Jenkins学习笔记3-重启Node.js服务">
+                <i class="fa fa-chevron-left"></i> Jenkins学习笔记3-重启Node.js服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/22/jenkins/jenkins5/" rel="prev" title="Jenkins学习笔记5-官方用法pipeline">
+                Jenkins学习笔记5-官方用法pipeline <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -290,6 +434,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -309,8 +457,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
@@ -383,6 +540,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-docker简介"><span class="nav-number">1.</span> <span class="nav-text">1.docker简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swarm集群拓展"><span class="nav-number">2.</span> <span class="nav-text">Swarm集群拓展</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -499,6 +672,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

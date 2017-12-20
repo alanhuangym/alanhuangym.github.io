@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jenkins," />
 
 
 
@@ -85,12 +85,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Note down something">
-<meta property="og:url" content="http://www.pirrla.cn/tags/javascript/index.html">
+<meta name="description" content="官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。
+Reference:
+[1] Jenkins使用简易教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins学习笔记5-官方用法pipeline">
+<meta property="og:url" content="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/index.html">
 <meta property="og:site_name" content="Note down something">
+<meta property="og:description" content="官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。
+Reference:
+[1] Jenkins使用简易教程">
+<meta property="og:updated_time" content="2017-12-20T06:05:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Note down something">
+<meta name="twitter:title" content="Jenkins学习笔记5-官方用法pipeline">
+<meta name="twitter:description" content="官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。
+Reference:
+[1] Jenkins使用简易教程">
 
 
 
@@ -118,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/tags/javascript/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/"/>
 
 
 
 
 
-  <title> Tag: javascript | Note down something </title>
+  <title> Jenkins学习笔记5-官方用法pipeline | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -149,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -243,46 +253,180 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        javascript
-        <small>Tag</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Jenkins学习笔记5-官方用法pipeline
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-22T00:00:00+08:00">
+                2017-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。</p>
+<p>Reference:</p>
+<p>[1] <a href="http://www.jianshu.com/p/b524b151d35f" target="_blank" rel="external">Jenkins使用简易教程</a></p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/07/21/other/js_notes/" itemprop="url">
-              
-                <span itemprop="name">Javascript学习笔记</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-21T16:36:48+08:00"
-              content="2017-07-21" >
-          07-21
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jenkins/" rel="tag"># jenkins</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/21/jenkins/jenkins4/" rel="next" title="Jenkins学习笔记4-使用Docker对环境和代码打包">
+                <i class="fa fa-chevron-left"></i> Jenkins学习笔记4-使用Docker对环境和代码打包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -290,6 +434,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -499,6 +647,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

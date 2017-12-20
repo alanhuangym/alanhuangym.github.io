@@ -255,6 +255,295 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/22/jenkins/jenkins5/" itemprop="url">
+                  Jenkins学习笔记5-官方用法pipeline
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-22T00:00:00+08:00">
+                2017-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。</p>
+<p>Reference:</p>
+<p>[1] <a href="http://www.jianshu.com/p/b524b151d35f" target="_blank" rel="external">Jenkins使用简易教程</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/21/jenkins/jenkins4/" itemprop="url">
+                  Jenkins学习笔记4-使用Docker对环境和代码打包
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-21T00:00:00+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。</p>
+<p>于是我们每次都需要执行一次<code>npm install</code>的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成dockerfile和dockerimage，从而就不需要每次都对生产环境进行更新操作。</p>
+<h3 id="1-docker简介"><a href="#1-docker简介" class="headerlink" title="1.docker简介"></a>1.docker简介</h3><h3 id="Swarm集群拓展"><a href="#Swarm集群拓展" class="headerlink" title="Swarm集群拓展"></a>Swarm集群拓展</h3>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/20/jenkins/jenkins3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -423,7 +712,7 @@
               
                 
                 <a class="post-title-link" href="/2017/12/19/jenkins/jenkins2/" itemprop="url">
-                  Jenkins学习笔记2
+                  Jenkins学习笔记2-代码质量管理
                 </a>
               
             
@@ -649,18 +938,48 @@
             <h3 id="1-敏捷开发"><a href="#1-敏捷开发" class="headerlink" title="1.敏捷开发"></a>1.敏捷开发</h3><p>普通的程序开发，是按照瀑布流一样的流程往下走的。</p>
 <p>但是时至今日，客户的需求变化速度非常之快，而且生产环境也在不断变化，所以以往的单一的以计划来完成软件开发已经不可取了。</p>
 <p>所以我们需要采取敏捷开发，<em>*</em></p>
-<h3 id="2-Jenkins入门"><a href="#2-Jenkins入门" class="headerlink" title="2.Jenkins入门"></a>2.Jenkins入门</h3><h5 id="2-1Jenkins安装"><a href="#2-1Jenkins安装" class="headerlink" title="2.1Jenkins安装"></a>2.1Jenkins安装</h5><p>在<a href="https://jenkins.io/" target="_blank" rel="external">官网</a>下载.war文件，然后直接在命令行运行<code>java -jar jenkins.war</code></p>
-<p>当命令行出现jenkins is running即已经成功启动了服务</p>
-<p>默认端口为localhost:8080</p>
+<h3 id="1-1-什么是持续集成："><a href="#1-1-什么是持续集成：" class="headerlink" title="1.1 什么是持续集成："></a>1.1 什么是持续集成：</h3><p>持续集成是指开发者在代码的开发过程中，可以频繁的将代码部署集成到主干，并进程自动化测试<br><img src="http://static.zybuluo.com/abcdocker/141k7ufqcy5zmgjvzlsgx444/image_1b4gk79111oqbf1l16qd80kqqh8q.png" alt="image_1b4gk79111oqbf1l16qd80kqqh8q.png-73.4kB"></p>
+<h3 id="1-2-什么是持续交付："><a href="#1-2-什么是持续交付：" class="headerlink" title="1.2 什么是持续交付："></a>1.2 什么是持续交付：</h3><p>持续交付指的是在持续集成的环境基础之上，将代码部署到预生产环境<br><img src="http://static.zybuluo.com/abcdocker/z47rzhss99x3gxahr93ovn45/image_1b4gk7hef1v4n6ino701pruj9n97.png" alt="image_1b4gk7hef1v4n6ino701pruj9n97.png-133.6kB"></p>
+<h3 id="1-3-持续部署："><a href="#1-3-持续部署：" class="headerlink" title="1.3 持续部署："></a>1.3 持续部署：</h3><p>在持续交付的基础上，把部署到生产环境的过程自动化，持续部署和持续交付的区别就是最终部署到生产环境是自动化的。<br><img src="http://static.zybuluo.com/abcdocker/4i4r6iwdisn4zmsmhqewxoew/image_1b4gk7o2t162hb71vcg1bb5p989k.png" alt="image_1b4gk7o2t162hb71vcg1bb5p989k.png-132.2kB"></p>
+<h3 id="2-Jenkins入门"><a href="#2-Jenkins入门" class="headerlink" title="2.Jenkins入门"></a>2.Jenkins入门</h3><h5 id="2-1-Jenkins安装"><a href="#2-1-Jenkins安装" class="headerlink" title="2.1 Jenkins安装"></a>2.1 Jenkins安装</h5><p>Jenkins是Java编写的，所以需要安装JDK。可以去<a href="https://www.oracle.com/java/index.html" target="_blank" rel="external">Oracle官网</a>进行下载</p>
+<p>在<a href="https://jenkins.io/" target="_blank" rel="external">Jenkins官网</a>下载.war文件，然后直接在命令行运行<code>java -jar jenkins.war</code>，如果需要后天启动可以<code>nohup java -jar jenkins.war &amp;</code></p>
+<p>当命令行出现<code>INFO: Jenkins is fully up and running</code>即已经成功启动了服务。</p>
+<p>默认端口为8080，可以在启动命令后加上 <code>—httpPort=8081</code>更改默认的启动端口。</p>
+<p>当然也可以把.war包部署进tomcat的webapps里面。</p>
+<h5 id="2-2-Jenkins启动"><a href="#2-2-Jenkins启动" class="headerlink" title="2.2 Jenkins启动"></a>2.2 Jenkins启动</h5><p>启动了Jenkins服务之后，我们登录<code>localhost:8080</code>提示需要输入安全token。</p>
+<p>根据提示，安全token在安装完jenkins会在本地的文件夹当中，例如macos会存放在<code>/Users/Shard/Jenkins/home/secrets/initialAdminPassword</code></p>
+<p>输入完密码之后，会提示安装建议安装的插件。</p>
+<p><img src="http://static.zybuluo.com/abcdocker/2dtjyesj3ae5zmyhxmer2kl2/image_1b4gkgcvk1c641d3k1e761jn6h10ae.png" alt=""></p>
+<p>然后会提示创建一个管理员账户</p>
+<p><img src="http://static.zybuluo.com/abcdocker/wkz0tuy8b3855c1q3s64vd7x/image_1b4gkkuopf351o7fltt17on13jbl.png" alt=""></p>
+<p>创建完成则正式进入jenkins。</p>
+<p><img src="http://static.zybuluo.com/abcdocker/tcz7eoamylmpjl1dekyzt6d0/image_1b4gkl8sf1o1m12b9h9q1p85hsc2.png" alt=""></p>
 <p>**</p>
-<p>macos如果遇到不能进入的文件夹，get info 然后添加权限用户即可</p>
-<p>例如配置jenkins需要进入</p>
-<p>/Users/Shard/Jenkins/home/secrets</p>
+<p>macos如果遇到没有权限进入的文件夹，右键get info 然后添加权限用户即可</p>
+<p>例如配置jenkins需要进入的<code>/Users/Shard/Jenkins/home/secrets</code></p>
 <p>**</p>
-<p>参考资料：</p>
-<ol>
-<li><a href="http://blog.csdn.net/abcdocker/article/category/6638595" target="_blank" rel="external">持续集成 by www.abcdocker.com</a></li>
-</ol>
+<h5 id="2-3-Jenkins的简介"><a href="#2-3-Jenkins的简介" class="headerlink" title="2.3 Jenkins的简介"></a>2.3 Jenkins的简介</h5><p>Jenkins的关闭、重启等操作，可以通过查找进程，获取pid号，然后kill进程来完成。</p>
+<p>但是更便捷的方法是，在jenkins的url中执行一些命令来操作jenkins，</p>
+<p>如下<a href="http://[jenkins-server]/[command" target="_blank" rel="external">http://[jenkins-server]/[command</a>] 命令可以为：</p>
+<ul>
+<li><code>exit</code> 关闭 jenkins</li>
+<li><code>restart</code> 重启 jenkins</li>
+<li><code>reload</code> 重新载入配置 configuration</li>
+</ul>
+<p>Jenkins的目录（例如macos在<code>/Users/Shared/Jenkins</code>）中的<code>Jenkins/Home/jobs</code>是jenkins的核心内容，包含了jenkins的项目的配置、构建日志等重要信息，对jenkins进行备份，主要备份该文件夹即可。</p>
+<p>Jenkins其实是一个开源的平台，主要的功能实现都是依靠插件完成，所以平台的设置没有太多，比较重要的是插件设置，所以我们将对使用到的具体的插件设置在后面讲述。</p>
+<h3 id="3-简易Python脚本启动"><a href="#3-简易Python脚本启动" class="headerlink" title="3.简易Python脚本启动"></a>3.简易Python脚本启动</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins2.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins3.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins4.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins5.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins6.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins7.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins8.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins9.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins10.png" alt=""></p>
+<h3 id="4-Jenkins的master-slave模型"><a href="#4-Jenkins的master-slave模型" class="headerlink" title="4.Jenkins的master-slave模型"></a>4.Jenkins的master-slave模型</h3><p>Reference：</p>
+<p>[1] <a href="http://blog.csdn.net/abcdocker/article/category/6638595" target="_blank" rel="external">持续集成 by www.abcdocker.com</a></p>
+<p>[2] <a href="https://files.cnblogs.com/files/itech/Jenkins%E5%85%A5%E9%97%A8.pdf" target="_blank" rel="external">Jenkins入门 by itech</a></p>
 
           
         
@@ -1560,605 +1879,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/fs/fs1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/05/fs/fs1/" itemprop="url">
-                  文件系统1
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/filesystem/" itemprop="url" rel="index">
-                    <span itemprop="name">filesystem</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="数据库选择"><a href="#数据库选择" class="headerlink" title="数据库选择"></a>数据库选择</h3><p><strong>关系型数据库 - Oracle</strong></p>
-<p>基础事务有四个特性：</p>
-<ul>
-<li>原子性：整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执行过程中发生错误，会被回复 （Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</li>
-<li>一致性：在事务开始之前和事务结束以后，数据库的完整性限制没有被破坏。</li>
-<li>隔离性：两个事务的执行是互不干扰的，一个事务不可能看到其他事务运行时，中间某一时刻的数据。</li>
-<li>持久性：在事务完成以后，该事务对数据库所作的更改便持久地保存在数据库之中，并不会被回复。</li>
-</ul>
-<p>对网站来说，关系型数据库的很多特性不再需要了：</p>
-<ul>
-<li>事务一致性</li>
-</ul>
-<p>关系型数据库在对事物一致性的维护中有很大的开销，而现在很多web系统对事物的读写一致性都不高</p>
-<ul>
-<li>读写实时性</li>
-</ul>
-<p>对关系数据库来说，插入一条数据之后立刻查询，是肯定可以读出这条数据的，但是对于很多web应用来说，并不要求这么高的实时性，比如发一条消息之后，过几秒乃至十几秒之后才看到这条动态是完全可以接受的</p>
-<ul>
-<li>复杂SQL，特别是多表关联查询</li>
-</ul>
-<p>任何大数据量的web系统，都非常忌讳多个大表的关联查询，以及复杂的数据分析类型的复杂SQL报表查询，特别是SNS类型的网站，从需求以及产品阶级角度，就避免了这种情况的产生。往往更多的只是单表的主键查询，以及单表的简单条件分页查询，SQL的功能极大的弱化了</p>
-<p><strong>NoSQL - MongoDB</strong></p>
-<p>由于在本项目中，数据是新闻资讯的存储，而新闻资讯相互之间是相对独立的，所以不需要使用到关系型数据库。</p>
-<p>非关系型数据库相当于是简化版的关系型数据库，减少了一些相对少用到的功能，提升了产品的性能。相对于关系型数据库，抛弃了ACID特性。</p>
-<p>但是由于是基于键值对的特性，所以非常容易进行扩展，可拓展性强。</p>
-<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>但是MongoDB也有一个问题。由于MongoDB的文档结构为BJSON格式（BJSON全称：Binary JSON），而BJSON格式本身就支持保存二进制格式的数据，因此可以把文件的二进制格式的数据直接保存到MongoDB的文档结构中。但是由于一个BJSON的最大长度不能超过16M，所以限制了单个文档中能存入的最大文件不能超过<font color="red">16M</font></p>
-<p>为了提供对大容量文件存取的支持，samus驱动提供了“GridFS”方式来支持。</p>
-<p><strong>BJSON</strong></p>
-<p><a href="http://blog.csdn.net/kwsy2008/article/details/48969607" target="_blank" rel="external">python 实现</a></p>
-<p><strong>GridDFS</strong></p>
-<p>MongoDB内置功能。</p>
-<p>GridFS是一种在MongoDB中存储大二进制文件的机制。使用GridFS存文件有如下几个原因：</p>
-<p>利用Grid可以简化需求。要是已经用了MongoDB，GridFS就可以不需要使用独立文件存储架构。</p>
-<p>基本原理是将文件存储在两个Collection之中，一个保存文件索引，一个保存文件内容。4MB每一块。</p>
-<table>
-<thead>
-<tr>
-<th>指标</th>
-<th>适合类型</th>
-<th>文件分布</th>
-<th>系统性能</th>
-<th>复杂度</th>
-<th>FUSE</th>
-<th>POSIX</th>
-<th>备份机制</th>
-<th>通讯协议接口</th>
-<th>社区支持</th>
-<th></th>
-<th>开发语言</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FastDFS</td>
-<td>4KB~500MB</td>
-<td>小文件合并存储不分片处理</td>
-<td>很高</td>
-<td>简单</td>
-<td>不支持</td>
-<td>不支持</td>
-<td>组内冗余备份</td>
-<td>ApiHTTP</td>
-<td>国内用户群</td>
-<td></td>
-<td>C语言</td>
-</tr>
-<tr>
-<td>TFS</td>
-<td>所有文件</td>
-<td>小文件合并，以block组织分片</td>
-<td></td>
-<td>复杂</td>
-<td>不支持</td>
-<td>不支持</td>
-<td>Block存储多份,主辅灾备</td>
-<td>APIhttp</td>
-<td>少</td>
-<td></td>
-<td>C++</td>
-</tr>
-<tr>
-<td>MFS</td>
-<td>大于64K</td>
-<td>分片存储</td>
-<td>Master占内存多</td>
-<td></td>
-<td>支持</td>
-<td>支持</td>
-<td>多点备份动态冗余</td>
-<td>使用fuse挂在</td>
-<td>较多</td>
-<td></td>
-<td>Perl</td>
-</tr>
-<tr>
-<td>HDFS</td>
-<td>大文件</td>
-<td>大文件分片分块存储</td>
-<td></td>
-<td>简单</td>
-<td>支持</td>
-<td>支持</td>
-<td>多副本</td>
-<td>原生api</td>
-<td>较多</td>
-<td></td>
-<td>java</td>
-</tr>
-<tr>
-<td>Ceph</td>
-<td>对象文件块</td>
-<td>OSD一主多从</td>
-<td></td>
-<td>复杂</td>
-<td>支持</td>
-<td>支持</td>
-<td>多副本</td>
-<td>原生api</td>
-<td>较少</td>
-<td></td>
-<td>C++</td>
-</tr>
-<tr>
-<td>MogileFS</td>
-<td>海量小图片</td>
-<td></td>
-<td>高</td>
-<td>复杂</td>
-<td>可以支持</td>
-<td>不支持</td>
-<td>动态冗余</td>
-<td>原生api</td>
-<td>文档少</td>
-<td></td>
-<td>Perl</td>
-</tr>
-<tr>
-<td>ClusterFS</td>
-<td>大文件</td>
-<td></td>
-<td></td>
-<td>简单</td>
-<td>支持</td>
-<td>支持</td>
-<td>镜像</td>
-<td></td>
-<td>多</td>
-<td></td>
-<td>C</td>
-</tr>
-</tbody>
-</table>
-<p><strong>HDFS</strong></p>
-<p>还是适合大数据处理，附件等文档太小，不适合使用HDFS。</p>
-<p><strong>FastDFS</strong></p>
-<ol>
-<li>为互联网量身定制，海量数据文件存储。</li>
-<li>高可用(同组备份机制)。</li>
-<li>FastDFS不是通用的文件系统，只能通过api来访问，目前提供c,java,php客户端。phtyon由第三方开发者提供。</li>
-<li>FastDFS可以看作是基于key/value pair存储系统，也许称为分布式文件存储服务更合适。</li>
-<li>支持高并发(这个好像没体现出支持什么高并发,这个是nginx的功劳吧)</li>
-</ol>
-<h3 id="从MongoDB到ElasticSearch"><a href="#从MongoDB到ElasticSearch" class="headerlink" title="从MongoDB到ElasticSearch"></a>从MongoDB到ElasticSearch</h3><p>MongoDB 本身是自带文本索引功能的，但是，不支持中文。<strong>术业有专攻</strong>，MongoDB 是数据存储应用，那么全文检索就使用专业的全文搜索引擎吧。</p>
-<p><strong>0.River</strong></p>
-<p>由于只支持ES 2.0 以下版本，已弃用。</p>
-<p><strong>1.<a href="https://github.com/mongodb-labs/mongo-connector" target="_blank" rel="external">Mongo-Connector</a></strong></p>
-<p>实时</p>
-<ul>
-<li>MongoDB必须开启复制集[2]</li>
-</ul>
-<p>This assumes there is a MongoDB replica set running on port 27017 and that Elasticsearch is running on port 9200 both on the local machine.</p>
-<ul>
-<li>安装mongo-connector</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install &apos;mongo-connector[elastic5]&apos;</div></pre></td></tr></table></figure>
-<ul>
-<li>运行mongo-connector</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo-connector -m 127.0.0.1:27017 -t 127.0.0.1:9200 -d elastic_doc_manager</div></pre></td></tr></table></figure>
-<p>启动之后，现在开始，在mongoDB上的操作，都会同步到elasticsearch之中了。</p>
-<p>（对旧数据无影响）</p>
-<p>问题：根据其他用户的评价，mongo-conncetor会出现延迟和退出的现象</p>
-<p><strong>2.<a href="https://github.com/keenwon/mongodb-to-elasticsearch" target="_blank" rel="external">mongodb to elasticsearch</a></strong></p>
-<p>非实时，应对一天更新一次的场景</p>
-<p>使用了mongoose</p>
-<p>一个node.js写的小程序，可以将mongodb的数据输入到es。</p>
-<p>Ref:</p>
-<p>[1] <a href="https://segmentfault.com/a/1190000003773614" target="_blank" rel="external">MongoDB 数据自动同步到 ElasticSearch</a></p>
-<p>[2] <a href="http://www.runoob.com/mongodb/mongodb-replication.html" target="_blank" rel="external">副本集设置</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/31/rs/rs_4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/31/rs/rs_4/" itemprop="url">
-                  推荐系统4
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T14:17:36+08:00">
-                2017-08-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
-                    <span itemprop="name">recommendationsystem</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<h3 id="数据归一化"><a href="#数据归一化" class="headerlink" title="数据归一化"></a>数据归一化</h3><p>现在每个用户的属性变为了持有产品的份额：</p>
-<p>直接使用份额计算会出现偏差化：</p>
-<p>例如购买了一款产品金额较大，那么权重就会偏大</p>
-<p>那么就将份额标准化</p>
-<p><strong>1.固定阈值</strong></p>
-<p>例如（万分之X）</p>
-<table>
-<thead>
-<tr>
-<th>方案</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>方案1</td>
-<td>0-0.03</td>
-<td>0.03-0.1</td>
-<td>0.1-0.3</td>
-<td>0.3-1.0</td>
-<td>1.0+</td>
-</tr>
-<tr>
-<td>方案2</td>
-<td>0-0.01</td>
-<td>0.01-0.1</td>
-<td>0.1-1.0</td>
-<td>1.0-2.0</td>
-<td>2.0+</td>
-</tr>
-</tbody>
-</table>
-<p>划分为五个评分，0分则是没有持仓过该产品</p>
-<p><strong>2.平均持仓数</strong></p>
-<p>计算出每个产品的用户平均持仓数，然后根据平均持仓倍数去划分数据：</p>
-<table>
-<thead>
-<tr>
-<th>方案</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>方案1</td>
-<td>0-0.5倍</td>
-<td>0.5-1.0倍</td>
-<td>1.0-1.5倍</td>
-<td>1.5-2.0倍</td>
-<td>2.0+倍</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong>3.排序划分</strong></p>
-<p>将一款产品的所有用户进行排序，然后根据排序去划分数据</p>
-<table>
-<thead>
-<tr>
-<th>方案</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>方案1</td>
-<td>20%</td>
-<td>20%</td>
-<td>20%</td>
-<td>20%</td>
-<td>20%</td>
-</tr>
-<tr>
-<td>方案</td>
-<td>10%</td>
-<td>25%</td>
-<td>30%</td>
-<td>25%</td>
-<td>10%</td>
-</tr>
-</tbody>
-</table>
-<p><strong>4.（0，1）标准化（max-min）</strong></p>
-<p>$${x}_{normalization}=\frac{x-Min}{Max-Min}$$</p>
-<p>然后将得到的结果乘以5，得到投资偏好。</p>
-<p><strong>5.Z-score标准化</strong></p>
-<p>将数据划分为正态分布化的数据</p>
-<p>$${x}_{normalization}=\frac{x-\mu }{\sigma }$$</p>
-<p>其中的u是平均数，sigma是标准差</p>
-<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h3><p><strong>0.不进行归一化</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 0.250494227106 新睿利优先91天 债券型 91</div><div class="line">产品2 0.228637469027 新睿利优先91天 债券型 91</div><div class="line">产品3 0.377176516585 新睿利优先91天 债券型 91</div><div class="line">产品4 0.256939429748 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 新睿利优先91天 债券型 91</div><div class="line">产品6 0.0578450717465 多添利14天 短期理财类 14</div><div class="line">产品7 0.288599403176 新睿利优先91天 债券型 91</div><div class="line">产品8 1.38227279375 新睿利优先91天 债券型 91</div><div class="line">产品9 0.0835590588465 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">d96e788472f4d36ae9163192f84635d2b3332ced</div><div class="line">产品1 0.249496242138 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 新睿利优先91天 债券型 91</div><div class="line">879002 0.0262265839131 多添利7天 短期理财类 7</div><div class="line">产品6 0.0390845079368 多添利14天 短期理财类 14</div><div class="line">产品9 0.0828958917128 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">b598fb7de5df3b8a73c5c23c98fb3c73483b020b</div><div class="line">产品1 0.249496242138 新睿利优先91天 债券型 91</div><div class="line">产品2 0.226822885939 新睿利优先91天 债券型 91</div><div class="line">产品3 0.374926954856 新睿利优先91天 债券型 91</div><div class="line">产品7 0.259999462321 新睿利优先91天 债券型 91</div><div class="line">GF1809 0.306768321508 新睿利优先91天 债券型 91</div><div class="line">879002 0.0233817984367 多添利7天 短期理财类 7</div><div class="line">879006 0.115620874347 多添利91天 短期理财类 91</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">36e64d058bd7a6c387ffe388179d4639749cc44f</div><div class="line">产品1 0.249496242138 新睿利优先91天 债券型 91</div><div class="line">GF1814 0.249990015339 新睿利优先91天 债券型 91</div><div class="line">GF1804 0.351223807748 新睿利优先91天 债券型 91</div><div class="line">产品3 0.375676808766 新睿利优先91天 债券型 91</div><div class="line">产品7 0.323959330052 新睿利优先91天 债券型 91</div><div class="line">GF1803 0.407730728967 新睿利优先91天 债券型 91</div><div class="line">产品2 0.229544760571 新睿利优先91天 债券型 91</div><div class="line">GF1812 0.355765682516 新睿利优先91天 债券型 91</div><div class="line">879119 0.729319808632 多添利X364天 短期理财类 364</div><div class="line">GF1809 0.311063078009 新睿利优先91天 债券型 91</div><div class="line">产品5 0.770938882151 新睿利优先91天 债券型 91</div><div class="line">879162 1.2696774613 多添利X182天 短期理财类 182</div><div class="line">879002 0.020420103968 多添利7天 短期理财类 7</div><div class="line">产品6 0.0394753530162 多添利14天 短期理财类 14</div><div class="line">产品8 1.38227279375 新睿利优先91天 债券型 91</div><div class="line">产品9 0.0830616834962 多添利56天 短期理财类 56</div><div class="line">879004 0.0871009660079 多添利28天 短期理财类 28</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div></pre></td></tr></table></figure>
-<p>1.固定值归一化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 0.250494227106 3 新睿利优先91天 债券型 91</div><div class="line">产品2 0.228637469027 3 新睿利优先91天 债券型 91</div><div class="line">产品3 0.377176516585 4 新睿利优先91天 债券型 91</div><div class="line">产品4 0.256939429748 3 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 4 新睿利优先91天 债券型 91</div><div class="line">产品6 0.0578450717465 2 多添利14天 短期理财类 14</div><div class="line">产品7 0.288599403176 3 新睿利优先91天 债券型 91</div><div class="line">产品8 1.38227279375 5 新睿利优先91天 债券型 91</div><div class="line">产品9 0.0835590588465 2 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 5 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">bb7a0f6f5d59a3bfcca72a685810c38c2bc8e3a3</div><div class="line">产品1 0.262470046729 3 新睿利优先91天 债券型 91</div><div class="line">产品3 0.451412053647 4 新睿利优先91天 债券型 91</div><div class="line">产品4 0.299002492211 3 新睿利优先91天 债券型 91</div><div class="line">产品6 0.101619720636 3 多添利14天 短期理财类 14</div><div class="line">产品8 1.38227279375 5 新睿利优先91天 债券型 91</div><div class="line">产品9 0.146891520115 3 多添利56天 短期理财类 56</div><div class="line">***********************************</div><div class="line">d96e788472f4d36ae9163192f84635d2b3332ced</div><div class="line">产品1 0.249496242138 3 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 4 新睿利优先91天 债券型 91</div><div class="line">879002 0.0262265839131 1 多添利7天 短期理财类 7</div><div class="line">产品6 0.0390845079368 2 多添利14天 短期理财类 14</div><div class="line">产品9 0.0828958917128 2 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 5 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">f0f5de95640aabbb217a35a7b141b2bae46783aa</div><div class="line">产品5 4.58465819484 5 新睿利优先91天 债券型 91</div><div class="line">产品8 3.31469015941 5 新睿利优先91天 债券型 91</div><div class="line">产品3 0.374926954856 4 新睿利优先91天 债券型 91</div></pre></td></tr></table></figure>
-<p>2.平均持仓数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品2 1 新睿利优先91天 债券型 91</div><div class="line">产品3 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div><div class="line">产品5 1 新睿利优先91天 债券型 91</div><div class="line">产品6 1 多添利14天 短期理财类 14</div><div class="line">产品7 1 新睿利优先91天 债券型 91</div><div class="line">产品8 1 新睿利优先91天 债券型 91</div><div class="line">产品9 1 多添利56天 短期理财类 56</div><div class="line">产品10 1 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">bb7a0f6f5d59a3bfcca72a685810c38c2bc8e3a3</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品3 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div><div class="line">产品6 1 多添利14天 短期理财类 14</div><div class="line">产品8 1 新睿利优先91天 债券型 91</div><div class="line">产品9 1 多添利56天 短期理财类 56</div><div class="line">***********************************</div><div class="line">7b0fa22fec8c28836d6a52cd35aa818218cd4021</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品2 1 新睿利优先91天 债券型 91</div><div class="line">产品7 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div><div class="line">产品6 1 多添利14天 短期理财类 14</div><div class="line">***********************************</div><div class="line">21cfa76118cad37e9af116b01ca19230b5def327</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品2 1 新睿利优先91天 债券型 91</div><div class="line">产品7 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div></pre></td></tr></table></figure>
-<p>3.(0,1)归一化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 0.00250205597229 新睿利优先91天 债券型 91</div><div class="line">产品2 0.00611680178649 新睿利优先91天 债券型 91</div><div class="line">产品3 0.00628624275145 新睿利优先91天 债券型 91</div><div class="line">产品4 0.00281313461987 新睿利优先91天 债券型 91</div><div class="line">产品5 0.0110457409948 新睿利优先91天 债券型 91</div><div class="line">产品6 9.96838674323e-05 多添利14天 短期理财类 14</div><div class="line">产品7 0.00168125266956 新睿利优先91天 债券型 91</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div><div class="line">产品9 0.000251958300901 多添利56天 短期理财类 56</div><div class="line">产品10 0.00139546358688 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">53685bbde6333d222b00c006f27ef581c88a4b1d</div><div class="line">产品1 0.00330949236175 新睿利优先91天 债券型 91</div><div class="line">产品2 0.00606825574057 新睿利优先91天 债券型 91</div><div class="line">产品4 0.00277429449691 新睿利优先91天 债券型 91</div><div class="line">GF1808 0.0049099997054 新睿利优先91天 债券型 91</div><div class="line">产品5 0.0110457409948 新睿利优先91天 债券型 91</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div><div class="line">879004 0.000391751898821 多添利28天 短期理财类 28</div><div class="line">***********************************</div><div class="line">2ff657077263d4833bad7d8c8035c623e336c977</div><div class="line">GF1814 0.00701227648786 新睿利优先91天 债券型 91</div><div class="line">产品2 0.00646876061945 新睿利优先91天 债券型 91</div><div class="line">产品3 0.00624875024995 新睿利优先91天 债券型 91</div><div class="line">产品4 0.00280203744188 新睿利优先91天 债券型 91</div><div class="line">879637 0.0 多添利X97天 短期理财类 97</div><div class="line">GF1812 0.00261713803293 新睿利优先91天 债券型 91</div><div class="line">87905M 0.0 多添利X181天 短期理财类 181</div><div class="line">87913V 0.0 多添利X90天 短期理财类 90</div><div class="line">GF1808 0.00505729969656 新睿利优先91天 债券型 91</div><div class="line">产品5 0.0110457409948 新睿利优先91天 债券型 91</div><div class="line">产品1 0.0025718344257 新睿利优先91天 债券型 91</div><div class="line">产品7 0.00151464204465 新睿利优先91天 债券型 91</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div><div class="line">879580 0.0 多添利X91天 短期理财类 91</div><div class="line">87907S 0.0 多添利X181天 短期理财类 181</div><div class="line">879410 0.0 多添利X90天 短期理财类 90</div><div class="line">***********************************</div><div class="line">ece0720feb0ff36294d63aef73021496db43f7b3</div><div class="line">产品5 0.0111852661442 新睿利优先91天 债券型 91</div><div class="line">879002 4.82520920901e-05 多添利7天 短期理财类 7</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div></pre></td></tr></table></figure>
-<p>4.Z-score</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 -0.319787520279</div><div class="line">产品2 -0.40743813927</div><div class="line">产品3 -0.349684885459</div><div class="line">产品4 -0.359717190383</div><div class="line">产品5 -0.405274114882</div><div class="line">产品6 -0.0725244748709</div><div class="line">产品7 -0.262125545055</div><div class="line">产品8 -0.441496892426</div><div class="line">产品9 -0.133596718487</div><div class="line">产品10 -0.266415990907</div><div class="line">***********************************</div><div class="line">da7ab1c15153fcf193a6fc7d754ae0d3c4d598af</div><div class="line">产品1 -0.218140849102</div><div class="line">产品2 -0.179129356215</div><div class="line">产品4 -0.331388969459</div><div class="line">GF1810 -0.268200096133</div><div class="line">产品5 -0.405274114882</div><div class="line">产品8 -0.441496892426</div><div class="line">***********************************</div><div class="line">bd086050bbaec0d4f07094224c4bf46cf64d057c</div><div class="line">产品1 -0.320230425164</div><div class="line">产品2 -0.40743813927</div><div class="line">87911V -0.247691581664</div><div class="line">产品3 -0.350590828042</div><div class="line">产品4 -0.356399470815</div><div class="line">GF1814 -0.0395975964336</div><div class="line">产品5 -0.404049998232</div><div class="line">GF1874 -0.30671101606</div><div class="line">产品6 -0.0764411040059</div><div class="line">产品7 -0.267856858948</div><div class="line">***********************************</div><div class="line">2681a76a23e95e26c0a84029644bb510547ee7cd</div><div class="line">产品1 -0.320230425164</div><div class="line">产品2 -0.511840648104</div><div class="line">产品7 -0.316486188947</div><div class="line">产品5 -0.488208017918</div><div class="line">879002 -0.0736386038632</div><div class="line">产品4 -0.432451811674</div></pre></td></tr></table></figure>
-<h3 id="时间权重："><a href="#时间权重：" class="headerlink" title="时间权重："></a>时间权重：</h3><p>建立一个字典</p>
-<p>{</p>
-<p>“user1”:</p>
-<p>{“87006”：“2017-01-03”</p>
-<p>}</p>
-<p>}</p>
-<p>然后 在计算金额权重的时候，再乘以这个权重。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2208,7 +1928,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

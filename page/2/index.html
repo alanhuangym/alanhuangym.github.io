@@ -255,6 +255,605 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/fs/fs1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/05/fs/fs1/" itemprop="url">
+                  文件系统1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/filesystem/" itemprop="url" rel="index">
+                    <span itemprop="name">filesystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="数据库选择"><a href="#数据库选择" class="headerlink" title="数据库选择"></a>数据库选择</h3><p><strong>关系型数据库 - Oracle</strong></p>
+<p>基础事务有四个特性：</p>
+<ul>
+<li>原子性：整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执行过程中发生错误，会被回复 （Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</li>
+<li>一致性：在事务开始之前和事务结束以后，数据库的完整性限制没有被破坏。</li>
+<li>隔离性：两个事务的执行是互不干扰的，一个事务不可能看到其他事务运行时，中间某一时刻的数据。</li>
+<li>持久性：在事务完成以后，该事务对数据库所作的更改便持久地保存在数据库之中，并不会被回复。</li>
+</ul>
+<p>对网站来说，关系型数据库的很多特性不再需要了：</p>
+<ul>
+<li>事务一致性</li>
+</ul>
+<p>关系型数据库在对事物一致性的维护中有很大的开销，而现在很多web系统对事物的读写一致性都不高</p>
+<ul>
+<li>读写实时性</li>
+</ul>
+<p>对关系数据库来说，插入一条数据之后立刻查询，是肯定可以读出这条数据的，但是对于很多web应用来说，并不要求这么高的实时性，比如发一条消息之后，过几秒乃至十几秒之后才看到这条动态是完全可以接受的</p>
+<ul>
+<li>复杂SQL，特别是多表关联查询</li>
+</ul>
+<p>任何大数据量的web系统，都非常忌讳多个大表的关联查询，以及复杂的数据分析类型的复杂SQL报表查询，特别是SNS类型的网站，从需求以及产品阶级角度，就避免了这种情况的产生。往往更多的只是单表的主键查询，以及单表的简单条件分页查询，SQL的功能极大的弱化了</p>
+<p><strong>NoSQL - MongoDB</strong></p>
+<p>由于在本项目中，数据是新闻资讯的存储，而新闻资讯相互之间是相对独立的，所以不需要使用到关系型数据库。</p>
+<p>非关系型数据库相当于是简化版的关系型数据库，减少了一些相对少用到的功能，提升了产品的性能。相对于关系型数据库，抛弃了ACID特性。</p>
+<p>但是由于是基于键值对的特性，所以非常容易进行扩展，可拓展性强。</p>
+<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>但是MongoDB也有一个问题。由于MongoDB的文档结构为BJSON格式（BJSON全称：Binary JSON），而BJSON格式本身就支持保存二进制格式的数据，因此可以把文件的二进制格式的数据直接保存到MongoDB的文档结构中。但是由于一个BJSON的最大长度不能超过16M，所以限制了单个文档中能存入的最大文件不能超过<font color="red">16M</font></p>
+<p>为了提供对大容量文件存取的支持，samus驱动提供了“GridFS”方式来支持。</p>
+<p><strong>BJSON</strong></p>
+<p><a href="http://blog.csdn.net/kwsy2008/article/details/48969607" target="_blank" rel="external">python 实现</a></p>
+<p><strong>GridDFS</strong></p>
+<p>MongoDB内置功能。</p>
+<p>GridFS是一种在MongoDB中存储大二进制文件的机制。使用GridFS存文件有如下几个原因：</p>
+<p>利用Grid可以简化需求。要是已经用了MongoDB，GridFS就可以不需要使用独立文件存储架构。</p>
+<p>基本原理是将文件存储在两个Collection之中，一个保存文件索引，一个保存文件内容。4MB每一块。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>适合类型</th>
+<th>文件分布</th>
+<th>系统性能</th>
+<th>复杂度</th>
+<th>FUSE</th>
+<th>POSIX</th>
+<th>备份机制</th>
+<th>通讯协议接口</th>
+<th>社区支持</th>
+<th></th>
+<th>开发语言</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastDFS</td>
+<td>4KB~500MB</td>
+<td>小文件合并存储不分片处理</td>
+<td>很高</td>
+<td>简单</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>组内冗余备份</td>
+<td>ApiHTTP</td>
+<td>国内用户群</td>
+<td></td>
+<td>C语言</td>
+</tr>
+<tr>
+<td>TFS</td>
+<td>所有文件</td>
+<td>小文件合并，以block组织分片</td>
+<td></td>
+<td>复杂</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>Block存储多份,主辅灾备</td>
+<td>APIhttp</td>
+<td>少</td>
+<td></td>
+<td>C++</td>
+</tr>
+<tr>
+<td>MFS</td>
+<td>大于64K</td>
+<td>分片存储</td>
+<td>Master占内存多</td>
+<td></td>
+<td>支持</td>
+<td>支持</td>
+<td>多点备份动态冗余</td>
+<td>使用fuse挂在</td>
+<td>较多</td>
+<td></td>
+<td>Perl</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>大文件</td>
+<td>大文件分片分块存储</td>
+<td></td>
+<td>简单</td>
+<td>支持</td>
+<td>支持</td>
+<td>多副本</td>
+<td>原生api</td>
+<td>较多</td>
+<td></td>
+<td>java</td>
+</tr>
+<tr>
+<td>Ceph</td>
+<td>对象文件块</td>
+<td>OSD一主多从</td>
+<td></td>
+<td>复杂</td>
+<td>支持</td>
+<td>支持</td>
+<td>多副本</td>
+<td>原生api</td>
+<td>较少</td>
+<td></td>
+<td>C++</td>
+</tr>
+<tr>
+<td>MogileFS</td>
+<td>海量小图片</td>
+<td></td>
+<td>高</td>
+<td>复杂</td>
+<td>可以支持</td>
+<td>不支持</td>
+<td>动态冗余</td>
+<td>原生api</td>
+<td>文档少</td>
+<td></td>
+<td>Perl</td>
+</tr>
+<tr>
+<td>ClusterFS</td>
+<td>大文件</td>
+<td></td>
+<td></td>
+<td>简单</td>
+<td>支持</td>
+<td>支持</td>
+<td>镜像</td>
+<td></td>
+<td>多</td>
+<td></td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p><strong>HDFS</strong></p>
+<p>还是适合大数据处理，附件等文档太小，不适合使用HDFS。</p>
+<p><strong>FastDFS</strong></p>
+<ol>
+<li>为互联网量身定制，海量数据文件存储。</li>
+<li>高可用(同组备份机制)。</li>
+<li>FastDFS不是通用的文件系统，只能通过api来访问，目前提供c,java,php客户端。phtyon由第三方开发者提供。</li>
+<li>FastDFS可以看作是基于key/value pair存储系统，也许称为分布式文件存储服务更合适。</li>
+<li>支持高并发(这个好像没体现出支持什么高并发,这个是nginx的功劳吧)</li>
+</ol>
+<h3 id="从MongoDB到ElasticSearch"><a href="#从MongoDB到ElasticSearch" class="headerlink" title="从MongoDB到ElasticSearch"></a>从MongoDB到ElasticSearch</h3><p>MongoDB 本身是自带文本索引功能的，但是，不支持中文。<strong>术业有专攻</strong>，MongoDB 是数据存储应用，那么全文检索就使用专业的全文搜索引擎吧。</p>
+<p><strong>0.River</strong></p>
+<p>由于只支持ES 2.0 以下版本，已弃用。</p>
+<p><strong>1.<a href="https://github.com/mongodb-labs/mongo-connector" target="_blank" rel="external">Mongo-Connector</a></strong></p>
+<p>实时</p>
+<ul>
+<li>MongoDB必须开启复制集[2]</li>
+</ul>
+<p>This assumes there is a MongoDB replica set running on port 27017 and that Elasticsearch is running on port 9200 both on the local machine.</p>
+<ul>
+<li>安装mongo-connector</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install &apos;mongo-connector[elastic5]&apos;</div></pre></td></tr></table></figure>
+<ul>
+<li>运行mongo-connector</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo-connector -m 127.0.0.1:27017 -t 127.0.0.1:9200 -d elastic_doc_manager</div></pre></td></tr></table></figure>
+<p>启动之后，现在开始，在mongoDB上的操作，都会同步到elasticsearch之中了。</p>
+<p>（对旧数据无影响）</p>
+<p>问题：根据其他用户的评价，mongo-conncetor会出现延迟和退出的现象</p>
+<p><strong>2.<a href="https://github.com/keenwon/mongodb-to-elasticsearch" target="_blank" rel="external">mongodb to elasticsearch</a></strong></p>
+<p>非实时，应对一天更新一次的场景</p>
+<p>使用了mongoose</p>
+<p>一个node.js写的小程序，可以将mongodb的数据输入到es。</p>
+<p>Ref:</p>
+<p>[1] <a href="https://segmentfault.com/a/1190000003773614" target="_blank" rel="external">MongoDB 数据自动同步到 ElasticSearch</a></p>
+<p>[2] <a href="http://www.runoob.com/mongodb/mongodb-replication.html" target="_blank" rel="external">副本集设置</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/31/rs/rs_4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/31/rs/rs_4/" itemprop="url">
+                  推荐系统4
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T14:17:36+08:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
+                    <span itemprop="name">recommendationsystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<h3 id="数据归一化"><a href="#数据归一化" class="headerlink" title="数据归一化"></a>数据归一化</h3><p>现在每个用户的属性变为了持有产品的份额：</p>
+<p>直接使用份额计算会出现偏差化：</p>
+<p>例如购买了一款产品金额较大，那么权重就会偏大</p>
+<p>那么就将份额标准化</p>
+<p><strong>1.固定阈值</strong></p>
+<p>例如（万分之X）</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方案1</td>
+<td>0-0.03</td>
+<td>0.03-0.1</td>
+<td>0.1-0.3</td>
+<td>0.3-1.0</td>
+<td>1.0+</td>
+</tr>
+<tr>
+<td>方案2</td>
+<td>0-0.01</td>
+<td>0.01-0.1</td>
+<td>0.1-1.0</td>
+<td>1.0-2.0</td>
+<td>2.0+</td>
+</tr>
+</tbody>
+</table>
+<p>划分为五个评分，0分则是没有持仓过该产品</p>
+<p><strong>2.平均持仓数</strong></p>
+<p>计算出每个产品的用户平均持仓数，然后根据平均持仓倍数去划分数据：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方案1</td>
+<td>0-0.5倍</td>
+<td>0.5-1.0倍</td>
+<td>1.0-1.5倍</td>
+<td>1.5-2.0倍</td>
+<td>2.0+倍</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>3.排序划分</strong></p>
+<p>将一款产品的所有用户进行排序，然后根据排序去划分数据</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方案1</td>
+<td>20%</td>
+<td>20%</td>
+<td>20%</td>
+<td>20%</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>方案</td>
+<td>10%</td>
+<td>25%</td>
+<td>30%</td>
+<td>25%</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4.（0，1）标准化（max-min）</strong></p>
+<p>$${x}_{normalization}=\frac{x-Min}{Max-Min}$$</p>
+<p>然后将得到的结果乘以5，得到投资偏好。</p>
+<p><strong>5.Z-score标准化</strong></p>
+<p>将数据划分为正态分布化的数据</p>
+<p>$${x}_{normalization}=\frac{x-\mu }{\sigma }$$</p>
+<p>其中的u是平均数，sigma是标准差</p>
+<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h3><p><strong>0.不进行归一化</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 0.250494227106 新睿利优先91天 债券型 91</div><div class="line">产品2 0.228637469027 新睿利优先91天 债券型 91</div><div class="line">产品3 0.377176516585 新睿利优先91天 债券型 91</div><div class="line">产品4 0.256939429748 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 新睿利优先91天 债券型 91</div><div class="line">产品6 0.0578450717465 多添利14天 短期理财类 14</div><div class="line">产品7 0.288599403176 新睿利优先91天 债券型 91</div><div class="line">产品8 1.38227279375 新睿利优先91天 债券型 91</div><div class="line">产品9 0.0835590588465 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">d96e788472f4d36ae9163192f84635d2b3332ced</div><div class="line">产品1 0.249496242138 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 新睿利优先91天 债券型 91</div><div class="line">879002 0.0262265839131 多添利7天 短期理财类 7</div><div class="line">产品6 0.0390845079368 多添利14天 短期理财类 14</div><div class="line">产品9 0.0828958917128 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">b598fb7de5df3b8a73c5c23c98fb3c73483b020b</div><div class="line">产品1 0.249496242138 新睿利优先91天 债券型 91</div><div class="line">产品2 0.226822885939 新睿利优先91天 债券型 91</div><div class="line">产品3 0.374926954856 新睿利优先91天 债券型 91</div><div class="line">产品7 0.259999462321 新睿利优先91天 债券型 91</div><div class="line">GF1809 0.306768321508 新睿利优先91天 债券型 91</div><div class="line">879002 0.0233817984367 多添利7天 短期理财类 7</div><div class="line">879006 0.115620874347 多添利91天 短期理财类 91</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">36e64d058bd7a6c387ffe388179d4639749cc44f</div><div class="line">产品1 0.249496242138 新睿利优先91天 债券型 91</div><div class="line">GF1814 0.249990015339 新睿利优先91天 债券型 91</div><div class="line">GF1804 0.351223807748 新睿利优先91天 债券型 91</div><div class="line">产品3 0.375676808766 新睿利优先91天 债券型 91</div><div class="line">产品7 0.323959330052 新睿利优先91天 债券型 91</div><div class="line">GF1803 0.407730728967 新睿利优先91天 债券型 91</div><div class="line">产品2 0.229544760571 新睿利优先91天 债券型 91</div><div class="line">GF1812 0.355765682516 新睿利优先91天 债券型 91</div><div class="line">879119 0.729319808632 多添利X364天 短期理财类 364</div><div class="line">GF1809 0.311063078009 新睿利优先91天 债券型 91</div><div class="line">产品5 0.770938882151 新睿利优先91天 债券型 91</div><div class="line">879162 1.2696774613 多添利X182天 短期理财类 182</div><div class="line">879002 0.020420103968 多添利7天 短期理财类 7</div><div class="line">产品6 0.0394753530162 多添利14天 短期理财类 14</div><div class="line">产品8 1.38227279375 新睿利优先91天 债券型 91</div><div class="line">产品9 0.0830616834962 多添利56天 短期理财类 56</div><div class="line">879004 0.0871009660079 多添利28天 短期理财类 28</div><div class="line">产品10 4.02077615455 多添利X36天 短期理财类 36</div></pre></td></tr></table></figure>
+<p>1.固定值归一化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 0.250494227106 3 新睿利优先91天 债券型 91</div><div class="line">产品2 0.228637469027 3 新睿利优先91天 债券型 91</div><div class="line">产品3 0.377176516585 4 新睿利优先91天 债券型 91</div><div class="line">产品4 0.256939429748 3 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 4 新睿利优先91天 债券型 91</div><div class="line">产品6 0.0578450717465 2 多添利14天 短期理财类 14</div><div class="line">产品7 0.288599403176 3 新睿利优先91天 债券型 91</div><div class="line">产品8 1.38227279375 5 新睿利优先91天 债券型 91</div><div class="line">产品9 0.0835590588465 2 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 5 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">bb7a0f6f5d59a3bfcca72a685810c38c2bc8e3a3</div><div class="line">产品1 0.262470046729 3 新睿利优先91天 债券型 91</div><div class="line">产品3 0.451412053647 4 新睿利优先91天 债券型 91</div><div class="line">产品4 0.299002492211 3 新睿利优先91天 债券型 91</div><div class="line">产品6 0.101619720636 3 多添利14天 短期理财类 14</div><div class="line">产品8 1.38227279375 5 新睿利优先91天 债券型 91</div><div class="line">产品9 0.146891520115 3 多添利56天 短期理财类 56</div><div class="line">***********************************</div><div class="line">d96e788472f4d36ae9163192f84635d2b3332ced</div><div class="line">产品1 0.249496242138 3 新睿利优先91天 债券型 91</div><div class="line">产品5 0.758798112353 4 新睿利优先91天 债券型 91</div><div class="line">879002 0.0262265839131 1 多添利7天 短期理财类 7</div><div class="line">产品6 0.0390845079368 2 多添利14天 短期理财类 14</div><div class="line">产品9 0.0828958917128 2 多添利56天 短期理财类 56</div><div class="line">产品10 4.02077615455 5 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">f0f5de95640aabbb217a35a7b141b2bae46783aa</div><div class="line">产品5 4.58465819484 5 新睿利优先91天 债券型 91</div><div class="line">产品8 3.31469015941 5 新睿利优先91天 债券型 91</div><div class="line">产品3 0.374926954856 4 新睿利优先91天 债券型 91</div></pre></td></tr></table></figure>
+<p>2.平均持仓数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品2 1 新睿利优先91天 债券型 91</div><div class="line">产品3 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div><div class="line">产品5 1 新睿利优先91天 债券型 91</div><div class="line">产品6 1 多添利14天 短期理财类 14</div><div class="line">产品7 1 新睿利优先91天 债券型 91</div><div class="line">产品8 1 新睿利优先91天 债券型 91</div><div class="line">产品9 1 多添利56天 短期理财类 56</div><div class="line">产品10 1 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">bb7a0f6f5d59a3bfcca72a685810c38c2bc8e3a3</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品3 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div><div class="line">产品6 1 多添利14天 短期理财类 14</div><div class="line">产品8 1 新睿利优先91天 债券型 91</div><div class="line">产品9 1 多添利56天 短期理财类 56</div><div class="line">***********************************</div><div class="line">7b0fa22fec8c28836d6a52cd35aa818218cd4021</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品2 1 新睿利优先91天 债券型 91</div><div class="line">产品7 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div><div class="line">产品6 1 多添利14天 短期理财类 14</div><div class="line">***********************************</div><div class="line">21cfa76118cad37e9af116b01ca19230b5def327</div><div class="line">产品1 1 新睿利优先91天 债券型 91</div><div class="line">产品2 1 新睿利优先91天 债券型 91</div><div class="line">产品7 1 新睿利优先91天 债券型 91</div><div class="line">产品4 1 新睿利优先91天 债券型 91</div></pre></td></tr></table></figure>
+<p>3.(0,1)归一化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 0.00250205597229 新睿利优先91天 债券型 91</div><div class="line">产品2 0.00611680178649 新睿利优先91天 债券型 91</div><div class="line">产品3 0.00628624275145 新睿利优先91天 债券型 91</div><div class="line">产品4 0.00281313461987 新睿利优先91天 债券型 91</div><div class="line">产品5 0.0110457409948 新睿利优先91天 债券型 91</div><div class="line">产品6 9.96838674323e-05 多添利14天 短期理财类 14</div><div class="line">产品7 0.00168125266956 新睿利优先91天 债券型 91</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div><div class="line">产品9 0.000251958300901 多添利56天 短期理财类 56</div><div class="line">产品10 0.00139546358688 多添利X36天 短期理财类 36</div><div class="line">***********************************</div><div class="line">53685bbde6333d222b00c006f27ef581c88a4b1d</div><div class="line">产品1 0.00330949236175 新睿利优先91天 债券型 91</div><div class="line">产品2 0.00606825574057 新睿利优先91天 债券型 91</div><div class="line">产品4 0.00277429449691 新睿利优先91天 债券型 91</div><div class="line">GF1808 0.0049099997054 新睿利优先91天 债券型 91</div><div class="line">产品5 0.0110457409948 新睿利优先91天 债券型 91</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div><div class="line">879004 0.000391751898821 多添利28天 短期理财类 28</div><div class="line">***********************************</div><div class="line">2ff657077263d4833bad7d8c8035c623e336c977</div><div class="line">GF1814 0.00701227648786 新睿利优先91天 债券型 91</div><div class="line">产品2 0.00646876061945 新睿利优先91天 债券型 91</div><div class="line">产品3 0.00624875024995 新睿利优先91天 债券型 91</div><div class="line">产品4 0.00280203744188 新睿利优先91天 债券型 91</div><div class="line">879637 0.0 多添利X97天 短期理财类 97</div><div class="line">GF1812 0.00261713803293 新睿利优先91天 债券型 91</div><div class="line">87905M 0.0 多添利X181天 短期理财类 181</div><div class="line">87913V 0.0 多添利X90天 短期理财类 90</div><div class="line">GF1808 0.00505729969656 新睿利优先91天 债券型 91</div><div class="line">产品5 0.0110457409948 新睿利优先91天 债券型 91</div><div class="line">产品1 0.0025718344257 新睿利优先91天 债券型 91</div><div class="line">产品7 0.00151464204465 新睿利优先91天 债券型 91</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div><div class="line">879580 0.0 多添利X91天 短期理财类 91</div><div class="line">87907S 0.0 多添利X181天 短期理财类 181</div><div class="line">879410 0.0 多添利X90天 短期理财类 90</div><div class="line">***********************************</div><div class="line">ece0720feb0ff36294d63aef73021496db43f7b3</div><div class="line">产品5 0.0111852661442 新睿利优先91天 债券型 91</div><div class="line">879002 4.82520920901e-05 多添利7天 短期理财类 7</div><div class="line">产品8 0.0126821535272 新睿利优先91天 债券型 91</div></pre></td></tr></table></figure>
+<p>4.Z-score</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">目标客户</div><div class="line">产品1 -0.319787520279</div><div class="line">产品2 -0.40743813927</div><div class="line">产品3 -0.349684885459</div><div class="line">产品4 -0.359717190383</div><div class="line">产品5 -0.405274114882</div><div class="line">产品6 -0.0725244748709</div><div class="line">产品7 -0.262125545055</div><div class="line">产品8 -0.441496892426</div><div class="line">产品9 -0.133596718487</div><div class="line">产品10 -0.266415990907</div><div class="line">***********************************</div><div class="line">da7ab1c15153fcf193a6fc7d754ae0d3c4d598af</div><div class="line">产品1 -0.218140849102</div><div class="line">产品2 -0.179129356215</div><div class="line">产品4 -0.331388969459</div><div class="line">GF1810 -0.268200096133</div><div class="line">产品5 -0.405274114882</div><div class="line">产品8 -0.441496892426</div><div class="line">***********************************</div><div class="line">bd086050bbaec0d4f07094224c4bf46cf64d057c</div><div class="line">产品1 -0.320230425164</div><div class="line">产品2 -0.40743813927</div><div class="line">87911V -0.247691581664</div><div class="line">产品3 -0.350590828042</div><div class="line">产品4 -0.356399470815</div><div class="line">GF1814 -0.0395975964336</div><div class="line">产品5 -0.404049998232</div><div class="line">GF1874 -0.30671101606</div><div class="line">产品6 -0.0764411040059</div><div class="line">产品7 -0.267856858948</div><div class="line">***********************************</div><div class="line">2681a76a23e95e26c0a84029644bb510547ee7cd</div><div class="line">产品1 -0.320230425164</div><div class="line">产品2 -0.511840648104</div><div class="line">产品7 -0.316486188947</div><div class="line">产品5 -0.488208017918</div><div class="line">879002 -0.0736386038632</div><div class="line">产品4 -0.432451811674</div></pre></td></tr></table></figure>
+<h3 id="时间权重："><a href="#时间权重：" class="headerlink" title="时间权重："></a>时间权重：</h3><p>建立一个字典</p>
+<p>{</p>
+<p>“user1”:</p>
+<p>{“87006”：“2017-01-03”</p>
+<p>}</p>
+<p>}</p>
+<p>然后 在计算金额权重的时候，再乘以这个权重。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/30/rs/rs_3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2413,419 +3012,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/13/es/es_stocks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/13/es/es_stocks/" itemprop="url">
-                  Elasticsearch股票分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-13T00:00:00+08:00">
-                2017-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"><a href="#1-制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）" class="headerlink" title="1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）"></a>1.制作股票代号-股票名称同义词词典，并添加入路径（同时需要将股票名称添加进拓展词典）</h3><p>首先，通过Python，我们将收集股票名称和股票代码来制作同义词词典。</p>
-<p>股票数据来源来自于<a href="http://quote.eastmoney.com/stocklist.html" target="_blank" rel="external">东方财富网</a>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="comment">#用两个列表分别存储上证和深证各支股票的信息</span></div><div class="line">sh = []</div><div class="line">sz = []</div><div class="line"><span class="keyword">with</span> requests.Session() <span class="keyword">as</span> s:</div><div class="line">    html = s.get(<span class="string">r'http://quote.eastmoney.com/stocklist.html'</span>)</div><div class="line">    soup = BeautifulSoup(html.content, <span class="string">'lxml'</span>)</div><div class="line">    sh_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">7</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sh_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sh.append(i.a.text)</div><div class="line">    sz_stocks =soup.find_all(<span class="string">'ul'</span>)[<span class="number">8</span>]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sz_stocks.find_all(<span class="string">'li'</span>):</div><div class="line">        sz.append(i.a.text)</div></pre></td></tr></table></figure>
-<p>输出的本文结果为如下格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">501001,财通精选</div><div class="line">501002,能源互联</div><div class="line">501003,上海改革</div><div class="line">501005,精准医疗</div><div class="line">...</div><div class="line">510190,龙头etf</div><div class="line">510210,综指etf</div><div class="line">510220,中小etf</div><div class="line">510230,金融etf</div><div class="line">...</div></pre></td></tr></table></figure>
-<p><img src="http://mednoter.com/media/files/2014/Sep/2014-09-07-flow.png" alt=""></p>
-<p>首先，由于分词ik不能识别股票名称（不能正确分词），即使添加了同义词词典也无法检索到，所以需要在拓展词库中添加全部股票名称。</p>
-<p>其中，由于用户输入一般是忽略大小写的，为了方便用户能够输入大小写都能匹配到股票信息，我们将拓展词典、同义词词典的股票名称信息都更改为小写，这样无论用户输入大写还是小写都能匹配到股票。</p>
-<p><del>暂时没有找到关闭 filter <em> 号的方法，所以搜索不了 </em>stXX股票</del></p>
-<p><del>有没有可能去除st等标记，因标记是在原股票名称前添加，不改变原股票名称</del></p>
-<h3 id="2-学习使用html-strip-filter"><a href="#2-学习使用html-strip-filter" class="headerlink" title="2.学习使用html_strip filter"></a>2.学习使用html_strip filter</h3><p>html strip filter 代码如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">"char_filter": &#123;</div><div class="line">        "my_html": &#123;</div><div class="line">          "type": "html_strip",</div><div class="line">          "escaped_tags": []</div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
-<p>其中<strong>escaped_tags</strong>字段表示该列表之中的标签不用去除</p>
-<h3 id="3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip"><a href="#3-创建索引，并设置IK为Tokenizer，Filter包括同义词和html-strip" class="headerlink" title="3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip"></a>3.创建索引，并设置IK为Tokenizer，Filter包括同义词和html_strip</h3><p>完整设置和mapping如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "settings": &#123;</div><div class="line">        "index" : &#123;</div><div class="line">            "analysis" : &#123;</div><div class="line">                "analyzer" : &#123;</div><div class="line">                    "my_analyzer" : &#123;</div><div class="line">                        "tokenizer" : "my_ik",</div><div class="line">                        "filter" : ["my_stop","synonym"],</div><div class="line">                        "char_filter":  ["my_html"]</div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                "char_filter": &#123;</div><div class="line">                    "my_html": &#123;</div><div class="line">                      "type": "html_strip",</div><div class="line">                      "escaped_tags": []</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                "filter" : &#123;</div><div class="line">                    "synonym" : &#123;</div><div class="line">                        "type" : "synonym",</div><div class="line">                        "synonyms_path" : "synonym.txt"</div><div class="line">                    &#125;,</div><div class="line">                    "my_stop":&#123;</div><div class="line">                      "type":"stop",</div><div class="line">                      "stopwords":"_none_"</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                  "tokenizer":&#123;</div><div class="line">                  "my_ik":&#123;</div><div class="line">                    "type":"ik_max_word",</div><div class="line">                    "enable_lowercase":true</div><div class="line">                &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    "mappings":&#123;</div><div class="line">    "news":&#123; //类型名，这里为news</div><div class="line">    "properties": &#123;</div><div class="line">        "title": &#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "keywords":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;,</div><div class="line">        "content":&#123;</div><div class="line">            "type":      "text",</div><div class="line">            "analyzer":  "my_analyzer"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>还需要完善：</p>
-<ul>
-<li>对于不需要和不希望加入搜索的字段进行not_analyze设置</li>
-<li>设置日期字段的数值类型date</li>
-</ul>
-<h3 id="4-对已有数据进行reindex-约34w数据"><a href="#4-对已有数据进行reindex-约34w数据" class="headerlink" title="4.对已有数据进行reindex(约34w数据)"></a>4.对已有数据进行reindex(约34w数据)</h3><p>之前进行reindex速度明显比这次高，原因是上次没有使用analyzer。</p>
-<p>此次reindex <strong>34w</strong>数据共用时<strong>793</strong>秒，每1秒操作<strong>428</strong>个文档。</p>
-<p>如无analyzer，则每一秒操作<strong>1581</strong>个文档。</p>
-<h3 id="5-使用function-score进行filter检索，发布时间越靠前的得分越高"><a href="#5-使用function-score进行filter检索，发布时间越靠前的得分越高" class="headerlink" title="5.使用function_score进行filter检索，发布时间越靠前的得分越高"></a>5.使用function_score进行filter检索，发布时间越靠前的得分越高</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">GET test/news/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "_source": ["title","publishdate"], </div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123;</div><div class="line">          "match": &#123;</div><div class="line">            "title": "600340"</div><div class="line">          &#125;</div><div class="line">        &#125; ,</div><div class="line">         "functions": [ </div><div class="line">            &#123;</div><div class="line">                    "exp": &#123;</div><div class="line">                        "publishdate" : &#123;</div><div class="line">                            "origin": "now",</div><div class="line">                            "offset": "1h",</div><div class="line">                            "scale" : "30d",</div><div class="line">                            "decay": 0.2</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    "weight": 200</div><div class="line">                &#125;</div><div class="line">        ],</div><div class="line">        "boost_mode": "sum"</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>其中使用的是<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#_supported_fields_for_decay_functions" target="_blank" rel="external">function score query</a> 的 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decayfunction</a>(衰减函数)。</p>
-<p>各参数设置如图：</p>
-<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt=""></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/es/es_similarity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/12/es/es_similarity/" itemprop="url">
-                  Elasticsearch相关性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
-                2017-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="ElasticSearch-相关性"><a href="#ElasticSearch-相关性" class="headerlink" title="ElasticSearch 相关性"></a>ElasticSearch 相关性</h1><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>Elasticsearch版本：5.4.2</p>
-<p>Kibana版本：5.4.2</p>
-<p>Logstash版本：5.4.2</p>
-<p>Elasticsearch在执行搜索后，返回结果的排序是根据字段<strong>_score</strong>决定的。排序结果是倒序排列，得分越高，越在前面。</p>
-<p><strong>_score</strong>字段即量化表明查询语句与文档内容的相似性与匹配度，为了更好地显示搜索结果，我们需要深入了解该数值的来源与相关算法，本文讨论的相关性则为此。</p>
-<h3 id="2-语句"><a href="#2-语句" class="headerlink" title="2.语句"></a>2.语句</h3><p>本文通过调用<strong>_search</strong>的<strong>explain</strong>参数进行调试。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /_search?explain</div><div class="line">&#123;</div><div class="line">  "query":&#123;</div><div class="line">    "match":&#123;</div><div class="line">      "title":"a"</div><div class="line">  &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-经典TF-IDF算法"><a href="#3-经典TF-IDF算法" class="headerlink" title="3.经典TF/IDF算法"></a>3.经典TF/IDF算法</h3><p>在Elasticsearch 5.X 版本前，Elasticsearch默认使用的是经典的TF/IDF算法，即：</p>
-<p><strong>检索词频率（TermFrequency）</strong></p>
-<p>检索词在该字段出现的频率？出现频率越高，相关性也越高。 字段中出现过 5 次要比只出现过 1 次的相关性高。当然，词频不是在score计算中直接使用的。通常是取词频（TermFrequency）的平方根。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TF_Score = sqrt(termFreq)</div></pre></td></tr></table></figure>
-<p><strong>反向文档频率（InverseDocumentFrequency）</strong></p>
-<p>每个检索词在索引中出现的频率？频率越高，相关性越低。检索词出现在多数文档中会比出现在少数文档中的权重更低。例如中文中，“的”、“得”，“不”等词因在大多数文档中出现，所以相关性较低。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">IDF_Score = log(maxDocs/docFreq+1)+1</div></pre></td></tr></table></figure>
-<p><strong>字段长度准则（FieldNorms）</strong></p>
-<p>字段的长度是多少？长度越长，相关性越低。 检索词出现在一个短的 title 要比同样的词出现在一个长的 content 字段权重更大。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FieldNorms = 1 / sqrt(length)</div></pre></td></tr></table></figure>
-<p>所以最终得分为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Score = TF_Score*IDF_Score*FieldNorms</div><div class="line">      = log(maxDocs / (docFreq + 1)) * sqrt(termFreq) * (1/sqrt(length))</div></pre></td></tr></table></figure>
-<p>*maxDocs有可能会数到已删除文档！</p>
-<h3 id="4-BM25算法"><a href="#4-BM25算法" class="headerlink" title="4.BM25算法"></a>4.BM25算法</h3><p>BM25是Elasticsearch5.X的默认相关性算法，它根据TF/IDF算法改进而来。它由两部分组成，分别是IDF和TFNorm.</p>
-<p>其中，根据不同的检索方法，数值各不相同，由于Elasticsearch是分布式系统，所以默认的检索方法为Query_Then_Search（该方法为在各自分片内进行检索，然后各分片返回各自的搜索结果至协调分片，非全局检索，当数据量充足时，效果良好，但当数据量较少时，应使用全局检索，请参看后文DFS_Query_Then_Search方法）</p>
-<p><strong>单词检索</strong>（即检索内容只包含单个英语单词（空格间隔）或单个中文分词（由Tokenizer划分））：</p>
-<p>IDF</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5))</div></pre></td></tr></table></figure>
-<p>TFNorm</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">termfreq * (k1 + 1)) / (termfreq + k1 * (1 - b + b * fieldLength / avgFieldLength)</div></pre></td></tr></table></figure>
-<ul>
-<li>docCount - 该索引该分片的文档总数</li>
-<li>docFreq - 该索引内该分片内，含有检索内容的文档的数量</li>
-<li>termFreq - 包含该检索内容的文档的检索内容出现次数</li>
-<li>k1 &amp; b - BM25参数，常分别设为 1.2 和 0.75</li>
-<li>fieldLength - 包含该检索内容的文档的长度</li>
-<li>avgFieldLength - 该索引该分片的平均文档长度</li>
-</ul>
-<p><strong>多词检索</strong></p>
-<p>如果检索内容为一段话或多个词语，首先通过Analyzer将一段话或多个词语进行筛选和划分，包括大小写转换、停用词去除、词根筛选、同义词转换、分词（英文根据空格划分，中文根据Tokenizer划分，本文使用中文分词工具ik）。然后将得到的多个词语逐个进行单词检索，然后最终得分为多个词语的得分的总和。</p>
-<h3 id="5-其他算法"><a href="#5-其他算法" class="headerlink" title="5.其他算法"></a>5.其他算法</h3><p>如果需要更换算法，可以在创建索引的时候，添加settings设置，更改默认的相关性算法。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">PUT /test</div><div class="line">&#123;</div><div class="line">  "settings": &#123;</div><div class="line">    "index": &#123;</div><div class="line">      "similarity": &#123;</div><div class="line">        "default": &#123;</div><div class="line">          "type": "classic"</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可选算法有</p>
-<ul>
-<li>“BM25” - 如无设置算法，则默认为BM25算法</li>
-<li>“classic” - 经典TF/IDF算法</li>
-</ul>
-<p>除了以上的两种算法，其他的算法需要<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html#lm_dirichlet" target="_blank" rel="external">配置参数</a></p>
-<ul>
-<li>“<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/DFRSimilarity.html" target="_blank" rel="external">DFR</a>“  / “<a href="http://trec.nist.gov/pubs/trec21/papers/irra.web.nb.pdf" target="_blank" rel="external">DFI</a>“  / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/IBSimilarity.html" target="_blank" rel="external">IB</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMDirichletSimilarity.html" target="_blank" rel="external">LMDirichlet</a>“ / “<a href="http://lucene.apache.org/core/5_2_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html" target="_blank" rel="external">LMJelinekMercer</a>“</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">"similarity" : &#123;</div><div class="line">  "my_similarity" : &#123;</div><div class="line">    "type" : "DFR",</div><div class="line">    "basic_model" : "g",</div><div class="line">    "after_effect" : "l",</div><div class="line">    "normalization" : "h2",</div><div class="line">    "normalization.h2.c" : "3.0"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>再在索引中设置mapping以应用算法</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"book"</span> : &#123;</div><div class="line">    <span class="attr">"properties"</span> : &#123;</div><div class="line">      <span class="attr">"title"</span> : &#123; <span class="attr">"type"</span> : <span class="string">"text"</span>, <span class="attr">"similarity"</span> : <span class="string">"my_similarity"</span> &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="6-Function-Score"><a href="#6-Function-Score" class="headerlink" title="6.Function Score"></a>6.Function Score</h3><p>首先，function score的语句如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">GET test6/test/_search?search_type=dfs_query_then_fetch</div><div class="line">&#123;</div><div class="line">  "query": &#123;</div><div class="line">    "function_score": &#123;</div><div class="line">        "query":&#123; //首先是检索体</div><div class="line">          "match_all": &#123;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">         "functions": [  //Functions可以添加多种脚本和过滤器</div><div class="line">          &#123;              //使用一个数组将各个function结合起来</div><div class="line">            "filter": &#123;  // 过滤器</div><div class="line">              "match": &#123; "title": "a" &#125; &#125;,</div><div class="line">              "weight": 23 // weight 直接给符合过滤器的文档权重分</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            "script_score": &#123; //脚本打分器</div><div class="line">              "script": &#123;     //只能对字段类型为数值的进行数学操作</div><div class="line">               "inline": "Math.log(2 + doc['votes'].value)"</div><div class="line">          &#125; </div><div class="line">         &#125;</div><div class="line">        &#125;</div><div class="line">        ],</div><div class="line">      "boost":5, //将该数值影响得分</div><div class="line">      "score_mode":"multiply", //functions内多个脚本的得分处理办法</div><div class="line">      "boost_mode":"multiply", //检索得分和函数得分的处理办法</div><div class="line">      "min_score":40, //返回搜索结果所需要的最少得分</div><div class="line">      "random_score":&#123;&#125;, //生成一个随机数，影响得分</div><div class="line">      "max_boost":10 //无论函数、脚本如何影响得分，最终得分最大值为此</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>其中<strong>boost_mode</strong>（检索得分与函数得分d的处理方式）的模式有：</p>
-<ul>
-<li><p>multiply - 检索得分和函数得分的积（默认）</p>
-</li>
-<li><p>sum - 检索得分和函数得分的和</p>
-</li>
-<li><p>min - 检索得分和函数得分之中的较小值</p>
-</li>
-<li><p>max - 检索得分和函数得分之中的较大值</p>
-</li>
-<li><p>replace - 函数得分代替检索得分</p>
-<p>​</p>
-</li>
-</ul>
-<p>而后在函数内部中不同脚本、函数和过滤器也需要进行得分处理，<strong>score_mode</strong>:</p>
-<ul>
-<li><p>multiply - 函数结果求积（默认）</p>
-</li>
-<li><p>sum - 函数结果求和</p>
-</li>
-<li><p>min - 函数结果最小值</p>
-</li>
-<li><p>max - 函数结果最大值</p>
-</li>
-<li><p>avg - 函数结果平均值</p>
-</li>
-<li><p>first - 首个函数结果作为最终结果</p>
-<p>​</p>
-</li>
-</ul>
-<p><strong>脚本评分</strong>（script_score）例子中使用的是简洁版本，其完整版本为：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">"script_score": &#123;</div><div class="line">          "params": &#123;  // 参数字段，以","分隔</div><div class="line">            "threshold": 80,</div><div class="line">            "discount": 0.1,</div><div class="line">            "target": 10</div><div class="line">          &#125;,</div><div class="line">  		  //脚本字段，以";"分隔语句</div><div class="line">          "script": "price  = doc['price'].value; margin = doc['margin'].value;</div><div class="line">          if (price &lt; threshold) &#123; return price * margin / target &#125;;</div><div class="line">          return price * (1 - discount) * margin / target;" </div><div class="line">        &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
-<h3 id="7-同义词"><a href="#7-同义词" class="headerlink" title="7.同义词"></a>7.同义词</h3><p>使用同义词进行检索时，部分数据会发生变化，以BM25算法为例：</p>
-<p>b,c为同义词</p>
-<ul>
-<li>docCount - 文档总数不变</li>
-<li>docFreq - 所有包含b或c的文档的数量</li>
-<li>termFreq - 如有一次b或c出现，则算双倍次数</li>
-<li>k1 &amp; b - 不变</li>
-<li>fieldLength - <del>不变</del> 经测试，目前认为是取同义词中，长度最长的为该文档长度</li>
-<li>avgFieldLength - 每个b或c算双倍大小</li>
-</ul>
-<h3 id="8-DFS-Query-Then-Fetch"><a href="#8-DFS-Query-Then-Fetch" class="headerlink" title="8.DFS Query Then Fetch"></a>8.DFS Query Then Fetch</h3><p>可以全局搜索，当数据量较少时可以使用</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /_search?search_type=dfs_query_then_fetch</div></pre></td></tr></table></figure>
-<h3 id="资料参考："><a href="#资料参考：" class="headerlink" title="资料参考："></a>资料参考：</h3><p>[1] <a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/relevance-intro.html" target="_blank" rel="external">Elasticsearch文档-什么是相关性？</a></p>
-<p>[2] <a href="http://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/" target="_blank" rel="external">BM25 The Next Generation of Lucene Relevance</a></p>
-<p>[3] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html" target="_blank" rel="external">Elasticsearch文档-Similarity module</a></p>
-<p>[4] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" rel="external">Elasticsearch文档-Function Score Query</a></p>
-<p>[5] <a href="https://www.elastic.co/blog/understanding-query-then-fetch-vs-dfs-query-then-fetch" target="_blank" rel="external">Elasticsearch文档-DFS-DFS Query Then Fetch</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2875,7 +3061,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
