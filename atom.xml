@@ -47,12 +47,18 @@
     <link href="http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/"/>
     <id>http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/</id>
     <published>2017-12-20T16:00:00.000Z</published>
-    <updated>2017-12-20T09:02:27.000Z</updated>
+    <updated>2017-12-22T06:00:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。</p>
 <p>于是我们每次都需要执行一次<code>npm install</code>的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成dockerfile和dockerimage，从而就不需要每次都对生产环境进行更新操作。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins11.png" alt=""></p>
-<h3 id="1-docker简介"><a href="#1-docker简介" class="headerlink" title="1.docker简介"></a>1.docker简介</h3><h3 id="Swarm集群拓展"><a href="#Swarm集群拓展" class="headerlink" title="Swarm集群拓展"></a>Swarm集群拓展</h3>]]></content>
+<h3 id="1-docker简介"><a href="#1-docker简介" class="headerlink" title="1.docker简介"></a>1.docker简介</h3><h5 id="Swarm集群拓展"><a href="#Swarm集群拓展" class="headerlink" title="Swarm集群拓展"></a>Swarm集群拓展</h5><h3 id="2-APACHE服务器"><a href="#2-APACHE服务器" class="headerlink" title="2.APACHE服务器"></a>2.APACHE服务器</h3><h3 id="3-Jenkins持续化集成"><a href="#3-Jenkins持续化集成" class="headerlink" title="3.Jenkins持续化集成"></a>3.Jenkins持续化集成</h3><p>介绍完docker和apache，我们希望能够通过jenkins进行一个集成，能够自动化实现在docker容器中的apache服务器的重启操作。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins15.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins16.png" alt=""></p>
+<p>References:</p>
+<p>[1] <a href="http://www.cnblogs.com/Leo_wl/p/4314792.html" target="_blank" rel="external">使用Jenkins来构建Docker容器</a></p>
+<p>[2] <a href="http://www.runoob.com/docker/docker-tutorial.html" target="_blank" rel="external">Docker 教程</a></p>
+]]></content>
     
     <summary type="html">
     
@@ -73,17 +79,49 @@
     <link href="http://www.pirrla.cn/2017/12/20/jenkins/jenkins3/"/>
     <id>http://www.pirrla.cn/2017/12/20/jenkins/jenkins3/</id>
     <published>2017-12-19T16:00:00.000Z</published>
-    <updated>2017-12-20T01:02:52.000Z</updated>
+    <updated>2017-12-21T08:44:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网站的node.js页面进行尝试。</p>
-<h3 id="1-项目代码简介"><a href="#1-项目代码简介" class="headerlink" title="1.项目代码简介"></a>1.项目代码简介</h3><h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>对于网页项目，还有许多的流程可以持续发布。</p>
-<h5 id="1-可以部署多个浏览器环境进行测试："><a href="#1-可以部署多个浏览器环境进行测试：" class="headerlink" title="1.可以部署多个浏览器环境进行测试："></a>1.可以部署多个浏览器环境进行测试：</h5><p>在网站的上线之前，可以部署一些浏览器测试环境，例如Firefox,IE,Safari等等的不同环境，当全部环境通过测试之后，才发布，提高了产品的容错性。</p>
+    <content type="html"><![CDATA[<p>我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网页网站的node.js页面进行尝试。</p>
+<h3 id="1-项目代码简介"><a href="#1-项目代码简介" class="headerlink" title="1.项目代码简介"></a>1.项目代码简介</h3><p>简单的网页面显示，没有具体的数据存储操作</p>
+<h3 id="2-代码Jenkins部署"><a href="#2-代码Jenkins部署" class="headerlink" title="2.代码Jenkins部署"></a>2.代码Jenkins部署</h3><h5 id="2-1-安装node-js插件"><a href="#2-1-安装node-js插件" class="headerlink" title="2.1 安装node.js插件"></a>2.1 安装node.js插件</h5><p>到jenkins插件管理界面下载<a href="https://wiki.jenkins.io/display/JENKINS/NodeJS+Plugin" target="_blank" rel="external">Node.js插件</a></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins12.png" alt=""></p>
+<p>安装完，对jenkins进行重启</p>
+<h5 id="2-2-插件配置"><a href="#2-2-插件配置" class="headerlink" title="2.2 插件配置"></a>2.2 插件配置</h5><p>进入<strong>Jenkins - Manage Jenkins - Global Tool Configuration</strong>设置页面</p>
+<p>找到NodeJS设置，点击<strong>NodeJS installations…</strong></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins13.png" alt=""></p>
+<p>帮这个node.js环境填上一个名字，然后选择需要安装的版本号。</p>
+<p>保存，即可。</p>
+<h5 id="2-3-NPM-install"><a href="#2-3-NPM-install" class="headerlink" title="2.3 NPM install"></a>2.3 NPM install</h5><p>现在选择Build Now，不管有没有job，系统会先安装node.js环境在workspace里。</p>
+<p>然后去到job的配置页面，在build里加入<strong>Execute NodeJS script</strong>操作</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins14.png" alt=""></p>
+<font color="red">这里如果把语句放入Node.js脚本执行框，会提示错误。（很奇怪，待研究）</font>
+
+<p>所以我们将语句按顺序，放在script下面的shell脚本里，node.js脚本为空。</p>
+<p>执行<code>npm install</code>对从远程仓库下载下来的代码进行构建，安装第三方库。</p>
+<h5 id="2-4-PM2守护进程"><a href="#2-4-PM2守护进程" class="headerlink" title="2.4 PM2守护进程"></a>2.4 PM2守护进程</h5><ul>
+<li><p>尝试一</p>
+<p>直接在shell脚本中执行<code>node index.js</code>操作，node.js服务正常启动，可以正常访问网页，但是在jenkins中，该job是一直处于执行的阶段，如果有新的代码推送上代码仓库，虽然jenkins可以获取到新的代码，但是因为旧的job一直执行，造成阻塞，只能人工进行停止服务，不能实现代码构建部署自动化</p>
+</li>
+<li><p>尝试二</p>
+<p>因为直接启动node.js不行，所以我们考虑使用nohup进行后台执行，使用脚本<code>nohup node index.js &amp;</code>，虽然显示无错误，该job也正常执行完成，但是无法访问网站，查看进程发现不存在node.js进程</p>
+</li>
+<li><p>尝试三</p>
+<p>因为nohup不能持久地运行node.js服务，所以我们选了一个进程守护程序来守护进程，我们选择的是<a href="https://github.com/Unitech/pm2" target="_blank" rel="external">pm2</a>，先在shell脚本中加入代码<code>npm install pm2 -g</code>，然后再启动进程<code>pm2 start index.js</code>，经过测试node.js进程成功常驻后台，网页访问正常，jenkins正常完成job的构建。</p>
+<p>由于我们希望达到自动化代码构建部署的效果，所以jenkins的shell脚本更改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pm2 stop index.js</div><div class="line">pm2 start index.js</div></pre></td></tr></table></figure>
+<p>这样当代码有更新的时候，先对原先的node.js进行停止，然后重新开启新的node.js服务。</p>
+</li>
+</ul>
+<p>至此，完成node.js代码的自动化构建部署。</p>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>对于网页项目，还有许多的流程持续发布，都需要经过浏览器测试的环节。</p>
+<h5 id="1-可以部署多个浏览器环境进行测试："><a href="#1-可以部署多个浏览器环境进行测试：" class="headerlink" title="1.可以部署多个浏览器环境进行测试："></a>1.可以部署多个浏览器环境进行测试：</h5><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins11.png" alt=""></p>
+<p>在网站的上线之前，可以部署一些浏览器测试环境，例如Firefox,IE,Safari等等的不同环境，当全部环境通过测试之后，才发布，提高了产品的容错性。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网站的node.js页面进行尝试。&lt;/p&gt;
-&lt;h3 id=&quot;1-项目代码
+      &lt;p&gt;我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网页网站的node.js页面进行尝试。&lt;/p&gt;
+&lt;h3 id=&quot;1-项目
     
     </summary>
     
@@ -99,13 +137,51 @@
     <link href="http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/"/>
     <id>http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/</id>
     <published>2017-12-18T16:00:00.000Z</published>
-    <updated>2017-12-20T01:47:45.000Z</updated>
+    <updated>2017-12-21T08:56:41.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-代码质量管理"><a href="#1-代码质量管理" class="headerlink" title="1.代码质量管理"></a>1.代码质量管理</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins1.png" alt=""></p>
 <p>此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。</p>
-<p>如果代码质量，此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、</p>
-<p>参考资料：</p>
-<p>1.<a href="https://docs.sonarqube.org/display/PLUG/GitHub+Plugin" target="_blank" rel="external">Github Plugin for Sonar</a></p>
+<p>此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。</p>
+<h3 id="2-SonarQube"><a href="#2-SonarQube" class="headerlink" title="2.SonarQube"></a>2.SonarQube</h3><p>Sonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言(包括Java、C/C++，Javascript，C#等)的代码进行分析，并且以数据可视化的界面进行显示，提高了代码的审查率。</p>
+<h5 id="2-1-SonarQube安装"><a href="#2-1-SonarQube安装" class="headerlink" title="2.1 SonarQube安装"></a>2.1 SonarQube安装</h5><p>可以到<a href="https://www.sonarqube.org/downloads/" target="_blank" rel="external">官网</a>下载最新的LTS包，Windows平台的话可以直接执行wrapper.exe文件，即可启动Sonar服务，unix平台的可以通过<code>./sonar.sh start</code>启动服务。</p>
+<p><code>./sonar.sh stop</code>停止服务</p>
+<p><code>./sonar.sh restart</code>重启服务</p>
+<p>当出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Starting SonarQube...</div><div class="line">Started SonarQube.</div></pre></td></tr></table></figure>
+<p>则启动成功</p>
+<p>默认的端口是9000，访问<code>localhost:9000</code>需要进行登录。</p>
+<p>默认的用户名和密码都是<code>admin</code></p>
+<h5 id="2-2-SonarQube-Scanner安装"><a href="#2-2-SonarQube-Scanner安装" class="headerlink" title="2.2 SonarQube Scanner安装"></a>2.2 SonarQube Scanner安装</h5><p>除了SonarQube服务外，我们还需要安装一个SonarQube Scanner作为分析源码的软件。</p>
+<p><a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">下载地址</a>下载相应系统版本的scanner之后，进行解压缩，放置到适当的位置。</p>
+<p>最好能将该文件夹的bin文件夹添加入环境变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#Macos下添加环境变量的方法</div><div class="line">#在命令行输入</div><div class="line">$ vi ~/.bash_profile</div><div class="line"></div><div class="line">#在文件的最后添加类似的路径</div><div class="line">export PATH=/usr/local/sonar-scanner-3.0.3.778-macosx/bin:$PATH</div><div class="line">#即完成了添加</div></pre></td></tr></table></figure>
+<p>然后可以进入对配置文件<code>./conf/sonar-scanner.properties</code>进行设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#基础设置两个就可以了</div><div class="line">#----- Default SonarQube server 设置SonarQube的服务地址</div><div class="line">sonar.host.url=http://localhost:9000</div><div class="line"></div><div class="line">#----- Default source code encoding 设置默认的源码编码格式</div><div class="line">sonar.sourceEncoding=UTF-8</div></pre></td></tr></table></figure>
+<p>然后当我们需要对一个项目进行代码分析时，需要在项目的根目录上创建一个<code>sonar*-project.properties</code>文件，对项目信息进行配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 为这个项目配置唯一的标识码（必填）</div><div class="line"># 例如以下的URL的id就是标识码</div><div class="line"># http://localhost:9000/dashboard?id=myproject</div><div class="line">sonar.projectKey=myproject</div><div class="line"># 这是在SonarQube上展示的名字和版本号(重要选填)</div><div class="line">sonar.projectName=My project</div><div class="line">sonar.projectVersion=1.0</div><div class="line"></div><div class="line"># 源码的地址(必填)，有多个路径用&apos;,&apos;符号隔开</div><div class="line"># 不同系统需要注意路径的&apos;/&apos;和&apos;\&apos;符号</div><div class="line">sonar.sources=.</div><div class="line"> </div><div class="line"># 编码，默认是系统编码(选填)</div><div class="line">#sonar.sourceEncoding=UTF-8</div></pre></td></tr></table></figure>
+<p>然后直接命令行运行<code>sonar-scanner</code>即可，我们现在可以在SonarQube上看到代码质量分析报告了。</p>
+<p>如果不是在当前目录运行代码分析，可以设定字段<code>sonar.projectBaseDir=</code>来制定代码的位置。</p>
+<p>当然如果不希望重新为每一个项目创造一个配置文件，或者无法再根目录创建文件，还有两种替代性的方法可以配置：</p>
+<ul>
+<li>可以在命令行启动sonar-scanner的时候添加上配置，例如</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># -D&lt;arg&gt;定义配置</div><div class="line">sonar-scanner -Dsonar.projectKey=myproject -Dsonar.sources=src1</div></pre></td></tr></table></figure>
+<ul>
+<li>可以在另外的位置创建配置文件，然后启动sonar-scanner的时候设置路径</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sonar-scanner -Dproject.settings=../myproject.properties</div></pre></td></tr></table></figure>
+<h5 id="2-3-MySQL配置"><a href="#2-3-MySQL配置" class="headerlink" title="2.3 MySQL配置"></a>2.3 MySQL配置</h5><p>sonar内部是有配置数据库的，但是效率低不能应用于生产环境，所以我们需要配置自己的数据库，用户保存sonar的分析报告和配置等。</p>
+<p>这里选择的是MySQL的分支MariaDB，因为MySQL有两种引擎，MyISAM和InnoDB，而MyISAM是比较老旧的引擎了，所以sonar不支持MyISAM，所以我们选择使用MariaDB。</p>
+<p>配置文件在<code>sonarqube-6.7/conf/sonar.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sonar.jdbc.username=sonar            #数据库用户</div><div class="line">sonar.jdbc.password=sonar@pw     #数据库密码</div><div class="line"></div><div class="line">sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;character    Encoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance</div></pre></td></tr></table></figure>
+<p>只需要把数据库的用户名和密码填上，然后解除SQL的注释就可以了。</p>
+<p>可能还需要将数据库驱动放入<code>sonarqube-6.7/extensions/jdbc-driver/mysql</code>中</p>
+<h5 id="2-3-SonarQube-简介"><a href="#2-3-SonarQube-简介" class="headerlink" title="2.3 SonarQube 简介"></a>2.3 SonarQube 简介</h5><h3 id="3-FindBugs"><a href="#3-FindBugs" class="headerlink" title="3.FindBugs"></a>3.FindBugs</h3><h3 id="4-PMD"><a href="#4-PMD" class="headerlink" title="4.PMD"></a>4.PMD</h3><p>参考资料：</p>
+<p>[1] <a href="https://docs.sonarqube.org/display/PLUG/GitHub+Plugin" target="_blank" rel="external">Github Plugin for Sonar</a></p>
+<p>[2] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">SonarQube Scanner</a></p>
+<p>[3] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins" target="_blank" rel="external">Analyzing with SonarQube Scanner for Jenkins</a></p>
+<p>[4] <a href="https://docs.sonarqube.org/display/SONAR/Analysis+Parameters" target="_blank" rel="external">Analysis Parameters</a></p>
+<p>[5] <a href="https://stackoverflow.com/questions/32047585/jenkins-sonar-github-integration" target="_blank" rel="external">https://stackoverflow.com/questions/32047585/jenkins-sonar-github-integration</a></p>
 ]]></content>
     
     <summary type="html">
@@ -122,11 +198,11 @@
   </entry>
   
   <entry>
-    <title>Jenkins学习笔记1-Jenkins入门</title>
+    <title>Jenkins学习笔记1-Jenkins入门&amp;Python代码初试</title>
     <link href="http://www.pirrla.cn/2017/12/18/jenkins/jenkins1/"/>
     <id>http://www.pirrla.cn/2017/12/18/jenkins/jenkins1/</id>
     <published>2017-12-17T16:00:00.000Z</published>
-    <updated>2017-12-20T09:08:32.000Z</updated>
+    <updated>2017-12-21T07:09:53.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-敏捷开发"><a href="#1-敏捷开发" class="headerlink" title="1.敏捷开发"></a>1.敏捷开发</h3><p>普通的程序开发，是按照瀑布流一样的流程往下走的。</p>
 <p>但是时至今日，客户的需求变化速度非常之快，而且生产环境也在不断变化，所以以往的单一的以计划来完成软件开发已经不可取了。</p>
@@ -212,7 +288,7 @@
 <p>例如 <em> </em> <em> </em> * 则代表每分钟进行一次构建</p>
 </li>
 <li><p><del><strong>GitHub hook trigger for GITScm polling</strong></del></p>
-<p><del>上文所说到的，当github有更新时，进行构建</del>   有坑暂时没弄好</p>
+<p><del>上文所说到的，当github有更新时，进行构建</del>   暂时没研究怎么用，可以使用以下的<strong>Poll SCM</strong></p>
 </li>
 <li><p><strong>Poll SCM</strong></p>
 <p>当使用非github作为远程仓库时，使用该触发器，周期性对远程仓库进行检测，当发现有更新时进行构建</p>
@@ -503,42 +579,6 @@
   </entry>
   
   <entry>
-    <title>推荐系统5</title>
-    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
-    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
-    <published>2017-09-05T06:23:06.000Z</published>
-    <updated>2017-09-08T05:24:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
-<p><strong>1.大类</strong></p>
-<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
-<p><strong>2.天数</strong></p>
-<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
-<p><strong>3.收益利率</strong></p>
-<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
-<p><strong>4.综上所述</strong></p>
-<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
-<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
-<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
-<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
-    
-    </summary>
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
-    
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
-    
-  </entry>
-  
-  <entry>
     <title>文件系统1</title>
     <link href="http://www.pirrla.cn/2017/09/05/fs/fs1/"/>
     <id>http://www.pirrla.cn/2017/09/05/fs/fs1/</id>
@@ -748,6 +788,42 @@
     
     
       <category term="filesystem" scheme="http://www.pirrla.cn/tags/filesystem/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>推荐系统5</title>
+    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
+    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
+    <published>2017-09-05T06:23:06.000Z</published>
+    <updated>2017-09-08T05:24:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
+    
+    </summary>
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
+    
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
     
   </entry>
   

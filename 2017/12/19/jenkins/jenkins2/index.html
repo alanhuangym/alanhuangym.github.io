@@ -87,27 +87,24 @@
 
 <meta name="description" content="1.代码质量管理
 此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。
-如果代码质量，此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、
-参考资料：
-1.Github Plugin for Sonar">
+此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。
+2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins学习笔记2-代码质量管理">
 <meta property="og:url" content="http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/index.html">
 <meta property="og:site_name" content="Note down something">
 <meta property="og:description" content="1.代码质量管理
 此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。
-如果代码质量，此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、
-参考资料：
-1.Github Plugin for Sonar">
+此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。
+2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins1.png">
-<meta property="og:updated_time" content="2017-12-20T01:47:45.000Z">
+<meta property="og:updated_time" content="2017-12-21T08:56:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记2-代码质量管理">
 <meta name="twitter:description" content="1.代码质量管理
 此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。
-如果代码质量，此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、
-参考资料：
-1.Github Plugin for Sonar">
+此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。
+2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言">
 <meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins1.png">
 
 
@@ -367,9 +364,47 @@
       
         <h3 id="1-代码质量管理"><a href="#1-代码质量管理" class="headerlink" title="1.代码质量管理"></a>1.代码质量管理</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins1.png" alt=""></p>
 <p>此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。</p>
-<p>如果代码质量，此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、</p>
-<p>参考资料：</p>
-<p>1.<a href="https://docs.sonarqube.org/display/PLUG/GitHub+Plugin" target="_blank" rel="external">Github Plugin for Sonar</a></p>
+<p>此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。</p>
+<h3 id="2-SonarQube"><a href="#2-SonarQube" class="headerlink" title="2.SonarQube"></a>2.SonarQube</h3><p>Sonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言(包括Java、C/C++，Javascript，C#等)的代码进行分析，并且以数据可视化的界面进行显示，提高了代码的审查率。</p>
+<h5 id="2-1-SonarQube安装"><a href="#2-1-SonarQube安装" class="headerlink" title="2.1 SonarQube安装"></a>2.1 SonarQube安装</h5><p>可以到<a href="https://www.sonarqube.org/downloads/" target="_blank" rel="external">官网</a>下载最新的LTS包，Windows平台的话可以直接执行wrapper.exe文件，即可启动Sonar服务，unix平台的可以通过<code>./sonar.sh start</code>启动服务。</p>
+<p><code>./sonar.sh stop</code>停止服务</p>
+<p><code>./sonar.sh restart</code>重启服务</p>
+<p>当出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Starting SonarQube...</div><div class="line">Started SonarQube.</div></pre></td></tr></table></figure>
+<p>则启动成功</p>
+<p>默认的端口是9000，访问<code>localhost:9000</code>需要进行登录。</p>
+<p>默认的用户名和密码都是<code>admin</code></p>
+<h5 id="2-2-SonarQube-Scanner安装"><a href="#2-2-SonarQube-Scanner安装" class="headerlink" title="2.2 SonarQube Scanner安装"></a>2.2 SonarQube Scanner安装</h5><p>除了SonarQube服务外，我们还需要安装一个SonarQube Scanner作为分析源码的软件。</p>
+<p><a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">下载地址</a>下载相应系统版本的scanner之后，进行解压缩，放置到适当的位置。</p>
+<p>最好能将该文件夹的bin文件夹添加入环境变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#Macos下添加环境变量的方法</div><div class="line">#在命令行输入</div><div class="line">$ vi ~/.bash_profile</div><div class="line"></div><div class="line">#在文件的最后添加类似的路径</div><div class="line">export PATH=/usr/local/sonar-scanner-3.0.3.778-macosx/bin:$PATH</div><div class="line">#即完成了添加</div></pre></td></tr></table></figure>
+<p>然后可以进入对配置文件<code>./conf/sonar-scanner.properties</code>进行设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#基础设置两个就可以了</div><div class="line">#----- Default SonarQube server 设置SonarQube的服务地址</div><div class="line">sonar.host.url=http://localhost:9000</div><div class="line"></div><div class="line">#----- Default source code encoding 设置默认的源码编码格式</div><div class="line">sonar.sourceEncoding=UTF-8</div></pre></td></tr></table></figure>
+<p>然后当我们需要对一个项目进行代码分析时，需要在项目的根目录上创建一个<code>sonar*-project.properties</code>文件，对项目信息进行配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 为这个项目配置唯一的标识码（必填）</div><div class="line"># 例如以下的URL的id就是标识码</div><div class="line"># http://localhost:9000/dashboard?id=myproject</div><div class="line">sonar.projectKey=myproject</div><div class="line"># 这是在SonarQube上展示的名字和版本号(重要选填)</div><div class="line">sonar.projectName=My project</div><div class="line">sonar.projectVersion=1.0</div><div class="line"></div><div class="line"># 源码的地址(必填)，有多个路径用&apos;,&apos;符号隔开</div><div class="line"># 不同系统需要注意路径的&apos;/&apos;和&apos;\&apos;符号</div><div class="line">sonar.sources=.</div><div class="line"> </div><div class="line"># 编码，默认是系统编码(选填)</div><div class="line">#sonar.sourceEncoding=UTF-8</div></pre></td></tr></table></figure>
+<p>然后直接命令行运行<code>sonar-scanner</code>即可，我们现在可以在SonarQube上看到代码质量分析报告了。</p>
+<p>如果不是在当前目录运行代码分析，可以设定字段<code>sonar.projectBaseDir=</code>来制定代码的位置。</p>
+<p>当然如果不希望重新为每一个项目创造一个配置文件，或者无法再根目录创建文件，还有两种替代性的方法可以配置：</p>
+<ul>
+<li>可以在命令行启动sonar-scanner的时候添加上配置，例如</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># -D&lt;arg&gt;定义配置</div><div class="line">sonar-scanner -Dsonar.projectKey=myproject -Dsonar.sources=src1</div></pre></td></tr></table></figure>
+<ul>
+<li>可以在另外的位置创建配置文件，然后启动sonar-scanner的时候设置路径</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sonar-scanner -Dproject.settings=../myproject.properties</div></pre></td></tr></table></figure>
+<h5 id="2-3-MySQL配置"><a href="#2-3-MySQL配置" class="headerlink" title="2.3 MySQL配置"></a>2.3 MySQL配置</h5><p>sonar内部是有配置数据库的，但是效率低不能应用于生产环境，所以我们需要配置自己的数据库，用户保存sonar的分析报告和配置等。</p>
+<p>这里选择的是MySQL的分支MariaDB，因为MySQL有两种引擎，MyISAM和InnoDB，而MyISAM是比较老旧的引擎了，所以sonar不支持MyISAM，所以我们选择使用MariaDB。</p>
+<p>配置文件在<code>sonarqube-6.7/conf/sonar.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sonar.jdbc.username=sonar            #数据库用户</div><div class="line">sonar.jdbc.password=sonar@pw     #数据库密码</div><div class="line"></div><div class="line">sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;character    Encoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance</div></pre></td></tr></table></figure>
+<p>只需要把数据库的用户名和密码填上，然后解除SQL的注释就可以了。</p>
+<p>可能还需要将数据库驱动放入<code>sonarqube-6.7/extensions/jdbc-driver/mysql</code>中</p>
+<h5 id="2-3-SonarQube-简介"><a href="#2-3-SonarQube-简介" class="headerlink" title="2.3 SonarQube 简介"></a>2.3 SonarQube 简介</h5><h3 id="3-FindBugs"><a href="#3-FindBugs" class="headerlink" title="3.FindBugs"></a>3.FindBugs</h3><h3 id="4-PMD"><a href="#4-PMD" class="headerlink" title="4.PMD"></a>4.PMD</h3><p>参考资料：</p>
+<p>[1] <a href="https://docs.sonarqube.org/display/PLUG/GitHub+Plugin" target="_blank" rel="external">Github Plugin for Sonar</a></p>
+<p>[2] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">SonarQube Scanner</a></p>
+<p>[3] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins" target="_blank" rel="external">Analyzing with SonarQube Scanner for Jenkins</a></p>
+<p>[4] <a href="https://docs.sonarqube.org/display/SONAR/Analysis+Parameters" target="_blank" rel="external">Analysis Parameters</a></p>
+<p>[5] <a href="https://stackoverflow.com/questions/32047585/jenkins-sonar-github-integration" target="_blank" rel="external">https://stackoverflow.com/questions/32047585/jenkins-sonar-github-integration</a></p>
 
       
     </div>
@@ -412,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/18/jenkins/jenkins1/" rel="next" title="Jenkins学习笔记1-Jenkins入门">
-                <i class="fa fa-chevron-left"></i> Jenkins学习笔记1-Jenkins入门
+              <a href="/2017/12/18/jenkins/jenkins1/" rel="next" title="Jenkins学习笔记1-Jenkins入门&Python代码初试">
+                <i class="fa fa-chevron-left"></i> Jenkins学习笔记1-Jenkins入门&Python代码初试
               </a>
             
           </div>
@@ -564,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-代码质量管理"><span class="nav-number">1.</span> <span class="nav-text">1.代码质量管理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-代码质量管理"><span class="nav-number">1.</span> <span class="nav-text">1.代码质量管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SonarQube"><span class="nav-number">2.</span> <span class="nav-text">2.SonarQube</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-SonarQube安装"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 SonarQube安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-SonarQube-Scanner安装"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 SonarQube Scanner安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-MySQL配置"><span class="nav-number">2.0.3.</span> <span class="nav-text">2.3 MySQL配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-SonarQube-简介"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.3 SonarQube 简介</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-FindBugs"><span class="nav-number">3.</span> <span class="nav-text">3.FindBugs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-PMD"><span class="nav-number">4.</span> <span class="nav-text">4.PMD</span></a></li></ol></div>
             
 
           </div>

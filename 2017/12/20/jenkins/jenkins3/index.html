@@ -85,22 +85,27 @@
 
 
 
-<meta name="description" content="我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网站的node.js页面进行尝试。
-1.项目代码简介拓展对于网页项目，还有许多的流程可以持续发布。
-1.可以部署多个浏览器环境进行测试：在网站的上线之前，可以部署一些浏览器测试环境，例如Firefo">
+<meta name="description" content="我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网页网站的node.js页面进行尝试。
+1.项目代码简介简单的网页面显示，没有具体的数据存储操作
+2.代码Jenkins部署2.1 安装node.js插件到jenkins插件管理界面下载Node.j">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins学习笔记3-重启Node.js服务">
 <meta property="og:url" content="http://www.pirrla.cn/2017/12/20/jenkins/jenkins3/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网站的node.js页面进行尝试。
-1.项目代码简介拓展对于网页项目，还有许多的流程可以持续发布。
-1.可以部署多个浏览器环境进行测试：在网站的上线之前，可以部署一些浏览器测试环境，例如Firefo">
-<meta property="og:updated_time" content="2017-12-20T01:02:52.000Z">
+<meta property="og:description" content="我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网页网站的node.js页面进行尝试。
+1.项目代码简介简单的网页面显示，没有具体的数据存储操作
+2.代码Jenkins部署2.1 安装node.js插件到jenkins插件管理界面下载Node.j">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins12.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins13.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins14.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins11.png">
+<meta property="og:updated_time" content="2017-12-21T08:44:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记3-重启Node.js服务">
-<meta name="twitter:description" content="我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网站的node.js页面进行尝试。
-1.项目代码简介拓展对于网页项目，还有许多的流程可以持续发布。
-1.可以部署多个浏览器环境进行测试：在网站的上线之前，可以部署一些浏览器测试环境，例如Firefo">
+<meta name="twitter:description" content="我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网页网站的node.js页面进行尝试。
+1.项目代码简介简单的网页面显示，没有具体的数据存储操作
+2.代码Jenkins部署2.1 安装node.js插件到jenkins插件管理界面下载Node.j">
+<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins12.png">
 
 
 
@@ -357,9 +362,41 @@
       
 
       
-        <p>我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网站的node.js页面进行尝试。</p>
-<h3 id="1-项目代码简介"><a href="#1-项目代码简介" class="headerlink" title="1.项目代码简介"></a>1.项目代码简介</h3><h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>对于网页项目，还有许多的流程可以持续发布。</p>
-<h5 id="1-可以部署多个浏览器环境进行测试："><a href="#1-可以部署多个浏览器环境进行测试：" class="headerlink" title="1.可以部署多个浏览器环境进行测试："></a>1.可以部署多个浏览器环境进行测试：</h5><p>在网站的上线之前，可以部署一些浏览器测试环境，例如Firefox,IE,Safari等等的不同环境，当全部环境通过测试之后，才发布，提高了产品的容错性。</p>
+        <p>我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网页网站的node.js页面进行尝试。</p>
+<h3 id="1-项目代码简介"><a href="#1-项目代码简介" class="headerlink" title="1.项目代码简介"></a>1.项目代码简介</h3><p>简单的网页面显示，没有具体的数据存储操作</p>
+<h3 id="2-代码Jenkins部署"><a href="#2-代码Jenkins部署" class="headerlink" title="2.代码Jenkins部署"></a>2.代码Jenkins部署</h3><h5 id="2-1-安装node-js插件"><a href="#2-1-安装node-js插件" class="headerlink" title="2.1 安装node.js插件"></a>2.1 安装node.js插件</h5><p>到jenkins插件管理界面下载<a href="https://wiki.jenkins.io/display/JENKINS/NodeJS+Plugin" target="_blank" rel="external">Node.js插件</a></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins12.png" alt=""></p>
+<p>安装完，对jenkins进行重启</p>
+<h5 id="2-2-插件配置"><a href="#2-2-插件配置" class="headerlink" title="2.2 插件配置"></a>2.2 插件配置</h5><p>进入<strong>Jenkins - Manage Jenkins - Global Tool Configuration</strong>设置页面</p>
+<p>找到NodeJS设置，点击<strong>NodeJS installations…</strong></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins13.png" alt=""></p>
+<p>帮这个node.js环境填上一个名字，然后选择需要安装的版本号。</p>
+<p>保存，即可。</p>
+<h5 id="2-3-NPM-install"><a href="#2-3-NPM-install" class="headerlink" title="2.3 NPM install"></a>2.3 NPM install</h5><p>现在选择Build Now，不管有没有job，系统会先安装node.js环境在workspace里。</p>
+<p>然后去到job的配置页面，在build里加入<strong>Execute NodeJS script</strong>操作</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins14.png" alt=""></p>
+<font color="red">这里如果把语句放入Node.js脚本执行框，会提示错误。（很奇怪，待研究）</font>
+
+<p>所以我们将语句按顺序，放在script下面的shell脚本里，node.js脚本为空。</p>
+<p>执行<code>npm install</code>对从远程仓库下载下来的代码进行构建，安装第三方库。</p>
+<h5 id="2-4-PM2守护进程"><a href="#2-4-PM2守护进程" class="headerlink" title="2.4 PM2守护进程"></a>2.4 PM2守护进程</h5><ul>
+<li><p>尝试一</p>
+<p>直接在shell脚本中执行<code>node index.js</code>操作，node.js服务正常启动，可以正常访问网页，但是在jenkins中，该job是一直处于执行的阶段，如果有新的代码推送上代码仓库，虽然jenkins可以获取到新的代码，但是因为旧的job一直执行，造成阻塞，只能人工进行停止服务，不能实现代码构建部署自动化</p>
+</li>
+<li><p>尝试二</p>
+<p>因为直接启动node.js不行，所以我们考虑使用nohup进行后台执行，使用脚本<code>nohup node index.js &amp;</code>，虽然显示无错误，该job也正常执行完成，但是无法访问网站，查看进程发现不存在node.js进程</p>
+</li>
+<li><p>尝试三</p>
+<p>因为nohup不能持久地运行node.js服务，所以我们选了一个进程守护程序来守护进程，我们选择的是<a href="https://github.com/Unitech/pm2" target="_blank" rel="external">pm2</a>，先在shell脚本中加入代码<code>npm install pm2 -g</code>，然后再启动进程<code>pm2 start index.js</code>，经过测试node.js进程成功常驻后台，网页访问正常，jenkins正常完成job的构建。</p>
+<p>由于我们希望达到自动化代码构建部署的效果，所以jenkins的shell脚本更改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pm2 stop index.js</div><div class="line">pm2 start index.js</div></pre></td></tr></table></figure>
+<p>这样当代码有更新的时候，先对原先的node.js进行停止，然后重新开启新的node.js服务。</p>
+</li>
+</ul>
+<p>至此，完成node.js代码的自动化构建部署。</p>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>对于网页项目，还有许多的流程持续发布，都需要经过浏览器测试的环节。</p>
+<h5 id="1-可以部署多个浏览器环境进行测试："><a href="#1-可以部署多个浏览器环境进行测试：" class="headerlink" title="1.可以部署多个浏览器环境进行测试："></a>1.可以部署多个浏览器环境进行测试：</h5><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins11.png" alt=""></p>
+<p>在网站的上线之前，可以部署一些浏览器测试环境，例如Firefox,IE,Safari等等的不同环境，当全部环境通过测试之后，才发布，提高了产品的容错性。</p>
 
       
     </div>
@@ -554,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-项目代码简介"><span class="nav-number">1.</span> <span class="nav-text">1.项目代码简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展"><span class="nav-number">2.</span> <span class="nav-text">拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-可以部署多个浏览器环境进行测试："><span class="nav-number">2.0.1.</span> <span class="nav-text">1.可以部署多个浏览器环境进行测试：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-项目代码简介"><span class="nav-number">1.</span> <span class="nav-text">1.项目代码简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-代码Jenkins部署"><span class="nav-number">2.</span> <span class="nav-text">2.代码Jenkins部署</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-安装node-js插件"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 安装node.js插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-插件配置"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 插件配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-NPM-install"><span class="nav-number">2.0.3.</span> <span class="nav-text">2.3 NPM install</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-PM2守护进程"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.4 PM2守护进程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展"><span class="nav-number">3.</span> <span class="nav-text">拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-可以部署多个浏览器环境进行测试："><span class="nav-number">3.0.1.</span> <span class="nav-text">1.可以部署多个浏览器环境进行测试：</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
