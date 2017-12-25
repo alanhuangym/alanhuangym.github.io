@@ -357,6 +357,8 @@
             <p>官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。</p>
 <p>Reference:</p>
 <p>[1] <a href="http://www.jianshu.com/p/b524b151d35f" target="_blank" rel="external">Jenkins使用简易教程</a></p>
+<p>[2] <a href="https://testerhome.com/topics/10003" target="_blank" rel="external">https://testerhome.com/topics/10003</a></p>
+<p>[3] <a href="https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/" target="_blank" rel="external">https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/</a></p>
 
           
         
@@ -502,12 +504,40 @@
             <p>当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。</p>
 <p>于是我们每次都需要执行一次<code>npm install</code>的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成dockerfile和dockerimage，从而就不需要每次都对生产环境进行更新操作。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins11.png" alt=""></p>
-<h3 id="1-docker简介"><a href="#1-docker简介" class="headerlink" title="1.docker简介"></a>1.docker简介</h3><h5 id="Swarm集群拓展"><a href="#Swarm集群拓展" class="headerlink" title="Swarm集群拓展"></a>Swarm集群拓展</h5><h3 id="2-APACHE服务器"><a href="#2-APACHE服务器" class="headerlink" title="2.APACHE服务器"></a>2.APACHE服务器</h3><h3 id="3-Jenkins持续化集成"><a href="#3-Jenkins持续化集成" class="headerlink" title="3.Jenkins持续化集成"></a>3.Jenkins持续化集成</h3><p>介绍完docker和apache，我们希望能够通过jenkins进行一个集成，能够自动化实现在docker容器中的apache服务器的重启操作。</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins15.png" alt=""></p>
+<h3 id="1-docker简介"><a href="#1-docker简介" class="headerlink" title="1.docker简介"></a>1.docker简介</h3><h5 id="dockerfile构建"><a href="#dockerfile构建" class="headerlink" title="dockerfile构建"></a>dockerfile构建</h5><h5 id="docker-compose-与jenkins类似"><a href="#docker-compose-与jenkins类似" class="headerlink" title="docker compose 与jenkins类似"></a>docker compose 与jenkins类似</h5><h5 id="docker-私有仓库搭建"><a href="#docker-私有仓库搭建" class="headerlink" title="docker 私有仓库搭建"></a>docker 私有仓库搭建</h5><p>仓库的搭建也不难，只用使用官方的registry docker即可。</p>
+<p>启动代码<code>sudo docker run -d -p 5000:5000 -v /data:/tmp/registry —restart=always --name</code></p>
+<p>即在5000端口启动了一个仓库docker</p>
+<font color="red">*</font>一般启动registryd docker会遇到https安全传输的问题。<br><br>一般当尝试向服务器push镜像时，会出现错误<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Forbidden. If this private registry supports only HTTP or HTTPS with an unknown CA certificate, please add –insecure-registry 10.0.0.26:5000 to the daemon’s arguments.</div></pre></td></tr></table></figure><br><br>解决这个问题的方法见<a href="http://stackoverflow.com/questions/26710153/remote-access-to-a-private-docker-registry" target="_blank" rel="external">StackOverflow</a><br>最快最简单的方法是将如下行添加到<code>/etc/default/docker</code>，然后重启Docker Daemon：<br><code>DOCKER_OPTS=&quot;--insecure-registry localhost:5000&quot;</code><br><br><br><br>##### Swarm集群拓展<br><br>##### 小问题：<br><br>- 当docker启动后，希望添加docker与宿主机的端口映射<br><br>  docker容器的操作变换很方便快捷，同时消耗比较少，所以如果希望更改端口映射，不建议手工添加，最好还是重新开启一个容器，使用docker官方的用法<code>-p 5000:5000</code><br><br>  如果容器内有工作内容需要保存，可以commit一个docker image保存数据，然后再启动一个新的容器<br><br><br>- docker容器启动的后的进入方法<br><br>  docker还是提倡一个容器一个进程的理念，但是有时还是需要进入docker容器中，进行一些配置，所以我们需要一个方法进入已经启动的docker容器内，同时需要一个终端进行交互<br><br>  - docker attach<br>  - docker 第三方工具(nsenter、nsinit)<br>  - docker exec<font color="“red”">（推荐）</font>
+
+<h3 id="2-APACHE服务器"><a href="#2-APACHE服务器" class="headerlink" title="2.APACHE服务器"></a><del>2.APACHE服务器</del></h3><h3 id="3-Jenkins持续化集成"><a href="#3-Jenkins持续化集成" class="headerlink" title="3.Jenkins持续化集成"></a>3.Jenkins持续化集成</h3><p>介绍完docker和apache，我们希望能够通过jenkins进行一个集成，能够自动化实现在docker容器中的apache服务器的重启操作。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins16.png" alt=""></p>
+<h5 id="3-1-在jenkins中使用docker有两种方法"><a href="#3-1-在jenkins中使用docker有两种方法" class="headerlink" title="3.1 在jenkins中使用docker有两种方法"></a>3.1 在jenkins中使用docker有两种方法</h5><ol>
+<li>为jenkins添加用户权限，直接在命令行执行</li>
+<li>使用docker build step plugin 插件进行docker操作</li>
+</ol>
+<p>因为插件操作比较麻烦，所以我们选择给jenkins添加用户权限，从而直接在命令行中编写脚本</p>
+<p><font color="red">*</font>为macos添加jenkins用户权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 使用id查看自己的群组和用户名称</div><div class="line">$ id</div><div class="line">uid=501(alan) gid=20(staff)  ...</div><div class="line"></div><div class="line"># 获取之后，先停止jenkins服务</div><div class="line">$ sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist</div></pre></td></tr></table></figure>
+<p>然后通过命令行或者直接修改<code>/Library/LaunchDaemons/org.jenkins-ci.plist</code>文件</p>
+<p><img src="http://images2015.cnblogs.com/blog/398519/201511/398519-20151129212817203-479162649.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 然后添加权限</div><div class="line">$ sudo chown -R userName /Users/Shared/Jenkins</div><div class="line">$ sudo chown -R userName /var/log/jenkins</div><div class="line"></div><div class="line">#重启Jenkins</div><div class="line">$ sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist</div></pre></td></tr></table></figure>
+<h5 id="3-2-编写jenkins设置"><a href="#3-2-编写jenkins设置" class="headerlink" title="3.2 编写jenkins设置"></a>3.2 编写jenkins设置</h5><p>之前的设置跟<a href="http://pirrla.cn/2017/12/18/jenkins/jenkins1/" target="_blank" rel="external">第一篇</a>设置一样，设定好每分钟自动从代码库获取更新</p>
+<p>然后到了构建操作脚本</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins17.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#!/bin/sh</div><div class="line">id</div><div class="line">set +e</div><div class="line">echo &apos;&gt;&gt;&gt; Get old container id&apos;</div><div class="line"></div><div class="line"># 查找正在运行的docker容器</div><div class="line">CID=$(/usr/local/bin/docker ps | grep &quot;my_nodejs&quot; | awk &apos;&#123;print $1&#125;&apos;)</div><div class="line"># 获取使用“my_nodejs”镜像的容器id</div><div class="line">echo $CID</div><div class="line"></div><div class="line"># 根据新的代码，构建新的docker</div><div class="line">/usr/local/bin/docker build -t my_nodejs .</div><div class="line"></div><div class="line"># 停止旧的容器</div><div class="line">if [ &quot;$CID&quot; != &quot;&quot; ];then</div><div class="line">  /usr/local/bin/docker stop $CID</div><div class="line">fi</div><div class="line"></div><div class="line"># 启动新容器</div><div class="line">/usr/local/bin/docker run -p 8000:8000 -d my_nodejs</div><div class="line"></div><div class="line"># 删除旧容器</div><div class="line">/usr/local/bin/docker rm $CID</div><div class="line"># 删除旧镜像</div></pre></td></tr></table></figure>
+<p>这样就完成了一个自动化部署docker的操作。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins15.png" alt=""></p>
 <p>References:</p>
 <p>[1] <a href="http://www.cnblogs.com/Leo_wl/p/4314792.html" target="_blank" rel="external">使用Jenkins来构建Docker容器</a></p>
 <p>[2] <a href="http://www.runoob.com/docker/docker-tutorial.html" target="_blank" rel="external">Docker 教程</a></p>
+<p>[3] <a href="http://blog.huangang.net/2017/01/06/docker%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E5%90%8E%E6%B7%BB%E5%8A%A0%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84/" target="_blank" rel="external">Docker启动后的端口映射</a></p>
+<p>[4] <a href="http://blog.csdn.net/woshiluahuo/article/details/52239407" target="_blank" rel="external">进入docker容器的方法</a></p>
+<p>[5] <a href="http://blog.csdn.net/u010397369/article/details/41045251" target="_blank" rel="external">如何进入Docker容器</a></p>
+<p>[6] <a href="https://blog.catscarlet.com/201612022593.html" target="_blank" rel="external">https://blog.catscarlet.com/201612022593.html</a></p>
+<p>[7] <a href="http://ju.outofmemory.cn/entry/306621" target="_blank" rel="external">http://ju.outofmemory.cn/entry/306621</a></p>
+<p>[8] <a href="https://www.qcloud.com/community/article/164816001481011806" target="_blank" rel="external">https://www.qcloud.com/community/article/164816001481011806</a></p>
+<p>[9] <a href="https://www.jianshu.com/p/41f2def6ec59" target="_blank" rel="external">https://www.jianshu.com/p/41f2def6ec59</a></p>
+<p>[10] <a href="http://www.cnblogs.com/ihojin/p/jenkins-permission.html" target="_blank" rel="external">Mac Jenkins 权限问题</a></p>
 
           
         
