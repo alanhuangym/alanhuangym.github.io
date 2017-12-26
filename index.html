@@ -255,6 +255,317 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/22/jenkins/jenkins7/" itemprop="url">
+                  Jenkins学习笔记6-搭建gitlabs仓库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-22T00:00:00+08:00">
+                2017-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/22/jenkins/jenkins6/" itemprop="url">
+                  Jenkins学习笔记6-搭建gitlabs仓库&DockerWeb管理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-22T00:00:00+08:00">
+                2017-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins-git/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins,git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-搭建gitlab仓库"><a href="#1-搭建gitlab仓库" class="headerlink" title="1. 搭建gitlab仓库"></a>1. 搭建gitlab仓库</h3><p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
+<blockquote>
+<p>GitLab是一个利用 <code>Ruby on Rails</code> 开发的开源应用程序，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。 </p>
+<p>　　GitLab拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。</p>
+</blockquote>
+<p>现在有了docker，所以搭建运行环境都比较方便，我们这里直接使用docker进行gitlab的搭建。</p>
+<p>使用以下命令拉取所需要的docker镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull sameersbn/redis</div><div class="line">docker pull sameersbn/postgresql</div><div class="line">docker pull sameersbn/gitlab</div></pre></td></tr></table></figure>
+<h3 id="2-Docker-WebGUI管理"><a href="#2-Docker-WebGUI管理" class="headerlink" title="2. Docker WebGUI管理"></a>2. Docker WebGUI管理</h3><ol>
+<li><p><a href="https://github.com/shipyard/shipyard" target="_blank" rel="external">shipyard</a>国产，但是20天前刚刚宣布停止更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins22.png" alt=""></p>
+</li>
+<li><p><a href="http://rancher.com/" target="_blank" rel="external">rancher</a> 硬性条件：需要一台linux服务器做主机，至少2G内存和20G硬盘，较少更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins23.png" alt=""></p>
+</li>
+<li><p><a href="https://github.com/kevana/ui-for-docker" target="_blank" rel="external">kevana</a>已停止更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins24.png" alt=""></p>
+</li>
+<li><p><a href="https://portainer.io/" target="_blank" rel="external">portainer</a>比较轻量，github显示更新及时</p>
+</li>
+</ol>
+<p>此处选择了portainer。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins19.png" alt=""></p>
+<p>References:</p>
+<p>[1] <a href="http://blog.csdn.net/abcdocker/article/category/6638595" target="_blank" rel="external">持续集成 by www.abcdocker.com</a></p>
+<p>[2] <a href="https://www.jianshu.com/p/060e7223e211?open_source=weibo_search" target="_blank" rel="external">https://www.jianshu.com/p/060e7223e211?open_source=weibo_search</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -530,7 +841,7 @@
 </ul>
 <p><strong>本地镜像管理</strong></p>
 <ul>
-<li><code>docker build -t 创建的镜像名称和标签 文件路径</code>使用文件路径的Dockerfile创建镜像</li>
+<li><code>docker build -t 创建的镜像名称和标签 文件路径</code>使用文件路径的Dockerfile创建镜像，如果镜像名称和标签有重复的，则最新的镜像会使用该名称和标签，旧的镜像将变成\<none\>，在后述操作当中可以批量删除。</none\></li>
 <li><code>docker rmi</code>移除镜像</li>
 </ul>
 <p><strong>镜像仓库</strong></p>
@@ -545,6 +856,7 @@
 <p>即在5000端口启动了一个仓库docker</p>
 <font color="red">*</font>一般启动registryd docker会遇到https安全传输的问题。<br><br>一般当尝试向服务器push镜像时，会出现错误<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Forbidden. If this private registry supports only HTTP or HTTPS with an unknown CA certificate, please add –insecure-registry 10.0.0.26:5000 to the daemon’s arguments.</div></pre></td></tr></table></figure><br><br>解决这个问题的方法见<a href="http://stackoverflow.com/questions/26710153/remote-access-to-a-private-docker-registry" target="_blank" rel="external">StackOverflow</a><br>最快最简单的方法是将如下行添加到<code>/etc/default/docker</code>，然后重启Docker Daemon：<br><code>DOCKER_OPTS=&quot;--insecure-registry localhost:5000&quot;</code><br><br>##### 1.6 Swarm集群拓展<br><br>##### 1.7 小问题：<br><br>- 当docker启动后，希望添加docker与宿主机的端口映射<br><br>  docker容器的操作变换很方便快捷，同时消耗比较少，所以如果希望更改端口映射，不建议手工添加，最好还是重新开启一个容器，使用docker官方的用法<code>-p 5000:5000</code><br><br>  如果容器内有工作内容需要保存，可以commit一个docker image保存数据，然后再启动一个新的容器<br><br><br>- docker容器启动的后的进入方法<br><br>  docker还是提倡一个容器一个进程的理念，但是有时还是需要进入docker容器中，进行一些配置，所以我们需要一个方法进入已经启动的docker容器内，同时需要一个终端进行交互<br><br>  - docker attach<br>  - docker 第三方工具(nsenter、nsinit)<br>  - docker exec<font color="“red”">（推荐）</font>
 
+<h5 id="1-8-Docker镜像仓库国内加速"><a href="#1-8-Docker镜像仓库国内加速" class="headerlink" title="1.8 Docker镜像仓库国内加速"></a>1.8 Docker镜像仓库国内加速</h5><p><a href="http://www.cnblogs.com/anliven/p/6218741.html" target="_blank" rel="external">http://www.cnblogs.com/anliven/p/6218741.html</a></p>
 <h3 id="2-APACHE服务器"><a href="#2-APACHE服务器" class="headerlink" title="2.APACHE服务器"></a><del>2.APACHE服务器</del></h3><h3 id="3-Jenkins持续化集成"><a href="#3-Jenkins持续化集成" class="headerlink" title="3.Jenkins持续化集成"></a>3.Jenkins持续化集成</h3><p>介绍完docker和apache，我们希望能够通过jenkins进行一个集成，能够自动化实现在docker容器中的apache服务器的重启操作。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins16.png" alt=""></p>
 <h5 id="3-1-在jenkins中使用docker有两种方法"><a href="#3-1-在jenkins中使用docker有两种方法" class="headerlink" title="3.1 在jenkins中使用docker有两种方法"></a>3.1 在jenkins中使用docker有两种方法</h5><ol>
@@ -555,7 +867,7 @@
 <p><font color="red">*</font>为macos添加jenkins用户权限</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 使用id查看自己的群组和用户名称</div><div class="line">$ id</div><div class="line">uid=501(alan) gid=20(staff)  ...</div><div class="line"></div><div class="line"># 获取之后，先停止jenkins服务</div><div class="line">$ sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist</div></pre></td></tr></table></figure>
 <p>然后通过命令行或者直接修改<code>/Library/LaunchDaemons/org.jenkins-ci.plist</code>文件</p>
-<p><img src="http://images2015.cnblogs.com/blog/398519/201511/398519-20151129212817203-479162649.jpg" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins20.png" alt=""></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 然后添加权限</div><div class="line">$ sudo chown -R userName /Users/Shared/Jenkins</div><div class="line">$ sudo chown -R userName /var/log/jenkins</div><div class="line"></div><div class="line">#重启Jenkins</div><div class="line">$ sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist</div></pre></td></tr></table></figure>
 <h5 id="3-2-编写jenkins设置"><a href="#3-2-编写jenkins设置" class="headerlink" title="3.2 编写jenkins设置"></a>3.2 编写jenkins设置</h5><p>之前的设置跟<a href="http://pirrla.cn/2017/12/18/jenkins/jenkins1/" target="_blank" rel="external">第一篇</a>设置一样，设定好每分钟自动从代码库获取更新</p>
 <p>然后到了构建操作脚本</p>
@@ -576,6 +888,7 @@
 <p>[10] <a href="http://www.cnblogs.com/ihojin/p/jenkins-permission.html" target="_blank" rel="external">Mac Jenkins 权限问题</a></p>
 <p>[11] <a href="https://blog.catscarlet.com/201612022593.html" target="_blank" rel="external">https://blog.catscarlet.com/201612022593.html</a></p>
 <p>[12] <a href="http://www.runoob.com/docker/docker-command-manual.html" target="_blank" rel="external">Docker 命令大全</a></p>
+<p>[13] <a href="http://blog.51cto.com/tangoo/1435078" target="_blank" rel="external">Mac Jenkins 修改端口</a></p>
 
           
         
@@ -938,6 +1251,8 @@
 <p>[3] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins" target="_blank" rel="external">Analyzing with SonarQube Scanner for Jenkins</a></p>
 <p>[4] <a href="https://docs.sonarqube.org/display/SONAR/Analysis+Parameters" target="_blank" rel="external">Analysis Parameters</a></p>
 <p>[5] <a href="https://stackoverflow.com/questions/32047585/jenkins-sonar-github-integration" target="_blank" rel="external">https://stackoverflow.com/questions/32047585/jenkins-sonar-github-integration</a></p>
+<p>[6] <a href="https://github.com/10up/wp-local-docker/issues/6" target="_blank" rel="external">Docker启动SonarQube错误es137</a></p>
+<p>[7] <a href="https://yq.aliyun.com/articles/316487" target="_blank" rel="external">https://yq.aliyun.com/articles/316487</a></p>
 
           
         
@@ -1738,549 +2053,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/12/fs/fs2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/12/fs/fs2/" itemprop="url">
-                  文件系统2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T14:23:06+08:00">
-                2017-09-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/filesystem/" itemprop="url" rel="index">
-                    <span itemprop="name">filesystem</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="FastDFS与GridFS的选择"><a href="#FastDFS与GridFS的选择" class="headerlink" title="FastDFS与GridFS的选择"></a>FastDFS与GridFS的选择</h3><h4 id="FastDFS"><a href="#FastDFS" class="headerlink" title="FastDFS"></a>FastDFS</h4><p>FastDFS服务器端有两个角色：追踪器（tracker）和存储节点（storage）。</p>
-<p>追踪器：主要负责调度工作，在访问上起到<strong>负载均衡</strong>的作用。</p>
-<p>存储节点：存储文件，完成文件管理的存储、同步和提供存取接口等功能。</p>
-<p>FastDFS同时会对文件的metadata（相关属性，例如宽度等）进行管理，以键值对的方式表示。</p>
-<p>建议文件大小： 4KB &lt; file_size &lt;500MB</p>
-<p>系统结构：</p>
-<p><img src="http://static.oschina.net/uploads/img/201204/20230218_pNXn.jpg" alt=""></p>
-<p>存储节点采用分卷的组织方式。存储系统由一个或多个卷组成，卷与卷之间的文件是相对独立的。</p>
-<p>一个卷可以由一台或多台存储服务器组成，多台存储服务器可以起到冗余备份和负载均衡的作用。</p>
-<p><strong>上传文件交互过程：</strong></p>
-<ol>
-<li>client询问tracker上传到的storage，不需要附加参数；</li>
-<li>tracker返回一台可用的storage；</li>
-<li>client直接和storage通讯完成文件上传。 </li>
-</ol>
-<p><strong>下载文件交互过程：</strong></p>
-<ol>
-<li>client询问tracker下载文件的storage，参数为文件标识（卷名和文件名）；</li>
-<li>tracker返回一台可用的storage；</li>
-<li>client直接和storage通讯完成文件下载。</li>
-</ol>
-<h4 id="GridFS"><a href="#GridFS" class="headerlink" title="GridFS"></a>GridFS</h4><p>MongoDB单个document存储上限为16M，为了存储大于16M的文件，我们可以使用MongoDB官方的文件系统GridFS。</p>
-<p>默认分割大小<strong>256K</strong>。</p>
-<p>GridFS的思想很简单就是将一个很大的文件进行分割，分割后的每一个小文件作为一个document单独存储。然后提供了两个集合来存储分割的信息和文件的元信息。这两个集合默认是fs.files和fs.chunks。</p>
-<p>fs.files集合就存储了这个文件的基本信息：</p>
-<ul>
-<li>_id</li>
-<li>length: 文件的大小</li>
-<li>filename: 文件的名称</li>
-<li>chunkSize: 这个文件每一个分块的大小，单位是字节，默认为256K。</li>
-<li>uploadDate: 文件上传的时间。</li>
-<li>md5: MD5信息，以检查文件完整性</li>
-</ul>
-<p>fs.chunks集合包括以下几个字段：</p>
-<ul>
-<li>_id</li>
-<li>n: 表示是分块中的第几块，从0开始。</li>
-<li>data: 存储的是当前文件分块的二进制数据。</li>
-<li>file_id: 表示的是该块是属于哪一个文件，存储的就是fs.files中document的_id。在读取文件的时候，先在fs.files集合中找满足条件的document，获取它的_id值，然后根据这个值到fs.chunks集合中查找所有files_id为该值的document，并按n排序，最后依次读取document中data的值拼凑出原来的文件。</li>
-</ul>
-<h3 id="Mongo-Connector使用心得"><a href="#Mongo-Connector使用心得" class="headerlink" title="Mongo Connector使用心得"></a>Mongo Connector使用心得</h3><p>当按照<a href="http://pirrla.cn/2017/09/05/fs/fs1/" target="_blank" rel="external">复制集开启流程</a>完成后，即可使用mongo connector。</p>
-<ol>
-<li>开启MongoDB复制集</li>
-<li>开启ES</li>
-<li>开启mongo connector</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mongo-connector --auto-commit-interval=0 -m localhost:28001 -t localhost:9200 -d elastic2_doc_manager -n news.tj_reports -o /Users/alan/Downloads/oplog.txt</div></pre></td></tr></table></figure>
-<font color="red">之前的表述有错误，开启mongo connector后数据会直接同步，旧数据也会</font>
-
-<p><strong>MongoDB的database会作为es的index</strong></p>
-<p><strong>collection会作为es的type</strong></p>
-<p>然后各个字段都会同步到es中。（增删改都会，version会变）</p>
-<h3 id="Mongo-connector-support-for-GridFS-2"><a href="#Mongo-connector-support-for-GridFS-2" class="headerlink" title="Mongo connector support for GridFS[2]"></a>Mongo connector support for GridFS[2]</h3><p>mongo connector支持将MongoDB的GridFS中的文件复制到es中，通过es的mapping种类attachment。(<del>已过期</del>)</p>
-<ol>
-<li>ES安装<a href="https://github.com/elastic/elasticsearch-mapper-attachments" target="_blank" rel="external">attachment插件</a></li>
-</ol>
-<ol>
-<li>​</li>
-</ol>
-<p>attachment type 已经被<a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.6/mapper-attachments.html#mapper-attachments-install" target="_blank" rel="external">抛弃</a>？</p>
-<font color="red">5.6ES推出了一个<a href="https://www.elastic.co/guide/en/elasticsearch/plugins/5.6/ingest-attachment.html" target="_blank" rel="external">Ingest Attachment Processor</a></font>
-
-
-
-
-
-<p>Ref:</p>
-<p>[1] <a href="http://www.oschina.net/p/fastdfs" target="_blank" rel="external">http://www.oschina.net/p/fastdfs</a></p>
-<p>[2] <a href="https://github.com/mongodb-labs/mongo-connector/wiki/Usage%20with%20ElasticSearch" target="_blank" rel="external">https://github.com/mongodb-labs/mongo-connector/wiki/Usage%20with%20ElasticSearch</a></p>
-<p>[3] <a href="http://blog.csdn.net/WK313753744/article/details/49943155" target="_blank" rel="external">FastDFS 介绍</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/fs/fs1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/05/fs/fs1/" itemprop="url">
-                  文件系统1
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/filesystem/" itemprop="url" rel="index">
-                    <span itemprop="name">filesystem</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="数据库选择"><a href="#数据库选择" class="headerlink" title="数据库选择"></a>数据库选择</h3><p><strong>关系型数据库 - Oracle</strong></p>
-<p>基础事务有四个特性：</p>
-<ul>
-<li>原子性：整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执行过程中发生错误，会被回复 （Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</li>
-<li>一致性：在事务开始之前和事务结束以后，数据库的完整性限制没有被破坏。</li>
-<li>隔离性：两个事务的执行是互不干扰的，一个事务不可能看到其他事务运行时，中间某一时刻的数据。</li>
-<li>持久性：在事务完成以后，该事务对数据库所作的更改便持久地保存在数据库之中，并不会被回复。</li>
-</ul>
-<p>对网站来说，关系型数据库的很多特性不再需要了：</p>
-<ul>
-<li>事务一致性</li>
-</ul>
-<p>关系型数据库在对事物一致性的维护中有很大的开销，而现在很多web系统对事物的读写一致性都不高</p>
-<ul>
-<li>读写实时性</li>
-</ul>
-<p>对关系数据库来说，插入一条数据之后立刻查询，是肯定可以读出这条数据的，但是对于很多web应用来说，并不要求这么高的实时性，比如发一条消息之后，过几秒乃至十几秒之后才看到这条动态是完全可以接受的</p>
-<ul>
-<li>复杂SQL，特别是多表关联查询</li>
-</ul>
-<p>任何大数据量的web系统，都非常忌讳多个大表的关联查询，以及复杂的数据分析类型的复杂SQL报表查询，特别是SNS类型的网站，从需求以及产品阶级角度，就避免了这种情况的产生。往往更多的只是单表的主键查询，以及单表的简单条件分页查询，SQL的功能极大的弱化了</p>
-<p><strong>NoSQL - MongoDB</strong></p>
-<p>由于在本项目中，数据是新闻资讯的存储，而新闻资讯相互之间是相对独立的，所以不需要使用到关系型数据库。</p>
-<p>非关系型数据库相当于是简化版的关系型数据库，减少了一些相对少用到的功能，提升了产品的性能。相对于关系型数据库，抛弃了ACID特性。</p>
-<p>但是由于是基于键值对的特性，所以非常容易进行扩展，可拓展性强。</p>
-<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>但是MongoDB也有一个问题。由于MongoDB的文档结构为BJSON格式（BJSON全称：Binary JSON），而BJSON格式本身就支持保存二进制格式的数据，因此可以把文件的二进制格式的数据直接保存到MongoDB的文档结构中。但是由于一个BJSON的最大长度不能超过16M，所以限制了单个文档中能存入的最大文件不能超过<font color="red">16M</font></p>
-<p>为了提供对大容量文件存取的支持，samus驱动提供了“GridFS”方式来支持。</p>
-<p><strong>BJSON</strong></p>
-<p><a href="http://blog.csdn.net/kwsy2008/article/details/48969607" target="_blank" rel="external">python 实现</a></p>
-<p><strong>GridDFS</strong></p>
-<p>MongoDB内置功能。</p>
-<p>GridFS是一种在MongoDB中存储大二进制文件的机制。使用GridFS存文件有如下几个原因：</p>
-<p>利用Grid可以简化需求。要是已经用了MongoDB，GridFS就可以不需要使用独立文件存储架构。</p>
-<p>基本原理是将文件存储在两个Collection之中，一个保存文件索引，一个保存文件内容。4MB每一块。</p>
-<table>
-<thead>
-<tr>
-<th>指标</th>
-<th>适合类型</th>
-<th>文件分布</th>
-<th>系统性能</th>
-<th>复杂度</th>
-<th>FUSE</th>
-<th>POSIX</th>
-<th>备份机制</th>
-<th>通讯协议接口</th>
-<th>社区支持</th>
-<th></th>
-<th>开发语言</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FastDFS</td>
-<td>4KB~500MB</td>
-<td>小文件合并存储不分片处理</td>
-<td>很高</td>
-<td>简单</td>
-<td>不支持</td>
-<td>不支持</td>
-<td>组内冗余备份</td>
-<td>ApiHTTP</td>
-<td>国内用户群</td>
-<td></td>
-<td>C语言</td>
-</tr>
-<tr>
-<td>TFS</td>
-<td>所有文件</td>
-<td>小文件合并，以block组织分片</td>
-<td></td>
-<td>复杂</td>
-<td>不支持</td>
-<td>不支持</td>
-<td>Block存储多份,主辅灾备</td>
-<td>APIhttp</td>
-<td>少</td>
-<td></td>
-<td>C++</td>
-</tr>
-<tr>
-<td>MFS</td>
-<td>大于64K</td>
-<td>分片存储</td>
-<td>Master占内存多</td>
-<td></td>
-<td>支持</td>
-<td>支持</td>
-<td>多点备份动态冗余</td>
-<td>使用fuse挂在</td>
-<td>较多</td>
-<td></td>
-<td>Perl</td>
-</tr>
-<tr>
-<td>HDFS</td>
-<td>大文件</td>
-<td>大文件分片分块存储</td>
-<td></td>
-<td>简单</td>
-<td>支持</td>
-<td>支持</td>
-<td>多副本</td>
-<td>原生api</td>
-<td>较多</td>
-<td></td>
-<td>java</td>
-</tr>
-<tr>
-<td>Ceph</td>
-<td>对象文件块</td>
-<td>OSD一主多从</td>
-<td></td>
-<td>复杂</td>
-<td>支持</td>
-<td>支持</td>
-<td>多副本</td>
-<td>原生api</td>
-<td>较少</td>
-<td></td>
-<td>C++</td>
-</tr>
-<tr>
-<td>MogileFS</td>
-<td>海量小图片</td>
-<td></td>
-<td>高</td>
-<td>复杂</td>
-<td>可以支持</td>
-<td>不支持</td>
-<td>动态冗余</td>
-<td>原生api</td>
-<td>文档少</td>
-<td></td>
-<td>Perl</td>
-</tr>
-<tr>
-<td>ClusterFS</td>
-<td>大文件</td>
-<td></td>
-<td></td>
-<td>简单</td>
-<td>支持</td>
-<td>支持</td>
-<td>镜像</td>
-<td></td>
-<td>多</td>
-<td></td>
-<td>C</td>
-</tr>
-</tbody>
-</table>
-<p><strong>HDFS</strong></p>
-<p>还是适合大数据处理，附件等文档太小，不适合使用HDFS。</p>
-<p><strong>FastDFS</strong></p>
-<ol>
-<li>为互联网量身定制，海量数据文件存储。</li>
-<li>高可用(同组备份机制)。</li>
-<li>FastDFS不是通用的文件系统，只能通过api来访问，目前提供c,java,php客户端。phtyon由第三方开发者提供。</li>
-<li>FastDFS可以看作是基于key/value pair存储系统，也许称为分布式文件存储服务更合适。</li>
-<li>支持高并发(这个好像没体现出支持什么高并发,这个是nginx的功劳吧)</li>
-</ol>
-<h3 id="从MongoDB到ElasticSearch"><a href="#从MongoDB到ElasticSearch" class="headerlink" title="从MongoDB到ElasticSearch"></a>从MongoDB到ElasticSearch</h3><p>MongoDB 本身是自带文本索引功能的，但是，不支持中文。<strong>术业有专攻</strong>，MongoDB 是数据存储应用，那么全文检索就使用专业的全文搜索引擎吧。</p>
-<p><strong>0.River</strong></p>
-<p>由于只支持ES 2.0 以下版本，已弃用。</p>
-<p><strong>1.<a href="https://github.com/mongodb-labs/mongo-connector" target="_blank" rel="external">Mongo-Connector</a></strong></p>
-<p>实时</p>
-<ul>
-<li>MongoDB必须开启复制集[2]</li>
-</ul>
-<p>This assumes there is a MongoDB replica set running on port 27017 and that Elasticsearch is running on port 9200 both on the local machine.</p>
-<ul>
-<li>安装mongo-connector</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install &apos;mongo-connector[elastic5]&apos;</div></pre></td></tr></table></figure>
-<ul>
-<li>运行mongo-connector</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo-connector -m 127.0.0.1:27017 -t 127.0.0.1:9200 -d elastic_doc_manager</div></pre></td></tr></table></figure>
-<p>启动之后，现在开始，在mongoDB上的操作，都会同步到elasticsearch之中了。</p>
-<p>（对旧数据无影响）</p>
-<p>问题：根据其他用户的评价，mongo-conncetor会出现延迟和退出的现象</p>
-<p><strong>2.<a href="https://github.com/keenwon/mongodb-to-elasticsearch" target="_blank" rel="external">mongodb to elasticsearch</a></strong></p>
-<p>非实时，应对一天更新一次的场景</p>
-<p>使用了mongoose</p>
-<p>一个node.js写的小程序，可以将mongodb的数据输入到es。</p>
-<p>Ref:</p>
-<p>[1] <a href="https://segmentfault.com/a/1190000003773614" target="_blank" rel="external">MongoDB 数据自动同步到 ElasticSearch</a></p>
-<p>[2] <a href="http://www.runoob.com/mongodb/mongodb-replication.html" target="_blank" rel="external">副本集设置</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2330,7 +2102,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2341,7 +2113,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2352,7 +2124,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

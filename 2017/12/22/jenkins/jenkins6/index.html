@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="jenkins,git," />
 
 
 
@@ -85,31 +85,30 @@
 
 
 
-<meta name="description" content="获取当前路径
-1234import osprint os.getcwd()/Users/alan/Python Files/Untitled Folder
-计算机CPU数量
-12import multiprocessingprint multiprocessing.cpu_count()
-遍历文件夹的文档
-1234from os import listdirfrom os.path import">
+<meta name="description" content="1. 搭建gitlab仓库由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。
+
+GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。 
+　　GitLab拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python练习笔记">
-<meta property="og:url" content="http://www.pirrla.cn/2017/07/12/python/python_practise/index.html">
+<meta property="og:title" content="Jenkins学习笔记6-搭建gitlabs仓库&DockerWeb管理">
+<meta property="og:url" content="http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="获取当前路径
-1234import osprint os.getcwd()/Users/alan/Python Files/Untitled Folder
-计算机CPU数量
-12import multiprocessingprint multiprocessing.cpu_count()
-遍历文件夹的文档
-1234from os import listdirfrom os.path import">
-<meta property="og:updated_time" content="2017-09-15T01:23:34.000Z">
+<meta property="og:description" content="1. 搭建gitlab仓库由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。
+
+GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。 
+　　GitLab拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins22.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins23.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins24.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins19.png">
+<meta property="og:updated_time" content="2017-12-26T09:45:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python练习笔记">
-<meta name="twitter:description" content="获取当前路径
-1234import osprint os.getcwd()/Users/alan/Python Files/Untitled Folder
-计算机CPU数量
-12import multiprocessingprint multiprocessing.cpu_count()
-遍历文件夹的文档
-1234from os import listdirfrom os.path import">
+<meta name="twitter:title" content="Jenkins学习笔记6-搭建gitlabs仓库&DockerWeb管理">
+<meta name="twitter:description" content="1. 搭建gitlab仓库由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。
+
+GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。 
+　　GitLab拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文">
+<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins22.png">
 
 
 
@@ -137,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/07/12/python/python_practise/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/"/>
 
 
 
 
 
-  <title> Python练习笔记 | Note down something </title>
+  <title> Jenkins学习笔记6-搭建gitlabs仓库&DockerWeb管理 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -272,7 +271,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/python/python_practise/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -293,7 +292,7 @@
             
             
               
-                Python练习笔记
+                Jenkins学习笔记6-搭建gitlabs仓库&DockerWeb管理
               
             
           </h1>
@@ -308,8 +307,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
-                2017-07-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-22T00:00:00+08:00">
+                2017-12-22
               </time>
             
 
@@ -331,8 +330,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/jenkins-git/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins,git</span>
                   </a>
                 </span>
 
@@ -366,22 +365,32 @@
       
 
       
-        <p><strong>获取当前路径</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
-<p><strong>计算机CPU数量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
-<p><strong>遍历文件夹的文档</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
-<p> <strong>获取当前用户名</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
-<p><strong>获取当前IP地址</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
-<p>绝对路径</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
-<p>从路径解析文件名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
-<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3><p>固定输出宽度</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> textwrap</div><div class="line">str = <span class="string">'xxxx'</span></div><div class="line"><span class="keyword">print</span> (textwarp.fill(str,width=<span class="number">50</span>))</div></pre></td></tr></table></figure>
+        <h3 id="1-搭建gitlab仓库"><a href="#1-搭建gitlab仓库" class="headerlink" title="1. 搭建gitlab仓库"></a>1. 搭建gitlab仓库</h3><p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
+<blockquote>
+<p>GitLab是一个利用 <code>Ruby on Rails</code> 开发的开源应用程序，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。 </p>
+<p>　　GitLab拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。</p>
+</blockquote>
+<p>现在有了docker，所以搭建运行环境都比较方便，我们这里直接使用docker进行gitlab的搭建。</p>
+<p>使用以下命令拉取所需要的docker镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull sameersbn/redis</div><div class="line">docker pull sameersbn/postgresql</div><div class="line">docker pull sameersbn/gitlab</div></pre></td></tr></table></figure>
+<h3 id="2-Docker-WebGUI管理"><a href="#2-Docker-WebGUI管理" class="headerlink" title="2. Docker WebGUI管理"></a>2. Docker WebGUI管理</h3><ol>
+<li><p><a href="https://github.com/shipyard/shipyard" target="_blank" rel="external">shipyard</a>国产，但是20天前刚刚宣布停止更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins22.png" alt=""></p>
+</li>
+<li><p><a href="http://rancher.com/" target="_blank" rel="external">rancher</a> 硬性条件：需要一台linux服务器做主机，至少2G内存和20G硬盘，较少更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins23.png" alt=""></p>
+</li>
+<li><p><a href="https://github.com/kevana/ui-for-docker" target="_blank" rel="external">kevana</a>已停止更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins24.png" alt=""></p>
+</li>
+<li><p><a href="https://portainer.io/" target="_blank" rel="external">portainer</a>比较轻量，github显示更新及时</p>
+</li>
+</ol>
+<p>此处选择了portainer。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins19.png" alt=""></p>
+<p>References:</p>
+<p>[1] <a href="http://blog.csdn.net/abcdocker/article/category/6638595" target="_blank" rel="external">持续集成 by www.abcdocker.com</a></p>
+<p>[2] <a href="https://www.jianshu.com/p/060e7223e211?open_source=weibo_search" target="_blank" rel="external">https://www.jianshu.com/p/060e7223e211?open_source=weibo_search</a></p>
 
       
     </div>
@@ -411,7 +420,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
+            <a href="/tags/jenkins-git/" rel="tag"># jenkins,git</a>
           
         </div>
       
@@ -424,8 +433,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/" rel="next" title="Mastering Social Media Mining wiht Python">
-                <i class="fa fa-chevron-left"></i> Mastering Social Media Mining wiht Python
+              <a href="/2017/12/22/jenkins/jenkins5/" rel="next" title="Jenkins学习笔记5-官方用法pipeline">
+                <i class="fa fa-chevron-left"></i> Jenkins学习笔记5-官方用法pipeline
               </a>
             
           </div>
@@ -434,8 +443,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/12/es/es_similarity/" rel="prev" title="Elasticsearch相关性">
-                Elasticsearch相关性 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/12/22/jenkins/jenkins7/" rel="prev" title="Jenkins学习笔记6-搭建gitlabs仓库">
+                Jenkins学习笔记6-搭建gitlabs仓库 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -576,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）"><span class="nav-number">1.</span> <span class="nav-text">两个同样内容的字符串指向同一个位置（用同一个位置储存）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-搭建gitlab仓库"><span class="nav-number">1.</span> <span class="nav-text">1. 搭建gitlab仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Docker-WebGUI管理"><span class="nav-number">2.</span> <span class="nav-text">2. Docker WebGUI管理</span></a></li></ol></div>
             
 
           </div>
