@@ -85,16 +85,60 @@
 
 
 
-<meta name="description" content="由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。">
+<meta name="description" content="1. Docker WebGUI管理
+shipyard国产，但是20天前刚刚宣布停止更新
+
+
+rancher 硬性条件：需要一台linux服务器做主机，至少2G内存和20G硬盘，较少更新
+
+
+kevana已停止更新
+
+
+portainer比较轻量，github显示更新及时
+
+
+此处选择了portainer。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jenkins学习笔记6-搭建gitlabs仓库">
-<meta property="og:url" content="http://www.pirrla.cn/2017/12/22/jenkins/jenkins7/index.html">
+<meta property="og:title" content="Jenkins学习笔记7-Docker WebGUI管理">
+<meta property="og:url" content="http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。">
-<meta property="og:updated_time" content="2017-12-25T02:32:42.000Z">
+<meta property="og:description" content="1. Docker WebGUI管理
+shipyard国产，但是20天前刚刚宣布停止更新
+
+
+rancher 硬性条件：需要一台linux服务器做主机，至少2G内存和20G硬盘，较少更新
+
+
+kevana已停止更新
+
+
+portainer比较轻量，github显示更新及时
+
+
+此处选择了portainer。">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins22.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins23.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins24.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins19.png">
+<meta property="og:updated_time" content="2017-12-27T07:22:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jenkins学习笔记6-搭建gitlabs仓库">
-<meta name="twitter:description" content="由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。">
+<meta name="twitter:title" content="Jenkins学习笔记7-Docker WebGUI管理">
+<meta name="twitter:description" content="1. Docker WebGUI管理
+shipyard国产，但是20天前刚刚宣布停止更新
+
+
+rancher 硬性条件：需要一台linux服务器做主机，至少2G内存和20G硬盘，较少更新
+
+
+kevana已停止更新
+
+
+portainer比较轻量，github显示更新及时
+
+
+此处选择了portainer。">
+<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins22.png">
 
 
 
@@ -122,13 +166,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins7/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/"/>
 
 
 
 
 
-  <title> Jenkins学习笔记6-搭建gitlabs仓库 | Note down something </title>
+  <title> Jenkins学习笔记7-Docker WebGUI管理 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -257,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins7/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -278,7 +322,7 @@
             
             
               
-                Jenkins学习笔记6-搭建gitlabs仓库
+                Jenkins学习笔记7-Docker WebGUI管理
               
             
           </h1>
@@ -293,8 +337,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-22T00:00:00+08:00">
-                2017-12-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-24T00:00:00+08:00">
+                2017-12-24
               </time>
             
 
@@ -351,7 +395,21 @@
       
 
       
-        <p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
+        <h3 id="1-Docker-WebGUI管理"><a href="#1-Docker-WebGUI管理" class="headerlink" title="1. Docker WebGUI管理"></a>1. Docker WebGUI管理</h3><ol>
+<li><p><a href="https://github.com/shipyard/shipyard" target="_blank" rel="external">shipyard</a>国产，但是20天前刚刚宣布停止更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins22.png" alt=""></p>
+</li>
+<li><p><a href="http://rancher.com/" target="_blank" rel="external">rancher</a> 硬性条件：需要一台linux服务器做主机，至少2G内存和20G硬盘，较少更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins23.png" alt=""></p>
+</li>
+<li><p><a href="https://github.com/kevana/ui-for-docker" target="_blank" rel="external">kevana</a>已停止更新</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins24.png" alt=""></p>
+</li>
+<li><p><a href="https://portainer.io/" target="_blank" rel="external">portainer</a>比较轻量，github显示更新及时</p>
+</li>
+</ol>
+<p>此处选择了portainer。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins19.png" alt=""></p>
 
       
     </div>
@@ -394,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/22/jenkins/jenkins6/" rel="next" title="Jenkins学习笔记6-搭建gitlabs仓库&DockerWeb管理">
-                <i class="fa fa-chevron-left"></i> Jenkins学习笔记6-搭建gitlabs仓库&DockerWeb管理
+              <a href="/2017/12/22/jenkins/jenkins6/" rel="next" title="Jenkins学习笔记6-搭建gitlabs仓库&Gtilab实现代码质量管理（提交到代码仓库前）">
+                <i class="fa fa-chevron-left"></i> Jenkins学习笔记6-搭建gitlabs仓库&Gtilab实现代码质量管理（提交到代码仓库前）
               </a>
             
           </div>
@@ -449,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
@@ -523,6 +590,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Docker-WebGUI管理"><span class="nav-number">1.</span> <span class="nav-text">1. Docker WebGUI管理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-12-25T02:32:42.000Z</updated>
+  <updated>2017-12-27T07:22:08.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -16,45 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Jenkins学习笔记6-搭建gitlabs仓库</title>
-    <link href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins7/"/>
-    <id>http://www.pirrla.cn/2017/12/22/jenkins/jenkins7/</id>
-    <published>2017-12-21T16:00:00.000Z</published>
-    <updated>2017-12-25T02:32:42.000Z</updated>
+    <title>Jenkins学习笔记7-Docker WebGUI管理</title>
+    <link href="http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/"/>
+    <id>http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/</id>
+    <published>2017-12-23T16:00:00.000Z</published>
+    <updated>2017-12-27T07:22:08.000Z</updated>
     
-    <content type="html"><![CDATA[<p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="jenkins" scheme="http://www.pirrla.cn/categories/jenkins/"/>
-    
-    
-      <category term="jenkins" scheme="http://www.pirrla.cn/tags/jenkins/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Jenkins学习笔记6-搭建gitlabs仓库&amp;DockerWeb管理</title>
-    <link href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/"/>
-    <id>http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/</id>
-    <published>2017-12-21T16:00:00.000Z</published>
-    <updated>2017-12-26T09:45:53.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-搭建gitlab仓库"><a href="#1-搭建gitlab仓库" class="headerlink" title="1. 搭建gitlab仓库"></a>1. 搭建gitlab仓库</h3><p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
-<blockquote>
-<p>GitLab是一个利用 <code>Ruby on Rails</code> 开发的开源应用程序，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。 </p>
-<p>　　GitLab拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。</p>
-</blockquote>
-<p>现在有了docker，所以搭建运行环境都比较方便，我们这里直接使用docker进行gitlab的搭建。</p>
-<p>使用以下命令拉取所需要的docker镜像</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull sameersbn/redis</div><div class="line">docker pull sameersbn/postgresql</div><div class="line">docker pull sameersbn/gitlab</div></pre></td></tr></table></figure>
-<h3 id="2-Docker-WebGUI管理"><a href="#2-Docker-WebGUI管理" class="headerlink" title="2. Docker WebGUI管理"></a>2. Docker WebGUI管理</h3><ol>
+    <content type="html"><![CDATA[<h3 id="1-Docker-WebGUI管理"><a href="#1-Docker-WebGUI管理" class="headerlink" title="1. Docker WebGUI管理"></a>1. Docker WebGUI管理</h3><ol>
 <li><p><a href="https://github.com/shipyard/shipyard" target="_blank" rel="external">shipyard</a>国产，但是20天前刚刚宣布停止更新</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins22.png" alt=""></p>
 </li>
@@ -69,6 +37,37 @@
 </ol>
 <p>此处选择了portainer。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins19.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-Docker-WebGUI管理&quot;&gt;&lt;a href=&quot;#1-Docker-WebGUI管理&quot; class=&quot;headerlink&quot; title=&quot;1. Docker WebGUI管理&quot;&gt;&lt;/a&gt;1. Docker WebGUI管理&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p
+    
+    </summary>
+    
+      <category term="jenkins" scheme="http://www.pirrla.cn/categories/jenkins/"/>
+    
+    
+      <category term="jenkins" scheme="http://www.pirrla.cn/tags/jenkins/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins学习笔记6-搭建gitlabs仓库&amp;Gtilab实现代码质量管理（提交到代码仓库前）</title>
+    <link href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/"/>
+    <id>http://www.pirrla.cn/2017/12/22/jenkins/jenkins6/</id>
+    <published>2017-12-21T16:00:00.000Z</published>
+    <updated>2017-12-27T07:23:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-搭建gitlab仓库"><a href="#1-搭建gitlab仓库" class="headerlink" title="1. 搭建gitlab仓库"></a>1. 搭建gitlab仓库</h3><p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
+<blockquote>
+<p>GitLab是一个利用 <code>Ruby on Rails</code> 开发的开源应用程序，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。 </p>
+<p>　　GitLab拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。</p>
+</blockquote>
+<p>现在有了docker，所以搭建运行环境都比较方便，我们这里直接使用docker进行gitlab的搭建。</p>
+<p>使用以下命令拉取所需要的docker镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull sameersbn/redis</div><div class="line">docker pull sameersbn/postgresql</div><div class="line">docker pull sameersbn/gitlab</div></pre></td></tr></table></figure>
 <p>References:</p>
 <p>[1] <a href="http://blog.csdn.net/abcdocker/article/category/6638595" target="_blank" rel="external">持续集成 by www.abcdocker.com</a></p>
 <p>[2] <a href="https://www.jianshu.com/p/060e7223e211?open_source=weibo_search" target="_blank" rel="external">https://www.jianshu.com/p/060e7223e211?open_source=weibo_search</a></p>
@@ -275,11 +274,11 @@
   </entry>
   
   <entry>
-    <title>Jenkins学习笔记2-代码质量管理</title>
+    <title>Jenkins学习笔记2-Sonar实现代码质量分析（提交到代码仓库后）</title>
     <link href="http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/"/>
     <id>http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/</id>
     <published>2017-12-18T16:00:00.000Z</published>
-    <updated>2017-12-26T09:45:51.000Z</updated>
+    <updated>2017-12-27T07:22:54.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-代码质量管理"><a href="#1-代码质量管理" class="headerlink" title="1.代码质量管理"></a>1.代码质量管理</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins1.png" alt=""></p>
 <p>此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。</p>
@@ -346,7 +345,7 @@
     <link href="http://www.pirrla.cn/2017/12/18/jenkins/jenkins1/"/>
     <id>http://www.pirrla.cn/2017/12/18/jenkins/jenkins1/</id>
     <published>2017-12-17T16:00:00.000Z</published>
-    <updated>2017-12-21T07:09:53.000Z</updated>
+    <updated>2017-12-27T02:07:47.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-敏捷开发"><a href="#1-敏捷开发" class="headerlink" title="1.敏捷开发"></a>1.敏捷开发</h3><p>普通的程序开发，是按照瀑布流一样的流程往下走的。</p>
 <p>但是时至今日，客户的需求变化速度非常之快，而且生产环境也在不断变化，所以以往的单一的以计划来完成软件开发已经不可取了。</p>
@@ -423,6 +422,8 @@
 <p>在该选项设定一个token口令，使用脚本对该项目进行立刻构建指令</p>
 <p><code>JENKINS_URL`/job/simple-python/build?token=`TOKEN_NAME` or /buildWithParameters?token=`TOKEN_NAME</code></p>
 <p>尾部最好加上<code>&amp;cause=Cause+Text</code>对该次构建进行注释，方面翻查操作日志</p>
+<p>可以在gitlab中设置，然后在每一次push时触发URL操作，进行jenkins触发</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins25.png" alt=""></p>
 </li>
 <li><p><strong>Build after other projects are built</strong></p>
 <p>可以选择在一个或多个项目完成构建之后触发触发器，进行构建，熟练地使用该触发器，可以形成一个有效的pipeline工作链</p>

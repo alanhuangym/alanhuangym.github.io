@@ -109,13 +109,14 @@
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins3.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins4.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins5.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins25.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins6.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins7.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins8.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins9.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins10.png">
 <meta property="og:image" content="http://images.cnblogs.com/cnblogs_com/itech/build/jenkinsslavetpye.PNG">
-<meta property="og:updated_time" content="2017-12-21T07:09:53.000Z">
+<meta property="og:updated_time" content="2017-12-27T02:07:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记1-Jenkins入门&Python代码初试">
 <meta name="twitter:description" content="1.敏捷开发普通的程序开发，是按照瀑布流一样的流程往下走的。
@@ -455,6 +456,8 @@
 <p>在该选项设定一个token口令，使用脚本对该项目进行立刻构建指令</p>
 <p><code>JENKINS_URL`/job/simple-python/build?token=`TOKEN_NAME` or /buildWithParameters?token=`TOKEN_NAME</code></p>
 <p>尾部最好加上<code>&amp;cause=Cause+Text</code>对该次构建进行注释，方面翻查操作日志</p>
+<p>可以在gitlab中设置，然后在每一次push时触发URL操作，进行jenkins触发</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins25.png" alt=""></p>
 </li>
 <li><p><strong>Build after other projects are built</strong></p>
 <p>可以选择在一个或多个项目完成构建之后触发触发器，进行构建，熟练地使用该触发器，可以形成一个有效的pipeline工作链</p>
@@ -559,8 +562,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/12/19/jenkins/jenkins2/" rel="prev" title="Jenkins学习笔记2-代码质量管理">
-                Jenkins学习笔记2-代码质量管理 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/12/19/jenkins/jenkins2/" rel="prev" title="Jenkins学习笔记2-Sonar实现代码质量分析（提交到代码仓库后）">
+                Jenkins学习笔记2-Sonar实现代码质量分析（提交到代码仓库后） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
