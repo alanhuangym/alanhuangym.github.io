@@ -102,9 +102,10 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins28.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins29.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins32.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins35.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins33.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins34.png">
-<meta property="og:updated_time" content="2017-12-28T03:09:58.000Z">
+<meta property="og:updated_time" content="2017-12-28T07:42:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记6-搭建gitlabs仓库&Gtilab实现代码质量管理（提交到代码仓库前）">
 <meta name="twitter:description" content="1. 搭建gitlab仓库1.1 安装前准备工作由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。
@@ -388,7 +389,7 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 <h5 id="1-5gitlab配置"><a href="#1-5gitlab配置" class="headerlink" title="1.5gitlab配置"></a>1.5gitlab配置</h5><p>当我们把gitlab运行起来之后，就可以访问默认的10080端口访问gitlab了。</p>
 <font color="red">注意到可能初次访问有时会出现502错误，多试几次即可</font>
 
-<p>当初次金融gitlab的管理页面时，需要重置密码，然后跳转到登录界面。</p>
+<p>当初次进入gitlab的页面时，需要重置管理员密码，然后跳转到登录界面。</p>
 <p>默认用户名是root，密码为刚刚设置的密码。</p>
 <p>登录完成之后就可以进入gitlab页面，具体使用跟github网站类似。</p>
 <p>首先需要将本机的公钥输入到设置当中进行身份验证。</p>
@@ -423,7 +424,7 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 </ul>
 <p>这样的话我们就可以通过<code>pre-commit</code>钩子实现代码质量管理了，在<code>pre-commit</code>中写入代码质量管理的脚本，当质量过关时，返回<code>0</code>，即脚本已通过，可以执行<code>commit</code>操作，当质量不过关时，返回<code>非0数值</code>，此时脚本未通过，<code>commit</code>操作未成功，即实现了阻止错误、低质量代码进入代码库的操作。</p>
 <p><font color="red">但是</font>我们需要注意到，<code>.git</code>文件是不会提交到远程仓库的，所以<code>pre-commit</code>脚本是不能同步到所有的协作者<code>.git</code>文件夹中的。</p>
-<p>即是<code>pre-commit</code>脚本的作用域只在本机，且不受服务器控制（可以被本机删除而不执行）。所以，如果希望通过<code>pre-commit</code>进行版本质量管理，只能讲脚本放在<code>.git</code>文件夹外，提交到远程仓库，同时需要复制文件进每一个协作者的<code>.git/hook</code>文件夹中。这样是一种<strong>鼓励形式</strong>的代码质量管理，可行性不高。</p>
+<p>即是<code>pre-commit</code>脚本的作用域只在本机，且不受服务器控制（可以被本机删除而不执行）。所以，如果希望通过<code>pre-commit</code>进行版本质量管理，只能将脚本放在<code>.git</code>文件夹外，提交到远程仓库，同时需要复制文件进每一个协作者的<code>.git/hook</code>文件夹中。这样是一种<strong>鼓励形式</strong>的代码质量管理，可行性不高。</p>
 <h5 id="2-2-远程仓库管理（重点）"><a href="#2-2-远程仓库管理（重点）" class="headerlink" title="2.2 远程仓库管理（重点）"></a>2.2 远程仓库管理（重点）</h5><p>由于本地仓库的钩子不能实现我们希望的效果，所以我们选择在服务端进行钩子脚本构建。在服务器端构建钩子有以下好处：</p>
 <ul>
 <li>无法被本地修改，强制进行质量管理</li>
@@ -440,17 +441,30 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins32.png" alt=""></p>
 <p>他们各自代表的步骤是：</p>
 <ul>
-<li>pre-receive</li>
-<li>update</li>
-<li>post-receive</li>
+<li><p>pre-receive</p>
+<p>在服务器收到用户推送的代码之前，进行操作</p>
+</li>
+</ul>
+<ul>
+<li><p>update</p>
+<p>服务器已经收到代码之后，对分支进行更新的操作，如果有多个分支则会运行多次update，且update操作之间<font color="red">相互独立</font>，失败不影响其他</p>
+</li>
+</ul>
+<ul>
+<li><p>post-receive</p>
+<p>在服务器已经更新完服务器端的代码之后的操作，一般是对客户返回信息</p>
+</li>
 </ul>
 <p>所以如果我们需要对代码进行质量管理，应该选择的是<code>pre-receive</code>钩子。</p>
 <h6 id="2-2-2-项目钩子"><a href="#2-2-2-项目钩子" class="headerlink" title="2.2.2 项目钩子"></a>2.2.2 项目钩子</h6><p>但是如果我们想用这三个全局钩子对所有的项目进行质量管理是不科学的，首先是因为没有一个通用的全代码质量管理工具，所以不能对全局使用同一个脚本，需要对不同的编程语言使用不同的脚本，其次，每一个项目可能会有特殊的需求，使用全局脚本不现实。所以我们需要找到每个脚本各自的<code>pre-receive</code>钩子。</p>
 <p>每一个项目各自的钩子可以在路径<code>/home/git/data/repositories/用户名/项目名.git</code>或者<code>/home/git/repositories/&lt;group&gt;/&lt;project&gt;.git</code>路径中找到。</p>
 <p>文件夹当中有一个<code>hooks</code>文件夹，<font color="red">但是</font>这个是一个超链接，跳转到的是全局钩子的地址<code>/home/git/gitlab-shell/hooks</code>。</p>
 <p>我们就可以知道，项目是通过这个超链接去调用全局脚本的，所以如果我们希望项目能调用自己的脚本，那么我们可以创建一个同名的<code>hooks</code>文件夹替代，从而实现项目的个性化处理。</p>
-<p><font color="red">不过需要注意的是</font>，当我们使用自定义的脚本的时候 ，如果将全局脚本当做模板进行改写的时候，全局脚本内有一些关联路径的语句，例如<code>require_relative &#39;../lib/gitlab_custom_hook&#39;</code>，这里是定义了全局脚本的<font color="red">相对地址</font>，所以我们需要更改为<font color="red">绝对地址</font>，例如改为<code>require_relative &#39;/home/git/gitlab-shell/lib/gitlab_custom_hook&#39;</code></p>
-<p>为了实现我们的项目钩子的编写，查看<a href="https://docs.gitlab.com/ee/administration/custom_hooks.html" target="_blank" rel="external">官方文档</a>，我们了解到自定义钩子的写法有是在<code>/home/git/repositories/&lt;group&gt;/&lt;project&gt;.git</code>文件夹内创建一个名为<code>custome_hooks</code>的文件夹，然后再文件夹内放置脚本，放置脚本的方法也有两种：</p>
+<p><font color="red">不过需要注意的是</font>，当我们使用自定义的脚本的时候 ，如果将全局脚本当做模板进行改写的时候，全局脚本内有一些关联路径的语句，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">require_relative &apos;../lib/gitlab_custom_hook</div></pre></td></tr></table></figure>
+<p>这里是定义了全局脚本的<font color="red">相对地址</font>，所以我们需要更改为<font color="red">绝对地址</font>，例如改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">require_relative &apos;/home/git/gitlab-shell/lib/gitlab_custom_hook</div></pre></td></tr></table></figure>
+<p>为了实现我们的项目钩子的编写，查看<a href="https://docs.gitlab.com/ee/administration/custom_hooks.html" target="_blank" rel="external">官方文档</a>，我们了解到自定义钩子的写法是在<code>/home/git/repositories/&lt;group&gt;/&lt;project&gt;.git</code>文件夹内创建一个名为<code>custome_hooks</code>的文件夹，然后再文件夹内放置脚本，放置脚本的方法也有两种：</p>
 <ul>
 <li><p>直接创建同名的<font color="red">可执行</font>脚本</p>
 <p>例如直接创建一个名为<code>pre-receive</code>的<font color="red">可执行</font>脚本</p>
@@ -461,6 +475,7 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 <p>例如创建一个<code>pre-receive.d</code>文件夹，在文件夹内放入一些<font color="red">可执行</font>脚本，则会按照命名顺序，顺序执行</p>
 </li>
 </ul>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins35.png" alt=""></p>
 <p><font color="red">**</font>这里我们遇到的可执行脚本的问题，可以通过命令行解决，只需要一行命令<code>chmod +x 文件名</code>即可以将脚本变为可执行脚本</p>
 <p><font color="red">需要注意的是</font>，如果没有将脚本变为可执行，那么脚本将不会在自定义钩子中生效。</p>
 <p>我们的自定义钩子是在官方的脚本运行结束后运行的，但是因为自定义钩子的写法也有不同，所以运行自定义钩子的顺序也有所不同，通过实验（通过对所有脚本加上一个命令行输出查看），我们了解到顺序如下：</p>
@@ -473,6 +488,7 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 <p>[3] <a href="https://www.jianshu.com/p/5531a21afa68" target="_blank" rel="external">Gitlab 服务器端 custom hook 配置</a></p>
 <p>[4] <a href="https://github.com/geeeeeeeeek/git-recipes/wiki/5.4-Git-%E9%92%A9%E5%AD%90%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%A0%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81" target="_blank" rel="external">Git 钩子</a></p>
 <p>[5] <a href="https://docs.gitlab.com/ee/administration/custom_hooks.html" target="_blank" rel="external">Custom Git Hooks </a></p>
+<p>[6] <a href="https://www.zhihu.com/question/65604891/answer/232935144" target="_blank" rel="external">https://www.zhihu.com/question/65604891/answer/232935144</a></p>
 
       
     </div>

@@ -58,7 +58,7 @@
     <link href="http://www.pirrla.cn/2017/12/23/jenkins/jenkins6/"/>
     <id>http://www.pirrla.cn/2017/12/23/jenkins/jenkins6/</id>
     <published>2017-12-22T16:00:00.000Z</published>
-    <updated>2017-12-28T03:09:58.000Z</updated>
+    <updated>2017-12-28T07:42:42.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-搭建gitlab仓库"><a href="#1-搭建gitlab仓库" class="headerlink" title="1. 搭建gitlab仓库"></a>1. 搭建gitlab仓库</h3><h5 id="1-1-安装前准备工作"><a href="#1-1-安装前准备工作" class="headerlink" title="1.1 安装前准备工作"></a>1.1 安装前准备工作</h5><p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
 <blockquote>
@@ -80,7 +80,7 @@
 <h5 id="1-5gitlab配置"><a href="#1-5gitlab配置" class="headerlink" title="1.5gitlab配置"></a>1.5gitlab配置</h5><p>当我们把gitlab运行起来之后，就可以访问默认的10080端口访问gitlab了。</p>
 <font color="red">注意到可能初次访问有时会出现502错误，多试几次即可</font>
 
-<p>当初次金融gitlab的管理页面时，需要重置密码，然后跳转到登录界面。</p>
+<p>当初次进入gitlab的页面时，需要重置管理员密码，然后跳转到登录界面。</p>
 <p>默认用户名是root，密码为刚刚设置的密码。</p>
 <p>登录完成之后就可以进入gitlab页面，具体使用跟github网站类似。</p>
 <p>首先需要将本机的公钥输入到设置当中进行身份验证。</p>
@@ -115,7 +115,7 @@
 </ul>
 <p>这样的话我们就可以通过<code>pre-commit</code>钩子实现代码质量管理了，在<code>pre-commit</code>中写入代码质量管理的脚本，当质量过关时，返回<code>0</code>，即脚本已通过，可以执行<code>commit</code>操作，当质量不过关时，返回<code>非0数值</code>，此时脚本未通过，<code>commit</code>操作未成功，即实现了阻止错误、低质量代码进入代码库的操作。</p>
 <p><font color="red">但是</font>我们需要注意到，<code>.git</code>文件是不会提交到远程仓库的，所以<code>pre-commit</code>脚本是不能同步到所有的协作者<code>.git</code>文件夹中的。</p>
-<p>即是<code>pre-commit</code>脚本的作用域只在本机，且不受服务器控制（可以被本机删除而不执行）。所以，如果希望通过<code>pre-commit</code>进行版本质量管理，只能讲脚本放在<code>.git</code>文件夹外，提交到远程仓库，同时需要复制文件进每一个协作者的<code>.git/hook</code>文件夹中。这样是一种<strong>鼓励形式</strong>的代码质量管理，可行性不高。</p>
+<p>即是<code>pre-commit</code>脚本的作用域只在本机，且不受服务器控制（可以被本机删除而不执行）。所以，如果希望通过<code>pre-commit</code>进行版本质量管理，只能将脚本放在<code>.git</code>文件夹外，提交到远程仓库，同时需要复制文件进每一个协作者的<code>.git/hook</code>文件夹中。这样是一种<strong>鼓励形式</strong>的代码质量管理，可行性不高。</p>
 <h5 id="2-2-远程仓库管理（重点）"><a href="#2-2-远程仓库管理（重点）" class="headerlink" title="2.2 远程仓库管理（重点）"></a>2.2 远程仓库管理（重点）</h5><p>由于本地仓库的钩子不能实现我们希望的效果，所以我们选择在服务端进行钩子脚本构建。在服务器端构建钩子有以下好处：</p>
 <ul>
 <li>无法被本地修改，强制进行质量管理</li>
@@ -132,17 +132,30 @@
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins32.png" alt=""></p>
 <p>他们各自代表的步骤是：</p>
 <ul>
-<li>pre-receive</li>
-<li>update</li>
-<li>post-receive</li>
+<li><p>pre-receive</p>
+<p>在服务器收到用户推送的代码之前，进行操作</p>
+</li>
+</ul>
+<ul>
+<li><p>update</p>
+<p>服务器已经收到代码之后，对分支进行更新的操作，如果有多个分支则会运行多次update，且update操作之间<font color="red">相互独立</font>，失败不影响其他</p>
+</li>
+</ul>
+<ul>
+<li><p>post-receive</p>
+<p>在服务器已经更新完服务器端的代码之后的操作，一般是对客户返回信息</p>
+</li>
 </ul>
 <p>所以如果我们需要对代码进行质量管理，应该选择的是<code>pre-receive</code>钩子。</p>
 <h6 id="2-2-2-项目钩子"><a href="#2-2-2-项目钩子" class="headerlink" title="2.2.2 项目钩子"></a>2.2.2 项目钩子</h6><p>但是如果我们想用这三个全局钩子对所有的项目进行质量管理是不科学的，首先是因为没有一个通用的全代码质量管理工具，所以不能对全局使用同一个脚本，需要对不同的编程语言使用不同的脚本，其次，每一个项目可能会有特殊的需求，使用全局脚本不现实。所以我们需要找到每个脚本各自的<code>pre-receive</code>钩子。</p>
 <p>每一个项目各自的钩子可以在路径<code>/home/git/data/repositories/用户名/项目名.git</code>或者<code>/home/git/repositories/&lt;group&gt;/&lt;project&gt;.git</code>路径中找到。</p>
 <p>文件夹当中有一个<code>hooks</code>文件夹，<font color="red">但是</font>这个是一个超链接，跳转到的是全局钩子的地址<code>/home/git/gitlab-shell/hooks</code>。</p>
 <p>我们就可以知道，项目是通过这个超链接去调用全局脚本的，所以如果我们希望项目能调用自己的脚本，那么我们可以创建一个同名的<code>hooks</code>文件夹替代，从而实现项目的个性化处理。</p>
-<p><font color="red">不过需要注意的是</font>，当我们使用自定义的脚本的时候 ，如果将全局脚本当做模板进行改写的时候，全局脚本内有一些关联路径的语句，例如<code>require_relative &#39;../lib/gitlab_custom_hook&#39;</code>，这里是定义了全局脚本的<font color="red">相对地址</font>，所以我们需要更改为<font color="red">绝对地址</font>，例如改为<code>require_relative &#39;/home/git/gitlab-shell/lib/gitlab_custom_hook&#39;</code></p>
-<p>为了实现我们的项目钩子的编写，查看<a href="https://docs.gitlab.com/ee/administration/custom_hooks.html" target="_blank" rel="external">官方文档</a>，我们了解到自定义钩子的写法有是在<code>/home/git/repositories/&lt;group&gt;/&lt;project&gt;.git</code>文件夹内创建一个名为<code>custome_hooks</code>的文件夹，然后再文件夹内放置脚本，放置脚本的方法也有两种：</p>
+<p><font color="red">不过需要注意的是</font>，当我们使用自定义的脚本的时候 ，如果将全局脚本当做模板进行改写的时候，全局脚本内有一些关联路径的语句，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">require_relative &apos;../lib/gitlab_custom_hook</div></pre></td></tr></table></figure>
+<p>这里是定义了全局脚本的<font color="red">相对地址</font>，所以我们需要更改为<font color="red">绝对地址</font>，例如改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">require_relative &apos;/home/git/gitlab-shell/lib/gitlab_custom_hook</div></pre></td></tr></table></figure>
+<p>为了实现我们的项目钩子的编写，查看<a href="https://docs.gitlab.com/ee/administration/custom_hooks.html" target="_blank" rel="external">官方文档</a>，我们了解到自定义钩子的写法是在<code>/home/git/repositories/&lt;group&gt;/&lt;project&gt;.git</code>文件夹内创建一个名为<code>custome_hooks</code>的文件夹，然后再文件夹内放置脚本，放置脚本的方法也有两种：</p>
 <ul>
 <li><p>直接创建同名的<font color="red">可执行</font>脚本</p>
 <p>例如直接创建一个名为<code>pre-receive</code>的<font color="red">可执行</font>脚本</p>
@@ -153,6 +166,7 @@
 <p>例如创建一个<code>pre-receive.d</code>文件夹，在文件夹内放入一些<font color="red">可执行</font>脚本，则会按照命名顺序，顺序执行</p>
 </li>
 </ul>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins35.png" alt=""></p>
 <p><font color="red">**</font>这里我们遇到的可执行脚本的问题，可以通过命令行解决，只需要一行命令<code>chmod +x 文件名</code>即可以将脚本变为可执行脚本</p>
 <p><font color="red">需要注意的是</font>，如果没有将脚本变为可执行，那么脚本将不会在自定义钩子中生效。</p>
 <p>我们的自定义钩子是在官方的脚本运行结束后运行的，但是因为自定义钩子的写法也有不同，所以运行自定义钩子的顺序也有所不同，通过实验（通过对所有脚本加上一个命令行输出查看），我们了解到顺序如下：</p>
@@ -165,6 +179,7 @@
 <p>[3] <a href="https://www.jianshu.com/p/5531a21afa68" target="_blank" rel="external">Gitlab 服务器端 custom hook 配置</a></p>
 <p>[4] <a href="https://github.com/geeeeeeeeek/git-recipes/wiki/5.4-Git-%E9%92%A9%E5%AD%90%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%A0%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81" target="_blank" rel="external">Git 钩子</a></p>
 <p>[5] <a href="https://docs.gitlab.com/ee/administration/custom_hooks.html" target="_blank" rel="external">Custom Git Hooks </a></p>
+<p>[6] <a href="https://www.zhihu.com/question/65604891/answer/232935144" target="_blank" rel="external">https://www.zhihu.com/question/65604891/answer/232935144</a></p>
 ]]></content>
     
     <summary type="html">
@@ -821,42 +836,6 @@
   </entry>
   
   <entry>
-    <title>推荐系统5</title>
-    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
-    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
-    <published>2017-09-05T06:23:06.000Z</published>
-    <updated>2017-09-08T05:24:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
-<p><strong>1.大类</strong></p>
-<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
-<p><strong>2.天数</strong></p>
-<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
-<p><strong>3.收益利率</strong></p>
-<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
-<p><strong>4.综上所述</strong></p>
-<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
-<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
-<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
-<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
-    
-    </summary>
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
-    
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
-    
-  </entry>
-  
-  <entry>
     <title>文件系统1</title>
     <link href="http://www.pirrla.cn/2017/09/05/fs/fs1/"/>
     <id>http://www.pirrla.cn/2017/09/05/fs/fs1/</id>
@@ -1066,6 +1045,42 @@
     
     
       <category term="filesystem" scheme="http://www.pirrla.cn/tags/filesystem/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>推荐系统5</title>
+    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
+    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
+    <published>2017-09-05T06:23:06.000Z</published>
+    <updated>2017-09-08T05:24:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
+    
+    </summary>
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
+    
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
     
   </entry>
   
