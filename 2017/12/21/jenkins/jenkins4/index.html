@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins20.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins17.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins15.png">
-<meta property="og:updated_time" content="2017-12-26T07:14:30.000Z">
+<meta property="og:updated_time" content="2017-12-27T07:37:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记4-使用Docker对环境和代码打包">
 <meta name="twitter:description" content="当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。
@@ -386,6 +386,7 @@
 <p><strong>容器操作</strong></p>
 <ul>
 <li><code>docker ps</code>查看当前正在运行的容器，<code>-a</code>可以查看所有容器包括未运行的</li>
+<li><code>docker cp &lt;containerId&gt;:/file/path/within/container /host/path/target</code> 将容器内的文件拷贝到宿主机中</li>
 </ul>
 <p><strong>本地镜像管理</strong></p>
 <ul>
@@ -574,7 +575,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
