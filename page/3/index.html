@@ -1026,6 +1026,164 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/python/python_practise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/12/python/python_practise/" itemprop="url">
+                  Python练习笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
+                2017-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>获取当前路径</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
+<p><strong>计算机CPU数量</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
+<p><strong>遍历文件夹的文档</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
+<p> <strong>获取当前用户名</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
+<p><strong>获取当前IP地址</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+<p>绝对路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
+<p>从路径解析文件名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
+<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3><p>固定输出宽度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> textwrap</div><div class="line">str = <span class="string">'xxxx'</span></div><div class="line"><span class="keyword">print</span> (textwarp.fill(str,width=<span class="number">50</span>))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/es/es_similarity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1227,164 +1385,6 @@
 <p>[3] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-similarity.html" target="_blank" rel="external">Elasticsearch文档-Similarity module</a></p>
 <p>[4] <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" rel="external">Elasticsearch文档-Function Score Query</a></p>
 <p>[5] <a href="https://www.elastic.co/blog/understanding-query-then-fetch-vs-dfs-query-then-fetch" target="_blank" rel="external">Elasticsearch文档-DFS-DFS Query Then Fetch</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/07/12/python/python_practise/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/12/python/python_practise/" itemprop="url">
-                  Python练习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
-                2017-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>获取当前路径</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.getcwd()</div><div class="line"></div><div class="line">/Users/alan/Python Files/Untitled Folder</div></pre></td></tr></table></figure>
-<p><strong>计算机CPU数量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"><span class="keyword">print</span> multiprocessing.cpu_count()</div></pre></td></tr></table></figure>
-<p><strong>遍历文件夹的文档</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> isfile, join</div><div class="line">files_list = [f <span class="keyword">for</span> f <span class="keyword">in</span> listdir(<span class="string">'/home/students'</span>) <span class="keyword">if</span> isfile(join(<span class="string">'/home/students'</span>, f))]</div><div class="line"><span class="keyword">print</span> files_list</div></pre></td></tr></table></figure>
-<p> <strong>获取当前用户名</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> getpass</div><div class="line"><span class="keyword">print</span> getpass.getuser()</div></pre></td></tr></table></figure>
-<p><strong>获取当前IP地址</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line">print([l <span class="keyword">for</span> l <span class="keyword">in</span> ([ip <span class="keyword">for</span> ip <span class="keyword">in</span> socket.gethostbyname_ex(socket.gethostname())[<span class="number">2</span>] </div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> ip.startswith(<span class="string">"127."</span>)][:<span class="number">1</span>], [[(s.connect((<span class="string">'8.8.8.8'</span>, <span class="number">53</span>)), </div><div class="line">s.getsockname()[<span class="number">0</span>], s.close()) <span class="keyword">for</span> s <span class="keyword">in</span> [socket.socket(socket.AF_INET, </div><div class="line">socket.SOCK_DGRAM)]][<span class="number">0</span>][<span class="number">1</span>]]) <span class="keyword">if</span> l][<span class="number">0</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
-<p>绝对路径</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.abspath(<span class="string">'xxx.txt'</span>)</div></pre></td></tr></table></figure>
-<p>从路径解析文件名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os.path.basename(<span class="string">'path'</span>)</div></pre></td></tr></table></figure>
-<h3 id="两个同样内容的字符串指向同一个位置（用同一个位置储存）"><a href="#两个同样内容的字符串指向同一个位置（用同一个位置储存）" class="headerlink" title="两个同样内容的字符串指向同一个位置（用同一个位置储存）"></a>两个同样内容的字符串指向同一个位置（用同一个位置储存）</h3><p>固定输出宽度</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> textwrap</div><div class="line">str = <span class="string">'xxxx'</span></div><div class="line"><span class="keyword">print</span> (textwarp.fill(str,width=<span class="number">50</span>))</div></pre></td></tr></table></figure>
 
           
         
@@ -1791,6 +1791,179 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/" itemprop="url">
+                  Coursera Machine Learning Notes
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T00:00:00+08:00">
+                2017-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CUHK-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">CUHK_Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
+</ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/cuhk/Duality_of_Linear_Programming/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1974,179 +2147,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/" itemprop="url">
-                  Coursera Machine Learning Notes
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T00:00:00+08:00">
-                2017-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CUHK-Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">CUHK_Notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
-<p>Week6:</p>
-<p>Evaluating a Learning Algorithm</p>
-<p>How to improve the algorithm:</p>
-<p>What to do next:</p>
-<ol>
-<li>Get more training examples</li>
-<li>Try smaller or additional features</li>
-<li>Try adding ploynomial features (x square or x cube)</li>
-<li>Try decrease or increse the lamda (regularization parameter)</li>
-</ol>
-<p>But every one takes much time. So</p>
-<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
-<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
-<p>Then only apply test on test set.</p>
-<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
-<ol>
-<li>Get more training examples - fix high variance</li>
-<li>Try smaller features - fix high variance</li>
-<li>Try additional features - fix high bias</li>
-<li>Try adding polynomial features - fix high bias</li>
-<li>Try decrease lamda - fix high bias</li>
-<li>Try increase lamda - fix high variance</li>
-</ol>
-<p>Precision and Recall</p>
-<p>Precision = True Positive/(True positive + False positive) </p>
-<p>= True Pos/Number of Predictive Pos</p>
-<p>Recall = True positive /(True positive + False negative)</p>
-<p>= True Pos/Number of Actual Pos</p>
-<p>one way to balance precision and recall is f1 score</p>
-<p>f1 score = 2*P*R/(P+R)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2270,8 +2270,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
