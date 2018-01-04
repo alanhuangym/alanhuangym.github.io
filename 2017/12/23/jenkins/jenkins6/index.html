@@ -105,8 +105,9 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins35.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins33.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins34.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins37.jpg">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins36.png">
-<meta property="og:updated_time" content="2018-01-04T08:35:53.000Z">
+<meta property="og:updated_time" content="2018-01-04T08:41:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记6-搭建gitlabs仓库&Gtilab实现代码质量管理（提交到代码仓库前）">
 <meta name="twitter:description" content="1. 搭建gitlab仓库1.1 安装前准备工作由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。
@@ -486,6 +487,7 @@ GitLab是一个利用 Ruby on Rails 开发的开源应用程序，实现一个�
 <h5 id="3-1-服务器代码存放问题"><a href="#3-1-服务器代码存放问题" class="headerlink" title="3.1 服务器代码存放问题"></a>3.1 服务器代码存放问题</h5><p>首先，由于在gitlab上存储的是每一个项目的.git文件夹，即<font color="red">服务器端没有存放除.git文件夹内容外真实存在的代码</font>，数据文件只有.git文件夹的objects文件（文件包含提交信息、项目树信息，代码信息、标签信息）。</p>
 <p>所以如果我们希望在服务器端实现代码质量审查，那么我们就首先需要将代码从objects文件夹中提取出来，再进行代码质量审查。</p>
 <h5 id="3-2-Git的数据存放原理"><a href="#3-2-Git的数据存放原理" class="headerlink" title="3.2 Git的数据存放原理"></a>3.2 Git的数据存放原理</h5><p>Git 存储数据内容的方式──为每份内容生成一个文件，取得该内容与头信息的 SHA-1 校验和，创建以该校验和前两个字符为名称的子目录，并以 (校验和) 剩下 38 个字符为文件命名 (保存至子目录下)。每当文件有改动之后，SHA-1值都会变动，所以我们可以通过SHA-1值找到不同版本的代码。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins37.jpg" alt=""></p>
 <p>对于SHA-1数据类型的文件，我们主要使用<code>git cat-file</code>命令对文件进行解析读取。</p>
 <p>Git中有四种基本的对象类型，这四种基本类型组成了Git更高级的数据结构。</p>
 <ul>
