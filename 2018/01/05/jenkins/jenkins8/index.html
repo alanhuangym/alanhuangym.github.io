@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="recommendationsystem," />
+  <meta name="keywords" content="jenkins," />
 
 
 
@@ -85,45 +85,51 @@
 
 
 
-<meta name="description" content="现在使用协同过滤方法数据概况
-“持有过.csv”
-目前只调用了2016年年度数据。
-统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
-数据约190w条。
-每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
-通过初步分析，得知，数据共包含125w位用户。
-子代码情况
-其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。平均每位">
+<meta name="description" content="现在我们已经完成了整个流程的学习，现在我们应用一个简单的python服务，来测试一下效果。
+1. 整体流程检视
+搭建好相应的环境：
+gitlab服务器、jenkins服务器、docker服务器（和相应的redis服务和数据库服务）
+
+
+业务流程如下：
+
+Reference:
+[1] Jenkins使用简易教程
+[2] https://testerhome.com/topics/10003
+[3]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="推荐系统3">
-<meta property="og:url" content="http://www.pirrla.cn/2017/08/30/rs/rs_3/index.html">
+<meta property="og:title" content="Jenkins学习笔记8-Python服务的完整持续部署流程">
+<meta property="og:url" content="http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="现在使用协同过滤方法数据概况
-“持有过.csv”
-目前只调用了2016年年度数据。
-统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
-数据约190w条。
-每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
-通过初步分析，得知，数据共包含125w位用户。
-子代码情况
-其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。平均每位">
-<meta property="og:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
-<meta property="og:updated_time" content="2017-08-30T05:46:23.000Z">
+<meta property="og:description" content="现在我们已经完成了整个流程的学习，现在我们应用一个简单的python服务，来测试一下效果。
+1. 整体流程检视
+搭建好相应的环境：
+gitlab服务器、jenkins服务器、docker服务器（和相应的redis服务和数据库服务）
+
+
+业务流程如下：
+
+Reference:
+[1] Jenkins使用简易教程
+[2] https://testerhome.com/topics/10003
+[3]">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/uml1.pdf">
+<meta property="og:updated_time" content="2018-01-08T02:13:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="推荐系统3">
-<meta name="twitter:description" content="现在使用协同过滤方法数据概况
-“持有过.csv”
-目前只调用了2016年年度数据。
-统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。
-数据约190w条。
-每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。
-通过初步分析，得知，数据共包含125w位用户。
-子代码情况
-其中约有96w的用户在该年度内只购买过一款产品（不计购买次数）
-29w用户购买过两款产品以上。平均每位">
-<meta name="twitter:image" content="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png">
+<meta name="twitter:title" content="Jenkins学习笔记8-Python服务的完整持续部署流程">
+<meta name="twitter:description" content="现在我们已经完成了整个流程的学习，现在我们应用一个简单的python服务，来测试一下效果。
+1. 整体流程检视
+搭建好相应的环境：
+gitlab服务器、jenkins服务器、docker服务器（和相应的redis服务和数据库服务）
+
+
+业务流程如下：
+
+Reference:
+[1] Jenkins使用简易教程
+[2] https://testerhome.com/topics/10003
+[3]">
+<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/uml1.pdf">
 
 
 
@@ -151,13 +157,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/2017/08/30/rs/rs_3/"/>
+  <link rel="canonical" href="http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/"/>
 
 
 
 
 
-  <title> 推荐系统3 | Note down something </title>
+  <title> Jenkins学习笔记8-Python服务的完整持续部署流程 | Note down something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -286,7 +292,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/30/rs/rs_3/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -307,7 +313,7 @@
             
             
               
-                推荐系统3
+                Jenkins学习笔记8-Python服务的完整持续部署流程
               
             
           </h1>
@@ -322,8 +328,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-30T09:12:35+08:00">
-                2017-08-30
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-05T00:00:00+08:00">
+                2018-01-05
               </time>
             
 
@@ -345,8 +351,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
-                    <span itemprop="name">recommendationsystem</span>
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
                   </a>
                 </span>
 
@@ -380,43 +386,19 @@
       
 
       
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<h3 id="现在使用协同过滤方法"><a href="#现在使用协同过滤方法" class="headerlink" title="现在使用协同过滤方法"></a>现在使用协同过滤方法</h3><p><strong>数据概况</strong></p>
-<p>“持有过.csv”</p>
-<p>目前只调用了2016年年度数据。</p>
-<p>统计用户在该年度中，曾经持仓过哪些产品，用于分析用户投资偏好。</p>
-<p>数据约190w条。</p>
-<p>每一条数据分别代表一位用户一个产品在该年度的平均持有数量和金额。</p>
-<p>通过初步分析，得知，数据共包含125w位用户。</p>
-<p><strong>子代码情况</strong></p>
-<p>其中约有<font color="red">96w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）</p>
-<font color="red">29w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.52</strong>款子产品<br><br><strong>母代码情况</strong><br><br>其中约有<font color="red">121w</font>的用户在该年度内只购买过<font color="red">一款产品</font>（不计购买次数）<br><br>只有<font color="red">4w</font>用户购买过两款产品以上。<br><br>平均每位用户购买<strong>1.03</strong>款母产品<br><br><br><br><strong>初步构建</strong><br><br>为了简化该问题，所以首先只考虑用户曾经持仓的产品，忽略<font color="red"><strong>购买次数、购买金额、购买日期、卖出</strong></font>等数据。建立一个用户-产品的矩阵（如下）。<br><br>| 表格   | 产品1  | 产品2  | 产品3  | 产品4  | 产品5  |<br>| —- | —- | —- | —- | —- | —- |<br>| 用户1  | 0    | 0    | 0    | 0    | 1    |<br>| 用户2  | 0    | 1    | 0    | 1    | 0    |<br>| 用户3  | 0    | 0    | 1    | 1    | 0    |<br>| 用户4  | 0    | 0    | 0    | 0    | 1    |<br>| 用户5  | 0    | 1    | 0    | 1    | 0    |<br><br>1则表示在该年度（目前只统计了2016年年度数据），该用户曾经持仓过该产品。<br><br>0则表示没有。<br><br>通过建立这个矩阵之后，计算不同用户之间的相似度。<br><br><br><br>相似度计算使用<a href="https://en.wikipedia.org/wiki/Jaccard_index" target="_blank" rel="external">Jaccard Similarity</a><br><br>$$similarity=\frac{USER1 \cap USER2}{USER1 \cup USER2}$$<br><br>（问题：是否需要在分子分母上加1）<br><br>即是计算两个用户之间购买了相同产品的数量，再除以两个用户共购买了多少款产品，即得到相似度。<br><br><font color="red">问题：用母代码还是子代码？</font>
-
-<p>但是由于之前描述的数据概况，大部分用户都只购买了一款产品，所以计算相似度时很大概率得到的结果是1和0。（完全相同和完全不相同）</p>
-<p><strong>针对只购买了一款产品的用户</strong></p>
-<p>所以为了实现协同过滤的效果，我们需要先挑选出<strong>购买过两款产品或以上</strong>的用户出来，然后再根据这些用户与其他用户进行重合，进行推荐。</p>
-<p>首先，根据统计一共有125款母代码产品。</p>
-<p>制作一份字典，遍历一遍记录，然后对于购买了两款产品以上的用户加入到字典里，索引是购买产品的产品代码。</p>
-<p>然后对于每一个只购买了一款产品的用户就可以到这份字典去索引，根据已经购买了的产品代码，可以得到与其相似的用户群，然后根据用户群进行推荐。</p>
-<p>这样，计算量可以离线完成，对于大部分的用户（只买过一款产品的），推荐系统的结果可以直接存取，快捷。</p>
-<p><strong>对于购买了两款产品或以上的用户</strong></p>
-<p>可以直接使用Jaccard Similarity 的计算方法，计算两位用户之间的相似度。</p>
-<p>设定一个阈值（threshold），当两位用户相似度超过这个阈值之后（去除相似度1.0的用户，以为完全相同没有推荐的意义），则认定这两位用户为相似用户。然后根据相似用户的其他喜好，进行推荐。</p>
-<h3 id="后期完善"><a href="#后期完善" class="headerlink" title="后期完善"></a>后期完善</h3><p><strong>1.使用时间字段</strong></p>
-<p>根据购买时间与现在时间的差值，赋予用户一个权重，标识这个用户近期对该产品的偏好程度。</p>
-<p>可以参考ES中的<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-function-score-query.html#function-decay" target="_blank" rel="external">decay_function</a>。</p>
-<p><img src="https://www.elastic.co/guide/en/elasticsearch/reference/5.5/images/decay_2d.png" alt="">根据时间差，套入不同的计算公式中，得出一个权重。</p>
-<p><strong>2.购买数量与金额</strong></p>
-<p>由于每个客户的购买金额和购买次数是不一样的。在初步构建的当中，我们忽略了购买的金额和次数，均算作1。所以我们现在需要将购买金额和次数考虑进去。</p>
-<p>想法是：</p>
-<p>$$金额权重=\frac{购买总金额}{该产品的最低购买金额}$$</p>
-<p>由于每个产品的规模大小都不一样，所以不能单纯以购买金额去衡量用户与产品之间的关系。所以我们使用到客户购买的总金额除以最低购买门槛金额，得到一个倍数，然后再辅以一个函数，达到实现权重的目的。</p>
-<p>其次，由于某一个客户可能会购买一款母代码的多款子产品，所以购买次数也会反应该用户的投资偏好，我们可以再设定一个函数，去控制该权重。</p>
-<p><strong>3.结合</strong></p>
-<p>根据上述两个字段的影响，每个用户-产品矩阵的内容可以为上述两个字段的权重相加相乘，然后就能计算更加准确的用户相似度。</p>
-<p><strong>4.已找出相似用户后的推荐想法</strong></p>
-<p>如果已经找出了相似的用户，那么就以这群用户对产品的购买次数进行统计，给出一个排名，然后相应地推荐排名第一的产品和后续产品中，客户尚未购买过的产品。</p>
+        <p>现在我们已经完成了整个流程的学习，现在我们应用一个简单的python服务，来测试一下效果。</p>
+<h3 id="1-整体流程检视"><a href="#1-整体流程检视" class="headerlink" title="1. 整体流程检视"></a>1. 整体流程检视</h3><ol>
+<li><p>搭建好相应的环境：</p>
+<p>gitlab服务器、jenkins服务器、docker服务器（和相应的redis服务和数据库服务）</p>
+</li>
+</ol>
+<p>业务流程如下：</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/uml1.pdf" alt=""></p>
+<p>Reference:</p>
+<p>[1] <a href="http://www.jianshu.com/p/b524b151d35f" target="_blank" rel="external">Jenkins使用简易教程</a></p>
+<p>[2] <a href="https://testerhome.com/topics/10003" target="_blank" rel="external">https://testerhome.com/topics/10003</a></p>
+<p>[3] <a href="https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/" target="_blank" rel="external">https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/</a></p>
+<p>[4] <a href="https://yq.aliyun.com/articles/80459" target="_blank" rel="external">https://yq.aliyun.com/articles/80459</a></p>
 
       
     </div>
@@ -446,7 +428,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/recommendationsystem/" rel="tag"># recommendationsystem</a>
+            <a href="/tags/jenkins/" rel="tag"># jenkins</a>
           
         </div>
       
@@ -459,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/22/rs/rs_2/" rel="next" title="推荐系统2">
-                <i class="fa fa-chevron-left"></i> 推荐系统2
+              <a href="/2017/12/24/jenkins/jenkins7/" rel="next" title="Jenkins学习笔记7-Docker WebGUI管理">
+                <i class="fa fa-chevron-left"></i> Jenkins学习笔记7-Docker WebGUI管理
               </a>
             
           </div>
@@ -468,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/31/rs/rs_4/" rel="prev" title="推荐系统4">
-                推荐系统4 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -611,7 +589,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#现在使用协同过滤方法"><span class="nav-number">1.</span> <span class="nav-text">现在使用协同过滤方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后期完善"><span class="nav-number">2.</span> <span class="nav-text">后期完善</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-整体流程检视"><span class="nav-number">1.</span> <span class="nav-text">1. 整体流程检视</span></a></li></ol></div>
             
 
           </div>

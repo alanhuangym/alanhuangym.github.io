@@ -85,27 +85,22 @@
 
 
 
-<meta name="description" content="1.代码质量管理
-此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。
+<meta name="description" content="1.代码质量管理此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库后，进行代码质量分析。
 此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。
-2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言">
+2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins学习笔记2-Sonar实现代码质量分析（提交到代码仓库后）">
 <meta property="og:url" content="http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/index.html">
 <meta property="og:site_name" content="Note down something">
-<meta property="og:description" content="1.代码质量管理
-此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。
+<meta property="og:description" content="1.代码质量管理此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库后，进行代码质量分析。
 此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。
-2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言">
-<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins1.png">
-<meta property="og:updated_time" content="2017-12-27T07:22:54.000Z">
+2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言(">
+<meta property="og:updated_time" content="2018-01-08T01:52:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记2-Sonar实现代码质量分析（提交到代码仓库后）">
-<meta name="twitter:description" content="1.代码质量管理
-此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。
+<meta name="twitter:description" content="1.代码质量管理此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库后，进行代码质量分析。
 此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。
-2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言">
-<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins1.png">
+2.SonarQubeSonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言(">
 
 
 
@@ -362,8 +357,7 @@
       
 
       
-        <h3 id="1-代码质量管理"><a href="#1-代码质量管理" class="headerlink" title="1.代码质量管理"></a>1.代码质量管理</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins1.png" alt=""></p>
-<p>此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。</p>
+        <h3 id="1-代码质量管理"><a href="#1-代码质量管理" class="headerlink" title="1.代码质量管理"></a>1.代码质量管理</h3><p>此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库后，进行代码质量分析。</p>
 <p>此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。</p>
 <h3 id="2-SonarQube"><a href="#2-SonarQube" class="headerlink" title="2.SonarQube"></a>2.SonarQube</h3><p>Sonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言(包括Java、C/C++，Javascript，C#等)的代码进行分析，并且以数据可视化的界面进行显示，提高了代码的审查率。</p>
 <h5 id="2-1-SonarQube安装"><a href="#2-1-SonarQube安装" class="headerlink" title="2.1 SonarQube安装"></a>2.1 SonarQube安装</h5><p>可以到<a href="https://www.sonarqube.org/downloads/" target="_blank" rel="external">官网</a>下载最新的LTS包，Windows平台的话可以直接执行wrapper.exe文件，即可启动Sonar服务，unix平台的可以通过<code>./sonar.sh start</code>启动服务。</p>
@@ -399,7 +393,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sonar.jdbc.username=sonar            #数据库用户</div><div class="line">sonar.jdbc.password=sonar@pw     #数据库密码</div><div class="line"></div><div class="line">sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;character    Encoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance</div></pre></td></tr></table></figure>
 <p>只需要把数据库的用户名和密码填上，然后解除SQL的注释就可以了。</p>
 <p>可能还需要将数据库驱动放入<code>sonarqube-6.7/extensions/jdbc-driver/mysql</code>中</p>
-<h5 id="2-3-SonarQube-简介"><a href="#2-3-SonarQube-简介" class="headerlink" title="2.3 SonarQube 简介"></a>2.3 SonarQube 简介</h5><h3 id="3-FindBugs"><a href="#3-FindBugs" class="headerlink" title="3.FindBugs"></a>3.FindBugs</h3><h3 id="4-PMD"><a href="#4-PMD" class="headerlink" title="4.PMD"></a>4.PMD</h3><p>参考资料：</p>
+<h5 id="2-3-SonarQube-简介"><a href="#2-3-SonarQube-简介" class="headerlink" title="2.3 SonarQube 简介"></a>2.3 SonarQube 简介</h5><blockquote>
+<p>SonarQube是一个用于代码质量管理的开源平台（Java开发），用于管理源代码的质量，可以从七个维度检测代码质量,通过插件形式，可以支持包括Java，C#，C/C++，PHP，PL/SQL，Cobol，Web，XML，JavaScrip，Groovy等等二十几种编程语言的代码质量管理与检测。</p>
+</blockquote>
+<p>参考资料：</p>
 <p>[1] <a href="https://docs.sonarqube.org/display/PLUG/GitHub+Plugin" target="_blank" rel="external">Github Plugin for Sonar</a></p>
 <p>[2] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">SonarQube Scanner</a></p>
 <p>[3] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins" target="_blank" rel="external">Analyzing with SonarQube Scanner for Jenkins</a></p>
@@ -533,7 +530,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -601,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-代码质量管理"><span class="nav-number">1.</span> <span class="nav-text">1.代码质量管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SonarQube"><span class="nav-number">2.</span> <span class="nav-text">2.SonarQube</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-SonarQube安装"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 SonarQube安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-SonarQube-Scanner安装"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 SonarQube Scanner安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-MySQL配置"><span class="nav-number">2.0.3.</span> <span class="nav-text">2.3 MySQL配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-SonarQube-简介"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.3 SonarQube 简介</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-FindBugs"><span class="nav-number">3.</span> <span class="nav-text">3.FindBugs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-PMD"><span class="nav-number">4.</span> <span class="nav-text">4.PMD</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-代码质量管理"><span class="nav-number">1.</span> <span class="nav-text">1.代码质量管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SonarQube"><span class="nav-number">2.</span> <span class="nav-text">2.SonarQube</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-SonarQube安装"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 SonarQube安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-SonarQube-Scanner安装"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 SonarQube Scanner安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-MySQL配置"><span class="nav-number">2.0.3.</span> <span class="nav-text">2.3 MySQL配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-SonarQube-简介"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.3 SonarQube 简介</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

@@ -255,6 +255,184 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/12/mongo-fuzhiji/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/12/mongo-fuzhiji/" itemprop="url">
+                  MongoDB 复制集
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T14:24:00+08:00">
+                2017-09-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mongodb/" itemprop="url" rel="index">
+                    <span itemprop="name">mongodb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="MongoDB复制集开启（本机）"><a href="#MongoDB复制集开启（本机）" class="headerlink" title="MongoDB复制集开启（本机）"></a>MongoDB复制集开启（本机）</h3><p>在本地开启三个mongod，当作三个服务器，分别使用作<strong>主复制集、从复制集、仲裁复制集</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:28001   //主复制集</div><div class="line">127.0.0.1:28002   //从复制集</div><div class="line">127.0.0.1:28003   //仲裁复制集</div></pre></td></tr></table></figure>
+<p><strong>1.首先建立三个文件夹分别存放数据库数据文件。</strong></p>
+<p><strong>2.分别建立各自的conf配置文件</strong></p>
+<p>配置内容如下：（三个服务器只是端口不同，其他配置相同）</p>
+<p>/data/mongodb/conf/28001.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># 端口</div><div class="line">port=28001</div><div class="line"># 绑定ip地址</div><div class="line">bind_ip=127.0.0.1</div><div class="line"># 日志文件路径</div><div class="line">logpath=/data/mongodb/log/28001.log</div><div class="line"># 数据文件存放目录</div><div class="line">dbpath=/data/mongodb/data/28001/</div><div class="line"># 以追加的方式写日志</div><div class="line">logappend=true</div><div class="line"></div><div class="line">pidfilepath=/data/mongodb/data/28001/28001.pid</div><div class="line">fork=true</div><div class="line">oplogSize=1024</div><div class="line"># 复制集名称</div><div class="line">replSet=MyMongo</div></pre></td></tr></table></figure>
+<p>其中复制集名称最重要，因为如果需要放在同一个复制集，必须保证不同的服务器的复制集名称完全相同。（<font color="red">其中replSet的S记得要大写</font>）</p>
+<p><strong>3.启动三个服务器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mongod -f /data/mongodb/conf/28001.conf</div><div class="line">mongod -f /data/mongodb/conf/28002.conf</div><div class="line">mongod -f /data/mongodb/conf/28003.conf</div></pre></td></tr></table></figure>
+<p>后面跟的是配置文件的地址，启动完成后，会出现一个fork:successful的提示信息，而且不是在前台启动的，所以要注意，可能已经启动过了。</p>
+<p>查找是否有启动可以使用以下命令查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep mongo</div></pre></td></tr></table></figure>
+<p><strong>4.初始化复制集</strong></p>
+<p>如果是第一次进行初始化，进入需要成为主复制集的服务器，这里进入28001端口</p>
+<p>进入mongo客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo localhost:28001</div></pre></td></tr></table></figure>
+<p>然后输入初始化命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rs.initiate(&#123;_id:&apos;MyMongo&apos;,members:[&#123;_id:1,host:&apos;127.0.0.1:28001&apos;&#125;]&#125;)</div></pre></td></tr></table></figure>
+<p>第一个_id：复制集的名称</p>
+<p>member：复制集服务器列表（因为其他服务器还没完成初始化，所以只有一个当前的服务器）</p>
+<p>第二个_id：指定给服务器的ID</p>
+<p>host：服务器主机地址</p>
+<p><strong>5.添加从复制集合仲裁复制集</strong></p>
+<p>完成初始化，可以看到，当前服务器的名称已经成为了primary。因为是整个复制集中第一个完成初始化的，所以该服务器成为主复制集。</p>
+<p>然后我们需要添加从复制集：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rs.add(&apos;127.0.0.1:28002&apos;)</div></pre></td></tr></table></figure>
+<p>{”ok“ : 1}添加成功</p>
+<p>调用rs.status()可以查看到复制集的情况</p>
+<p>然后我们添加仲裁复制集：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rs.addArb(&apos;127.0.0.1:28003&apos;)</div></pre></td></tr></table></figure>
+<p>{”ok“ : 1}添加成功</p>
+<p><strong>6.测试</strong></p>
+<p>Ref:</p>
+<p>[1] <a href="http://www.cnblogs.com/nicolegxt/p/6841442.html?utm_source=itdadao&amp;utm_medium=referral" target="_blank" rel="external">http://www.cnblogs.com/nicolegxt/p/6841442.html?utm_source=itdadao&amp;utm_medium=referral</a></p>
+<p>[2] <a href="http://blog.csdn.net/lichangzai/article/details/50903130" target="_blank" rel="external">http://blog.csdn.net/lichangzai/article/details/50903130</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/12/fs/fs2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2610,174 +2788,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/03/es/es_input/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/03/es/es_input/" itemprop="url">
-                  ES输入设置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-03T10:31:08+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="PDF"><a href="#PDF" class="headerlink" title="PDF"></a>PDF</h1><h3 id="1-安装PDFMiner"><a href="#1-安装PDFMiner" class="headerlink" title="1.安装PDFMiner"></a>1.安装PDFMiner</h3><p>从<a href="http://www.unixuser.org/~euske/python/pdfminer/" target="_blank" rel="external">官网</a>上下载源安装包。</p>
-<p>通过命令行，运行安装安装包。(注意需要到解压后安装包的根目录)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python setup.py install</div></pre></td></tr></table></figure>
-<p>测试是否安装成功，可以紧接着运行以下的代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pdf2txt.py samples/simple1.pdf</div></pre></td></tr></table></figure>
-<p>如果能读取PDF内容则安装成功。</p>
-<p>如果是中文、韩文、日文等特殊文字PDF，则需要额外安装特殊文字补充包。</p>
-<p>紧接着上述的安装程序，也是在根目录下运行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ make cmap</div><div class="line">...</div><div class="line">$ python setup.py install</div></pre></td></tr></table></figure>
-<p>运行完这两行之后，则可以正常运行PDFMiner了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="comment">#-*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> pdfminer.converter <span class="keyword">import</span> PDFPageAggregator</div><div class="line"><span class="keyword">from</span> pdfminer.pdfparser <span class="keyword">import</span> PDFParser</div><div class="line"><span class="keyword">from</span> pdfminer.pdfdocument <span class="keyword">import</span> PDFDocument</div><div class="line"><span class="keyword">from</span> pdfminer.pdfpage <span class="keyword">import</span> PDFPage</div><div class="line"><span class="keyword">from</span> pdfminer.pdfpage <span class="keyword">import</span> PDFTextExtractionNotAllowed</div><div class="line"><span class="keyword">from</span> pdfminer.pdfinterp <span class="keyword">import</span> PDFResourceManager</div><div class="line"><span class="keyword">from</span> pdfminer.pdfinterp <span class="keyword">import</span> PDFPageInterpreter</div><div class="line"><span class="keyword">from</span> pdfminer.layout <span class="keyword">import</span> *</div><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line"><span class="comment">#打开一个pdf文件</span></div><div class="line">fp = open(<span class="string">u'F:\\pdf\\2013\\000001_平安银行_2013年年度报告_2562.pdf'</span>, <span class="string">'rb'</span>)</div><div class="line"><span class="comment">#创建一个PDF文档解析器对象</span></div><div class="line">parser = PDFParser(fp)</div><div class="line"><span class="comment">#创建一个PDF文档对象存储文档结构</span></div><div class="line"><span class="comment">#提供密码初始化，没有就不用传该参数</span></div><div class="line"><span class="comment">#document = PDFDocument(parser, password)</span></div><div class="line">document = PDFDocument(parser)</div><div class="line"><span class="comment">#检查文件是否允许文本提取</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> document.is_extractable:</div><div class="line">    <span class="keyword">raise</span> PDFTextExtractionNotAllowed</div><div class="line"><span class="comment">#创建一个PDF资源管理器对象来存储共享资源</span></div><div class="line"><span class="comment">#caching = False不缓存</span></div><div class="line">rsrcmgr = PDFResourceManager(caching = <span class="keyword">False</span>)</div><div class="line"><span class="comment"># 创建一个PDF设备对象</span></div><div class="line">laparams = LAParams()</div><div class="line"><span class="comment"># 创建一个PDF页面聚合对象</span></div><div class="line">device = PDFPageAggregator(rsrcmgr, laparams=laparams)</div><div class="line"><span class="comment">#创建一个PDF解析器对象</span></div><div class="line">interpreter = PDFPageInterpreter(rsrcmgr, device)</div><div class="line"><span class="comment">#处理文档当中的每个页面</span></div><div class="line"></div><div class="line"><span class="comment"># doc.get_pages() 获取page列表</span></div><div class="line"><span class="comment">#for i, page in enumerate(document.get_pages()):</span></div><div class="line"><span class="comment">#PDFPage.create_pages(document) 获取page列表的另一种方式</span></div><div class="line">replace=re.compile(<span class="string">r'\s+'</span>);</div><div class="line"><span class="comment"># 循环遍历列表，每次处理一个page的内容</span></div><div class="line"><span class="keyword">for</span> page <span class="keyword">in</span> PDFPage.create_pages(document):</div><div class="line">    interpreter.process_page(page)</div><div class="line">    <span class="comment"># 接受该页面的LTPage对象</span></div><div class="line">    layout=device.get_result()</div><div class="line">    <span class="comment"># 这里layout是一个LTPage对象 里面存放着 这个page解析出的各种对象</span></div><div class="line">    <span class="comment"># 一般包括LTTextBox, LTFigure, LTImage, LTTextBoxHorizontal 等等</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> layout:</div><div class="line">        <span class="comment">#如果x是水平文本对象的话</span></div><div class="line">        <span class="keyword">if</span>(isinstance(x,LTTextBoxHorizontal)):</div><div class="line">            text=re.sub(replace,<span class="string">''</span>,x.get_text())</div><div class="line">            <span class="keyword">if</span> len(text)!=<span class="number">0</span>:</div><div class="line">                <span class="keyword">print</span> text</div></pre></td></tr></table></figure>
-<p>可是如果内容物是中文的话，解析出来的结果是cid编码（adobe公司特有编码）</p>
-<p>同时需要解析出文档的目录：</p>
-<p>使用document.get_outlines()获取并另存为</p>
-<h1 id="DOC-amp-DOCX"><a href="#DOC-amp-DOCX" class="headerlink" title="DOC&amp;DOCX"></a>DOC&amp;DOCX</h1><p>pip install python-docx</p>
-<p>安装第三方库<a href="https://python-docx.readthedocs.io/" target="_blank" rel="external">python-docx</a></p>
-<p>直接使用可以读取.docx文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</div><div class="line">doc = Document(<span class="string">r'/Users/alan/Downloads/123.docx'</span>)</div><div class="line">para = doc.paragraphs</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> para:</div><div class="line">    <span class="keyword">print</span> i.text</div></pre></td></tr></table></figure>
-<p>.doc（word2003之前版本）的处理方法则比较复杂</p>
-<p>Linux用户可以下载<a href="http://www.winfield.demon.nl/#Programmer" target="_blank" rel="external">antiword</a>第三方包进行直接读取。（未验证）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">安装antiword官方站：http://www.winfield.demon.nl/</div><div class="line">下载地：http://www.winfield.demon.nl/linux/antiword-0.37.tar.gz</div><div class="line">下载完，解压，进入目录使用命令 </div><div class="line">make &amp;&amp; make install</div><div class="line"></div><div class="line">#!/usr/bin/env python</div><div class="line"># coding:utf-8</div><div class="line">import subprocess</div><div class="line">word = &quot;test.doc&quot;</div><div class="line">output = subprocess.check_output([&quot;antiword&quot;, word])</div><div class="line">print(output)</div><div class="line"></div><div class="line">作者：Jun</div><div class="line">链接：https://www.zhihu.com/question/56834115/answer/158115736</div><div class="line">来源：知乎</div><div class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div></pre></td></tr></table></figure>
-<p><a href="https://www.zhihu.com/question/56834115/answer/150658178" target="_blank" rel="external">用LibreOffice(Ubuntu自带)直接转docx再用python-docx，蠢了点但还能用</a></p>
-<h1 id="PPTX"><a href="#PPTX" class="headerlink" title="PPTX"></a>PPTX</h1><p>pip install python-pptx</p>
-<p>安装第三方库<a href="https://python-pptx.readthedocs.io/en/latest/index.html" target="_blank" rel="external">python-pptx</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pptx <span class="keyword">import</span> Presentation</div><div class="line">ppt = Presentation(<span class="string">'1.pptx'</span>)</div><div class="line">text_runs = []</div><div class="line"></div><div class="line"><span class="keyword">for</span> slide <span class="keyword">in</span> prs.slides:</div><div class="line">    <span class="keyword">for</span> shape <span class="keyword">in</span> slide.shapes:</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> shape.has_text_frame:</div><div class="line">            <span class="keyword">continue</span></div><div class="line">        <span class="keyword">for</span> paragraph <span class="keyword">in</span> shape.text_frame.paragraphs:</div><div class="line">            <span class="keyword">for</span> run <span class="keyword">in</span> paragraph.runs:</div><div class="line">                text_runs.append(run.text)</div><div class="line"><span class="keyword">print</span> text_runs</div></pre></td></tr></table></figure>
-<p>xls2csv</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2827,7 +2837,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

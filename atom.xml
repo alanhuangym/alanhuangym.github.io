@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2017-12-27T07:22:08.000Z</updated>
+  <updated>2018-01-08T02:13:02.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -16,11 +16,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Jenkins学习笔记8-Python服务的完整持续部署流程</title>
+    <link href="http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/"/>
+    <id>http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/</id>
+    <published>2018-01-04T16:00:00.000Z</published>
+    <updated>2018-01-08T02:13:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>现在我们已经完成了整个流程的学习，现在我们应用一个简单的python服务，来测试一下效果。</p>
+<h3 id="1-整体流程检视"><a href="#1-整体流程检视" class="headerlink" title="1. 整体流程检视"></a>1. 整体流程检视</h3><ol>
+<li><p>搭建好相应的环境：</p>
+<p>gitlab服务器、jenkins服务器、docker服务器（和相应的redis服务和数据库服务）</p>
+</li>
+</ol>
+<p>业务流程如下：</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/uml1.pdf" alt=""></p>
+<p>Reference:</p>
+<p>[1] <a href="http://www.jianshu.com/p/b524b151d35f" target="_blank" rel="external">Jenkins使用简易教程</a></p>
+<p>[2] <a href="https://testerhome.com/topics/10003" target="_blank" rel="external">https://testerhome.com/topics/10003</a></p>
+<p>[3] <a href="https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/" target="_blank" rel="external">https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/</a></p>
+<p>[4] <a href="https://yq.aliyun.com/articles/80459" target="_blank" rel="external">https://yq.aliyun.com/articles/80459</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现在我们已经完成了整个流程的学习，现在我们应用一个简单的python服务，来测试一下效果。&lt;/p&gt;
+&lt;h3 id=&quot;1-整体流程检视&quot;&gt;&lt;a href=&quot;#1-整体流程检视&quot; class=&quot;headerlink&quot; title=&quot;1. 整体流程检视&quot;&gt;&lt;/a&gt;1. 整体流程检
+    
+    </summary>
+    
+      <category term="jenkins" scheme="http://www.pirrla.cn/categories/jenkins/"/>
+    
+    
+      <category term="jenkins" scheme="http://www.pirrla.cn/tags/jenkins/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Jenkins学习笔记7-Docker WebGUI管理</title>
     <link href="http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/"/>
     <id>http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/</id>
     <published>2017-12-23T16:00:00.000Z</published>
-    <updated>2017-12-27T07:22:08.000Z</updated>
+    <updated>2018-01-08T01:48:05.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-Docker-WebGUI管理"><a href="#1-Docker-WebGUI管理" class="headerlink" title="1. Docker WebGUI管理"></a>1. Docker WebGUI管理</h3><ol>
 <li><p><a href="https://github.com/shipyard/shipyard" target="_blank" rel="external">shipyard</a>国产，但是20天前刚刚宣布停止更新</p>
@@ -37,6 +73,16 @@
 </ol>
 <p>此处选择了portainer。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins19.png" alt=""></p>
+<h3 id="2-Portainer"><a href="#2-Portainer" class="headerlink" title="2.Portainer"></a>2.Portainer</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>根据<a href="https://www.portainer.io/install.html" target="_blank" rel="external">官方教程</a>，使用portainer也是非常方便，使用它的官方docker镜像即可。(注意使用的是本机的9000端口，如有需要请修改)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</div><div class="line">`</div></pre></td></tr></table></figure>
+<p><font color="red">注意：</font><code>-v /var/run/docker.sock:/var/run/docker.sock</code>命令只能适用于linux环境</p>
+<p>当启动完成后，portainer即在本机9000端口服务，首次进入后我们需要进行管理人员的账户创建。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins46.png" alt=""></p>
+<p>之后我们就需要选择进行管理的docker环境（本地/远程）</p>
+<p>如果是远程的话，我们需要输入目标docker服务器的地址、端口等信息，同时需要确保目标端的docker开启了TCP端口暴露设置，详情参考docker官方文档。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins47.png" alt=""></p>
+<p>如果是本地的话就简单很多，直接选择连接即可，但是要注意，由于本操作需要开启portainer的docker镜像时，使用<code>-v /var/run/docker.sock:/var/run/docker.sock</code>命令才可以，但是Windows系统下无法执行该命令，所以Windows系统无法连接本地的docker。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins48.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -58,7 +104,7 @@
     <link href="http://www.pirrla.cn/2017/12/23/jenkins/jenkins6/"/>
     <id>http://www.pirrla.cn/2017/12/23/jenkins/jenkins6/</id>
     <published>2017-12-22T16:00:00.000Z</published>
-    <updated>2018-01-05T01:14:58.000Z</updated>
+    <updated>2018-01-05T01:17:28.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-搭建gitlab仓库"><a href="#1-搭建gitlab仓库" class="headerlink" title="1. 搭建gitlab仓库"></a>1. 搭建gitlab仓库</h3><h5 id="1-1-安装前准备工作"><a href="#1-1-安装前准备工作" class="headerlink" title="1.1 安装前准备工作"></a>1.1 安装前准备工作</h5><p>由于需要实现代码仓库的质量管理操作，所以我们需要搭建一个gitlab的仓库。</p>
 <blockquote>
@@ -215,7 +261,7 @@
 <p>[5] <a href="https://docs.gitlab.com/ee/administration/custom_hooks.html" target="_blank" rel="external">Custom Git Hooks </a></p>
 <p>[6] <a href="https://www.zhihu.com/question/65604891/answer/232935144" target="_blank" rel="external">https://www.zhihu.com/question/65604891/answer/232935144</a></p>
 <p>[7] <a href="https://git-scm.com/book/zh/v2/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-Git-%E5%AF%B9%E8%B1%A1" target="_blank" rel="external">https://git-scm.com/book/zh/v2/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-Git-%E5%AF%B9%E8%B1%A1</a></p>
-<p>[8] <a href="https://git-scm.com/book/zh/v2/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-Git-%E5%AF%B9%E8%B1%A1" target="_blank" rel="external">https://git-scm.com/book/zh/v2/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-Git-%E5%AF%B9%E8%B1%A1</a></p>
+<p>[8] <a href="http://blog.jobbole.com/26209/" target="_blank" rel="external">http://blog.jobbole.com/26209/</a></p>
 ]]></content>
     
     <summary type="html">
@@ -234,11 +280,11 @@
   </entry>
   
   <entry>
-    <title>Jenkins学习笔记5-官方用法pipeline</title>
+    <title>Jenkins学习笔记5-官方用法pipeline(可选)</title>
     <link href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/"/>
     <id>http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/</id>
     <published>2017-12-21T16:00:00.000Z</published>
-    <updated>2017-12-25T01:20:11.000Z</updated>
+    <updated>2018-01-08T01:55:57.000Z</updated>
     
     <content type="html"><![CDATA[<p>官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。</p>
 <p>Reference:</p>
@@ -268,7 +314,7 @@
     <link href="http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/"/>
     <id>http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/</id>
     <published>2017-12-20T16:00:00.000Z</published>
-    <updated>2017-12-27T07:37:47.000Z</updated>
+    <updated>2018-01-05T07:11:17.000Z</updated>
     
     <content type="html"><![CDATA[<p>当我们已经完成了了尝试重启Node.js服务之后，我们应该发现，远程的代码仓库对于node.js的代码，是没有保存Node Modules的。这个文件夹包含的都是node.js需要的第三方的环境库等的包，所以不适合放入远程仓库里。</p>
 <p>于是我们每次都需要执行一次<code>npm install</code>的操作，确保下载全部的包。但是这样的操作十分耗时耗力，所以我们考虑到使用docker对我们的基础环境进行打包，生成dockerfile和dockerimage，从而就不需要每次都对生产环境进行更新操作。</p>
@@ -330,8 +376,10 @@
 <h5 id="3-2-编写jenkins设置"><a href="#3-2-编写jenkins设置" class="headerlink" title="3.2 编写jenkins设置"></a>3.2 编写jenkins设置</h5><p>之前的设置跟<a href="http://pirrla.cn/2017/12/18/jenkins/jenkins1/" target="_blank" rel="external">第一篇</a>设置一样，设定好每分钟自动从代码库获取更新</p>
 <p>然后到了构建操作脚本</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins17.png" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#!/bin/sh</div><div class="line">id</div><div class="line">set +e</div><div class="line">echo &apos;&gt;&gt;&gt; Get old container id&apos;</div><div class="line"></div><div class="line"># 查找正在运行的docker容器</div><div class="line">CID=$(/usr/local/bin/docker ps | grep &quot;my_nodejs&quot; | awk &apos;&#123;print $1&#125;&apos;)</div><div class="line"># 获取使用“my_nodejs”镜像的容器id</div><div class="line">echo $CID</div><div class="line"></div><div class="line"># 根据新的代码，构建新的docker</div><div class="line">/usr/local/bin/docker build -t my_nodejs .</div><div class="line"></div><div class="line"># 停止旧的容器</div><div class="line">if [ &quot;$CID&quot; != &quot;&quot; ];then</div><div class="line">  /usr/local/bin/docker stop $CID</div><div class="line">fi</div><div class="line"></div><div class="line"># 启动新容器</div><div class="line">/usr/local/bin/docker run -p 8000:8000 -d my_nodejs</div><div class="line"></div><div class="line"># 删除旧容器</div><div class="line">/usr/local/bin/docker rm $CID</div><div class="line"># 删除旧镜像</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#!/bin/sh</div><div class="line">id</div><div class="line">set +e</div><div class="line">echo &apos;&gt;&gt;&gt; Get old container id&apos;</div><div class="line"></div><div class="line"># 查找正在运行的docker容器</div><div class="line">CID=$(/usr/local/bin/docker ps | grep &quot;my_nodejs&quot; | awk &apos;&#123;print $1&#125;&apos;)</div><div class="line"># 获取使用“my_nodejs”镜像的容器id</div><div class="line">echo $CID</div><div class="line"></div><div class="line"># 根据新的代码，构建新的docker</div><div class="line">/usr/local/bin/docker build -t my_nodejs .</div><div class="line"></div><div class="line"># 停止旧的容器</div><div class="line">if [ &quot;$CID&quot; != &quot;&quot; ];then</div><div class="line">  /usr/local/bin/docker stop $CID</div><div class="line">  # 删除旧容器</div><div class="line">/usr/local/bin/docker rm $CID</div><div class="line">fi</div><div class="line"></div><div class="line"># 启动新容器</div><div class="line">/usr/local/bin/docker run -p 8000:8000 -d my_nodejs</div><div class="line"></div><div class="line"></div><div class="line"># 删除旧镜像</div></pre></td></tr></table></figure>
 <p>这样就完成了一个自动化部署docker的操作。</p>
+<p>注意，这里只删除了容器，但是每一次构建都会产生新的镜像，旧镜像还在，但是名字变为了none，所以我们还需要定期删除镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 删除旧镜像</div><div class="line">docker images|grep none|awk &apos;&#123;print $3 &#125;&apos;|xargs docker rmi</div></pre></td></tr></table></figure>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins15.png" alt=""></p>
 <p>References:</p>
 <p>[1] <a href="http://www.cnblogs.com/Leo_wl/p/4314792.html" target="_blank" rel="external">使用Jenkins来构建Docker容器</a></p>
@@ -368,7 +416,7 @@
     <link href="http://www.pirrla.cn/2017/12/20/jenkins/jenkins3/"/>
     <id>http://www.pirrla.cn/2017/12/20/jenkins/jenkins3/</id>
     <published>2017-12-19T16:00:00.000Z</published>
-    <updated>2017-12-21T08:44:22.000Z</updated>
+    <updated>2018-01-08T01:53:01.000Z</updated>
     
     <content type="html"><![CDATA[<p>我们在之前的文章已经完成了当github上python代码有新的push操作之后，jenkins会自动pull最新的代码，并进行编译执行。因为python代码不能体现服务的持续展现，所以我们现在选择一个网页网站的node.js页面进行尝试。</p>
 <h3 id="1-项目代码简介"><a href="#1-项目代码简介" class="headerlink" title="1.项目代码简介"></a>1.项目代码简介</h3><p>简单的网页面显示，没有具体的数据存储操作</p>
@@ -426,10 +474,9 @@
     <link href="http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/"/>
     <id>http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/</id>
     <published>2017-12-18T16:00:00.000Z</published>
-    <updated>2017-12-27T07:22:54.000Z</updated>
+    <updated>2018-01-08T01:52:24.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="1-代码质量管理"><a href="#1-代码质量管理" class="headerlink" title="1.代码质量管理"></a>1.代码质量管理</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins1.png" alt=""></p>
-<p>此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库前，进行代码质量分析。</p>
+    <content type="html"><![CDATA[<h3 id="1-代码质量管理"><a href="#1-代码质量管理" class="headerlink" title="1.代码质量管理"></a>1.代码质量管理</h3><p>此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库后，进行代码质量分析。</p>
 <p>此处的代码质量不单单指有无拼写错误、格式错误等，还包括代码重复率、鲁棒性、注释率等等的指标。所以单纯的syntax错误已经不能满足我们的需求，我们希望团队能够写出高效的代码。</p>
 <h3 id="2-SonarQube"><a href="#2-SonarQube" class="headerlink" title="2.SonarQube"></a>2.SonarQube</h3><p>Sonar是一个用于代码质量管理的开放平台，同样支持很多的插件，可以集成不同的测试工具，从而对多种语言(包括Java、C/C++，Javascript，C#等)的代码进行分析，并且以数据可视化的界面进行显示，提高了代码的审查率。</p>
 <h5 id="2-1-SonarQube安装"><a href="#2-1-SonarQube安装" class="headerlink" title="2.1 SonarQube安装"></a>2.1 SonarQube安装</h5><p>可以到<a href="https://www.sonarqube.org/downloads/" target="_blank" rel="external">官网</a>下载最新的LTS包，Windows平台的话可以直接执行wrapper.exe文件，即可启动Sonar服务，unix平台的可以通过<code>./sonar.sh start</code>启动服务。</p>
@@ -465,7 +512,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sonar.jdbc.username=sonar            #数据库用户</div><div class="line">sonar.jdbc.password=sonar@pw     #数据库密码</div><div class="line"></div><div class="line">sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;character    Encoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance</div></pre></td></tr></table></figure>
 <p>只需要把数据库的用户名和密码填上，然后解除SQL的注释就可以了。</p>
 <p>可能还需要将数据库驱动放入<code>sonarqube-6.7/extensions/jdbc-driver/mysql</code>中</p>
-<h5 id="2-3-SonarQube-简介"><a href="#2-3-SonarQube-简介" class="headerlink" title="2.3 SonarQube 简介"></a>2.3 SonarQube 简介</h5><h3 id="3-FindBugs"><a href="#3-FindBugs" class="headerlink" title="3.FindBugs"></a>3.FindBugs</h3><h3 id="4-PMD"><a href="#4-PMD" class="headerlink" title="4.PMD"></a>4.PMD</h3><p>参考资料：</p>
+<h5 id="2-3-SonarQube-简介"><a href="#2-3-SonarQube-简介" class="headerlink" title="2.3 SonarQube 简介"></a>2.3 SonarQube 简介</h5><blockquote>
+<p>SonarQube是一个用于代码质量管理的开源平台（Java开发），用于管理源代码的质量，可以从七个维度检测代码质量,通过插件形式，可以支持包括Java，C#，C/C++，PHP，PL/SQL，Cobol，Web，XML，JavaScrip，Groovy等等二十几种编程语言的代码质量管理与检测。</p>
+</blockquote>
+<p>参考资料：</p>
 <p>[1] <a href="https://docs.sonarqube.org/display/PLUG/GitHub+Plugin" target="_blank" rel="external">Github Plugin for Sonar</a></p>
 <p>[2] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">SonarQube Scanner</a></p>
 <p>[3] <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins" target="_blank" rel="external">Analyzing with SonarQube Scanner for Jenkins</a></p>
@@ -477,7 +527,8 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;1-代码质量管理&quot;&gt;&lt;a href=&quot;#1-代码质量管理&quot; class=&quot;headerlink&quot; title=&quot;1.代码质量管理&quot;&gt;&lt;/a&gt;1.代码质量管理&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://ondsf10qe.bkt.clouddn.com/jen
+      &lt;h3 id=&quot;1-代码质量管理&quot;&gt;&lt;a href=&quot;#1-代码质量管理&quot; class=&quot;headerlink&quot; title=&quot;1.代码质量管理&quot;&gt;&lt;/a&gt;1.代码质量管理&lt;/h3&gt;&lt;p&gt;此次代码质量管理的需求，是在用户将本地的代码提交到远程仓库后，进行代码质量分析。&lt;/p&gt;
+&lt;
     
     </summary>
     
@@ -493,14 +544,14 @@
     <link href="http://www.pirrla.cn/2017/12/18/jenkins/jenkins1/"/>
     <id>http://www.pirrla.cn/2017/12/18/jenkins/jenkins1/</id>
     <published>2017-12-17T16:00:00.000Z</published>
-    <updated>2018-01-04T09:36:02.000Z</updated>
+    <updated>2018-01-08T01:49:11.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-敏捷开发"><a href="#1-敏捷开发" class="headerlink" title="1.敏捷开发"></a>1.敏捷开发</h3><p>普通的程序开发，是按照瀑布流一样的流程往下走的。</p>
 <p>但是时至今日，客户的需求变化速度非常之快，而且生产环境也在不断变化，所以以往的单一的以计划来完成软件开发已经不可取了。</p>
 <p>所以我们需要采取敏捷开发，<em>*</em></p>
-<h5 id="1-1-什么是持续集成："><a href="#1-1-什么是持续集成：" class="headerlink" title="1.1 什么是持续集成："></a>1.1 什么是持续集成：</h5><p>持续集成是指开发者在代码的开发过程中，可以频繁的将代码部署集成到主干，并进程自动化测试<br><img src="http://static.zybuluo.com/abcdocker/141k7ufqcy5zmgjvzlsgx444/image_1b4gk79111oqbf1l16qd80kqqh8q.png" alt="image_1b4gk79111oqbf1l16qd80kqqh8q.png-73.4kB"></p>
-<h5 id="1-2-什么是持续交付："><a href="#1-2-什么是持续交付：" class="headerlink" title="1.2 什么是持续交付："></a>1.2 什么是持续交付：</h5><p>持续交付指的是在持续集成的环境基础之上，将代码部署到预生产环境<br><img src="http://static.zybuluo.com/abcdocker/z47rzhss99x3gxahr93ovn45/image_1b4gk7hef1v4n6ino701pruj9n97.png" alt="image_1b4gk7hef1v4n6ino701pruj9n97.png-133.6kB"></p>
-<h5 id="1-3-持续部署："><a href="#1-3-持续部署：" class="headerlink" title="1.3 持续部署："></a>1.3 持续部署：</h5><p>在持续交付的基础上，把部署到生产环境的过程自动化，持续部署和持续交付的区别就是最终部署到生产环境是自动化的。<br><img src="http://static.zybuluo.com/abcdocker/4i4r6iwdisn4zmsmhqewxoew/image_1b4gk7o2t162hb71vcg1bb5p989k.png" alt="image_1b4gk7o2t162hb71vcg1bb5p989k.png-132.2kB"></p>
+<h5 id="1-1-什么是持续集成："><a href="#1-1-什么是持续集成：" class="headerlink" title="1.1 什么是持续集成："></a>1.1 什么是持续集成：</h5><p>持续集成是指开发者在代码的开发过程中，可以频繁的将代码部署集成到主干，并进程自动化测试<br><img src="http://ondsf10qe.bkt.clouddn.com/jenkins40.png" alt=""></p>
+<h5 id="1-2-什么是持续交付："><a href="#1-2-什么是持续交付：" class="headerlink" title="1.2 什么是持续交付："></a>1.2 什么是持续交付：</h5><p>持续交付指的是在持续集成的环境基础之上，将代码部署到预生产环境<br><img src="http://ondsf10qe.bkt.clouddn.com/jenkins41.png" alt=""></p>
+<h5 id="1-3-持续部署："><a href="#1-3-持续部署：" class="headerlink" title="1.3 持续部署："></a>1.3 持续部署：</h5><p>在持续交付的基础上，把部署到生产环境的过程自动化，持续部署和持续交付的区别就是最终部署到生产环境是自动化的。<br><img src="http://ondsf10qe.bkt.clouddn.com/jenkins42.png" alt=""></p>
 <h3 id="2-Jenkins入门"><a href="#2-Jenkins入门" class="headerlink" title="2.Jenkins入门"></a>2.Jenkins入门</h3><h5 id="2-1-Jenkins安装"><a href="#2-1-Jenkins安装" class="headerlink" title="2.1 Jenkins安装"></a>2.1 Jenkins安装</h5><p>Jenkins是Java编写的，所以需要安装JDK。可以去<a href="https://www.oracle.com/java/index.html" target="_blank" rel="external">Oracle官网</a>进行下载</p>
 <p>在<a href="https://jenkins.io/" target="_blank" rel="external">Jenkins官网</a>下载.war文件，然后直接在命令行运行<code>java -jar jenkins.war</code>，如果需要后天启动可以<code>nohup java -jar jenkins.war &amp;</code></p>
 <p>当命令行出现<code>INFO: Jenkins is fully up and running</code>即已经成功启动了服务。</p>
@@ -511,18 +562,20 @@
 <h5 id="2-2-Jenkins启动"><a href="#2-2-Jenkins启动" class="headerlink" title="2.2 Jenkins启动"></a>2.2 Jenkins启动</h5><p>启动了Jenkins服务之后，我们登录<code>localhost:8080</code>提示需要输入安全token。</p>
 <p>根据提示，安全token在安装完jenkins会在本地的文件夹当中，例如macos会存放在<code>/Users/Shard/Jenkins/home/secrets/initialAdminPassword</code></p>
 <p>输入完密码之后，会提示安装建议安装的插件。</p>
-<p><img src="http://static.zybuluo.com/abcdocker/2dtjyesj3ae5zmyhxmer2kl2/image_1b4gkgcvk1c641d3k1e761jn6h10ae.png" alt=""></p>
+<font color="red">如果安装推荐失败，只能手动一个个安装，所以推荐手动删除jenkins目录，重新启动war包</font>
+
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins43.png" alt=""></p>
 <p>然后会提示创建一个管理员账户</p>
-<p><img src="http://static.zybuluo.com/abcdocker/wkz0tuy8b3855c1q3s64vd7x/image_1b4gkkuopf351o7fltt17on13jbl.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins44.png" alt=""></p>
 <p>创建完成则正式进入jenkins。</p>
-<p><img src="http://static.zybuluo.com/abcdocker/tcz7eoamylmpjl1dekyzt6d0/image_1b4gkl8sf1o1m12b9h9q1p85hsc2.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins45.png" alt=""></p>
 <p>**</p>
 <p>macos如果遇到没有权限进入的文件夹，右键get info 然后添加权限用户即可</p>
 <p>例如配置jenkins需要进入的<code>/Users/Shard/Jenkins/home/secrets</code></p>
 <p>**</p>
 <h5 id="2-3-Jenkins的简介"><a href="#2-3-Jenkins的简介" class="headerlink" title="2.3 Jenkins的简介"></a>2.3 Jenkins的简介</h5><p>Jenkins的关闭、重启等操作，可以通过查找进程，获取pid号，然后kill进程来完成。</p>
-<p>但是更便捷的方法是，在jenkins的url中执行一些命令来操作jenkins，</p>
-<p>如下<a href="http://[jenkins-server]/[command" target="_blank" rel="external">http://[jenkins-server]/[command</a>] 命令可以为：</p>
+<p>但是更便捷的方法是，在jenkins的url中执行一些命令来操作jenkins</p>
+<p>如下<code>http://[jenkins-server]/[command]</code> 命令可以为：</p>
 <ul>
 <li><code>exit</code> 关闭 jenkins</li>
 <li><code>restart</code> 重启 jenkins</li>
@@ -530,7 +583,11 @@
 </ul>
 <p>Jenkins的目录（例如macos在<code>/Users/Shared/Jenkins</code>）中的<code>Jenkins/Home/jobs</code>是jenkins的核心内容，包含了jenkins的项目的配置、构建日志等重要信息，对jenkins进行备份，主要备份该文件夹即可。</p>
 <p>Jenkins其实是一个开源的平台，主要的功能实现都是依靠插件完成，所以平台的设置没有太多，比较重要的是插件设置，所以我们将对使用到的具体的插件设置在后面讲述。</p>
-<h5 id="2-4-当第一次启动完成后，后续启动-MacOS"><a href="#2-4-当第一次启动完成后，后续启动-MacOS" class="headerlink" title="2.4 当第一次启动完成后，后续启动(MacOS)"></a>2.4 当第一次启动完成后，后续启动(MacOS)</h5><h3 id="3-简易Python脚本启动"><a href="#3-简易Python脚本启动" class="headerlink" title="3.简易Python脚本启动"></a>3.简易Python脚本启动</h3><p>首先我们点击左上角的<strong>New Item</strong>，新建一个job</p>
+<h5 id="2-4-当第一次启动完成后，后续启动-MacOS"><a href="#2-4-当第一次启动完成后，后续启动-MacOS" class="headerlink" title="2.4 当第一次启动完成后，后续启动(MacOS)"></a>2.4 当第一次启动完成后，后续启动(MacOS)</h5><p><code>/Users/用户/.jenkins</code>是程序文件夹</p>
+<p><code>/Library/Application Support/Jenkins</code></p>
+<p><code>/Library/LaunchDaemon/jenkins</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">取消开机启动</div><div class="line">$ sudo launchctl unload -w /Library/LaunchDaemons/org.jenkins-ci.plist </div><div class="line"></div><div class="line">设置开机启动</div><div class="line">$ sudo launchctl load -w /Library/LaunchDaemons/org.jenkins-ci.plist</div></pre></td></tr></table></figure>
+<h3 id="3-简易Python脚本启动"><a href="#3-简易Python脚本启动" class="headerlink" title="3.简易Python脚本启动"></a>3.简易Python脚本启动</h3><p>首先我们点击左上角的<strong>New Item</strong>，新建一个job</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins2.png" alt=""></p>
 <p>我们需要对这个job命名，因为是一个简单的实验项目，所以我们选择的是<strong>Freestyle project</strong></p>
 <p>其中的<strong>Pipeline</strong>其实是官方推荐的持续部署的写法，但是有其特殊的编写语法，所以我们会在后面再去使用</p>
@@ -618,7 +675,7 @@
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins10.png" alt=""></p>
 <p>至此，这个job就简单设置完成了，每当检测到远程代码仓库有更新时，进行代码构建，输出到控制台。</p>
 <p>这是一个简单的python程序。</p>
-<h3 id="4-Jenkins的master-slave模型"><a href="#4-Jenkins的master-slave模型" class="headerlink" title="4. Jenkins的master-slave模型"></a>4. Jenkins的master-slave模型</h3><p><img src="http://images.cnblogs.com/cnblogs_com/itech/build/jenkinsslavetpye.PNG" alt=""></p>
+<h3 id="4-Jenkins的master-slave模型"><a href="#4-Jenkins的master-slave模型" class="headerlink" title="4. Jenkins的master-slave模型"></a>4. Jenkins的master-slave模型</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins39.png" alt=""></p>
 <p>Jenkins也有分布式的构建，模式是master-slave的模型，master主管所有的job的运行情况。slave可以设置成不同的生产环境，master分配job到slave中，实现相应的操作。</p>
 <p>Reference：</p>
 <p>[1] <a href="http://blog.csdn.net/abcdocker/article/category/6638595" target="_blank" rel="external">持续集成 by www.abcdocker.com</a></p>
@@ -2069,54 +2126,6 @@
     
     
       <category term="elasticsearch" scheme="http://www.pirrla.cn/tags/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ES输入设置</title>
-    <link href="http://www.pirrla.cn/2017/08/03/es/es_input/"/>
-    <id>http://www.pirrla.cn/2017/08/03/es/es_input/</id>
-    <published>2017-08-03T02:31:08.000Z</published>
-    <updated>2017-08-07T08:58:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="PDF"><a href="#PDF" class="headerlink" title="PDF"></a>PDF</h1><h3 id="1-安装PDFMiner"><a href="#1-安装PDFMiner" class="headerlink" title="1.安装PDFMiner"></a>1.安装PDFMiner</h3><p>从<a href="http://www.unixuser.org/~euske/python/pdfminer/" target="_blank" rel="external">官网</a>上下载源安装包。</p>
-<p>通过命令行，运行安装安装包。(注意需要到解压后安装包的根目录)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python setup.py install</div></pre></td></tr></table></figure>
-<p>测试是否安装成功，可以紧接着运行以下的代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pdf2txt.py samples/simple1.pdf</div></pre></td></tr></table></figure>
-<p>如果能读取PDF内容则安装成功。</p>
-<p>如果是中文、韩文、日文等特殊文字PDF，则需要额外安装特殊文字补充包。</p>
-<p>紧接着上述的安装程序，也是在根目录下运行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ make cmap</div><div class="line">...</div><div class="line">$ python setup.py install</div></pre></td></tr></table></figure>
-<p>运行完这两行之后，则可以正常运行PDFMiner了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="comment">#-*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> pdfminer.converter <span class="keyword">import</span> PDFPageAggregator</div><div class="line"><span class="keyword">from</span> pdfminer.pdfparser <span class="keyword">import</span> PDFParser</div><div class="line"><span class="keyword">from</span> pdfminer.pdfdocument <span class="keyword">import</span> PDFDocument</div><div class="line"><span class="keyword">from</span> pdfminer.pdfpage <span class="keyword">import</span> PDFPage</div><div class="line"><span class="keyword">from</span> pdfminer.pdfpage <span class="keyword">import</span> PDFTextExtractionNotAllowed</div><div class="line"><span class="keyword">from</span> pdfminer.pdfinterp <span class="keyword">import</span> PDFResourceManager</div><div class="line"><span class="keyword">from</span> pdfminer.pdfinterp <span class="keyword">import</span> PDFPageInterpreter</div><div class="line"><span class="keyword">from</span> pdfminer.layout <span class="keyword">import</span> *</div><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line"><span class="comment">#打开一个pdf文件</span></div><div class="line">fp = open(<span class="string">u'F:\\pdf\\2013\\000001_平安银行_2013年年度报告_2562.pdf'</span>, <span class="string">'rb'</span>)</div><div class="line"><span class="comment">#创建一个PDF文档解析器对象</span></div><div class="line">parser = PDFParser(fp)</div><div class="line"><span class="comment">#创建一个PDF文档对象存储文档结构</span></div><div class="line"><span class="comment">#提供密码初始化，没有就不用传该参数</span></div><div class="line"><span class="comment">#document = PDFDocument(parser, password)</span></div><div class="line">document = PDFDocument(parser)</div><div class="line"><span class="comment">#检查文件是否允许文本提取</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> document.is_extractable:</div><div class="line">    <span class="keyword">raise</span> PDFTextExtractionNotAllowed</div><div class="line"><span class="comment">#创建一个PDF资源管理器对象来存储共享资源</span></div><div class="line"><span class="comment">#caching = False不缓存</span></div><div class="line">rsrcmgr = PDFResourceManager(caching = <span class="keyword">False</span>)</div><div class="line"><span class="comment"># 创建一个PDF设备对象</span></div><div class="line">laparams = LAParams()</div><div class="line"><span class="comment"># 创建一个PDF页面聚合对象</span></div><div class="line">device = PDFPageAggregator(rsrcmgr, laparams=laparams)</div><div class="line"><span class="comment">#创建一个PDF解析器对象</span></div><div class="line">interpreter = PDFPageInterpreter(rsrcmgr, device)</div><div class="line"><span class="comment">#处理文档当中的每个页面</span></div><div class="line"></div><div class="line"><span class="comment"># doc.get_pages() 获取page列表</span></div><div class="line"><span class="comment">#for i, page in enumerate(document.get_pages()):</span></div><div class="line"><span class="comment">#PDFPage.create_pages(document) 获取page列表的另一种方式</span></div><div class="line">replace=re.compile(<span class="string">r'\s+'</span>);</div><div class="line"><span class="comment"># 循环遍历列表，每次处理一个page的内容</span></div><div class="line"><span class="keyword">for</span> page <span class="keyword">in</span> PDFPage.create_pages(document):</div><div class="line">    interpreter.process_page(page)</div><div class="line">    <span class="comment"># 接受该页面的LTPage对象</span></div><div class="line">    layout=device.get_result()</div><div class="line">    <span class="comment"># 这里layout是一个LTPage对象 里面存放着 这个page解析出的各种对象</span></div><div class="line">    <span class="comment"># 一般包括LTTextBox, LTFigure, LTImage, LTTextBoxHorizontal 等等</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> layout:</div><div class="line">        <span class="comment">#如果x是水平文本对象的话</span></div><div class="line">        <span class="keyword">if</span>(isinstance(x,LTTextBoxHorizontal)):</div><div class="line">            text=re.sub(replace,<span class="string">''</span>,x.get_text())</div><div class="line">            <span class="keyword">if</span> len(text)!=<span class="number">0</span>:</div><div class="line">                <span class="keyword">print</span> text</div></pre></td></tr></table></figure>
-<p>可是如果内容物是中文的话，解析出来的结果是cid编码（adobe公司特有编码）</p>
-<p>同时需要解析出文档的目录：</p>
-<p>使用document.get_outlines()获取并另存为</p>
-<h1 id="DOC-amp-DOCX"><a href="#DOC-amp-DOCX" class="headerlink" title="DOC&amp;DOCX"></a>DOC&amp;DOCX</h1><p>pip install python-docx</p>
-<p>安装第三方库<a href="https://python-docx.readthedocs.io/" target="_blank" rel="external">python-docx</a></p>
-<p>直接使用可以读取.docx文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</div><div class="line">doc = Document(<span class="string">r'/Users/alan/Downloads/123.docx'</span>)</div><div class="line">para = doc.paragraphs</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> para:</div><div class="line">    <span class="keyword">print</span> i.text</div></pre></td></tr></table></figure>
-<p>.doc（word2003之前版本）的处理方法则比较复杂</p>
-<p>Linux用户可以下载<a href="http://www.winfield.demon.nl/#Programmer" target="_blank" rel="external">antiword</a>第三方包进行直接读取。（未验证）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">安装antiword官方站：http://www.winfield.demon.nl/</div><div class="line">下载地：http://www.winfield.demon.nl/linux/antiword-0.37.tar.gz</div><div class="line">下载完，解压，进入目录使用命令 </div><div class="line">make &amp;&amp; make install</div><div class="line"></div><div class="line">#!/usr/bin/env python</div><div class="line"># coding:utf-8</div><div class="line">import subprocess</div><div class="line">word = &quot;test.doc&quot;</div><div class="line">output = subprocess.check_output([&quot;antiword&quot;, word])</div><div class="line">print(output)</div><div class="line"></div><div class="line">作者：Jun</div><div class="line">链接：https://www.zhihu.com/question/56834115/answer/158115736</div><div class="line">来源：知乎</div><div class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div></pre></td></tr></table></figure>
-<p><a href="https://www.zhihu.com/question/56834115/answer/150658178" target="_blank" rel="external">用LibreOffice(Ubuntu自带)直接转docx再用python-docx，蠢了点但还能用</a></p>
-<h1 id="PPTX"><a href="#PPTX" class="headerlink" title="PPTX"></a>PPTX</h1><p>pip install python-pptx</p>
-<p>安装第三方库<a href="https://python-pptx.readthedocs.io/en/latest/index.html" target="_blank" rel="external">python-pptx</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pptx <span class="keyword">import</span> Presentation</div><div class="line">ppt = Presentation(<span class="string">'1.pptx'</span>)</div><div class="line">text_runs = []</div><div class="line"></div><div class="line"><span class="keyword">for</span> slide <span class="keyword">in</span> prs.slides:</div><div class="line">    <span class="keyword">for</span> shape <span class="keyword">in</span> slide.shapes:</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> shape.has_text_frame:</div><div class="line">            <span class="keyword">continue</span></div><div class="line">        <span class="keyword">for</span> paragraph <span class="keyword">in</span> shape.text_frame.paragraphs:</div><div class="line">            <span class="keyword">for</span> run <span class="keyword">in</span> paragraph.runs:</div><div class="line">                text_runs.append(run.text)</div><div class="line"><span class="keyword">print</span> text_runs</div></pre></td></tr></table></figure>
-<p>xls2csv</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;PDF&quot;&gt;&lt;a href=&quot;#PDF&quot; class=&quot;headerlink&quot; title=&quot;PDF&quot;&gt;&lt;/a&gt;PDF&lt;/h1&gt;&lt;h3 id=&quot;1-安装PDFMiner&quot;&gt;&lt;a href=&quot;#1-安装PDFMiner&quot; class=&quot;headerlink&quot; titl
-    
-    </summary>
-    
-      <category term="python" scheme="http://www.pirrla.cn/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://www.pirrla.cn/tags/python/"/>
     
   </entry>
   
