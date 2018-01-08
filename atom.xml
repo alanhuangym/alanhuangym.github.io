@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2018-01-08T02:13:02.000Z</updated>
+  <updated>2018-01-08T03:40:55.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -20,16 +20,57 @@
     <link href="http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/"/>
     <id>http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/</id>
     <published>2018-01-04T16:00:00.000Z</published>
-    <updated>2018-01-08T02:13:02.000Z</updated>
+    <updated>2018-01-08T03:40:55.000Z</updated>
     
     <content type="html"><![CDATA[<p>现在我们已经完成了整个流程的学习，现在我们应用一个简单的python服务，来测试一下效果。</p>
 <h3 id="1-整体流程检视"><a href="#1-整体流程检视" class="headerlink" title="1. 整体流程检视"></a>1. 整体流程检视</h3><ol>
 <li><p>搭建好相应的环境：</p>
-<p>gitlab服务器、jenkins服务器、docker服务器（和相应的redis服务和数据库服务）</p>
+<p>gitlab服务器、jenkins服务器、docker服务器、portainer监视docker服务器（和相应的redis等服务和数据库服务）</p>
+</li>
+<li><p>准备好一份需要维护和持续部署的代码</p>
+</li>
+<li><p>在gitlab服务器端写好钩子脚本，进行代码质量的把关</p>
+</li>
+<li><p>上传代码至gitlab远程仓库</p>
+</li>
+<li><p>在jenkins编写好联动docker的部署流程脚本和设置</p>
+</li>
+<li><p>等待jenkins触发，完成部署</p>
+</li>
+<li><p>检视部署效果</p>
 </li>
 </ol>
 <p>业务流程如下：</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/uml1.pdf" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/uml1.png" alt=""></p>
+<h3 id="2-Gitlab搭建"><a href="#2-Gitlab搭建" class="headerlink" title="2. Gitlab搭建"></a>2. Gitlab搭建</h3><h4 id="2-1-python代码预览"><a href="#2-1-python代码预览" class="headerlink" title="2.1 python代码预览"></a>2.1 python代码预览</h4><p>就是一个简单监听本地端口3002的python服务，然后返回一个html页面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#-*- coding:utf-8 -*-</span></div><div class="line"><span class="string">'''</span></div><div class="line"># author:alanhuang</div><div class="line"># create date: 2018.1.3</div><div class="line">'''</div><div class="line"><span class="keyword">import</span> BaseHTTPServer</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RequestHandler</span><span class="params">(BaseHTTPServer.BaseHTTPRequestHandler)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    处理请求并返回页面</div><div class="line">    '''</div><div class="line"></div><div class="line">    <span class="comment"># 页面模板</span></div><div class="line">    Page = <span class="string">'''\</span></div><div class="line">        &lt;html&gt;</div><div class="line">        &lt;body&gt;</div><div class="line">        &lt;p&gt;Hello, world!&lt;/p&gt;</div><div class="line">        &lt;/body&gt;</div><div class="line">        &lt;/html&gt;</div><div class="line">    '''</div><div class="line"></div><div class="line">    <span class="comment"># 处理一个GET请求</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_GET</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">            用于处理GET请求</div><div class="line">        '''</div><div class="line">        self.send_response(<span class="number">200</span>)</div><div class="line">        self.send_header(<span class="string">"Content-Type"</span>, <span class="string">"text/html"</span>)</div><div class="line">        self.send_header(<span class="string">"Content-Length"</span>, str(len(self.Page)))</div><div class="line">        self.end_headers()</div><div class="line">        self.wfile.write(self.Page)</div><div class="line"></div><div class="line"><span class="comment">#----------------------------------------------------------------------</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    serverAddress = (<span class="string">''</span>, <span class="number">3002</span>)</div><div class="line">    server = BaseHTTPServer.HTTPServer(serverAddress, RequestHandler)</div><div class="line">    server.serve_forever()</div></pre></td></tr></table></figure>
+<h4 id="2-2-gitlab"><a href="#2-2-gitlab" class="headerlink" title="2.2 gitlab"></a>2.2 gitlab</h4><p>gitlab的搭建过程我们就省略了，可以查看<a href="http://pirrla.cn/2017/12/23/jenkins/jenkins6/" target="_blank" rel="external">前文</a>。</p>
+<p>我们直接到钩子编写的部分，我们在服务器端找到我们的项目，然后在服务器的<code>/git/data/repositories/root/test-python.git</code>项目目录中创建一个<code>custom_hooks</code>文件夹，然后在文件夹中新建一个可执行文件<code>update</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line"># 提交分支的名字</div><div class="line">ref_name=$1</div><div class="line"># 上一个commit的ID</div><div class="line">old_value=$2</div><div class="line"># 现在这个commit的ID</div><div class="line">new_value=$3</div><div class="line"></div><div class="line"># 共有四种状态</div><div class="line"># M-修改，A-新增，D-删除，RXXX-重命名 XXX是指重命名前后代码相似度</div><div class="line"># 所以这里选择修改和新增和重命名的进行代码审查</div><div class="line"># （因为重命名会覆盖掉D和M的状态</div><div class="line">new_and_modify=`git diff $old_value $new_value --raw | grep &quot;\sM\s\|\sA\s&quot; | awk &apos;&#123;print $4&quot;\t&quot;$6&#125;&apos; |  uniq`</div><div class="line">rename=`git diff $old_value $new_value --raw | grep &quot;\sR.*\s&quot; | awk &apos;&#123;print $4&quot;\t&quot;$7&#125;&apos; |  uniq`</div><div class="line"># 检查文件夹和文件的名字是否有空格</div><div class="line"># 有空格则直接提交失败</div><div class="line">count=`git show $new_value --name-only | grep &quot;\s&quot; -c`</div><div class="line">if [[ $count -gt 4 ]]</div><div class="line">then</div><div class="line">	echo &quot;文件/文件夹 名字包含空格，提交失败&quot;</div><div class="line">	exit 1</div><div class="line">fi</div><div class="line"></div><div class="line"># 将字符串变为数组</div><div class="line">new_and_modify_array=($new_and_modify)</div><div class="line">rename_array=($rename)</div><div class="line"></div><div class="line">collect_array=($&#123;new_and_modify_array[@]&#125; $&#123;rename_array[@]&#125;)</div><div class="line"></div><div class="line"># n用于遍历数组</div><div class="line">n=0</div><div class="line"># 遍历数组，提取出需要代码质量管理的文件的blob id和原本的文件名</div><div class="line">while [ $n -lt $&#123;#collect_array[@]&#125; ]</div><div class="line">do</div><div class="line">	# blob id 用于提取代码</div><div class="line">	blob_id=$&#123;collect_array[$n]:0:7&#125;</div><div class="line">	# 文件名，由于带有路径，所以将文件名中的/斜杠替换为_下划线</div><div class="line">	f_name=$&#123;collect_array[$&#123;n&#125;+1]////_&#125;</div><div class="line">	# 将代码保存到临时文件夹中</div><div class="line">	git show $blob_id &gt; temp_files/code_$&#123;f_name&#125;</div><div class="line">	# n自增，用于遍历</div><div class="line">	let n+=2</div><div class="line">done</div><div class="line"></div><div class="line"># 该标记用于识别是否有代码没用通过，全部通过则为0，只要有一个代码没通过就为1</div><div class="line">flag=0</div><div class="line"></div><div class="line"># 转换工作路径到临时文件夹</div><div class="line">cd temp_files</div><div class="line"># 获取临时文件夹里的文件</div><div class="line">files=`ls`</div><div class="line"># 如果临时文件夹里没有内容，则证明没有进行代码修改</div><div class="line"># 不需要进行代码管理，返回0</div><div class="line">if [[ $files == &quot;&quot; ]]</div><div class="line">then </div><div class="line">	exit 0</div><div class="line">fi</div><div class="line"></div><div class="line"># 将文件转换成数组，遍历数组，对每一个文件分别进行代码质量管理操作</div><div class="line">files_array=($files)</div><div class="line"># m用于遍历数组</div><div class="line">m=0</div><div class="line">files_count=$&#123;#files_array[@]&#125;</div><div class="line">echo &quot;此次提交共有 $files_count 个文件进行过修改/新增/重命名&quot;</div><div class="line"></div><div class="line">while [ $m -lt $&#123;#files_array[@]&#125; ]</div><div class="line">do</div><div class="line">	# 文件名</div><div class="line">	file_name=$&#123;files_array[$m]&#125;</div><div class="line">	let m+=1</div><div class="line"></div><div class="line"></div><div class="line">#########################################################</div><div class="line">#此处，不同语言应对不同的代码质量管理程序</div><div class="line">#主要操作是 `操作语句 $file_name` </div><div class="line">#例如python语言使用的是pylint，那么语句就是`pylint $file_name`</div><div class="line">#主要通过设定flag的值操作代码是否通过</div><div class="line">#########################################################</div><div class="line"></div><div class="line"></div><div class="line">#########################################################</div><div class="line">#Python 文件</div><div class="line">if [[ $file_name = *.py ]]</div><div class="line">then</div><div class="line"></div><div class="line"># 运行pylint脚本，对代码进行审查</div><div class="line"># 将报告输出在临时文件夹的report.txt中</div><div class="line">pylint $file_name  &gt; report.txt</div><div class="line"></div><div class="line"># 检测是否代码有语法错误，如果有语法错误直接退出</div><div class="line"># （因为有语法错误的话没有评分，无法与阈值比较</div><div class="line">error=`cat report.txt | grep &quot;syntax-error&quot;`</div><div class="line">if [[ $error != &quot;&quot; ]]</div><div class="line">then</div><div class="line">	echo $file_name &quot;有语法错误，提交失败&quot;</div><div class="line">	exit 1</div><div class="line">fi</div><div class="line"></div><div class="line"># 获取评分的语句</div><div class="line">score_senten=`cat report.txt | grep &quot;rated&quot; | awk &apos;&#123;print $7&#125;&apos;`</div><div class="line"></div><div class="line"># 从语句中提取分数</div><div class="line">if [[ &quot;$score_senten&quot; =~ (.*)/10 ]] </div><div class="line">then</div><div class="line">	score=&quot;$&#123;BASH_REMATCH[1]&#125;&quot;</div><div class="line">else</div><div class="line">	score=0</div><div class="line">fi</div><div class="line"></div><div class="line">echo $file_name 程序得分为 $score_senten</div><div class="line">echo 程序分析报告:</div><div class="line">cat report.txt</div><div class="line"></div><div class="line"># 如果分数大于5分，则通过，否则失败</div><div class="line"># 需要更改为单独计分，即每一个.py运行一次pylint</div><div class="line"># 对分数进行四舍五入（因bash不能处理浮点数）</div><div class="line">k=`echo $score|awk &apos;&#123; printf(&quot;%.0f\n&quot;, $0); &#125;&apos;`</div><div class="line">if [[ $&#123;k&#125; -ge 5 ]]</div><div class="line">then</div><div class="line">	echo &quot;该代码通过&quot;</div><div class="line">else</div><div class="line">	echo &quot;该代码评分未通过&quot;</div><div class="line">	let flag=1</div><div class="line">fi</div><div class="line"></div><div class="line">fi</div><div class="line"></div><div class="line">#Python 文件结束</div><div class="line">#########################################################</div><div class="line"></div><div class="line"></div><div class="line"># 文件循环结束</div><div class="line">done</div><div class="line"></div><div class="line"># 移除临时生成的文件</div><div class="line">rm *</div><div class="line"># 判断标记是否为0</div><div class="line">if [[ $flag == 0 ]]</div><div class="line">then </div><div class="line">	echo &quot;代码全部通过，提交成功&quot;</div><div class="line">else</div><div class="line">	echo &quot;有代码未通过，提交失败&quot;</div><div class="line">	exit 1</div><div class="line">fi</div><div class="line"></div><div class="line">exit 0</div></pre></td></tr></table></figure>
+<p>gitlab端的钩子脚本即部署完毕，可以进行代码质量管理了。</p>
+<h4 id="2-3测试代码质量"><a href="#2-3测试代码质量" class="headerlink" title="2.3测试代码质量"></a>2.3测试代码质量</h4><p>下面我们进行代码质量的检测，首先将原始文件推送上去，检测代码质量。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins49.png" alt=""></p>
+<p>我们设置的代码质量通过评分为5分，此次代码质量7.69分，代码通过，其中有三个变量命名方式不规范，我们暂时不修改。</p>
+<p>然后我们在代码中加入一行引用未安装的第三方的库，而且不调用，推送上去。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="keyword">import</span> BaseHTTPServer</div><div class="line"><span class="keyword">import</span> tensorflow</div><div class="line">...</div></pre></td></tr></table></figure>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins50.png" alt=""></p>
+<p>结果显示评分为3.57分，未通过，有两条新增错误，一条是无法引用该库，第二个是未使用该引用库。</p>
+<p>至此，实现了代码的质量管理。</p>
+<h3 id="3-Jenkins"><a href="#3-Jenkins" class="headerlink" title="3.Jenkins"></a>3.Jenkins</h3><h4 id="3-1准备工作"><a href="#3-1准备工作" class="headerlink" title="3.1准备工作"></a>3.1准备工作</h4><p>由于我们在持续部署中使用到了docker服务，所以我们需要在代码之中，新增加一个<code>dockerfile</code>的文件，用于将代码部署成docker镜像。</p>
+<p><code>dockerfile</code>直接放置在代码的根目录中，跟随代码一起推送上gitlab远程代码仓库。</p>
+<p>dockerfile写法</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 设定镜像的官方运行环境</span></div><div class="line"><span class="keyword">FROM</span> python:<span class="number">2</span></div><div class="line"><span class="comment"># 设定docker内部工作环境为根目录下的app文件夹</span></div><div class="line"><span class="keyword">WORKDIR</span> /app</div><div class="line"><span class="comment"># 添加宿主机当前目录的所有文件进入docker</span></div><div class="line"><span class="keyword">ADD</span> . /app</div><div class="line"></div><div class="line"><span class="comment"># 由于没有需要import的包，空安装会报错，所以注释了</span></div><div class="line"><span class="comment">#COPY requirements.txt ./</span></div><div class="line"><span class="comment">#RUN pip install --no-cache-dir -r requirements.txt</span></div><div class="line"></div><div class="line"><span class="comment"># 暴露docker的3002端口</span></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">3002</span></div><div class="line"><span class="comment"># 运行命令</span></div><div class="line"><span class="keyword">CMD</span> ["python","./test.py"]</div></pre></td></tr></table></figure>
+<h4 id="3-2-设置配置"><a href="#3-2-设置配置" class="headerlink" title="3.2 设置配置"></a>3.2 设置配置</h4><p>首先是gitlab配置，当配置了公钥ssh上gitlab之后，就可以直接连上gitlab了。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins51.png" alt=""></p>
+<p>接着是触发器，选择的是每一分钟检查一次gitlab是否有更新。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins52.png" alt=""></p>
+<p>接着就是构建部分，直接运行一个shell脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#!/bin/sh</div><div class="line">set +e</div><div class="line">echo &apos;&gt;&gt;&gt; Get old container id&apos;</div><div class="line"></div><div class="line"># 查找正在运行的docker容器</div><div class="line">CID=$(/usr/local/bin/docker ps | grep &quot;test-python&quot; | awk &apos;&#123;print $1&#125;&apos;)</div><div class="line"># 获取使用“test-python”镜像的容器id</div><div class="line">echo $CID</div><div class="line"></div><div class="line"># 根据新的代码，构建新的docker</div><div class="line">/usr/local/bin/docker build -t test-python .</div><div class="line"></div><div class="line"># 停止旧的容器</div><div class="line">if [ &quot;$CID&quot; != &quot;&quot; ];then</div><div class="line">  /usr/local/bin/docker stop $CID</div><div class="line">  # 删除旧容器</div><div class="line">  /usr/local/bin/docker rm $CID</div><div class="line">fi</div><div class="line"></div><div class="line"># 启动新容器</div><div class="line">/usr/local/bin/docker run -p 3002:3002 -d test-python</div><div class="line"></div><div class="line"></div><div class="line"># 删除旧镜像</div></pre></td></tr></table></figure>
+<p>这样就完成了jenkins的配置。</p>
+<h4 id="3-3查看部署效果"><a href="#3-3查看部署效果" class="headerlink" title="3.3查看部署效果"></a>3.3查看部署效果</h4><p>我们通过在返回的html页面中新增内容，从而可以从前后对比知道部署是否成功</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins53.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins54.png" alt=""></p>
+<p>部署成功</p>
 <p>Reference:</p>
 <p>[1] <a href="http://www.jianshu.com/p/b524b151d35f" target="_blank" rel="external">Jenkins使用简易教程</a></p>
 <p>[2] <a href="https://testerhome.com/topics/10003" target="_blank" rel="external">https://testerhome.com/topics/10003</a></p>
@@ -56,7 +97,7 @@
     <link href="http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/"/>
     <id>http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/</id>
     <published>2017-12-23T16:00:00.000Z</published>
-    <updated>2018-01-08T01:48:05.000Z</updated>
+    <updated>2018-01-08T02:19:35.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-Docker-WebGUI管理"><a href="#1-Docker-WebGUI管理" class="headerlink" title="1. Docker WebGUI管理"></a>1. Docker WebGUI管理</h3><ol>
 <li><p><a href="https://github.com/shipyard/shipyard" target="_blank" rel="external">shipyard</a>国产，但是20天前刚刚宣布停止更新</p>
@@ -77,12 +118,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</div><div class="line">`</div></pre></td></tr></table></figure>
 <p><font color="red">注意：</font><code>-v /var/run/docker.sock:/var/run/docker.sock</code>命令只能适用于linux环境</p>
 <p>当启动完成后，portainer即在本机9000端口服务，首次进入后我们需要进行管理人员的账户创建。</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins46.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins46.jpg" alt=""></p>
 <p>之后我们就需要选择进行管理的docker环境（本地/远程）</p>
 <p>如果是远程的话，我们需要输入目标docker服务器的地址、端口等信息，同时需要确保目标端的docker开启了TCP端口暴露设置，详情参考docker官方文档。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins47.png" alt=""></p>
 <p>如果是本地的话就简单很多，直接选择连接即可，但是要注意，由于本操作需要开启portainer的docker镜像时，使用<code>-v /var/run/docker.sock:/var/run/docker.sock</code>命令才可以，但是Windows系统下无法执行该命令，所以Windows系统无法连接本地的docker。</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins48.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins48.jpg" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -280,11 +321,11 @@
   </entry>
   
   <entry>
-    <title>Jenkins学习笔记5-官方用法pipeline(可选)</title>
+    <title>Jenkins学习笔记5-官方用法pipeline&amp;开启BlueOcean GUI(可选)</title>
     <link href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/"/>
     <id>http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/</id>
     <published>2017-12-21T16:00:00.000Z</published>
-    <updated>2018-01-08T01:55:57.000Z</updated>
+    <updated>2018-01-08T03:22:41.000Z</updated>
     
     <content type="html"><![CDATA[<p>官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。</p>
 <p>Reference:</p>
@@ -929,6 +970,42 @@
   </entry>
   
   <entry>
+    <title>推荐系统5</title>
+    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
+    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
+    <published>2017-09-05T06:23:06.000Z</published>
+    <updated>2017-09-08T05:24:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
+    
+    </summary>
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
+    
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
+    
+  </entry>
+  
+  <entry>
     <title>文件系统1</title>
     <link href="http://www.pirrla.cn/2017/09/05/fs/fs1/"/>
     <id>http://www.pirrla.cn/2017/09/05/fs/fs1/</id>
@@ -1138,42 +1215,6 @@
     
     
       <category term="filesystem" scheme="http://www.pirrla.cn/tags/filesystem/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>推荐系统5</title>
-    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
-    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
-    <published>2017-09-05T06:23:06.000Z</published>
-    <updated>2017-09-08T05:24:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
-<p><strong>1.大类</strong></p>
-<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
-<p><strong>2.天数</strong></p>
-<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
-<p><strong>3.收益利率</strong></p>
-<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
-<p><strong>4.综上所述</strong></p>
-<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
-<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
-<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
-<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
-    
-    </summary>
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
-    
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
     
   </entry>
   
