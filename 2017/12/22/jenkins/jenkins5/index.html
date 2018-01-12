@@ -86,27 +86,25 @@
 
 
 <meta name="description" content="官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。
-Reference:
-[1] Jenkins使用简易教程
-[2] https://testerhome.com/topics/10003
-[3] https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkins">
+1.Pipelinepipeline其实就是使用jenkins定义好的语法，编写你的流程，不再是使用图形界面去进行流程构建。教程地址
+1.1 多种语言可以使用多种语言来进行pipeline编写，包括Java/Node.js/Ruby/Python/P">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins学习笔记5-官方用法pipeline&开启BlueOcean GUI(可选)">
 <meta property="og:url" content="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/index.html">
 <meta property="og:site_name" content="Note down something">
 <meta property="og:description" content="官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。
-Reference:
-[1] Jenkins使用简易教程
-[2] https://testerhome.com/topics/10003
-[3] https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkins">
-<meta property="og:updated_time" content="2018-01-08T03:22:41.000Z">
+1.Pipelinepipeline其实就是使用jenkins定义好的语法，编写你的流程，不再是使用图形界面去进行流程构建。教程地址
+1.1 多种语言可以使用多种语言来进行pipeline编写，包括Java/Node.js/Ruby/Python/P">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins55.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins56.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins57.png">
+<meta property="og:updated_time" content="2018-01-08T06:58:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins学习笔记5-官方用法pipeline&开启BlueOcean GUI(可选)">
 <meta name="twitter:description" content="官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。
-Reference:
-[1] Jenkins使用简易教程
-[2] https://testerhome.com/topics/10003
-[3] https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkins">
+1.Pipelinepipeline其实就是使用jenkins定义好的语法，编写你的流程，不再是使用图形界面去进行流程构建。教程地址
+1.1 多种语言可以使用多种语言来进行pipeline编写，包括Java/Node.js/Ruby/Python/P">
+<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/jenkins55.png">
 
 
 
@@ -364,11 +362,28 @@ Reference:
 
       
         <p>官方的文档是在描述另一种jenkins的用法pipeline。pipeline有其特有的语句，我们以下以一个node.js和npm的例子来进行说明。</p>
+<h3 id="1-Pipeline"><a href="#1-Pipeline" class="headerlink" title="1.Pipeline"></a>1.Pipeline</h3><p>pipeline其实就是使用jenkins定义好的语法，编写你的流程，不再是使用图形界面去进行流程构建。<a href="https://jenkins.io/doc/pipeline/tour/hello-world/" target="_blank" rel="external">教程地址</a></p>
+<h4 id="1-1-多种语言"><a href="#1-1-多种语言" class="headerlink" title="1.1 多种语言"></a>1.1 多种语言</h4><p>可以使用多种语言来进行pipeline编写，包括Java/Node.js/Ruby/Python/PHP。</p>
+<p>基础的结构式是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">pipeline &#123;</div><div class="line">    agent &#123; docker &apos;python:3.5.1&apos; &#125;</div><div class="line">    stages &#123;</div><div class="line">        stage(&apos;build&apos;) &#123;</div><div class="line">            steps &#123;</div><div class="line">                sh &apos;python --version&apos;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="agent"><a href="#agent" class="headerlink" title="agent"></a>agent</h4><p>agent是指该pipeline在特定的环境下进行执行。</p>
+<p>除了在顶部进行定义之外，在每一步也可以自定义。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">pipeline &#123;</div><div class="line">    agent none</div><div class="line">    stages &#123;</div><div class="line">        stage(&apos;Example Build&apos;) &#123;</div><div class="line">            agent &#123; docker &apos;maven:3-alpine&apos; &#125;</div><div class="line">            steps &#123;</div><div class="line">                echo &apos;Hello, Maven&apos;</div><div class="line">                sh &apos;mvn --version&apos;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        stage(&apos;Example Test&apos;) &#123;</div><div class="line">            agent &#123; docker &apos;openjdk:8-jre&apos; &#125;</div><div class="line">            steps &#123;</div><div class="line">                echo &apos;Hello, JDK&apos;</div><div class="line">                sh &apos;java -version&apos;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="stages-stage"><a href="#stages-stage" class="headerlink" title="stages/stage"></a>stages/stage</h4><p>表示多个或一个步骤，大部分操作都在该序列中执行。</p>
+<h4 id="steps"><a href="#steps" class="headerlink" title="steps"></a>steps</h4><p>一条或多条命令在stage中执行</p>
+<h3 id="2-Blue-Ocean"><a href="#2-Blue-Ocean" class="headerlink" title="2. Blue Ocean"></a>2. Blue Ocean</h3><p>Blue Ocean首先是对Jenkins的运行检视页面进行UI替换，替换成更美观的界面。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins55.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins56.png" alt=""></p>
+<p>其次，blue ocean赋予了构建jenkins pipeline一个图形化界面，可以通过简单的点击操作即可以构建jenkins pipeline流程。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins57.png" alt=""></p>
+<p>当使用docker运行jenkins时，通常会已经安装好blue ocean的插件，而当使用war包进行jenkins运行时，blue ocean需要自行安装。</p>
+<p>blue ocean插件安装完成后，在左侧的控制栏上会有一个 <code>Open Blue Ocean</code>的按钮，点击即可以开启blue ocean页面。</p>
 <p>Reference:</p>
 <p>[1] <a href="http://www.jianshu.com/p/b524b151d35f" target="_blank" rel="external">Jenkins使用简易教程</a></p>
 <p>[2] <a href="https://testerhome.com/topics/10003" target="_blank" rel="external">https://testerhome.com/topics/10003</a></p>
 <p>[3] <a href="https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/" target="_blank" rel="external">https://personal-notes.me/%E5%9F%BA%E4%BA%8E-jenkinsdocker-%E6%90%AD%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88/</a></p>
 <p>[4] <a href="https://yq.aliyun.com/articles/80459" target="_blank" rel="external">https://yq.aliyun.com/articles/80459</a></p>
+<p>[5] <a href="http://www.cnblogs.com/YatHo/p/7856556.html" target="_blank" rel="external">http://www.cnblogs.com/YatHo/p/7856556.html</a></p>
 
       
     </div>
@@ -470,8 +485,17 @@ Reference:
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ondsf10qe.bkt.clouddn.com/avatar01.png"
@@ -544,6 +568,22 @@ Reference:
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Pipeline"><span class="nav-number">1.</span> <span class="nav-text">1.Pipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-多种语言"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 多种语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#agent"><span class="nav-number">1.2.</span> <span class="nav-text">agent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stages-stage"><span class="nav-number">1.3.</span> <span class="nav-text">stages/stage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#steps"><span class="nav-number">1.4.</span> <span class="nav-text">steps</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Blue-Ocean"><span class="nav-number">2.</span> <span class="nav-text">2. Blue Ocean</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
