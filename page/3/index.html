@@ -255,6 +255,494 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/21/rs/rs_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/21/rs/rs_1/" itemprop="url">
+                  推荐系统1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T00:00:00+08:00">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
+                    <span itemprop="name">recommendationsystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="目前大部分舆论："><a href="#目前大部分舆论：" class="headerlink" title="目前大部分舆论："></a>目前大部分舆论：</h3><p>目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用</p>
+<p><strong>精细的特征工程+简单可行的模型+各种Trick+CF协同过滤</strong></p>
+<p>即可以实现比较好的效果。</p>
+<p>其中，大部分人认为其中重要性是：</p>
+<p><strong>用户交互界面UI &gt; 数据 &gt; 算法</strong></p>
+<font color="red">所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）</font>
+
+<font color="red">其次，我们的推荐页面是已什么形式展现给客户？</font>
+
+<p>是直接在目前的基础上，进行排序展示？（推荐的产品在最前面）</p>
+<p>现有的第三方库：<strong>Java-mahout, Python-Crab</strong></p>
+<p>特征工程分为：静态特征、行为特征、Item特征、上下文特征</p>
+<p>特镇工程操作有：转换、切分、叠加、离散化、组合</p>
+<p>大数据不一定有效，提高维度则有一定的帮助，数据量太大可以随机从原始数据中采样。</p>
+<h3 id="USER表"><a href="#USER表" class="headerlink" title="USER表"></a>USER表</h3><p>对于USER，我们设计了一个表去存储用户的信息。</p>
+<p>信息来源暂定是用户自己填写的信息、问卷调查获得的风险偏好和从身份证号所获取的信息（出生地、年龄、性别等）。</p>
+<p>开户日期指的是用户已经在网站注册的时长。</p>
+<font color="red">金额方面，暂时还需要解决，是什么金额？</font>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>userid</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>金额</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>风险偏好</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>已购产品</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>年龄</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>职业</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>电话</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>出生地</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>邮箱</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>开户日期</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ITEM表"><a href="#ITEM表" class="headerlink" title="ITEM表"></a>ITEM表</h3><p>对于ITEM，我们同样将它存储在数据库中。</p>
+<p>这个数据来源我们可以从自身获取。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>itemid</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>风险</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+<tr>
+<td>起购额</td>
+<td>NUMBER</td>
+</tr>
+<tr>
+<td>产品类型</td>
+<td>VARCHAR2(20 BYTE)</td>
+</tr>
+</tbody>
+</table>
+<p>两个表中，有<strong>关联的是风险和风险偏好，起购额和金额</strong>。因为这两个字段的数值是硬性要求，起到了一个Filter的作用。</p>
+<h3 id="可能添加的字段（增加维度，提高准度）"><a href="#可能添加的字段（增加维度，提高准度）" class="headerlink" title="可能添加的字段（增加维度，提高准度）"></a>可能添加的字段（增加维度，提高准度）</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户行为-退款行为</td>
+<td>用户是否发生退款行为，退款产品为</td>
+</tr>
+<tr>
+<td>用户行为-投诉行为</td>
+<td>用户是否对某款产品进行过投诉</td>
+</tr>
+<tr>
+<td>用户-是否有亲戚好友购买过相关产品</td>
+<td>对于熟人推荐的会比较信任（但是亲戚好友的信息比较难获取，推荐码？）</td>
+</tr>
+<tr>
+<td>产品-描述</td>
+<td>对描述进行NLP，得出一个向量</td>
+</tr>
+<tr>
+<td>产品-投资经理</td>
+<td>对于不同的投资经理，会有不同的喜好（例如已经购买的产品的同一位投资经理，但是要确定是否前一款产品是否亏损）</td>
+</tr>
+<tr>
+<td>产品-目前盈亏</td>
+<td>目前产品的盈亏情况，是否会推荐亏损的产品给客户</td>
+</tr>
+<tr>
+<td>产品-行业归属</td>
+<td>投资详情</td>
+</tr>
+<tr>
+<td>产品-开始销售日期</td>
+<td>长期稳定的产品会让客户偏喜爱</td>
+</tr>
+<tr>
+<td>网页动作</td>
+<td>是否能捕捉到用户的网页动作？（例如在某一个产品页面逗留很久，多次点击同一款产品的详情）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="相关论文"><a href="#相关论文" class="headerlink" title="相关论文"></a>相关论文</h3><p><a href="http://www.cin.ufpe.br/~idal/rs/Amazon-Recommendations.pdf" target="_blank" rel="external">Amazon CF</a></p>
+<p>基础的推荐算法有：</p>
+<p><strong>1.传统的协同过滤</strong></p>
+<p>其中，分为寻找相似的用户和相似的产品。</p>
+<p>计算相似度的基本都是使用向量之间的cos距离</p>
+<p>推荐相似用户购买的产品或者推荐相似产品的产品</p>
+<p><strong>2.Cluster Models</strong></p>
+<p>将用户分类成几个类，然后对新来的用户同样进行分类，然后推荐同一个分类用户的购买的产品信息</p>
+<p>其中分类的算法可以有：KNN, LogisticRegression, NeuralNetwork, DecesionTree, K-Means</p>
+<p><strong>3.Search-Based Methods</strong></p>
+<p>将item进行细分，划分出目录、类别、作者等信息，然后推荐相关目录、相关作者的其他作品等。</p>
+<p><strong>4.亚马逊Item-to-item 协同过滤</strong></p>
+<p>基于庞大的用户数量和商品数量，一个一个算相似度计算量非常庞大，同时不能满足业务要求的0.5秒内给用户推荐信息的要求，所以亚马逊按照传统的协同过滤进行优化，只计算购买过某一产品的用户们的购买记录中商品的相似度，然后推荐相似度最高的产品。</p>
+<p><a href="https://datajobs.com/data-science-repo/Recommender-Systems-%5BNetflix%5D.pdf" target="_blank" rel="external">matrix factorization</a></p>
+<p>Neighborhodd methods - 计算产品与产品之间，用户与用户之间的关系，例如某一个用户喜欢3部电影，则选择出一组用户也同时喜欢这三部作品，然后推荐这组用户最喜爱的电影作为推荐系统推荐</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/1.png" alt=""></p>
+<p>Lantent factore models - 将用户或产品的属性进行建模，数值化，然后根据用户的偏好和产品的属性的数值，去作推荐</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/2.png" alt=""></p>
+<p><a href="http://cs.rochester.edu/twiki/pub/Main/HarpSeminar/Factorization_Meets_the_Neighborhood-_a_Multifaceted_Collaborative_Filtering_Model.pdf" target="_blank" rel="external">Factorization Meets the Neighborhood: a Multifaceted Collaborative Filtering Model</a></p>
+<p>定义相似度：</p>
+<p>用户：</p>
+<h3 id="想法："><a href="#想法：" class="headerlink" title="想法："></a>想法：</h3><h3 id="1-直接将已购产品当做Training-data"><a href="#1-直接将已购产品当做Training-data" class="headerlink" title="1.直接将已购产品当做Training data"></a>1.直接将已购产品当做Training data</h3><p>是否可以直接将客户已经购买的产品记录当做training data放进神经网络</p>
+<p>然后把产品当成ont-hot型的向量输出（或者把金额当成输出）</p>
+<h3 id="2-将用户分类"><a href="#2-将用户分类" class="headerlink" title="2.将用户分类"></a>2.将用户分类</h3><p>将用户分成某几类用户，然后进来一个用户则根据模型，将该用户分配到不同的组里面。</p>
+<p>然后推荐系统将推荐组内用户最常购买的产品。</p>
+<h3 id="3-将产品分类"><a href="#3-将产品分类" class="headerlink" title="3.将产品分类"></a>3.将产品分类</h3><p>由于产品比较少，所以是否直接人工分类？</p>
+<p>或者根据投资经理（用户是否有投资经理偏好）进行分类？</p>
+<h3 id="目前难题："><a href="#目前难题：" class="headerlink" title="目前难题："></a>目前难题：</h3><p>1.冷启动？（完全新用户进入，没有任何数据，是否能找出新用户最多购买的产品）（例如注册时间小于30天的用户，购买最多的产品是？）</p>
+<p>2.推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
+<p>3.是否要将客户引导到高风险的产品上去？</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/11/other/game_operation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/11/other/game_operation/" itemprop="url">
+                  游戏运营面试准备
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-11T00:00:00+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/game-operation/" itemprop="url" rel="index">
+                    <span itemprop="name">game_operation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>获得成就感主要途径：</p>
+<ol>
+<li>打赢别人，比别人强</li>
+<li>指挥大家，拥有权力和影响力</li>
+<li>得到自己想要的东西</li>
+<li>在团队中有归属感</li>
+</ol>
+<p>怎么玩？-&gt;为什么玩？-&gt;下次还来吗?-&gt;如何玩的更好?-&gt;我要花钱吗?-&gt;我要玩到什么时候?</p>
+<h4 id="什么是运营？"><a href="#什么是运营？" class="headerlink" title="什么是运营？"></a>什么是运营？</h4><p>拉新、留存、促活</p>
+<ol>
+<li>深入理解产品，深入理解玩家</li>
+<li>提供优质服务，解决玩家问题，服务好高付费玩家</li>
+<li>维持稳定，包括服务器、数据的稳定</li>
+<li>通过运营手段，包括活动、引导等，提高收入</li>
+<li>改进产品，通过数据、用户反馈等发现问题，解决问题</li>
+</ol>
+<h4 id="活动"><a href="#活动" class="headerlink" title="活动"></a>活动</h4><p>产品是活动的基础</p>
+<p>活动可以尝试解决产品问题，测试效果</p>
+<p>需求诞生的原因是不满足现状，需要通过一些途径实现自己的愿景。</p>
+<p>功能游戏需要运营吗？</p>
+<p>后续的网易咔嗒会有运营吗？</p>
+<p>搭载网易云课堂这一强大的资源背景</p>
+<p>考虑抖音等新兴平台的社区运营吗？</p>
+<p>代理的游戏会有运营管理吗</p>
+<p>Ref:</p>
+<p>[1] 游戏运营手册<a href="http://xiaoqiang.me/%E3%80%8A%E6%B4%BB%E5%8A%A8%E7%AD%96%E5%88%92%E6%89%8B%E5%86%8C%E3%80%8B/" target="_blank" rel="external">http://xiaoqiang.me/%E3%80%8A%E6%B4%BB%E5%8A%A8%E7%AD%96%E5%88%92%E6%89%8B%E5%86%8C%E3%80%8B/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/10/other/mac_oracle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2006,369 +2494,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/" itemprop="url">
-                  Mastering Social Media Mining wiht Python
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T00:00:00+08:00">
-                2017-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CUHK-Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">CUHK_Notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Resource: <a href="https://marcobonzanini.com/2016/08/02/mastering-social-media-mining-with-python/" target="_blank" rel="external">Mastering Social Media Mining wiht Python</a></p>
-<p>By Marco Bonzanini</p>
-<h2 id="Python-tools-for-data-science"><a href="#Python-tools-for-data-science" class="headerlink" title="Python tools for data science"></a>Python tools for data science</h2><p>Pandas</p>
-<p>Numpy</p>
-<p>Scikit-learn</p>
-<p>NLTK</p>
-<p>Gensim</p>
-<p>Pyro4</p>
-<p>Networks</p>
-<p>Matplotlib</p>
-<p>wordcloud</p>
-<h2 id="Twitter"><a href="#Twitter" class="headerlink" title="Twitter"></a>Twitter</h2><h2 id="Entity-Analysis"><a href="#Entity-Analysis" class="headerlink" title="Entity Analysis"></a>Entity Analysis</h2><p>1.Count the hashtags frenquency</p>
-<p>2.Count the tweets with hashtags or without hashtags and count the number of hashtags in one tweet</p>
-<p>3.Count the occurancy of people mention</p>
-<h2 id="Text-Analysis"><a href="#Text-Analysis" class="headerlink" title="Text Analysis"></a>Text Analysis</h2><p>1.lowercase the texts</p>
-<p>2.Tokenization</p>
-<p> use NLTK.TweetTokenizer() to </p>
-<p>3.remove the stop words</p>
-<p>4.remove digits</p>
-<p> Count the occrance of words</p>
-<h2 id="Time-Series-Analysis"><a href="#Time-Series-Analysis" class="headerlink" title="Time Series Analysis"></a>Time Series Analysis</h2><p>Plot the figure with different timeslot</p>
-<p>Normalize the time</p>
-<p>For example from 15:13-15:14 all of them add to together</p>
-<h2 id="Text-analysis-and-TF-IDF-on-notes"><a href="#Text-analysis-and-TF-IDF-on-notes" class="headerlink" title="Text analysis and TF-IDF on notes"></a>Text analysis and TF-IDF on notes</h2><p>TF = Term Frequency</p>
-<p>frequency in a document, can be normalized by the length of the document</p>
-<p>IDF = Inverse Document Frequency</p>
-<p>1+log(N/n)  N means the total number of words, the n mean this word’s occrance in each document</p>
-<p>TF-IDF = TF*IDF</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/16/other/GitTutorial_ByLiaoxuefeng/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/16/other/GitTutorial_ByLiaoxuefeng/" itemprop="url">
-                  Git Tutorial
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T00:00:00+08:00">
-                2017-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Source:</p>
-<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
-<h1 id="Git-Tutorial"><a href="#Git-Tutorial" class="headerlink" title="Git Tutorial"></a>Git Tutorial</h1><p>Download:</p>
-<p>For Mac user, you can simply go to the offical website to download the package and install it.</p>
-<p>Link:<a href="https://git-scm.com/downloads" target="_blank" rel="external">https://git-scm.com/downloads</a></p>
-<p>在终端里面，使用</p>
-<p>pwd</p>
-<p>显示当前所在的目录地址</p>
-<p>/Users/alan/git/learngit</p>
-<p>使用</p>
-<p>git init 创建一个新的仓库</p>
-<p>修改：</p>
-<p>git add 文件名（带后缀）</p>
-<p>git commit -m “说明” </p>
-<p>查看本地仓库状态</p>
-<p>git status</p>
-<p>查看修改在何处</p>
-<p>git diff</p>
-<p>查看修改日志</p>
-<p>git log</p>
-<p>美观可以改为</p>
-<p>git log —pretty=oneline</p>
-<p>返回上一次修改后的版本（每一个^返回一个版本）（HEAD 表示当前版本）</p>
-<p>git reset —hard HEAD^</p>
-<p>前进版本(hard 后面是版本号，从log中可以得出)</p>
-<p>git reset —hard b3fe8e</p>
-<p>找版本号可以</p>
-<p>git reflog (命令日志)</p>
-<p>从这里可以找到版本号</p>
-<p>舍弃工作区的修改（返回add状态的版本或者最新commit的版本）</p>
-<p>git checkout — readme.txt </p>
-<p>舍弃缓存区的修改</p>
-<p>git reset HEAD readme.txt</p>
-<p>关联远程仓库(先有本地库再有远程库的时候才需要)</p>
-<p>git remote add origin git@github.com:alanhuangym/learngit.git</p>
-<p>把本地内容推送到远程仓库上（第一次加-u）</p>
-<p>git push -u origin master</p>
-<p>git push origin master</p>
-<p>从远程库中下载到本地库中(会自动新建文件夹)</p>
-<p>git clone git@github.com:alanhuangym/gitskills.git</p>
-<p>分支：</p>
-<p>查看分支</p>
-<p>git branch</p>
-<p>创建分支</p>
-<p>git branch 分支名</p>
-<p>切换分支</p>
-<p>git checkout 分支名</p>
-<p>在master下面合并分支</p>
-<p>git merge 分支名</p>
-<p>删除分支</p>
-<p>git branch -d 分支名</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2418,7 +2543,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2429,7 +2554,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2440,7 +2565,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

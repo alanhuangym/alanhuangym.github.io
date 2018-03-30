@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.pirrla.cn/"/>
-  <updated>2018-01-26T02:33:39.000Z</updated>
+  <updated>2018-03-30T08:32:34.000Z</updated>
   <id>http://www.pirrla.cn/</id>
   
   <author>
@@ -16,11 +16,60 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>周志华-机器学习 笔记</title>
+    <link href="http://www.pirrla.cn/2018/03/28/reading/machinelearningbyzhouzhihua/"/>
+    <id>http://www.pirrla.cn/2018/03/28/reading/machinelearningbyzhouzhihua/</id>
+    <published>2018-03-27T16:00:00.000Z</published>
+    <updated>2018-03-30T08:32:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="第1章-绪论"><a href="#第1章-绪论" class="headerlink" title="第1章 绪论"></a>第1章 绪论</h3><h4 id="监督学习："><a href="#监督学习：" class="headerlink" title="监督学习："></a>监督学习：</h4><p>欲预测的是离散值：分类（classification）</p>
+<p>欲预测的是连续值：回归（regression）</p>
+<h4 id="无监督学习："><a href="#无监督学习：" class="headerlink" title="无监督学习："></a>无监督学习：</h4><p>聚类clustering</p>
+<p>泛化generalization</p>
+<p>样本空间”独立同分布”independent and identically distributed i.i.d.</p>
+<p>假设hypothesis</p>
+<h4 id="奥卡姆剃刀（Occam’s-razor）原则"><a href="#奥卡姆剃刀（Occam’s-razor）原则" class="headerlink" title="奥卡姆剃刀（Occam’s razor）原则"></a>奥卡姆剃刀（Occam’s razor）原则</h4><p>若有多个假设与观察一致，则选最简单的那个</p>
+<h3 id="第二章-模型评估与选择"><a href="#第二章-模型评估与选择" class="headerlink" title="第二章 模型评估与选择"></a>第二章 模型评估与选择</h3><h4 id="过拟合overfitting"><a href="#过拟合overfitting" class="headerlink" title="过拟合overfitting"></a>过拟合overfitting</h4><p>学习器把训练样本本身的一些特点当作了所有潜在样本都会具有的一般性质，导致泛化性能下降</p>
+<p>因素：学习能力过于强大</p>
+<p>解决：过拟合无法避免，能“缓解”，各个算法有不同的解决方法</p>
+<h4 id="欠拟合underfitting"><a href="#欠拟合underfitting" class="headerlink" title="欠拟合underfitting"></a>欠拟合underfitting</h4><p>相对于过拟合，对训练样本的一般性质尚未学好</p>
+<p>因素：学习能力低下</p>
+<p>解决：增加训练轮数</p>
+<h4 id="训练集"><a href="#训练集" class="headerlink" title="训练集"></a>训练集</h4><p>测试集应该尽可能与训练集互斥</p>
+<p>划分方法：</p>
+<ol>
+<li><p>留出法hold-out</p>
+<p>直接将数据集，根据比例，划分成两个互斥的集合，一个做训练集，一个做测试集</p>
+</li>
+<li><p>交叉验证法</p>
+<p>​</p>
+</li>
+<li><p>自助法</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">F1 = \frac&#123;2*P*R&#125;&#123;P+R&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;第1章-绪论&quot;&gt;&lt;a href=&quot;#第1章-绪论&quot; class=&quot;headerlink&quot; title=&quot;第1章 绪论&quot;&gt;&lt;/a&gt;第1章 绪论&lt;/h3&gt;&lt;h4 id=&quot;监督学习：&quot;&gt;&lt;a href=&quot;#监督学习：&quot; class=&quot;headerlink&quot; title=
+    
+    </summary>
+    
+      <category term="reading" scheme="http://www.pirrla.cn/categories/reading/"/>
+    
+    
+      <category term="reading" scheme="http://www.pirrla.cn/tags/reading/"/>
+    
+      <category term="machinelearning" scheme="http://www.pirrla.cn/tags/machinelearning/"/>
+    
+  </entry>
+  
+  <entry>
     <title>禅道二次开发</title>
     <link href="http://www.pirrla.cn/2018/01/24/zentao/"/>
     <id>http://www.pirrla.cn/2018/01/24/zentao/</id>
     <published>2018-01-23T16:00:00.000Z</published>
-    <updated>2018-01-26T02:33:39.000Z</updated>
+    <updated>2018-03-30T01:33:56.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-禅道安装"><a href="#1-禅道安装" class="headerlink" title="1.禅道安装"></a>1.禅道安装</h3><p>因为省去配置APACHE和MySQL等环境，我们直接使用docker镜像进行二次开发，也方便了开发成果的后续转移和部署。</p>
 <p>使用的是<a href="http://www.zentao.net/thread/87209.html" target="_blank" rel="external">官方论坛idoop的镜像</a>。版本号是<font color="red">9.8stable</font></p>
@@ -44,7 +93,7 @@
 <p>同时在url里还可以传递参数例如<code>/zentao/attendance-onduty-100</code>这样就传递了100这个参数。</p>
 <h3 id="2-考勤系统开发"><a href="#2-考勤系统开发" class="headerlink" title="2.考勤系统开发"></a>2.考勤系统开发</h3><p>我们希望参考<a href="http://www.zentao.net/book/zentaobizhelp/268.html" target="_blank" rel="external">禅道企业版的考勤系统</a>，开发出一个适合我们的考勤系统。</p>
 <h4 id="2-1-签到按钮"><a href="#2-1-签到按钮" class="headerlink" title="2.1 签到按钮"></a>2.1 签到按钮</h4><p>实现签到和签退的功能，首先我们需要在用户界面上添加两个按钮，分别让用户实现签到签退操作。效果如下</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/zentao/zentao1.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/zentao1.png" alt=""></p>
 <p>我们需要在顶部导航栏添加按钮，就需要在module文件夹中找到common模块，因为根据禅道的结构，头文件都放在common模块中。</p>
 <p>找到<code>./module/common/view/header.html.php</code>，我们在html文件中，找到了顶部导航栏的信息</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'pull-right'</span> <span class="attr">id</span>=<span class="string">'topnav'</span>&gt;</span>&lt;?php commonModel::printTopBar();?&gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -272,7 +321,7 @@
 <h3 id="3-Jenkins"><a href="#3-Jenkins" class="headerlink" title="3.Jenkins"></a>3.Jenkins</h3><h4 id="3-1准备工作"><a href="#3-1准备工作" class="headerlink" title="3.1准备工作"></a>3.1准备工作</h4><p>由于我们在持续部署中使用到了docker服务，所以我们需要在代码之中，新增加一个<code>dockerfile</code>的文件，用于将代码部署成docker镜像。</p>
 <p><code>dockerfile</code>直接放置在代码的根目录中，跟随代码一起推送上gitlab远程代码仓库。</p>
 <p>dockerfile写法</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 设定镜像的官方运行环境</span></div><div class="line"><span class="keyword">FROM</span> python:<span class="number">2</span></div><div class="line"><span class="comment"># 设定docker内部工作环境为根目录下的app文件夹</span></div><div class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></div><div class="line"><span class="comment"># 添加宿主机当前目录的所有文件进入docker</span></div><div class="line"><span class="keyword">ADD</span><span class="bash"> . /app</span></div><div class="line"></div><div class="line"><span class="comment"># 由于没有需要import的包，空安装会报错，所以注释了</span></div><div class="line"><span class="comment">#COPY requirements.txt ./</span></div><div class="line"><span class="comment">#RUN pip install --no-cache-dir -r requirements.txt</span></div><div class="line"></div><div class="line"><span class="comment"># 暴露docker的3002端口</span></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">3002</span></div><div class="line"><span class="comment"># 运行命令</span></div><div class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"python"</span>,<span class="string">"./test.py"</span>]</span></div></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 设定镜像的官方运行环境</span></div><div class="line"><span class="keyword">FROM</span> python:<span class="number">2</span></div><div class="line"><span class="comment"># 设定docker内部工作环境为根目录下的app文件夹</span></div><div class="line"><span class="keyword">WORKDIR</span> /app</div><div class="line"><span class="comment"># 添加宿主机当前目录的所有文件进入docker</span></div><div class="line"><span class="keyword">ADD</span> . /app</div><div class="line"></div><div class="line"><span class="comment"># 由于没有需要import的包，空安装会报错，所以注释了</span></div><div class="line"><span class="comment">#COPY requirements.txt ./</span></div><div class="line"><span class="comment">#RUN pip install --no-cache-dir -r requirements.txt</span></div><div class="line"></div><div class="line"><span class="comment"># 暴露docker的3002端口</span></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">3002</span></div><div class="line"><span class="comment"># 运行命令</span></div><div class="line"><span class="keyword">CMD</span> ["python","./test.py"]</div></pre></td></tr></table></figure>
 <h4 id="3-2-设置配置"><a href="#3-2-设置配置" class="headerlink" title="3.2 设置配置"></a>3.2 设置配置</h4><p>首先是gitlab配置，当配置了公钥ssh上gitlab之后，就可以直接连上gitlab了。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins51.png" alt=""></p>
 <p>接着是触发器，选择的是每一分钟检查一次gitlab是否有更新。</p>
@@ -1207,42 +1256,6 @@
   </entry>
   
   <entry>
-    <title>推荐系统5</title>
-    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
-    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
-    <published>2017-09-05T06:23:06.000Z</published>
-    <updated>2017-09-08T05:24:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
-<p><strong>1.大类</strong></p>
-<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
-<p><strong>2.天数</strong></p>
-<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
-<p><strong>3.收益利率</strong></p>
-<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
-<p><strong>4.综上所述</strong></p>
-<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
-<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
-<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
-<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
-    
-    </summary>
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
-    
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
-    
-  </entry>
-  
-  <entry>
     <title>文件系统1</title>
     <link href="http://www.pirrla.cn/2017/09/05/fs/fs1/"/>
     <id>http://www.pirrla.cn/2017/09/05/fs/fs1/</id>
@@ -1452,6 +1465,42 @@
     
     
       <category term="filesystem" scheme="http://www.pirrla.cn/tags/filesystem/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>推荐系统5</title>
+    <link href="http://www.pirrla.cn/2017/09/05/rs/rs_5/"/>
+    <id>http://www.pirrla.cn/2017/09/05/rs/rs_5/</id>
+    <published>2017-09-05T06:23:06.000Z</published>
+    <updated>2017-09-08T05:24:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;a href=&quot;#假设已经得出了目标用户的相似用户，现做出推荐&quot; class=&quot;headerlink&quot; title=&quot;假设已经得出了目标用户的相似用户，现做出推荐&quot;&gt;&lt;/a&gt;假设已经得出了目标用户的相似用户，现做出
+    
+    </summary>
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
+    
+    
+      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
     
   </entry>
   
@@ -2016,207 +2065,6 @@
     
       &lt;h3 id=&quot;想法1&quot;&gt;&lt;a href=&quot;#想法1&quot; class=&quot;headerlink&quot; title=&quot;想法1:&quot;&gt;&lt;/a&gt;想法1:&lt;/h3&gt;&lt;p&gt;根据用户的属性来进行用户分类器的建立。&lt;/p&gt;
 &lt;p&gt;从client和client_info两个表查看，可以得出信息。&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/categories/recommendationsystem/"/>
-    
-    
-      <category term="recommendationsystem" scheme="http://www.pirrla.cn/tags/recommendationsystem/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>推荐系统1</title>
-    <link href="http://www.pirrla.cn/2017/08/21/rs/rs_1/"/>
-    <id>http://www.pirrla.cn/2017/08/21/rs/rs_1/</id>
-    <published>2017-08-20T16:00:00.000Z</published>
-    <updated>2017-12-27T08:09:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="目前大部分舆论："><a href="#目前大部分舆论：" class="headerlink" title="目前大部分舆论："></a>目前大部分舆论：</h3><p>目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用</p>
-<p><strong>精细的特征工程+简单可行的模型+各种Trick+CF协同过滤</strong></p>
-<p>即可以实现比较好的效果。</p>
-<p>其中，大部分人认为其中重要性是：</p>
-<p><strong>用户交互界面UI &gt; 数据 &gt; 算法</strong></p>
-<font color="red">所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）</font>
-
-<font color="red">其次，我们的推荐页面是已什么形式展现给客户？</font>
-
-<p>是直接在目前的基础上，进行排序展示？（推荐的产品在最前面）</p>
-<p>现有的第三方库：<strong>Java-mahout, Python-Crab</strong></p>
-<p>特征工程分为：静态特征、行为特征、Item特征、上下文特征</p>
-<p>特镇工程操作有：转换、切分、叠加、离散化、组合</p>
-<p>大数据不一定有效，提高维度则有一定的帮助，数据量太大可以随机从原始数据中采样。</p>
-<h3 id="USER表"><a href="#USER表" class="headerlink" title="USER表"></a>USER表</h3><p>对于USER，我们设计了一个表去存储用户的信息。</p>
-<p>信息来源暂定是用户自己填写的信息、问卷调查获得的风险偏好和从身份证号所获取的信息（出生地、年龄、性别等）。</p>
-<p>开户日期指的是用户已经在网站注册的时长。</p>
-<font color="red">金额方面，暂时还需要解决，是什么金额？</font>
-
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>userid</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>金额</td>
-<td>NUMBER</td>
-</tr>
-<tr>
-<td>风险偏好</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>已购产品</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>年龄</td>
-<td>NUMBER</td>
-</tr>
-<tr>
-<td>性别</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>职业</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>电话</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>出生地</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>邮箱</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>开户日期</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ITEM表"><a href="#ITEM表" class="headerlink" title="ITEM表"></a>ITEM表</h3><p>对于ITEM，我们同样将它存储在数据库中。</p>
-<p>这个数据来源我们可以从自身获取。</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>itemid</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>风险</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>起购额</td>
-<td>NUMBER</td>
-</tr>
-<tr>
-<td>产品类型</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-</tbody>
-</table>
-<p>两个表中，有<strong>关联的是风险和风险偏好，起购额和金额</strong>。因为这两个字段的数值是硬性要求，起到了一个Filter的作用。</p>
-<h3 id="可能添加的字段（增加维度，提高准度）"><a href="#可能添加的字段（增加维度，提高准度）" class="headerlink" title="可能添加的字段（增加维度，提高准度）"></a>可能添加的字段（增加维度，提高准度）</h3><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用户行为-退款行为</td>
-<td>用户是否发生退款行为，退款产品为</td>
-</tr>
-<tr>
-<td>用户行为-投诉行为</td>
-<td>用户是否对某款产品进行过投诉</td>
-</tr>
-<tr>
-<td>用户-是否有亲戚好友购买过相关产品</td>
-<td>对于熟人推荐的会比较信任（但是亲戚好友的信息比较难获取，推荐码？）</td>
-</tr>
-<tr>
-<td>产品-描述</td>
-<td>对描述进行NLP，得出一个向量</td>
-</tr>
-<tr>
-<td>产品-投资经理</td>
-<td>对于不同的投资经理，会有不同的喜好（例如已经购买的产品的同一位投资经理，但是要确定是否前一款产品是否亏损）</td>
-</tr>
-<tr>
-<td>产品-目前盈亏</td>
-<td>目前产品的盈亏情况，是否会推荐亏损的产品给客户</td>
-</tr>
-<tr>
-<td>产品-行业归属</td>
-<td>投资详情</td>
-</tr>
-<tr>
-<td>产品-开始销售日期</td>
-<td>长期稳定的产品会让客户偏喜爱</td>
-</tr>
-<tr>
-<td>网页动作</td>
-<td>是否能捕捉到用户的网页动作？（例如在某一个产品页面逗留很久，多次点击同一款产品的详情）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="相关论文"><a href="#相关论文" class="headerlink" title="相关论文"></a>相关论文</h3><p><a href="http://www.cin.ufpe.br/~idal/rs/Amazon-Recommendations.pdf" target="_blank" rel="external">Amazon CF</a></p>
-<p>基础的推荐算法有：</p>
-<p><strong>1.传统的协同过滤</strong></p>
-<p>其中，分为寻找相似的用户和相似的产品。</p>
-<p>计算相似度的基本都是使用向量之间的cos距离</p>
-<p>推荐相似用户购买的产品或者推荐相似产品的产品</p>
-<p><strong>2.Cluster Models</strong></p>
-<p>将用户分类成几个类，然后对新来的用户同样进行分类，然后推荐同一个分类用户的购买的产品信息</p>
-<p>其中分类的算法可以有：KNN, LogisticRegression, NeuralNetwork, DecesionTree, K-Means</p>
-<p><strong>3.Search-Based Methods</strong></p>
-<p>将item进行细分，划分出目录、类别、作者等信息，然后推荐相关目录、相关作者的其他作品等。</p>
-<p><strong>4.亚马逊Item-to-item 协同过滤</strong></p>
-<p>基于庞大的用户数量和商品数量，一个一个算相似度计算量非常庞大，同时不能满足业务要求的0.5秒内给用户推荐信息的要求，所以亚马逊按照传统的协同过滤进行优化，只计算购买过某一产品的用户们的购买记录中商品的相似度，然后推荐相似度最高的产品。</p>
-<p><a href="https://datajobs.com/data-science-repo/Recommender-Systems-%5BNetflix%5D.pdf" target="_blank" rel="external">matrix factorization</a></p>
-<p>Neighborhodd methods - 计算产品与产品之间，用户与用户之间的关系，例如某一个用户喜欢3部电影，则选择出一组用户也同时喜欢这三部作品，然后推荐这组用户最喜爱的电影作为推荐系统推荐</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/1.png" alt=""></p>
-<p>Lantent factore models - 将用户或产品的属性进行建模，数值化，然后根据用户的偏好和产品的属性的数值，去作推荐</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/2.png" alt=""></p>
-<p><a href="http://cs.rochester.edu/twiki/pub/Main/HarpSeminar/Factorization_Meets_the_Neighborhood-_a_Multifaceted_Collaborative_Filtering_Model.pdf" target="_blank" rel="external">Factorization Meets the Neighborhood: a Multifaceted Collaborative Filtering Model</a></p>
-<p>定义相似度：</p>
-<p>用户：</p>
-<h3 id="想法："><a href="#想法：" class="headerlink" title="想法："></a>想法：</h3><h3 id="1-直接将已购产品当做Training-data"><a href="#1-直接将已购产品当做Training-data" class="headerlink" title="1.直接将已购产品当做Training data"></a>1.直接将已购产品当做Training data</h3><p>是否可以直接将客户已经购买的产品记录当做training data放进神经网络</p>
-<p>然后把产品当成ont-hot型的向量输出（或者把金额当成输出）</p>
-<h3 id="2-将用户分类"><a href="#2-将用户分类" class="headerlink" title="2.将用户分类"></a>2.将用户分类</h3><p>将用户分成某几类用户，然后进来一个用户则根据模型，将该用户分配到不同的组里面。</p>
-<p>然后推荐系统将推荐组内用户最常购买的产品。</p>
-<h3 id="3-将产品分类"><a href="#3-将产品分类" class="headerlink" title="3.将产品分类"></a>3.将产品分类</h3><p>由于产品比较少，所以是否直接人工分类？</p>
-<p>或者根据投资经理（用户是否有投资经理偏好）进行分类？</p>
-<h3 id="目前难题："><a href="#目前难题：" class="headerlink" title="目前难题："></a>目前难题：</h3><p>1.冷启动？（完全新用户进入，没有任何数据，是否能找出新用户最多购买的产品）（例如注册时间小于30天的用户，购买最多的产品是？）</p>
-<p>2.推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
-<p>3.是否要将客户引导到高风险的产品上去？</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;目前大部分舆论：&quot;&gt;&lt;a href=&quot;#目前大部分舆论：&quot; class=&quot;headerlink&quot; title=&quot;目前大部分舆论：&quot;&gt;&lt;/a&gt;目前大部分舆论：&lt;/h3&gt;&lt;p&gt;目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用&lt;/p&gt;
 
     
     </summary>

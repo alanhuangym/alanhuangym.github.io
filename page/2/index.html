@@ -255,6 +255,283 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/18/jenkins/jenkins1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/18/jenkins/jenkins1/" itemprop="url">
+                  Jenkins学习笔记1-Jenkins入门&Python代码初试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-18T00:00:00+08:00">
+                2017-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-敏捷开发"><a href="#1-敏捷开发" class="headerlink" title="1.敏捷开发"></a>1.敏捷开发</h3><p>普通的程序开发，是按照瀑布流一样的流程往下走的。</p>
+<p>但是时至今日，客户的需求变化速度非常之快，而且生产环境也在不断变化，所以以往的单一的以计划来完成软件开发已经不可取了。</p>
+<p>所以我们需要采取敏捷开发，<em>*</em></p>
+<h5 id="1-1-什么是持续集成："><a href="#1-1-什么是持续集成：" class="headerlink" title="1.1 什么是持续集成："></a>1.1 什么是持续集成：</h5><p>持续集成是指开发者在代码的开发过程中，可以频繁的将代码部署集成到主干，并进程自动化测试<br><img src="http://ondsf10qe.bkt.clouddn.com/jenkins40.png" alt=""></p>
+<h5 id="1-2-什么是持续交付："><a href="#1-2-什么是持续交付：" class="headerlink" title="1.2 什么是持续交付："></a>1.2 什么是持续交付：</h5><p>持续交付指的是在持续集成的环境基础之上，将代码部署到预生产环境<br><img src="http://ondsf10qe.bkt.clouddn.com/jenkins41.png" alt=""></p>
+<h5 id="1-3-持续部署："><a href="#1-3-持续部署：" class="headerlink" title="1.3 持续部署："></a>1.3 持续部署：</h5><p>在持续交付的基础上，把部署到生产环境的过程自动化，持续部署和持续交付的区别就是最终部署到生产环境是自动化的。<br><img src="http://ondsf10qe.bkt.clouddn.com/jenkins42.png" alt=""></p>
+<h3 id="2-Jenkins入门"><a href="#2-Jenkins入门" class="headerlink" title="2.Jenkins入门"></a>2.Jenkins入门</h3><h5 id="2-1-Jenkins安装"><a href="#2-1-Jenkins安装" class="headerlink" title="2.1 Jenkins安装"></a>2.1 Jenkins安装</h5><p>Jenkins是Java编写的，所以需要安装JDK。可以去<a href="https://www.oracle.com/java/index.html" target="_blank" rel="external">Oracle官网</a>进行下载</p>
+<p>在<a href="https://jenkins.io/" target="_blank" rel="external">Jenkins官网</a>下载.war文件，然后直接在命令行运行<code>java -jar jenkins.war</code>，如果需要后天启动可以<code>nohup java -jar jenkins.war &amp;</code></p>
+<p>当命令行出现<code>INFO: Jenkins is fully up and running</code>即已经成功启动了服务。</p>
+<p>默认端口为8080，可以在启动命令后加上 <code>—httpPort=8081</code>更改默认的启动端口。</p>
+<p>启动设置还有：</p>
+<p><code>—httpsPort=$HTTP_PORT</code>表示使用 https 协议。<br><code>—httpListenAddress=$HTTP_HOST</code>用来指定 jenkins 监听的 ip 范围，默认为所有的 ip 都可以访问此 jenkins server。</p>
+<p>当然也可以把.war包部署进tomcat的webapps里面。</p>
+<h5 id="2-2-Jenkins启动"><a href="#2-2-Jenkins启动" class="headerlink" title="2.2 Jenkins启动"></a>2.2 Jenkins启动</h5><p>启动了Jenkins服务之后，我们登录<code>localhost:8080</code>提示需要输入安全token。</p>
+<p>根据提示，安全token在安装完jenkins会在本地的文件夹当中，例如macos会存放在<code>/Users/Shard/Jenkins/home/secrets/initialAdminPassword</code></p>
+<p>输入完密码之后，会提示安装建议安装的插件。</p>
+<font color="red">如果安装推荐失败，只能手动一个个安装，所以推荐手动删除jenkins目录，重新启动war包</font>
+
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins43.png" alt=""></p>
+<p>然后会提示创建一个管理员账户</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins44.png" alt=""></p>
+<p>创建完成则正式进入jenkins。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins45.png" alt=""></p>
+<p>**</p>
+<p>macos如果遇到没有权限进入的文件夹，右键get info 然后添加权限用户即可</p>
+<p>例如配置jenkins需要进入的<code>/Users/Shard/Jenkins/home/secrets</code></p>
+<p>**</p>
+<h5 id="2-3-Jenkins的简介"><a href="#2-3-Jenkins的简介" class="headerlink" title="2.3 Jenkins的简介"></a>2.3 Jenkins的简介</h5><p>Jenkins的关闭、重启等操作，可以通过查找进程，获取pid号，然后kill进程来完成。</p>
+<p>但是更便捷的方法是，在jenkins的url中执行一些命令来操作jenkins</p>
+<p>如下<code>http://[jenkins-server]/[command]</code> 命令可以为：</p>
+<ul>
+<li><code>exit</code> 关闭 jenkins</li>
+<li><code>restart</code> 重启 jenkins</li>
+<li><code>reload</code> 重新载入配置 configuration</li>
+</ul>
+<p>Jenkins的目录（例如macos在<code>/Users/Shared/Jenkins</code>）中的<code>Jenkins/Home/jobs</code>是jenkins的核心内容，包含了jenkins的项目的配置、构建日志等重要信息，对jenkins进行备份，主要备份该文件夹即可。</p>
+<p>Jenkins其实是一个开源的平台，主要的功能实现都是依靠插件完成，所以平台的设置没有太多，比较重要的是插件设置，所以我们将对使用到的具体的插件设置在后面讲述。</p>
+<h5 id="2-4-当第一次启动完成后，后续启动-MacOS"><a href="#2-4-当第一次启动完成后，后续启动-MacOS" class="headerlink" title="2.4 当第一次启动完成后，后续启动(MacOS)"></a>2.4 当第一次启动完成后，后续启动(MacOS)</h5><p><code>/Users/用户/.jenkins</code>是程序文件夹</p>
+<p><code>/Library/Application Support/Jenkins</code></p>
+<p><code>/Library/LaunchDaemon/jenkins</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">取消开机启动</div><div class="line">$ sudo launchctl unload -w /Library/LaunchDaemons/org.jenkins-ci.plist </div><div class="line"></div><div class="line">设置开机启动</div><div class="line">$ sudo launchctl load -w /Library/LaunchDaemons/org.jenkins-ci.plist</div></pre></td></tr></table></figure>
+<h3 id="3-简易Python脚本启动"><a href="#3-简易Python脚本启动" class="headerlink" title="3.简易Python脚本启动"></a>3.简易Python脚本启动</h3><p>首先我们点击左上角的<strong>New Item</strong>，新建一个job</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins2.png" alt=""></p>
+<p>我们需要对这个job命名，因为是一个简单的实验项目，所以我们选择的是<strong>Freestyle project</strong></p>
+<p>其中的<strong>Pipeline</strong>其实是官方推荐的持续部署的写法，但是有其特殊的编写语法，所以我们会在后面再去使用</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins3.png" alt=""></p>
+<p>然后我们进入了一个freestyle job的设置页面。</p>
+<ul>
+<li><p><strong>Discard old builds</strong></p>
+<p> 一个job由于触发器的触发，会产生许多的构建记录，所以这个选项可以让我们选择是否丢弃过时的构建记录。阈值的设置可以为日期（即丢弃X日前的构建记录）或数量（即只保存最新的X个构建记录）。</p>
+</li>
+<li><p><strong>Github project</strong></p>
+<p>由<a href="http://wiki.jenkins-ci.org/display/JENKINS/Github+Plugin" target="_blank" rel="external">GitHub plugin</a>产生的选项，可以输入该job的github地址，从而可以在后面的trigger触发器中选择使用<strong>GitHub hook trigger for GITScm polling</strong>（当有更改push上github后触发触发器）</p>
+</li>
+<li><p><strong><em>This</em> project is parameterised</strong> </p>
+<p>为这个job添加一些变量参数，当执行构建或触发触发器而构建的时候，使用到这些参数，从而实现不同的功能，参数的设定可以由默认值，当该项被勾选后，Build Now<em>会变更为Build with Parameters</em>，需要键入相应的参数</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>Throttle builds</strong></p>
+<p>由 <a href="http://wiki.jenkins-ci.org/display/JENKINS/Branch+API+Plugin" target="_blank" rel="external">Branch API Plugin</a>产生的选项，对于构建进行一个最小时间间隔的强制设定，例如一天最多构建6次job。但是这个选项<strong>不会</strong>让job在时间段内<strong>平均</strong>构建，例如设置了一天6次，但是不是每隔4个小时就执行一次。</p>
+</li>
+<li><p><strong>Disable this project</strong></p>
+<p>暂时关闭这个job，从而停止触发器的触发等操作。</p>
+</li>
+<li><p><strong>Execute concurrent builds if necessary</strong></p>
+<p>勾选了这个选项，这个job并发的构建（例如同时点击数次Build Now）会异步进行构建。而默认非勾选情况下，是阻塞执行构建的。</p>
+</li>
+</ul>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins4.png" alt=""></p>
+<p>然后就是代码仓库的管理选项了。</p>
+<p>这个项目使用的是使用github作为代码仓库，所以我们选择第二个。（如使用SVN则选择第三个Subversion）</p>
+<p>其中我们需要键入仓库的地址，对于github或者gitlab，我们需要使用非对称密钥对去进行身份验证，这里使用的是RSA算法生成的密钥。将jenkins所在本机生成的公钥填写入github或gitlab的密钥验证中，从而实现身份验证。</p>
+<p>其中也需要选择远程仓库的分支，默认是master分支。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins5.png" alt=""></p>
+<p>接下来是选择构建触发器的选项，当触发器的条件满足时，则对job进行构建</p>
+<ul>
+<li><p><strong>Trigger builds remotely (e.g., from scripts)</strong></p>
+<p>在该选项设定一个token口令，使用脚本对该项目进行立刻构建指令</p>
+<p><code>JENKINS_URL`/job/simple-python/build?token=`TOKEN_NAME` or /buildWithParameters?token=`TOKEN_NAME</code></p>
+<p>尾部最好加上<code>&amp;cause=Cause+Text</code>对该次构建进行注释，方面翻查操作日志</p>
+<p>可以在gitlab中设置，然后在每一次push时触发URL操作，进行jenkins触发</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins25.png" alt=""></p>
+</li>
+<li><p><strong>Build after other projects are built</strong></p>
+<p>可以选择在一个或多个项目完成构建之后触发触发器，进行构建，熟练地使用该触发器，可以形成一个有效的pipeline工作链</p>
+</li>
+<li><p><strong>Build periodically</strong></p>
+<p>周期性地对项目进行构建，使用的语法是<a href="http://blog.csdn.net/k_scott/article/details/8508290" target="_blank" rel="external">cron</a></p>
+<p>例如 <em> </em> <em> </em> * 则代表每分钟进行一次构建</p>
+</li>
+<li><p><del><strong>GitHub hook trigger for GITScm polling</strong></del></p>
+<p><del>上文所说到的，当github有更新时，进行构建</del>   暂时没研究怎么用，可以使用以下的<strong>Poll SCM</strong></p>
+</li>
+<li><p><strong>Poll SCM</strong></p>
+<p>当使用非github作为远程仓库时，使用该触发器，周期性对远程仓库进行检测，当发现有更新时进行构建</p>
+<p>使用的时间安排表语法也是<a href="http://blog.csdn.net/k_scott/article/details/8508290" target="_blank" rel="external">cron</a></p>
+</li>
+</ul>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins6.png" alt=""></p>
+<p>接下来是一些构建时的，对环境的选项设置</p>
+<ul>
+<li><p><strong>Delete workspace before build starts</strong></p>
+<p>默认是当开始新的构建时，对该job的工作空间进行全部删除，也可以通过设置，只删除某些文件</p>
+</li>
+<li><p><strong>Abort the build if it’s stuck</strong></p>
+<p>可以设置某一个具体的超时时间，当构建阻塞超过超时时间后，对该构建进行中止</p>
+</li>
+<li><p><strong>Add timestamps to the Console Output</strong></p>
+<p>添加时间戳到控制台输出</p>
+</li>
+<li><p><strong>Use secret text(s) or file(s)</strong></p>
+<p>对文件或密码进行加密</p>
+</li>
+<li><p><strong>With Ant</strong></p>
+<p>为Apache Ant搭建环境</p>
+</li>
+</ul>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins7.png" alt=""></p>
+<p>接下来是根据需要进行构建的脚本编写，这里是测试一个简单的python程序，所以直接使用命令行语句</p>
+<p><code>python test.py</code></p>
+<p>其中还有一些例如代码质量管理的<strong>Sonar Gates</strong>会在后述解释</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins8.png" alt=""></p>
+<p>最后还可以选择在构建完成之后做其他动作，例如构建其他的项目，形成一个pipeline。</p>
+<p>这里没有使用。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins9.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins10.png" alt=""></p>
+<p>至此，这个job就简单设置完成了，每当检测到远程代码仓库有更新时，进行代码构建，输出到控制台。</p>
+<p>这是一个简单的python程序。</p>
+<h3 id="4-Jenkins的master-slave模型"><a href="#4-Jenkins的master-slave模型" class="headerlink" title="4. Jenkins的master-slave模型"></a>4. Jenkins的master-slave模型</h3><p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins39.png" alt=""></p>
+<p>Jenkins也有分布式的构建，模式是master-slave的模型，master主管所有的job的运行情况。slave可以设置成不同的生产环境，master分配job到slave中，实现相应的操作。</p>
+<p>Reference：</p>
+<p>[1] <a href="http://blog.csdn.net/abcdocker/article/category/6638595" target="_blank" rel="external">持续集成 by www.abcdocker.com</a></p>
+<p>[2] <a href="https://files.cnblogs.com/files/itech/Jenkins%E5%85%A5%E9%97%A8.pdf" target="_blank" rel="external">Jenkins入门 by itech</a></p>
+<p>[3] <a href="http://www.yiibai.com/jenkins/jenkins_distributed_builds.html" target="_blank" rel="external">Jenkins分布式构建</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/19/other/html_notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -964,162 +1241,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/rs/rs_5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/05/rs/rs_5/" itemprop="url">
-                  推荐系统5
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
-                    <span itemprop="name">recommendationsystem</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
-<p><strong>1.大类</strong></p>
-<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
-<p><strong>2.天数</strong></p>
-<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
-<p><strong>3.收益利率</strong></p>
-<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
-<p><strong>4.综上所述</strong></p>
-<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
-<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
-<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
-<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/fs/fs1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1408,6 +1529,162 @@
 <p>Ref:</p>
 <p>[1] <a href="https://segmentfault.com/a/1190000003773614" target="_blank" rel="external">MongoDB 数据自动同步到 ElasticSearch</a></p>
 <p>[2] <a href="http://www.runoob.com/mongodb/mongodb-replication.html" target="_blank" rel="external">副本集设置</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/09/05/rs/rs_5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/05/rs/rs_5/" itemprop="url">
+                  推荐系统5
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:23:06+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
+                    <span itemprop="name">recommendationsystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="假设已经得出了目标用户的相似用户，现做出推荐"><a href="#假设已经得出了目标用户的相似用户，现做出推荐" class="headerlink" title="假设已经得出了目标用户的相似用户，现做出推荐"></a>假设已经得出了目标用户的相似用户，现做出推荐</h3><h3 id="1-推荐目标用户已购买的产品相似产品"><a href="#1-推荐目标用户已购买的产品相似产品" class="headerlink" title="1.推荐目标用户已购买的产品相似产品"></a>1.推荐目标用户已购买的产品相似产品</h3><p>由于用户在购买了产品后，当产品过了存续期后，可能需要继续购买同类型的产品，所以我们需要对用户之前购买的产品进行统计分析，继续推荐相似的产品给用户。</p>
+<p><strong>1.大类</strong></p>
+<p>当用户购买了多次相同大类的产品之后，我们可以认为该用户对该大类的风险程度、收益情况比较认可，所以有较大的可能性会再次购买，所以我们主要统计用户已购买产品大类的情况。</p>
+<p><strong>2.天数</strong></p>
+<p>由于用户对资金的灵活程度有自己的偏好，所以用户购买产品的天数比较固定或者有规律性，例如用户如果认为91天的产品的灵活程度和收益情况互相权衡之下最理想，那么用户对91天的产品的偏好是存在的。同时用户初期对产品的信任程度没有达到一定的高度，购买的天数可能会比较短，所以如果用户多次购买了同一类产品后，可以推荐同样的天数<strong>或更长的天数</strong>的产品。</p>
+<p><strong>3.收益利率</strong></p>
+<p>由于前两个属性产品大类和产品天数就决定了产品的收益情况，所以可以直接根据前两个属性直接得到用户的投资偏好。</p>
+<p><strong>4.综上所述</strong></p>
+<p>我们将统计用户购买过最多的产品类型和产品天数，然后将开放日期在未来或今日的产品选择出来，推荐给用户。</p>
+<h3 id="2-推荐用户尝试其他类型产品"><a href="#2-推荐用户尝试其他类型产品" class="headerlink" title="2.推荐用户尝试其他类型产品"></a>2.推荐用户尝试其他类型产品</h3><p>统计相似用户前100位的购买习惯，然后推荐该用户未购买过的产品或者排名第一的产品。</p>
+<p>因为统计前100位相似用户的时候已经筛选掉了只购买过一款产品的用户，所以不会出现无法推荐的问题。</p>
+<p><strong>问题：如果购买习惯完全相同怎么处理？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1a6726cef907827da0411d9f107550b4fcfd2feb</div><div class="line">9.43% GF1806 0.250494227106 新睿利优先91天 债券型 91 6.55</div><div class="line">9.46% GF1807 0.228637469027 新睿利优先91天 债券型 91 6</div><div class="line">9.44% GF1805 0.377176516585 新睿利优先91天 债券型 91 4.35</div><div class="line">9.53% GF1802 0.256939429748 新睿利优先91天 债券型 91 5.5</div><div class="line">9.33% GF180F 0.758798112353 新睿利优先91天 债券型 91 3.8</div><div class="line">13.81% 879003 0.0578450717465 多添利14天 短期理财类 14 4.3</div><div class="line">10.56% GF1811 0.288599403176 新睿利优先91天 债券型 91 4.8</div><div class="line">9.71% GF180L 1.38227279375 新睿利优先91天 债券型 91 4.7</div><div class="line">9.40% 879005 0.0835590588465 多添利56天 短期理财类 56 5.2</div><div class="line">9.33% 879049 4.02077615455 多添利X36天 短期理财类 36 4.7</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">879002 54 多添利7天 短期理财类 7 4.4</div><div class="line">879004 42 多添利28天 短期理财类 28 4.6</div><div class="line">GF1808 23 新睿利优先91天 债券型 91 5.4</div><div class="line">GF1810 21 新睿利优先91天 债券型 91 </div><div class="line">879006 21 多添利91天 短期理财类 91 4.6</div><div class="line">GF1814 19 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1804 14 新睿利优先91天 债券型 91 5.6</div><div class="line">GF1809 12 新睿利优先91天 债券型 91 3.6</div><div class="line">GF1803 11 新睿利优先91天 债券型 91 6</div><div class="line">GF1813 8 新睿利优先91天 债券型 91 6.2</div><div class="line">GF1812 8 新睿利优先91天 债券型 91 4.8</div><div class="line">GF1815 6 新睿利优先91天 债券型 91 5.3</div><div class="line">879007 5 多添利182天 短期理财类 182 4.75</div><div class="line">879287 3 多添利X28天 短期理财类 28 5.5</div><div class="line">879610 3 多添利X364天 短期理财类 364 4.8</div><div class="line">879114 3 多添利X182天 短期理财类 182 4.4</div><div class="line">879620 2 多添利X364天 短期理财类 364 4.9</div><div class="line">879119 2 多添利X364天 短期理财类 364 5.25</div><div class="line">GF1884 2 新睿利优先X189天 债券型 189 6.1</div><div class="line">GF1823 2 新睿利优先X126天 债券型 126 6</div><div class="line">879008 2 多添利364天 短期理财类 364 </div><div class="line">879208 2 多添利X126天 短期理财类 126 5.3</div><div class="line">879277 2 多添利X56天 短期理财类 56 4.6</div><div class="line">GF1887 1 新睿利优先X182天 债券型 182 4.9</div><div class="line">87953P 1 多添利X56天 短期理财类 56 4.45</div><div class="line">879579 1 多添利X364天 短期理财类 364 4.9</div><div class="line">879341 1 多添利X182天15 短期理财类 182 5.1</div><div class="line">879162 1 多添利X182天 短期理财类 182 4.1</div><div class="line">87913I 1 多添利X35天 短期理财类 35 4.5</div><div class="line">GF1821 1 新睿利优先X182天 债券型 182 5.25</div><div class="line">GF1894 1 新睿利优先X182天 债券型 182 5.3</div><div class="line">879218 1 多添利X28天 短期理财类 28 4.2</div></pre></td></tr></table></figure>
 
           
         
@@ -2368,326 +2645,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/08/21/rs/rs_1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alan Wong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/21/rs/rs_1/" itemprop="url">
-                  推荐系统1
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T00:00:00+08:00">
-                2017-08-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/recommendationsystem/" itemprop="url" rel="index">
-                    <span itemprop="name">recommendationsystem</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="目前大部分舆论："><a href="#目前大部分舆论：" class="headerlink" title="目前大部分舆论："></a>目前大部分舆论：</h3><p>目前，大多数的资料（知乎等）显示，工业界和学术界的鸿沟还是比较大的，工业界通常使用</p>
-<p><strong>精细的特征工程+简单可行的模型+各种Trick+CF协同过滤</strong></p>
-<p>即可以实现比较好的效果。</p>
-<p>其中，大部分人认为其中重要性是：</p>
-<p><strong>用户交互界面UI &gt; 数据 &gt; 算法</strong></p>
-<font color="red">所以我们是否需要进行UI的调研？（淘宝、其他公司的同类产品等?）</font>
-
-<font color="red">其次，我们的推荐页面是已什么形式展现给客户？</font>
-
-<p>是直接在目前的基础上，进行排序展示？（推荐的产品在最前面）</p>
-<p>现有的第三方库：<strong>Java-mahout, Python-Crab</strong></p>
-<p>特征工程分为：静态特征、行为特征、Item特征、上下文特征</p>
-<p>特镇工程操作有：转换、切分、叠加、离散化、组合</p>
-<p>大数据不一定有效，提高维度则有一定的帮助，数据量太大可以随机从原始数据中采样。</p>
-<h3 id="USER表"><a href="#USER表" class="headerlink" title="USER表"></a>USER表</h3><p>对于USER，我们设计了一个表去存储用户的信息。</p>
-<p>信息来源暂定是用户自己填写的信息、问卷调查获得的风险偏好和从身份证号所获取的信息（出生地、年龄、性别等）。</p>
-<p>开户日期指的是用户已经在网站注册的时长。</p>
-<font color="red">金额方面，暂时还需要解决，是什么金额？</font>
-
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>userid</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>金额</td>
-<td>NUMBER</td>
-</tr>
-<tr>
-<td>风险偏好</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>已购产品</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>年龄</td>
-<td>NUMBER</td>
-</tr>
-<tr>
-<td>性别</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>职业</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>电话</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>出生地</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>邮箱</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>开户日期</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ITEM表"><a href="#ITEM表" class="headerlink" title="ITEM表"></a>ITEM表</h3><p>对于ITEM，我们同样将它存储在数据库中。</p>
-<p>这个数据来源我们可以从自身获取。</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>itemid</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>风险</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-<tr>
-<td>起购额</td>
-<td>NUMBER</td>
-</tr>
-<tr>
-<td>产品类型</td>
-<td>VARCHAR2(20 BYTE)</td>
-</tr>
-</tbody>
-</table>
-<p>两个表中，有<strong>关联的是风险和风险偏好，起购额和金额</strong>。因为这两个字段的数值是硬性要求，起到了一个Filter的作用。</p>
-<h3 id="可能添加的字段（增加维度，提高准度）"><a href="#可能添加的字段（增加维度，提高准度）" class="headerlink" title="可能添加的字段（增加维度，提高准度）"></a>可能添加的字段（增加维度，提高准度）</h3><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用户行为-退款行为</td>
-<td>用户是否发生退款行为，退款产品为</td>
-</tr>
-<tr>
-<td>用户行为-投诉行为</td>
-<td>用户是否对某款产品进行过投诉</td>
-</tr>
-<tr>
-<td>用户-是否有亲戚好友购买过相关产品</td>
-<td>对于熟人推荐的会比较信任（但是亲戚好友的信息比较难获取，推荐码？）</td>
-</tr>
-<tr>
-<td>产品-描述</td>
-<td>对描述进行NLP，得出一个向量</td>
-</tr>
-<tr>
-<td>产品-投资经理</td>
-<td>对于不同的投资经理，会有不同的喜好（例如已经购买的产品的同一位投资经理，但是要确定是否前一款产品是否亏损）</td>
-</tr>
-<tr>
-<td>产品-目前盈亏</td>
-<td>目前产品的盈亏情况，是否会推荐亏损的产品给客户</td>
-</tr>
-<tr>
-<td>产品-行业归属</td>
-<td>投资详情</td>
-</tr>
-<tr>
-<td>产品-开始销售日期</td>
-<td>长期稳定的产品会让客户偏喜爱</td>
-</tr>
-<tr>
-<td>网页动作</td>
-<td>是否能捕捉到用户的网页动作？（例如在某一个产品页面逗留很久，多次点击同一款产品的详情）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="相关论文"><a href="#相关论文" class="headerlink" title="相关论文"></a>相关论文</h3><p><a href="http://www.cin.ufpe.br/~idal/rs/Amazon-Recommendations.pdf" target="_blank" rel="external">Amazon CF</a></p>
-<p>基础的推荐算法有：</p>
-<p><strong>1.传统的协同过滤</strong></p>
-<p>其中，分为寻找相似的用户和相似的产品。</p>
-<p>计算相似度的基本都是使用向量之间的cos距离</p>
-<p>推荐相似用户购买的产品或者推荐相似产品的产品</p>
-<p><strong>2.Cluster Models</strong></p>
-<p>将用户分类成几个类，然后对新来的用户同样进行分类，然后推荐同一个分类用户的购买的产品信息</p>
-<p>其中分类的算法可以有：KNN, LogisticRegression, NeuralNetwork, DecesionTree, K-Means</p>
-<p><strong>3.Search-Based Methods</strong></p>
-<p>将item进行细分，划分出目录、类别、作者等信息，然后推荐相关目录、相关作者的其他作品等。</p>
-<p><strong>4.亚马逊Item-to-item 协同过滤</strong></p>
-<p>基于庞大的用户数量和商品数量，一个一个算相似度计算量非常庞大，同时不能满足业务要求的0.5秒内给用户推荐信息的要求，所以亚马逊按照传统的协同过滤进行优化，只计算购买过某一产品的用户们的购买记录中商品的相似度，然后推荐相似度最高的产品。</p>
-<p><a href="https://datajobs.com/data-science-repo/Recommender-Systems-%5BNetflix%5D.pdf" target="_blank" rel="external">matrix factorization</a></p>
-<p>Neighborhodd methods - 计算产品与产品之间，用户与用户之间的关系，例如某一个用户喜欢3部电影，则选择出一组用户也同时喜欢这三部作品，然后推荐这组用户最喜爱的电影作为推荐系统推荐</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/1.png" alt=""></p>
-<p>Lantent factore models - 将用户或产品的属性进行建模，数值化，然后根据用户的偏好和产品的属性的数值，去作推荐</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/2.png" alt=""></p>
-<p><a href="http://cs.rochester.edu/twiki/pub/Main/HarpSeminar/Factorization_Meets_the_Neighborhood-_a_Multifaceted_Collaborative_Filtering_Model.pdf" target="_blank" rel="external">Factorization Meets the Neighborhood: a Multifaceted Collaborative Filtering Model</a></p>
-<p>定义相似度：</p>
-<p>用户：</p>
-<h3 id="想法："><a href="#想法：" class="headerlink" title="想法："></a>想法：</h3><h3 id="1-直接将已购产品当做Training-data"><a href="#1-直接将已购产品当做Training-data" class="headerlink" title="1.直接将已购产品当做Training data"></a>1.直接将已购产品当做Training data</h3><p>是否可以直接将客户已经购买的产品记录当做training data放进神经网络</p>
-<p>然后把产品当成ont-hot型的向量输出（或者把金额当成输出）</p>
-<h3 id="2-将用户分类"><a href="#2-将用户分类" class="headerlink" title="2.将用户分类"></a>2.将用户分类</h3><p>将用户分成某几类用户，然后进来一个用户则根据模型，将该用户分配到不同的组里面。</p>
-<p>然后推荐系统将推荐组内用户最常购买的产品。</p>
-<h3 id="3-将产品分类"><a href="#3-将产品分类" class="headerlink" title="3.将产品分类"></a>3.将产品分类</h3><p>由于产品比较少，所以是否直接人工分类？</p>
-<p>或者根据投资经理（用户是否有投资经理偏好）进行分类？</p>
-<h3 id="目前难题："><a href="#目前难题：" class="headerlink" title="目前难题："></a>目前难题：</h3><p>1.冷启动？（完全新用户进入，没有任何数据，是否能找出新用户最多购买的产品）（例如注册时间小于30天的用户，购买最多的产品是？）</p>
-<p>2.推荐系统的目标是？推荐用户最喜爱的产品，最有可能购买的产品？还是将冷门的产品推销出去？</p>
-<p>3.是否要将客户引导到高风险的产品上去？</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2737,7 +2694,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2748,7 +2705,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2759,7 +2716,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

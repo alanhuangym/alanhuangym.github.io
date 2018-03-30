@@ -97,7 +97,7 @@
 使用的是官方论坛idoop的镜像。版本号是9.8stable
 运行命令是
 123456docker run -d -p 8085:80 -p 3307:3306 \        -e USER=“alan” -e PASSWD=&amp;quot;password&amp;quo">
-<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao/zentao1.png">
+<meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao1.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao2.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao3.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao4.png">
@@ -105,14 +105,14 @@
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao6.jpg">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao7.png">
 <meta property="og:image" content="http://ondsf10qe.bkt.clouddn.com/zentao8.png">
-<meta property="og:updated_time" content="2018-01-26T02:33:39.000Z">
+<meta property="og:updated_time" content="2018-03-30T01:33:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="禅道二次开发">
 <meta name="twitter:description" content="1.禅道安装因为省去配置APACHE和MySQL等环境，我们直接使用docker镜像进行二次开发，也方便了开发成果的后续转移和部署。
 使用的是官方论坛idoop的镜像。版本号是9.8stable
 运行命令是
 123456docker run -d -p 8085:80 -p 3307:3306 \        -e USER=“alan” -e PASSWD=&amp;quot;password&amp;quo">
-<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/zentao/zentao1.png">
+<meta name="twitter:image" content="http://ondsf10qe.bkt.clouddn.com/zentao1.png">
 
 
 
@@ -391,7 +391,7 @@
 <p>同时在url里还可以传递参数例如<code>/zentao/attendance-onduty-100</code>这样就传递了100这个参数。</p>
 <h3 id="2-考勤系统开发"><a href="#2-考勤系统开发" class="headerlink" title="2.考勤系统开发"></a>2.考勤系统开发</h3><p>我们希望参考<a href="http://www.zentao.net/book/zentaobizhelp/268.html" target="_blank" rel="external">禅道企业版的考勤系统</a>，开发出一个适合我们的考勤系统。</p>
 <h4 id="2-1-签到按钮"><a href="#2-1-签到按钮" class="headerlink" title="2.1 签到按钮"></a>2.1 签到按钮</h4><p>实现签到和签退的功能，首先我们需要在用户界面上添加两个按钮，分别让用户实现签到签退操作。效果如下</p>
-<p><img src="http://ondsf10qe.bkt.clouddn.com/zentao/zentao1.png" alt=""></p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/zentao1.png" alt=""></p>
 <p>我们需要在顶部导航栏添加按钮，就需要在module文件夹中找到common模块，因为根据禅道的结构，头文件都放在common模块中。</p>
 <p>找到<code>./module/common/view/header.html.php</code>，我们在html文件中，找到了顶部导航栏的信息</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'pull-right'</span> <span class="attr">id</span>=<span class="string">'topnav'</span>&gt;</span>&lt;?php commonModel::printTopBar();?&gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -556,6 +556,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/03/28/reading/machinelearningbyzhouzhihua/" rel="prev" title="周志华-机器学习 笔记">
+                周志华-机器学习 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -626,7 +630,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -637,7 +641,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -648,7 +652,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

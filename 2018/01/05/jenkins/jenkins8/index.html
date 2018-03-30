@@ -423,7 +423,7 @@ gitlab服务器、jenkins服务器、docker服务器、portainer监视docker服�
 <h3 id="3-Jenkins"><a href="#3-Jenkins" class="headerlink" title="3.Jenkins"></a>3.Jenkins</h3><h4 id="3-1准备工作"><a href="#3-1准备工作" class="headerlink" title="3.1准备工作"></a>3.1准备工作</h4><p>由于我们在持续部署中使用到了docker服务，所以我们需要在代码之中，新增加一个<code>dockerfile</code>的文件，用于将代码部署成docker镜像。</p>
 <p><code>dockerfile</code>直接放置在代码的根目录中，跟随代码一起推送上gitlab远程代码仓库。</p>
 <p>dockerfile写法</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 设定镜像的官方运行环境</span></div><div class="line"><span class="keyword">FROM</span> python:<span class="number">2</span></div><div class="line"><span class="comment"># 设定docker内部工作环境为根目录下的app文件夹</span></div><div class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></div><div class="line"><span class="comment"># 添加宿主机当前目录的所有文件进入docker</span></div><div class="line"><span class="keyword">ADD</span><span class="bash"> . /app</span></div><div class="line"></div><div class="line"><span class="comment"># 由于没有需要import的包，空安装会报错，所以注释了</span></div><div class="line"><span class="comment">#COPY requirements.txt ./</span></div><div class="line"><span class="comment">#RUN pip install --no-cache-dir -r requirements.txt</span></div><div class="line"></div><div class="line"><span class="comment"># 暴露docker的3002端口</span></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">3002</span></div><div class="line"><span class="comment"># 运行命令</span></div><div class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"python"</span>,<span class="string">"./test.py"</span>]</span></div></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 设定镜像的官方运行环境</span></div><div class="line"><span class="keyword">FROM</span> python:<span class="number">2</span></div><div class="line"><span class="comment"># 设定docker内部工作环境为根目录下的app文件夹</span></div><div class="line"><span class="keyword">WORKDIR</span> /app</div><div class="line"><span class="comment"># 添加宿主机当前目录的所有文件进入docker</span></div><div class="line"><span class="keyword">ADD</span> . /app</div><div class="line"></div><div class="line"><span class="comment"># 由于没有需要import的包，空安装会报错，所以注释了</span></div><div class="line"><span class="comment">#COPY requirements.txt ./</span></div><div class="line"><span class="comment">#RUN pip install --no-cache-dir -r requirements.txt</span></div><div class="line"></div><div class="line"><span class="comment"># 暴露docker的3002端口</span></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">3002</span></div><div class="line"><span class="comment"># 运行命令</span></div><div class="line"><span class="keyword">CMD</span> ["python","./test.py"]</div></pre></td></tr></table></figure>
 <h4 id="3-2-设置配置"><a href="#3-2-设置配置" class="headerlink" title="3.2 设置配置"></a>3.2 设置配置</h4><p>首先是gitlab配置，当配置了公钥ssh上gitlab之后，就可以直接连上gitlab了。</p>
 <p><img src="http://ondsf10qe.bkt.clouddn.com/jenkins51.png" alt=""></p>
 <p>接着是触发器，选择的是每一分钟检查一次gitlab是否有更新。</p>
@@ -566,7 +566,7 @@ gitlab服务器、jenkins服务器、docker服务器、portainer监视docker服�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -577,7 +577,7 @@ gitlab服务器、jenkins服务器、docker服务器、portainer监视docker服�
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -588,7 +588,7 @@ gitlab服务器、jenkins服务器、docker服务器、portainer监视docker服�
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

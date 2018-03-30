@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -277,8 +277,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/" itemprop="url">
-                  Coursera Machine Learning Notes
+                <a class="post-title-link" href="/2017/03/17/cuhk/Mastering_Social_Media_Mining_with_Python/" itemprop="url">
+                  Mastering Social Media Mining wiht Python
                 </a>
               
             
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T00:00:00+08:00">
-                2017-03-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T00:00:00+08:00">
+                2017-03-17
               </time>
             
 
@@ -354,37 +354,227 @@
       
         
           
-            <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
-<p>Week6:</p>
-<p>Evaluating a Learning Algorithm</p>
-<p>How to improve the algorithm:</p>
-<p>What to do next:</p>
-<ol>
-<li>Get more training examples</li>
-<li>Try smaller or additional features</li>
-<li>Try adding ploynomial features (x square or x cube)</li>
-<li>Try decrease or increse the lamda (regularization parameter)</li>
-</ol>
-<p>But every one takes much time. So</p>
-<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
-<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
-<p>Then only apply test on test set.</p>
-<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
-<ol>
-<li>Get more training examples - fix high variance</li>
-<li>Try smaller features - fix high variance</li>
-<li>Try additional features - fix high bias</li>
-<li>Try adding polynomial features - fix high bias</li>
-<li>Try decrease lamda - fix high bias</li>
-<li>Try increase lamda - fix high variance</li>
-</ol>
-<p>Precision and Recall</p>
-<p>Precision = True Positive/(True positive + False positive) </p>
-<p>= True Pos/Number of Predictive Pos</p>
-<p>Recall = True positive /(True positive + False negative)</p>
-<p>= True Pos/Number of Actual Pos</p>
-<p>one way to balance precision and recall is f1 score</p>
-<p>f1 score = 2*P*R/(P+R)</p>
+            <p>Resource: <a href="https://marcobonzanini.com/2016/08/02/mastering-social-media-mining-with-python/" target="_blank" rel="external">Mastering Social Media Mining wiht Python</a></p>
+<p>By Marco Bonzanini</p>
+<h2 id="Python-tools-for-data-science"><a href="#Python-tools-for-data-science" class="headerlink" title="Python tools for data science"></a>Python tools for data science</h2><p>Pandas</p>
+<p>Numpy</p>
+<p>Scikit-learn</p>
+<p>NLTK</p>
+<p>Gensim</p>
+<p>Pyro4</p>
+<p>Networks</p>
+<p>Matplotlib</p>
+<p>wordcloud</p>
+<h2 id="Twitter"><a href="#Twitter" class="headerlink" title="Twitter"></a>Twitter</h2><h2 id="Entity-Analysis"><a href="#Entity-Analysis" class="headerlink" title="Entity Analysis"></a>Entity Analysis</h2><p>1.Count the hashtags frenquency</p>
+<p>2.Count the tweets with hashtags or without hashtags and count the number of hashtags in one tweet</p>
+<p>3.Count the occurancy of people mention</p>
+<h2 id="Text-Analysis"><a href="#Text-Analysis" class="headerlink" title="Text Analysis"></a>Text Analysis</h2><p>1.lowercase the texts</p>
+<p>2.Tokenization</p>
+<p> use NLTK.TweetTokenizer() to </p>
+<p>3.remove the stop words</p>
+<p>4.remove digits</p>
+<p> Count the occrance of words</p>
+<h2 id="Time-Series-Analysis"><a href="#Time-Series-Analysis" class="headerlink" title="Time Series Analysis"></a>Time Series Analysis</h2><p>Plot the figure with different timeslot</p>
+<p>Normalize the time</p>
+<p>For example from 15:13-15:14 all of them add to together</p>
+<h2 id="Text-analysis-and-TF-IDF-on-notes"><a href="#Text-analysis-and-TF-IDF-on-notes" class="headerlink" title="Text analysis and TF-IDF on notes"></a>Text analysis and TF-IDF on notes</h2><p>TF = Term Frequency</p>
+<p>frequency in a document, can be normalized by the length of the document</p>
+<p>IDF = Inverse Document Frequency</p>
+<p>1+log(N/n)  N means the total number of words, the n mean this word’s occrance in each document</p>
+<p>TF-IDF = TF*IDF</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/16/other/GitTutorial_ByLiaoxuefeng/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/16/other/GitTutorial_ByLiaoxuefeng/" itemprop="url">
+                  Git Tutorial
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T00:00:00+08:00">
+                2017-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Source:</p>
+<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
+<h1 id="Git-Tutorial"><a href="#Git-Tutorial" class="headerlink" title="Git Tutorial"></a>Git Tutorial</h1><p>Download:</p>
+<p>For Mac user, you can simply go to the offical website to download the package and install it.</p>
+<p>Link:<a href="https://git-scm.com/downloads" target="_blank" rel="external">https://git-scm.com/downloads</a></p>
+<p>在终端里面，使用</p>
+<p>pwd</p>
+<p>显示当前所在的目录地址</p>
+<p>/Users/alan/git/learngit</p>
+<p>使用</p>
+<p>git init 创建一个新的仓库</p>
+<p>修改：</p>
+<p>git add 文件名（带后缀）</p>
+<p>git commit -m “说明” </p>
+<p>查看本地仓库状态</p>
+<p>git status</p>
+<p>查看修改在何处</p>
+<p>git diff</p>
+<p>查看修改日志</p>
+<p>git log</p>
+<p>美观可以改为</p>
+<p>git log —pretty=oneline</p>
+<p>返回上一次修改后的版本（每一个^返回一个版本）（HEAD 表示当前版本）</p>
+<p>git reset —hard HEAD^</p>
+<p>前进版本(hard 后面是版本号，从log中可以得出)</p>
+<p>git reset —hard b3fe8e</p>
+<p>找版本号可以</p>
+<p>git reflog (命令日志)</p>
+<p>从这里可以找到版本号</p>
+<p>舍弃工作区的修改（返回add状态的版本或者最新commit的版本）</p>
+<p>git checkout — readme.txt </p>
+<p>舍弃缓存区的修改</p>
+<p>git reset HEAD readme.txt</p>
+<p>关联远程仓库(先有本地库再有远程库的时候才需要)</p>
+<p>git remote add origin git@github.com:alanhuangym/learngit.git</p>
+<p>把本地内容推送到远程仓库上（第一次加-u）</p>
+<p>git push -u origin master</p>
+<p>git push origin master</p>
+<p>从远程库中下载到本地库中(会自动新建文件夹)</p>
+<p>git clone git@github.com:alanhuangym/gitskills.git</p>
+<p>分支：</p>
+<p>查看分支</p>
+<p>git branch</p>
+<p>创建分支</p>
+<p>git branch 分支名</p>
+<p>切换分支</p>
+<p>git checkout 分支名</p>
+<p>在master下面合并分支</p>
+<p>git merge 分支名</p>
+<p>删除分支</p>
+<p>git branch -d 分支名</p>
 
           
         
@@ -611,6 +801,179 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Wong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ondsf10qe.bkt.clouddn.com/avatar01.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Note down something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/15/cuhk/Coursera-MachineLearningByAndrewNg/" itemprop="url">
+                  Coursera Machine Learning Notes
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T00:00:00+08:00">
+                2017-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CUHK-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">CUHK_Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.coursera.org/learn/machine-learning/home/" target="_blank" rel="external">CourseHomePage</a></p>
+<p>Week6:</p>
+<p>Evaluating a Learning Algorithm</p>
+<p>How to improve the algorithm:</p>
+<p>What to do next:</p>
+<ol>
+<li>Get more training examples</li>
+<li>Try smaller or additional features</li>
+<li>Try adding ploynomial features (x square or x cube)</li>
+<li>Try decrease or increse the lamda (regularization parameter)</li>
+</ol>
+<p>But every one takes much time. So</p>
+<h3 id="Evaluate-the-hypothesis"><a href="#Evaluate-the-hypothesis" class="headerlink" title="Evaluate the hypothesis:"></a>Evaluate the hypothesis:</h3><p>Divide the dataset to traning set : cross validation set : test set = 6:2:2</p>
+<p>Tune the parameters on cross validation set. Minimize the error in CV set. </p>
+<p>Then only apply test on test set.</p>
+<h3 id="Bias-VS-Variance"><a href="#Bias-VS-Variance" class="headerlink" title="Bias VS Variance"></a>Bias VS Variance</h3><p>High means (underfit and overfit)</p>
+<ol>
+<li>Get more training examples - fix high variance</li>
+<li>Try smaller features - fix high variance</li>
+<li>Try additional features - fix high bias</li>
+<li>Try adding polynomial features - fix high bias</li>
+<li>Try decrease lamda - fix high bias</li>
+<li>Try increase lamda - fix high variance</li>
+</ol>
+<p>Precision and Recall</p>
+<p>Precision = True Positive/(True positive + False positive) </p>
+<p>= True Pos/Number of Predictive Pos</p>
+<p>Recall = True positive /(True positive + False negative)</p>
+<p>= True Pos/Number of Actual Pos</p>
+<p>one way to balance precision and recall is f1 score</p>
+<p>f1 score = 2*P*R/(P+R)</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -660,7 +1023,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -671,7 +1034,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -682,7 +1045,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
