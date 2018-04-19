@@ -86,11 +86,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Note down something">
-<meta property="og:url" content="http://www.pirrla.cn/index.html">
-<meta property="og:site_name" content="Note down something">
+<meta property="og:title" content="Note something">
+<meta property="og:url" content="http://www.pirrla.com/index.html">
+<meta property="og:site_name" content="Note something">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Note down something">
+<meta name="twitter:title" content="Note something">
 
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://www.pirrla.cn/"/>
+  <link rel="canonical" href="http://www.pirrla.com/"/>
 
 
 
 
 
-  <title> Note down something </title>
+  <title> Note something </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -162,7 +162,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Note down something</span>
+        <span class="site-title">Note something</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2018/03/28/reading/machinelearningbyzhouzhihua/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2018/03/28/reading/machinelearningbyzhouzhihua/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -264,7 +264,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -435,6 +435,79 @@
 <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">F1 = \frac&#123;2*P*R&#125;&#123;P+R&#125;</div></pre></td></tr></table></figure>
 <p>当我们需要对查全/差准有一定偏向的时候，我们使用F1的一般形式</p>
 <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">F_&#123;\beta&#125; = \frac&#123;(1+\beta^2)*P*R&#125;&#123;(\beta^2*P)+R&#125;</div><div class="line"></div><div class="line">\beta&gt;<span class="number">1</span>时查全率更重要</div><div class="line">\beta&lt;<span class="number">1</span>时查准率更重要</div><div class="line">\bata=<span class="number">1</span> 即F1 score</div></pre></td></tr></table></figure>
+<p>更有，当我们拥有n个二分类混淆矩阵的时候，我们有两种方法进行综合考察</p>
+<ul>
+<li>一是，在各个混淆矩阵中计算出查准率和查全率后，得出平均查准率查全率，然后使用平均查准率查全率计算出F1得分，称为“宏F1”</li>
+<li>二是，统计各个混淆矩阵中的TP、FP、TN、FN的平均值，然后再计算查准率查全率，然后再计算F1得分，称为“微F1”</li>
+</ul>
+<h4 id="ROC和AUC"><a href="#ROC和AUC" class="headerlink" title="ROC和AUC"></a>ROC和AUC</h4><p>ROC 受试者工作特征Receiver Operating Characteristic</p>
+<p>AUC Area Under Curve</p>
+<p>与P-R曲线类似，ROC也是用两个值作为横纵坐标</p>
+<p>真正例率True Positive Rate</p>
+<p>假正例率False Positive Rate </p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TPF = \frac&#123;TP&#125;&#123;TP+FN&#125;</div><div class="line"></div><div class="line">FPR = \frac&#123;FP&#125;&#123;TN+FP&#125;</div></pre></td></tr></table></figure>
+<p>ROC以TPR为纵轴，以FPR为横轴，也是通过设定不同的阈值画线</p>
+<font color="red">比较检验待深入学习</font>
+
+
+
+<h3 id="第三章-线性模型"><a href="#第三章-线性模型" class="headerlink" title="第三章 线性模型"></a>第三章 线性模型</h3><p>基本形式</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">f(x)=w^&#123;T&#125;x+b</div></pre></td></tr></table></figure>
+<p>线性模型形式简单，易于建模，拥有很好的可解释性comprehensibility</p>
+<p>非线性模型可以在线性模型的基础上引入层级结构和高维映射而构成</p>
+<h4 id="线性回归-linear-regression"><a href="#线性回归-linear-regression" class="headerlink" title="线性回归 linear regression"></a>线性回归 linear regression</h4><p>对于离散属性，若属性值间存在着序(order)的关系，则通过连续化转化为连续值</p>
+<p>例如身高属性的高、中、低 可以转化为{1.0,0.5,0.0}</p>
+<p>但是如果是例如黄瓜、西瓜、南瓜这类转换成(0,0,1),(0,1,0),(1,0,0)会不恰当引入序关系，导致后续处理如计算距离造成误导</p>
+<p>均方误差（取差平方再求和）有非常好的几何意义，例如欧氏距离Euclidean distance</p>
+<p>基于均方误差最小化来进行模型求解的方法称为<font color="red">最小二乘法least square method</font></p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">凸函数定义</div><div class="line">对区间的任意两点x_1,x_2均有</div><div class="line">f(\frac&#123;x_1+x_2&#125;&#123;2&#125;)&lt;=\frac&#123;f(x_1)+f(x_2)&#125;&#123;2&#125;</div></pre></td></tr></table></figure>
+<p>当属性大于1时，称为多元线性回归multivariate linear regression</p>
+<h4 id="对数几率回归logistic-regression"><a href="#对数几率回归logistic-regression" class="headerlink" title="对数几率回归logistic regression"></a>对数几率回归logistic regression</h4><p>对于二分类任务，线性回归模型产生的是实值，我们需要将实值转换为0/1值</p>
+<p>对数几率函数，是一种sigmoid函数（形似s的函数），将z值转化为一个接近0或1的y值</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y=\frac&#123;1&#125;&#123;1+e^&#123;-z&#125;&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/ml01.png" alt=""></p>
+<h4 id="线性判别分析-linear-discriminant-analysis"><a href="#线性判别分析-linear-discriminant-analysis" class="headerlink" title="线性判别分析 linear discriminant analysis"></a>线性判别分析 linear discriminant analysis</h4><p>给定训练集，设法将训练集投影到一条直线上，使得同类的投影点尽可能解禁，异类的投影点尽可能远离。当一个新样本进来的时候，将其投影到直线上，根据投影点位置进行分类。</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/ml02.png" alt=""></p>
+<p>LDA通常也用来有监督的降维</p>
+<p>协方差</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Cov(X,Y)=<span class="keyword">E</span>[(X-<span class="keyword">E</span>(X))(Y-<span class="keyword">E</span>(Y))]</div><div class="line">		=<span class="keyword">E</span>[XY]-<span class="keyword">E</span>[X][Y]</div></pre></td></tr></table></figure>
+<p>协方差矩阵</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/ml03.png" alt=""></p>
+<h4 id="多分类学习"><a href="#多分类学习" class="headerlink" title="多分类学习"></a>多分类学习</h4><h5 id="一对一One-vs-One"><a href="#一对一One-vs-One" class="headerlink" title="一对一One vs. One"></a>一对一One vs. One</h5><p>当有N个类别，那么我们队这N个类别两两配对，产生N(N-1)个二分类任务，然后产生N(N-1)个分类器，最终，通过所有的分类器预测最多的类别作为最终预测结果。</p>
+<h5 id="一对多One-vs-All"><a href="#一对多One-vs-All" class="headerlink" title="一对多One vs. All"></a>一对多One vs. All</h5><p>每次将一个类别的样例作为正例，其他的都作为反例，从而训练N个分类器，然后通过所有的分类器，置信度最高的作为最终预测结果</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/ml04.jpg" alt=""></p>
+<h5 id="多对多Many-vs-Many"><a href="#多对多Many-vs-Many" class="headerlink" title="多对多Many vs. Many"></a>多对多Many vs. Many</h5><p>纠错输出码Error Correcting Output Codes</p>
+<p>编码：</p>
+<p>将N个类别做M次划分，一部分正类一部分反类（二元码，三元码还会划分停用类），形成M个训练集，M个分类器</p>
+<p>解码：</p>
+<p>M个分类器分别对测试样本进行预测，这些预测标记组成一个编码，与每个类别各自的编码进行比较，返回距离最小的为预测结果</p>
+<p><img src="http://ondsf10qe.bkt.clouddn.com/ml05.jpg" alt=""></p>
+<h4 id="类别不平衡class-imbalance"><a href="#类别不平衡class-imbalance" class="headerlink" title="类别不平衡class-imbalance"></a>类别不平衡class-imbalance</h4><ul>
+<li><p>阈值移动threshold-moving</p>
+<p>在置信值与阈值比较之前，对置信值乘以一个偏差值，偏差值由真实几率决定</p>
+<p>但是真实几率往往不能观测出来</p>
+</li>
+</ul>
+<ul>
+<li><p>欠采样undersampling</p>
+<p>去除一些反例，使得正反比例相近</p>
+</li>
+<li><p>过采样oversampling</p>
+<p>增加一些正例，使比例接近</p>
+</li>
+</ul>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><h4 id="A-矩阵"><a href="#A-矩阵" class="headerlink" title="A 矩阵"></a>A 矩阵</h4><p>转置transpose</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(A+B)^T=A^T+B^T</div><div class="line">(AB)^T=B^&#123;T&#125;A^&#123;T&#125;</div></pre></td></tr></table></figure>
+<p>逆矩阵</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AA^&#123;-1&#125;=A^&#123;-1&#125;A=<span class="keyword">I</span></div><div class="line">(A^&#123;T&#125;)^&#123;-1&#125;=(A^&#123;-1&#125;)^&#123;T&#125;</div></pre></td></tr></table></figure>
+<p>迹trace - 主对角线上的元素之和</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tr(A^T)=tr(A)</div><div class="line">tr(A+B)=tr(A)+tr(B)</div><div class="line">tr(AB)=tr(BA)</div></pre></td></tr></table></figure>
+<p>Frobenius范数 - A矩阵里所有的值的平方和的开方</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">||A||_F=(tr(A^&#123;T&#125;A))^&#123;1/2&#125;</div></pre></td></tr></table></figure>
+<h4 id="B-优化"><a href="#B-优化" class="headerlink" title="B 优化"></a>B 优化</h4><p>拉格朗日乘子法Lagrange multipliers</p>
+<p>将d个变量与k个约束条件的最优化问题，转换为具有d+k个变量的无约束优化问题求解</p>
+<p>Ref:</p>
+<p>[1]<a href="https://www.cnblogs.com/pinard/p/6244265.html" target="_blank" rel="external">线性判别分析LDA原理总结</a></p>
 
           
         
@@ -478,7 +551,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2018/01/24/zentao/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2018/01/24/zentao/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -487,7 +560,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -755,7 +828,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2018/01/12/jenkins/jenkins9/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2018/01/12/jenkins/jenkins9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -764,7 +837,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -866,11 +939,11 @@
 <p>脚本如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">#########################################################</div><div class="line">#Javascript 文件</div><div class="line"></div><div class="line">if [[ $file_name = *.js ]]</div><div class="line">then</div><div class="line"></div><div class="line">eslint $file_name &gt; report.txt</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">problems_sentence=`cat report.txt | grep -m 1 &apos;[0-9]* problem[s]*&apos;`</div><div class="line">eslint_problems=`echo $problems_sentence | grep -o &apos;[0-9]* problem[s]*&apos; | grep -o &apos;[0-9]*&apos;`</div><div class="line">eslint_errors=`echo $problems_sentence | grep -o &apos;[0-9]* error[s]*&apos; | grep -o &apos;[0-9]*&apos;`</div><div class="line">eslint_warnings=`echo $problems_sentence | grep -o &apos;[0-9]* warning[s]*&apos; | grep -o &apos;[0-9]*&apos;`</div><div class="line"></div><div class="line"></div><div class="line">echo $file_name 程序共有$eslint_problems个问题，其中$eslint_errors个错误，$eslint_warnings个警告</div><div class="line"></div><div class="line">echo 程序分析报告:</div><div class="line">cat report.txt | tail -n +3</div><div class="line"></div><div class="line">if [[ $&#123;eslint_errors&#125; -ge 2 ]]</div><div class="line">then</div><div class="line">	echo &quot;该代码错误数量未通过（大于等于2个）&quot;</div><div class="line">	let flag=1</div><div class="line">else</div><div class="line">	echo &quot;该代码错误数量通过&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">if [[ $&#123;eslint_warnings&#125; -ge 5 ]]</div><div class="line">then</div><div class="line">	echo &quot;该代码警告数量未通过（大于等于5个）&quot;</div><div class="line">	let flag=1</div><div class="line">else</div><div class="line">	echo &quot;该代码警告数量通过&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">fi</div><div class="line">#Javascript 文件结束</div><div class="line">#########################################################</div></pre></td></tr></table></figure>
 <p>gitlab的dockerfile需要新增加</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#安装eslint</span></div><div class="line"><span class="keyword">RUN</span> npm install -g eslint</div><div class="line"><span class="comment">#安装airbnb的风格插件 </span></div><div class="line"><span class="keyword">RUN</span> npm install eslint-config-airbnb -g</div><div class="line"><span class="keyword">RUN</span> npm install eslint-plugin-jsx-a11y -g</div><div class="line"><span class="keyword">RUN</span> npm install eslint-plugin-import -g</div><div class="line"><span class="keyword">RUN</span> npm install eslint-plugin-react -g</div><div class="line"><span class="comment">#放入配置文件.eslintrc.js</span></div><div class="line"><span class="keyword">RUN</span> cd /</div><div class="line"><span class="keyword">RUN</span> touch .eslintrc.js</div></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#安装eslint</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> npm install -g eslint</span></div><div class="line"><span class="comment">#安装airbnb的风格插件 </span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> npm install eslint-config-airbnb -g</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> npm install eslint-plugin-jsx<span class="_">-a</span>11y -g</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> npm install eslint-plugin-import -g</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> npm install eslint-plugin-react -g</span></div><div class="line"><span class="comment">#放入配置文件.eslintrc.js</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">cd</span> /</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> touch .eslintrc.js</span></div></pre></td></tr></table></figure>
 <h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><p>我们使用<a href="https://pmd.github.io/" target="_blank" rel="external">PWD</a>去实现Java的静态检查。</p>
 <p>dockerfile 新增以下内容，由于gitlab没有java环境，我们还需要配置java环境</p>
 <p>(/etc/profile文件需要添加java文件)</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">###把jdk添加到容器内目录</span></div><div class="line"><span class="keyword">ADD</span> ./jdk-8u131-linux-x64.tar.gz  /usr/local/</div><div class="line"></div><div class="line"><span class="comment">###配置jdk环境变量</span></div><div class="line"><span class="keyword">ENV</span> JAVA_HOME /usr/local/jdk1.<span class="number">8.0</span>_131</div><div class="line"><span class="keyword">ENV</span> PATH /usr/local/jdk1.<span class="number">8.0</span>_131/bin:/home/maven/apache-maven-<span class="number">3.3</span>.<span class="number">9</span>/bin:/usr/local/jdk1.<span class="number">8.0</span>_131/bin:/usr/local/jdk1.<span class="number">8.0</span>_131/bin:/sbin:/usr/sbin:/bin:/usr/bin</div><div class="line"><span class="keyword">ENV</span> PATH $JAVA_HOME/bin:$PATH</div><div class="line"><span class="keyword">ENV</span> CLASSPATH .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">RUN</span> cd $HOME</div><div class="line"><span class="keyword">RUN</span> wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.0.0/pmd-bin-6.0.0.zip</div><div class="line"><span class="keyword">RUN</span> unzip pmd-bin-6.0.0.zip</div><div class="line"><span class="comment">#RUN alias pmd="$HOME/pmd-bin-6.0.0/bin/run.sh pmd"</span></div></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">###把jdk添加到容器内目录</span></div><div class="line"><span class="keyword">ADD</span><span class="bash"> ./jdk-8u131-linux-x64.tar.gz  /usr/<span class="built_in">local</span>/</span></div><div class="line"></div><div class="line"><span class="comment">###配置jdk环境变量</span></div><div class="line"><span class="keyword">ENV</span> JAVA_HOME /usr/local/jdk1.<span class="number">8.0</span>_131</div><div class="line"><span class="keyword">ENV</span> PATH /usr/local/jdk1.<span class="number">8.0</span>_131/bin:/home/maven/apache-maven-<span class="number">3.3</span>.<span class="number">9</span>/bin:/usr/local/jdk1.<span class="number">8.0</span>_131/bin:/usr/local/jdk1.<span class="number">8.0</span>_131/bin:/sbin:/usr/sbin:/bin:/usr/bin</div><div class="line"><span class="keyword">ENV</span> PATH $JAVA_HOME/bin:$PATH</div><div class="line"><span class="keyword">ENV</span> CLASSPATH .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$HOME</span></span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.0.0/pmd-bin-6.0.0.zip</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> unzip pmd-bin-6.0.0.zip</span></div><div class="line"><span class="comment">#RUN alias pmd="$HOME/pmd-bin-6.0.0/bin/run.sh pmd"</span></div></pre></td></tr></table></figure>
 <p>同时脚本如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#########################################################</div><div class="line">#Java 文件</div><div class="line"></div><div class="line">if [[ $file_name = *.java ]]</div><div class="line">then</div><div class="line">#激活java环境</div><div class="line">source /etc/profile</div><div class="line">#运行PMD对代码进行静态检查，输出报告到report.txt中</div><div class="line">/home/git/pmd-bin-6.0.0/bin/run.sh pmd -d $file_name -f text -R java-basic,java-design &gt; report.txt</div><div class="line"></div><div class="line"></div><div class="line">echo 程序分析报告:</div><div class="line">#输出报告，但是报告中带有比较多的路径信息，所以进行正则匹配删除</div><div class="line">cat report.txt | sed &apos;s/\/home\/git\/data\/repositories\/.*\/.*.git\/temp_files\///g&apos;</div><div class="line">#返回代码报告的警告和错误共有多少个，如果超过一定程度则不通过</div><div class="line">java_count=`cat report.txt | wc -l`</div><div class="line"># 如果错误和警告大于等于5个，则不通过检查</div><div class="line">if [[ $&#123;java_count&#125; -ge 5 ]]</div><div class="line">then</div><div class="line">	echo &quot;该代码错误警告数量未通过（大于等于5个）&quot;</div><div class="line">	let flag=1</div><div class="line">else</div><div class="line">	echo &quot;该代码错误警告数量通过&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">fi</div><div class="line">#Java 文件结束</div><div class="line">#########################################################</div></pre></td></tr></table></figure>
 <h3 id="CSS检查"><a href="#CSS检查" class="headerlink" title="CSS检查"></a>CSS检查</h3><p>我们使用<a href="https://stylelint.io/" target="_blank" rel="external">stylelint</a>作为css和html文件的检查工具</p>
@@ -884,7 +957,7 @@
 <p>脚本如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#########################################################</div><div class="line"># CSS和HTML 文件</div><div class="line">if [[ $file_name = *.html || $file_name = *.css ]]</div><div class="line">then</div><div class="line"></div><div class="line">stylelint $file_name &gt; report.txt</div><div class="line"></div><div class="line">style_count=`cat report.txt | wc -l`</div><div class="line"></div><div class="line">echo &quot;程序分析报告(大于30行的只显示前30行):&quot;</div><div class="line">#输出报告</div><div class="line">cat report.txt | head -n 30</div><div class="line"></div><div class="line">if [[ $&#123;style_count&#125; -ge 10 ]]</div><div class="line">then</div><div class="line">	echo &quot;该代码错误警告数量未通过（大于等于10个）&quot;</div><div class="line">	let flag=1</div><div class="line">else</div><div class="line">	echo &quot;该代码错误警告数量通过&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">fi</div><div class="line"># CSS和HTML文件结束</div><div class="line">#########################################################</div></pre></td></tr></table></figure>
 <p>dockerfile</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#安装stylelint主体</span></div><div class="line"><span class="keyword">RUN</span> npm install -g stylelint</div><div class="line"><span class="comment">#安装推荐的设置</span></div><div class="line"><span class="keyword">RUN</span> npm install -g stylelint-config-standard</div><div class="line"><span class="comment"># 把配置文件添加到某个路径中</span></div><div class="line"><span class="keyword">ADD</span> ./stylelintrc /home/git</div></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#安装stylelint主体</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> npm install -g stylelint</span></div><div class="line"><span class="comment">#安装推荐的设置</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> npm install -g stylelint-config-standard</span></div><div class="line"><span class="comment"># 把配置文件添加到某个路径中</span></div><div class="line"><span class="keyword">ADD</span><span class="bash"> ./stylelintrc /home/git</span></div></pre></td></tr></table></figure>
 <p>Reference:</p>
 <p>[1] <a href="https://segmentfault.com/a/1190000005984309" target="_blank" rel="external">https://segmentfault.com/a/1190000005984309</a></p>
 <p>[2] <a href="https://www.jianshu.com/p/83a5d4800250" target="_blank" rel="external">https://www.jianshu.com/p/83a5d4800250</a></p>
@@ -931,7 +1004,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2018/01/05/jenkins/jenkins8/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2018/01/05/jenkins/jenkins8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -940,7 +1013,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -1127,7 +1200,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/24/jenkins/jenkins7/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2017/12/24/jenkins/jenkins7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -1136,7 +1209,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -1294,7 +1367,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/23/jenkins/jenkins6/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2017/12/23/jenkins/jenkins6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -1303,7 +1376,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -1600,7 +1673,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/22/jenkins/jenkins5/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2017/12/22/jenkins/jenkins5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -1609,7 +1682,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -1765,7 +1838,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/21/jenkins/jenkins4/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2017/12/21/jenkins/jenkins4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -1774,7 +1847,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -1986,7 +2059,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/20/jenkins/jenkins3/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2017/12/20/jenkins/jenkins3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -1995,7 +2068,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
@@ -2163,7 +2236,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.pirrla.cn/2017/12/19/jenkins/jenkins2/">
+    <link itemprop="mainEntityOfPage" href="http://www.pirrla.com/2017/12/19/jenkins/jenkins2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Wong">
@@ -2172,7 +2245,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Note down something">
+      <meta itemprop="name" content="Note something">
     </span>
 
     
